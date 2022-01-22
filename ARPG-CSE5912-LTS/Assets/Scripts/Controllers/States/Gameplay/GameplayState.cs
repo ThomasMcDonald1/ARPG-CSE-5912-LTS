@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameplayState : BaseGameplayState
 {
+    [SerializeField] private DialogueUI dialogueUI;
+    public DialogueUI DialogueUI => dialogueUI;
+    public IInteractable Interactable { get; set; }
+
+    int groundLayer, npcLayer, enemyLayer;
+    Player player;
+    NavMeshAgent agent;
+
     public override void Enter()
     {
         base.Enter();
@@ -14,8 +23,11 @@ public class GameplayState : BaseGameplayState
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
         exitGameButton.onClick.AddListener(() => OnExitGameClicked());
-
-        gameplayStateController.controls.Gameplay.Cancel.performed += OnEscapePressed;
+        groundLayer = LayerMask.NameToLayer("Walkable");
+        npcLayer = LayerMask.NameToLayer("NPC");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
+        player = GetComponentInChildren<Player>();
+        agent = player.GetComponent<NavMeshAgent>();
     }
 
     public override void Exit()
@@ -23,9 +35,7 @@ public class GameplayState : BaseGameplayState
         base.Exit();
         // Can remove this line to keep gameplay HUD visible while game is paused.
         gameplayStateController.gameplayUICanvas.enabled = false;
-        gameplayStateController.controls.Gameplay.Cancel.performed -= OnEscapePressed;
     }
-
 
     void OnExitToMenuClicked()
     {
@@ -43,7 +53,31 @@ public class GameplayState : BaseGameplayState
         PauseGame();
     }
 
-    void OnEscapePressed(InputAction.CallbackContext context)
+    protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
+    {
+        if (e.info.collider.gameObject.layer == groundLayer)
+        {
+            agent.destination = e.info.point;
+        }
+        else if (e.info.collider.gameObject.layer == npcLayer)
+        {
+            if (Interactable != null)
+            {
+               //Interact with NPC stuff goes here
+            }
+        }
+        else if (e.info.collider.gameObject.layer == enemyLayer)
+        {
+            //fight enemy
+        }
+    }
+
+    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    {
+
+    }
+
+    protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
         PauseGame();
     }

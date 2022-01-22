@@ -53,11 +53,6 @@ public class PlayerMove : MonoBehaviour
     {
         interactHeld = true;
         StartCoroutine(InteractHeldCoroutine());
-
-        //TODO: If cursor is over the ground, then move
-        //TODO: If cursor on NPC, interact with NPC
-        //TODO: If cursor on enemy, attack
-        //TODO: etc
     }
 
     void OnInteractCanceled(InputAction.CallbackContext context)
@@ -72,8 +67,6 @@ public class PlayerMove : MonoBehaviour
     {
         while (interactHeld)
         {
-            MoveToCursor();
-
             yield return null; 
         } 
     }

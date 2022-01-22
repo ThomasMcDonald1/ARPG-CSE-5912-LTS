@@ -7,8 +7,6 @@ public class GameplayStateController : StateMachine
     // References to things that will need to be controlled and known by the state controller go here
     public GameObject pauseMenuCanvasObj;
     public GameObject gameplayUICanvasObj;
-    [SerializeField] GameObject player;
-    public Controls controls;
 
     [HideInInspector] public Canvas pauseMenuCanvas;
     [HideInInspector] public Canvas gameplayUICanvas;
@@ -25,7 +23,6 @@ public class GameplayStateController : StateMachine
 
     private void Awake()
     {
-        controls = player.gameObject.GetComponent<PlayerMove>().controls;
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
 

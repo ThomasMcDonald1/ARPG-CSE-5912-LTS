@@ -22,4 +22,26 @@ public class BaseGameplayState : State
         exitToMainMenuButton = gameplayStateController.exitToMainMenuButtonObj.GetComponent<Button>();
         exitGameButton = gameplayStateController.exitGameButtonObj.GetComponent<Button>();
     }
+
+    protected override void AddListeners()
+    {
+        InputController.ClickEvent += OnClick;
+        InputController.ClickCanceledEvent += OnClickCanceled;
+        InputController.CancelPressedEvent += OnCancelPressed;
+    }
+
+    protected virtual void OnClick(object sender, InfoEventArgs<RaycastHit> e)
+    {
+
+    }
+
+    protected virtual void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    {
+
+    }
+
+    protected virtual void OnCancelPressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
 }

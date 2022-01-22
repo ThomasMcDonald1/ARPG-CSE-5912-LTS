@@ -11,7 +11,6 @@ public class PauseGameState : BaseGameplayState
         Time.timeScale = 0;
         gameplayStateController.pauseMenuCanvas.enabled = true;
         resumeGameButton.onClick.AddListener(() => OnResumeGameClicked());
-        gameplayStateController.controls.Gameplay.Cancel.performed += OnEscapePressed;
     }
 
     public override void Exit()
@@ -19,7 +18,6 @@ public class PauseGameState : BaseGameplayState
         base.Exit();
         gameplayStateController.pauseMenuCanvas.enabled = false;
         Time.timeScale = 1;
-        gameplayStateController.controls.Gameplay.Cancel.performed -= OnEscapePressed;
     }
 
     void OnResumeGameClicked()
@@ -27,7 +25,17 @@ public class PauseGameState : BaseGameplayState
         ResumeGame();
     }
 
-    void OnEscapePressed(InputAction.CallbackContext context)
+    protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
+    {
+
+    }
+
+    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    {
+
+    }
+
+    protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
         ResumeGame();
     }
