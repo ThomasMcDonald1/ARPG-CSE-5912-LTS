@@ -11,6 +11,7 @@ public class PauseGameState : BaseGameplayState
         Time.timeScale = 0;
         gameplayStateController.pauseMenuCanvas.enabled = true;
         resumeGameButton.onClick.AddListener(() => OnResumeGameClicked());
+        inGameOptionsButton.onClick.AddListener(() => OnOptionsClicked());
     }
 
     public override void Exit()
@@ -23,6 +24,11 @@ public class PauseGameState : BaseGameplayState
     void OnResumeGameClicked()
     {
         ResumeGame();
+    }
+
+    void OnOptionsClicked()
+    {
+        gameplayStateController.ChangeState<OptionsGameplayState>();
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)

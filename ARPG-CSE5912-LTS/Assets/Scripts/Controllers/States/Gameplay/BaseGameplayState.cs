@@ -10,6 +10,7 @@ public class BaseGameplayState : State
     public Button pauseMenuButton;
     public Button resumeGameButton;
     public Button inGameOptionsButton;
+    public Button exitOptionsToPauseButton;
     public Button exitToMainMenuButton;
     public Button exitGameButton;
 
@@ -21,6 +22,7 @@ public class BaseGameplayState : State
         inGameOptionsButton = gameplayStateController.inGameOptionsButtonObj.GetComponent<Button>();
         exitToMainMenuButton = gameplayStateController.exitToMainMenuButtonObj.GetComponent<Button>();
         exitGameButton = gameplayStateController.exitGameButtonObj.GetComponent<Button>();
+        exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
     }
 
     protected override void AddListeners()

@@ -13,6 +13,7 @@ public class MainMenuRootState : BaseMenuState
         mainMenuController.mainMenuCanvas.enabled = true;
         startGameButton.onClick.AddListener(() => OnStartGameClicked());
         createCharButton.onClick.AddListener(() => OnCreateCharClicked());
+        optionsButton.onClick.AddListener(() => OnOptionsClicked());
     }
 
     public override void Exit()
@@ -30,5 +31,10 @@ public class MainMenuRootState : BaseMenuState
     void OnCreateCharClicked()
     {
         mainMenuController.ChangeState<CharacterCreationState>();
+    }
+
+    void OnOptionsClicked()
+    {
+        mainMenuController.ChangeState<OptionsState>();
     }
 }
