@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameplayState : BaseGameplayState
 {
-    [SerializeField] private DialogueUI dialogueUI;
-    public DialogueUI DialogueUI => dialogueUI;
-    public IInteractable Interactable { get; set; }
+    //[SerializeField] private DialogueUI dialogueUI;
+    //public DialogueUI DialogueUI => dialogueUI;
+    //public IInteractable Interactable { get; set; }
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
@@ -55,20 +55,27 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (e.info.collider.gameObject.layer == groundLayer)
+        if (!player.DialogueUI.IsOpen)
         {
-            agent.destination = e.info.point;
-        }
-        else if (e.info.collider.gameObject.layer == npcLayer)
-        {
-            if (Interactable != null)
+            if (e.info.collider.gameObject.layer == groundLayer)
             {
-               //Interact with NPC stuff goes here
+                agent.destination = e.info.point;
             }
-        }
-        else if (e.info.collider.gameObject.layer == enemyLayer)
-        {
-            //fight enemy
+            else if (e.info.collider.gameObject.layer == npcLayer)
+            {
+                agent.destination = e.info.point;
+                if (player.Interactable != null)
+                {
+                    //Interact with NPC stuff goes here
+                    player.Interactable.Interact(player);
+                }
+
+
+            }
+            else if (e.info.collider.gameObject.layer == enemyLayer)
+            {
+                //fight enemy
+            }
         }
     }
 
