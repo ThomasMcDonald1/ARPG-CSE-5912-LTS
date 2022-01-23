@@ -5,8 +5,12 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-public class InputController : MonoBehaviour
+public class InputController: MonoBehaviour
 {
+    private static InputController instance;
+    public static InputController Instance { get { return instance; } }
+
+
     public static event EventHandler<InfoEventArgs<RaycastHit>> ClickEvent;
     public static event EventHandler<InfoEventArgs<bool>> ClickCanceledEvent;
     public static event EventHandler<InfoEventArgs<int>> CancelPressedEvent;
@@ -15,6 +19,15 @@ public class InputController : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         controls = new Controls();
     }
 

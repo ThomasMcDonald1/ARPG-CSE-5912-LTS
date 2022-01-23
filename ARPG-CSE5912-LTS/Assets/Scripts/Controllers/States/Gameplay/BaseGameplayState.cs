@@ -30,6 +30,13 @@ public class BaseGameplayState : State
         InputController.CancelPressedEvent += OnCancelPressed;
     }
 
+    protected override void RemoveListeners()
+    {
+        InputController.ClickEvent -= OnClick;
+        InputController.ClickCanceledEvent -= OnClickCanceled;
+        InputController.CancelPressedEvent -= OnCancelPressed;
+    }
+
     protected virtual void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
 
