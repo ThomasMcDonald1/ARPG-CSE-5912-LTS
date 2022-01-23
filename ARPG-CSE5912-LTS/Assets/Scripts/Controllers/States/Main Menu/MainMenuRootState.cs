@@ -24,7 +24,6 @@ public class MainMenuRootState : BaseMenuState
     void OnStartGameClicked()
     {
         Debug.Log("Start Button Clicked!");
-        //TODO: Add a loading screen here somehow
         SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 

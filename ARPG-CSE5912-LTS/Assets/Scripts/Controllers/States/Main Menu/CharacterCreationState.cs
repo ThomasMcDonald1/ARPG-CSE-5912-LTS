@@ -10,7 +10,6 @@ public class CharacterCreationState : BaseMenuState
         Debug.Log("entered character creation menu state");
         mainMenuController.createCharMenuCanvas.enabled = true;
         backFromCharCreateToMainButton.onClick.AddListener(() => OnBackButtonClicked());
-
     }
 
     public override void Exit()
