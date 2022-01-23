@@ -11,16 +11,22 @@ public class LoadingStateController : StateMachine
     public bool loadScene = true;
     public string sceneToLoad;
     public Text percentLoaded;
+    public Texture[] images;
+    public RawImage backgroundImage;
 
     private float progressValue;
 
     [HideInInspector] public Canvas loadingSceneCanvas;
+    
 
     void Update()
     {
-        if(loadScene == true)
+        
+
+        if (loadScene == true)
         {
             loadScene = false;
+            StartCoroutine(loadImage());
             StartCoroutine(LoadYourAsyncScene());
         }
     }
@@ -57,10 +63,24 @@ public class LoadingStateController : StateMachine
         //Debug.Log("level is loaded");
     }
 
+    IEnumerator loadImage()
+    {
+        for (int i = 0; i < images.Length; i++)
+        {
+            backgroundImage.texture = images[i];
+            yield return new WaitForSeconds(1);
+        }
+        yield return null;
+    }
+
     private void Awake()
     {
         loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
         loadingSceneCanvas.enabled = true;
         ChangeState<LoadingState>();
+
+        backgroundImage.texture = images[1];
+        
+        
     }
 }
