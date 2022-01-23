@@ -24,7 +24,7 @@ public class MainMenuRootState : BaseMenuState
     void OnStartGameClicked()
     {
         Debug.Log("Start Button Clicked!");
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("NatureScene", LoadSceneMode.Single);
     }
 
     void OnCreateCharClicked()
