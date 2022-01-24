@@ -23,6 +23,8 @@ public class GameplayStateController : StateMachine
 
     private void Awake()
     {
+        if (gameObject.activeSelf == false)
+            gameObject.SetActive(true);
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
 
