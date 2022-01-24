@@ -41,6 +41,7 @@ public class ResponseHandler : MonoBehaviour
 
     private void OnPickedResponse(Response response)
     {
+        Debug.Log("clicked on response");
         responseBox.gameObject.SetActive(false);
         
         foreach (GameObject button in tempResponseButtons)

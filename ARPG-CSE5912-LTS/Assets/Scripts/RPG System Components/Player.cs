@@ -18,6 +18,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dialogueUI.IsOpen) return;
+        //if (dialogueUI.IsOpen) return;
     }
 }
