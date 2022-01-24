@@ -14,12 +14,15 @@ public class DialogueActivator : MonoBehaviour, IInteractable
             player.Interactable = this;
 
             Debug.Log("triggered");
-            //fix bug where this gets triggered at start of game
-            if (!started)
-            {
-                player.Interactable = null;
-                started = true;
-            }
+
+
+
+            ////fix bug where this gets triggered at start of game, only for game scene
+            //if (!started)
+            //{
+            //    player.Interactable = null;
+            //    started = true;
+            //}
 
 
             GameObject cap;
