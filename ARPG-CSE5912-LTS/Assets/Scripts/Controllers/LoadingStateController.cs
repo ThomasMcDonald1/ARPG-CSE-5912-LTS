@@ -13,11 +13,13 @@ public class LoadingStateController : StateMachine
     public Text percentLoaded;
     public Texture[] images;
     public RawImage backgroundImage;
+    public float height = 250.0f;
+    public float width = 0.0f;
 
     private float progressValue;
 
     [HideInInspector] public Canvas loadingSceneCanvas;
-    
+    [HideInInspector] public bool clickSpace = true;
 
     void Update()
     {
@@ -54,6 +56,7 @@ public class LoadingStateController : StateMachine
                 }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    clickSpace = false;
                     asyncLoad.allowSceneActivation = true;
                 }
                 
@@ -65,9 +68,15 @@ public class LoadingStateController : StateMachine
 
     IEnumerator loadImage()
     {
-        for (int i = 0; i < images.Length; i++)
+        int i = 0;
+        while (clickSpace)
         {
             backgroundImage.texture = images[i];
+            width = (height / (float)images[i].height) * (float)images[i].width;
+            var rectTrans = backgroundImage.GetComponent<RectTransform>();
+
+            rectTrans.sizeDelta = new Vector2(width, height);
+            i = (i + 1) % images.Length;
             yield return new WaitForSeconds(1);
         }
         yield return null;
