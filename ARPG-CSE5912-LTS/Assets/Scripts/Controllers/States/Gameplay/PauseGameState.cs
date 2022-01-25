@@ -10,6 +10,10 @@ public class PauseGameState : BaseGameplayState
         Debug.Log("Game paused");
         Time.timeScale = 0;
         gameplayStateController.pauseMenuCanvas.enabled = true;
+        foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+        {
+            if (s.name != "Theme") s.source.Stop();
+        }
         resumeGameButton.onClick.AddListener(() => OnResumeGameClicked());
         inGameOptionsButton.onClick.AddListener(() => OnOptionsClicked());
     }
@@ -24,11 +28,13 @@ public class PauseGameState : BaseGameplayState
     void OnResumeGameClicked()
     {
         ResumeGame();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnOptionsClicked()
     {
         gameplayStateController.ChangeState<OptionsGameplayState>();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
