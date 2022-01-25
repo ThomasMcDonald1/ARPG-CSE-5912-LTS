@@ -65,12 +65,14 @@ public class GameplayState : BaseGameplayState
             }
             else if (e.info.collider.gameObject.layer == npcLayer)
             {
-                agent.destination = e.info.point;
+                //Debug.Log("Clicked on npc");
                 if (player.Interactable != null)
                 {
                     //Interact with NPC stuff goes here
                     player.Interactable.Interact(player);
                 }
+                agent.destination = e.info.point;
+
 
 
             }
