@@ -25,6 +25,7 @@ public class OptionsGameplayState : BaseGameplayState
     void OnBackToPauseClicked()
     {
         gameplayStateController.ChangeState<PauseGameState>();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
