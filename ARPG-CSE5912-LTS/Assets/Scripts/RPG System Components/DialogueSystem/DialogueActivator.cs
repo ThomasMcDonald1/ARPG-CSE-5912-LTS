@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueActivator : MonoBehaviour, IInteractable
 {
     [SerializeField] private DialogueObject dialogueObject;
-    bool started = false;
+    //bool started = false;
 
     private void OnTriggerEnter(Collider other)
     {

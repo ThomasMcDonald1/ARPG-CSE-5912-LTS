@@ -77,6 +77,13 @@ public class GameplayState : BaseGameplayState
             else if (e.info.collider.gameObject.layer == enemyLayer)
             {
                 //fight enemy
+                Debug.Log("Clicked on enmey");
+                if (player.Interactable != null)
+                {
+                    //Interact with NPC stuff goes here
+                    player.Interactable.Interact(player);
+                }
+                agent.destination = e.info.point;
             }
         }
     }
