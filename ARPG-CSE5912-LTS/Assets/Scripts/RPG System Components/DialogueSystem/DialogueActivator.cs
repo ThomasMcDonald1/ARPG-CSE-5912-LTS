@@ -5,7 +5,6 @@ using UnityEngine;
 public class DialogueActivator : MonoBehaviour, IInteractable
 {
     [SerializeField] private DialogueObject dialogueObject;
-    //bool started = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,15 +13,6 @@ public class DialogueActivator : MonoBehaviour, IInteractable
             player.Interactable = this;
 
             Debug.Log("triggered");
-
-
-
-            ////fix bug where this gets triggered at start of game, only for game scene
-            //if (!started)
-            //{
-            //    player.Interactable = null;
-            //    started = true;
-            //}
 
 
             GameObject cap;
@@ -40,7 +30,7 @@ public class DialogueActivator : MonoBehaviour, IInteractable
 
                 GameObject cap;
                 cap = this.transform.Find("Capsule").gameObject;
-                cap.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
+                cap.GetComponent<Renderer>().material.color = new Color(51f/255f, 192f/255f, 14f/255f);
             }
         }
     }

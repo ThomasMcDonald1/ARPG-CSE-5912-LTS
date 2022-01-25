@@ -9,7 +9,6 @@ public class DamageActivator : MonoBehaviour, IInteractable
     public AudioSource audioSource;
     public AudioClip audioClip;
     bool takeDamage = false;
-    //bool started = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
@@ -17,15 +16,6 @@ public class DamageActivator : MonoBehaviour, IInteractable
             player.Interactable = this;
 
             Debug.Log("triggered");
-
-
-
-            ////fix bug where this gets triggered at start of game, only for game scene
-            //if (!started)
-            //{
-            //    player.Interactable = null;
-            //    started = true;
-            //}
 
 
             GameObject cap;
@@ -44,7 +34,7 @@ public class DamageActivator : MonoBehaviour, IInteractable
 
                 GameObject cap;
                 cap = this.transform.Find("Capsule").gameObject;
-                cap.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
+                cap.GetComponent<Renderer>().material.color = new Color(178f/255f, 6f/255f, 6f/255f);
             }
         }
     }
