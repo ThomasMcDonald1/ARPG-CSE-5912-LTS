@@ -41,6 +41,7 @@ public class GameplayState : BaseGameplayState
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnExitGameClicked()
@@ -51,6 +52,7 @@ public class GameplayState : BaseGameplayState
     void OnPauseMenuClicked()
     {
         PauseGame();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)

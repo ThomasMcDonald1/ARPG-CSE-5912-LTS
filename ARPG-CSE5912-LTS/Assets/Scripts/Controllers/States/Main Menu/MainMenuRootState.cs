@@ -20,21 +20,25 @@ public class MainMenuRootState : BaseMenuState
     {
         base.Exit();
         mainMenuController.mainMenuCanvas.enabled = false;
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnStartGameClicked()
     {
         Debug.Log("Start Button Clicked!");
         SceneManager.LoadScene("NatureScene", LoadSceneMode.Single);
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnCreateCharClicked()
     {
         mainMenuController.ChangeState<CharacterCreationState>();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnOptionsClicked()
     {
         mainMenuController.ChangeState<OptionsState>();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 }
