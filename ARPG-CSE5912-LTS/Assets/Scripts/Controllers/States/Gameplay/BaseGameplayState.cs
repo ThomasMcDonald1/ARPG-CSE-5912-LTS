@@ -13,6 +13,8 @@ public class BaseGameplayState : State
     public Button exitOptionsToPauseButton;
     public Button exitToMainMenuButton;
     public Button exitGameButton;
+    public Button charaPanelButton;
+    public Button exitPanelToGameButton;
 
     protected virtual void Awake()
     {
@@ -23,6 +25,8 @@ public class BaseGameplayState : State
         exitToMainMenuButton = gameplayStateController.exitToMainMenuButtonObj.GetComponent<Button>();
         exitGameButton = gameplayStateController.exitGameButtonObj.GetComponent<Button>();
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
+        charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
+        exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
     }
 
     protected override void AddListeners()

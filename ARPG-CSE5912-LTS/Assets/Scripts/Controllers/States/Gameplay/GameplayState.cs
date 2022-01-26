@@ -23,6 +23,7 @@ public class GameplayState : BaseGameplayState
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
         exitGameButton.onClick.AddListener(() => OnExitGameClicked());
+        charaPanelButton.onClick.AddListener(() => OnCharaPanelClicked());
         groundLayer = LayerMask.NameToLayer("Walkable");
         npcLayer = LayerMask.NameToLayer("NPC");
         enemyLayer = LayerMask.NameToLayer("Enemy");
@@ -52,6 +53,12 @@ public class GameplayState : BaseGameplayState
     void OnPauseMenuClicked()
     {
         PauseGame();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
+    }
+
+    void OnCharaPanelClicked()
+    {
+        OpenCharacterPanel();
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
@@ -103,5 +110,10 @@ public class GameplayState : BaseGameplayState
     void PauseGame()
     {
         gameplayStateController.ChangeState<PauseGameState>();
+    }
+
+    void OpenCharacterPanel()
+    {
+        gameplayStateController.ChangeState<CharacterPanelState>();
     }
 }
