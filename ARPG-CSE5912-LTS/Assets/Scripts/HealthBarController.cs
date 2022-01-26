@@ -45,11 +45,5 @@ public class HealthBarController : MonoBehaviour
             currHealth -= damageRate;
         }
     }
-    public void Healing(float healingRate)
-    {
-        if (currHealth > 0 && currHealth<maxHealth)
-        {
-            currHealth += healingRate;
-        }
-    }
+    
 }
