@@ -8,7 +8,12 @@ public class CharacterPanelState : BaseGameplayState
     {
         base.Enter();
         Debug.Log("entered character panel state");
+        Time.timeScale = 0;
         gameplayStateController.characterPanelCanvas.enabled = true;
+        foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+        {
+            if (s.name != "Theme") s.source.Stop();
+        }
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
     }
 
@@ -16,6 +21,7 @@ public class CharacterPanelState : BaseGameplayState
     {
         base.Exit();
         gameplayStateController.characterPanelCanvas.enabled = false;
+        Time.timeScale = 1;
     }
 
     void OnBackButtonClicked()
