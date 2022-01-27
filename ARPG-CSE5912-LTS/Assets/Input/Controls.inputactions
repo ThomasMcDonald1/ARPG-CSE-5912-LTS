@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ActionBar1",
+                    "type": "Button",
+                    "id": "9aa309dd-1372-4f10-b3fe-39ac7dc03d44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -44,6 +53,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b05046e-0d6d-477a-a513-54f8e7b88462",
+                    "path": "<Keyboard>/1",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActionBar1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
