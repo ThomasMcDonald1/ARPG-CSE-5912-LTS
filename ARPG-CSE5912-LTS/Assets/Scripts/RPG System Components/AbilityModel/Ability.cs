@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ability : MonoBehaviour
 {
     public string description;
+    public Sprite icon;
 
     //Add events here for checking if an ability can be performed, if an ability fails, if an ability was performed, if an ability crits, etc
 
