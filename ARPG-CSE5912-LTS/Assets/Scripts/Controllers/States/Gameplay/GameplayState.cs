@@ -64,7 +64,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (!player.DialogueUI.IsOpen)
+        if (agent.enabled)
         {
             if (e.info.collider.gameObject.layer == groundLayer)
             {
