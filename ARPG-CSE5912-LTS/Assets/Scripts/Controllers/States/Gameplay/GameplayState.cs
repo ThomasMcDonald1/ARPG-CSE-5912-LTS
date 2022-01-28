@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class GameplayState : BaseGameplayState
 {
@@ -14,6 +15,7 @@ public class GameplayState : BaseGameplayState
     int groundLayer, npcLayer, enemyLayer;
     Player player;
     NavMeshAgent agent;
+    ContextMenuPanel contextMenuPanel;
 
     public override void Enter()
     {
@@ -29,6 +31,8 @@ public class GameplayState : BaseGameplayState
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
         agent = player.GetComponent<NavMeshAgent>();
+        contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
     }
 
     public override void Exit()
@@ -107,6 +111,138 @@ public class GameplayState : BaseGameplayState
         PauseGame();
     }
 
+    protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
+    {
+        
+    }
+
+    protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnStationaryButtonPressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnStationaryButtonCanceled(object sender, InfoEventArgs<bool> e)
+    {
+
+    }
+
+    protected override void OnPotion1Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnPotion2Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnPotion3Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnPotion4Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar1Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar3Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar4Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar5Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar6Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar7Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar8Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar9Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar10Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar11Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnActionBar12Pressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected override void OnUIElementLeftClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+        //figure out if the results contain an action button
+        foreach (RaycastResult result in e.info)
+        {
+            GameObject go = result.gameObject;
+            ActionButton actionButton = go.GetComponent<ActionButton>();
+            if (actionButton != null)
+            {
+                Debug.Log("Left Clicked: " + go.name);
+            }           
+        }
+    }
+
+    protected override void OnUIElementRightClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+        //figure out if the results contain an action button
+        foreach (RaycastResult result in e.info)
+        {
+            GameObject go = result.gameObject;
+            ActionButton actionButton = go.GetComponent<ActionButton>();
+            if (actionButton != null)
+            {
+                Debug.Log("Action Button clicked on: " + actionButton.name);
+                contextMenuPanel.transform.position = Mouse.current.position.ReadValue();
+                contextMenuPanel.transform.position = new Vector3(contextMenuPanel.transform.position.x, 400, contextMenuPanel.transform.position.z);
+                contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
+                contextMenuPanel.PopulateContextMenu(actionButton);
+            }
+        }
+    }
+
     void PauseGame()
     {
         gameplayStateController.ChangeState<PauseGameState>();
@@ -116,4 +252,6 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<CharacterPanelState>();
     }
+
+    
 }

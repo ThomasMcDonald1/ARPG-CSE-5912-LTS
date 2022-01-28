@@ -13,12 +13,18 @@ public class Player : MonoBehaviour
     private Vector3 playerVelocity;
     private bool isMoving;
     private bool soundPlaying = false;
-    // Start is called before the first frame update
-    void Start()
+
+    public List<Ability> abilitiesKnown;
+    [SerializeField] Ability basicAttack;
+    [SerializeField] Ability fireballTest;
+
+    void Awake()
     {
+        abilitiesKnown = new List<Ability>();
+        abilitiesKnown.Add(basicAttack);
+        abilitiesKnown.Add(fireballTest);
     }
 
-    // Update is called once per frame
     void Update()
     {
         //if (dialogueUI.IsOpen) return;
