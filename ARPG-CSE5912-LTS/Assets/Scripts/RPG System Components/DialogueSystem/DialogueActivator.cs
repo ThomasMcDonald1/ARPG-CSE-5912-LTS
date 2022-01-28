@@ -36,6 +36,7 @@ public class DialogueActivator : MonoBehaviour, IInteractable
     }
     public void Interact(Player player)
     {
+        player.transform.LookAt(this.transform.position);
         player.DialogueUI.ShowDialogue(dialogueObject);
     }
 }

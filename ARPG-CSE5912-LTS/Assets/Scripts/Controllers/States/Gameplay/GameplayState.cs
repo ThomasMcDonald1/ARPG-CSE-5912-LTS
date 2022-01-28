@@ -70,6 +70,7 @@ public class GameplayState : BaseGameplayState
             {
                 agent.destination = e.info.point;
             }
+
             else if (e.info.collider.gameObject.layer == npcLayer)
             {
                 //Debug.Log("Clicked on npc");
@@ -79,10 +80,8 @@ public class GameplayState : BaseGameplayState
                     player.Interactable.Interact(player);
                 }
                 agent.destination = e.info.point;
-
-
-
             }
+
             else if (e.info.collider.gameObject.layer == enemyLayer)
             {
                 //fight enemy
