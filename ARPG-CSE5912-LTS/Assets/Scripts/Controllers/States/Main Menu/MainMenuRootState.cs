@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainMenuRootState : BaseMenuState
 {
@@ -26,7 +25,7 @@ public class MainMenuRootState : BaseMenuState
     void OnStartGameClicked()
     {
         Debug.Log("Start Button Clicked!");
-        SceneManager.LoadScene("NatureScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
