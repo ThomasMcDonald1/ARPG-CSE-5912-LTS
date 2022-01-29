@@ -32,7 +32,10 @@ public class GameplayState : BaseGameplayState
         player = GetComponentInChildren<Player>();
         agent = player.GetComponent<NavMeshAgent>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
-        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+        if (contextMenuPanel != null)
+        {
+            contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+        }
     }
 
     public override void Exit()
