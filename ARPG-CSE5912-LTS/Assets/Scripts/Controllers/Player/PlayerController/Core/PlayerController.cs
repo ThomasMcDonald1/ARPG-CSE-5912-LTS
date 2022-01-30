@@ -26,12 +26,12 @@ namespace ARPG.Core
 
         private IPlayerClass playerClass;
 
-        public void PlayerEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
+        public void PlayerOnClickEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
         {
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-                    playerClass.CancelAttack();
+                    playerClass.Cancel();
                     GetComponentInChildren<MovementHandler>().MoveToTarget(e.info.point);
                     break;
 
@@ -39,6 +39,7 @@ namespace ARPG.Core
                     break;
 
                 case "Enemy":
+                    playerClass.AttackSignal(true);
                     EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
                     playerClass.Attack(target);
                     break;
@@ -46,6 +47,12 @@ namespace ARPG.Core
                 default:
                     break;
             }
+        }
+
+        public void PlayerCancelClickEventResponse(object sender, InfoEventArgs<RaycastHit> e)
+        {
+            playerClass.AttackSignal(false);
+            if (playerClass.InTargetRange()) { playerClass.Cancel(); }
         }
 
         private void Start()

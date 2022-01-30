@@ -9,43 +9,68 @@ namespace ARPG.Combat
 {
     public class Knight : PlayerClass
     {
-        Player player;
-        public override float AttackRange { get; set; }
-        private float attackRange;
-
         private GameObject GeneralClass;
-        Transform target;
+        private bool signalAttack;
 
         private void Start()
         {
             GeneralClass = GameObject.Find("Class");
-            attackRange = 2f;
+            AttackRange = 2f;
+            AttackTarget = null;
         }
 
         private void Update()
         {
-            if (target != null)
+            if (AttackTarget != null)
             {
-                if (Vector3.Distance(GeneralClass.transform.position, target.position) > attackRange)
+                if (!InTargetRange())
                 {
                     GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                    GeneralClass.GetComponent<MovementHandler>().MoveToTarget(target.position);
+                    GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
                 }
-                else
+                else if (InTargetRange() && signalAttack)
                 {
-                    GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = true;
+                    GeneralClass.GetComponent<MovementHandler>().Cancel();
+                    GetComponent<Animator>().SetTrigger("AttackTrigger");
+                }
+                else if (InTargetRange() && !signalAttack)
+                {
+                    GeneralClass.GetComponent<MovementHandler>().Cancel();
+                    GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    Cancel();
                 }
             }
         }
 
+        
+
+
         public override void Attack(EnemyTarget target)
         {
-            this.target = target.transform;
+            AttackTarget = target.transform;
         }
 
-        public override void CancelAttack()
+        public override void Cancel()
         {
-            target = null;
+            AttackTarget = null;
+        }
+
+        // Needed for the animation hit event
+        void Hit()
+        {
+
+        }
+
+
+        public override bool InTargetRange()
+        {
+            if (AttackTarget == null) return false;
+            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
+        }
+
+        public override void AttackSignal(bool signal)
+        {
+            signalAttack = signal;
         }
     }
 }

@@ -73,13 +73,16 @@ public class GameplayState : BaseGameplayState
     {
         if (agent.enabled)
         {
-            player.GetComponent<PlayerController>().PlayerEventResponse(e.info.collider.gameObject.layer, sender, e);
+            player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
-
+        if (agent.enabled)
+        {
+            player.GetComponent<PlayerController>().PlayerCancelClickEventResponse(sender, e);
+        }
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)

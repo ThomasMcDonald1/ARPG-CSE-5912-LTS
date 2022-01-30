@@ -6,10 +6,10 @@ using UnityEngine.AI;
 
 namespace ARPG.Movement
 {
-    public class MovementHandler : MonoBehaviour, IAction
+    public class MovementHandler : MonoBehaviour
     {
         public NavMeshAgent NavMeshAgent { get { return agent; } }
-        private NavMeshAgent agent;
+        NavMeshAgent agent;
 
         private void Start()
         {
@@ -18,18 +18,13 @@ namespace ARPG.Movement
 
         public void MoveToTarget(Vector3 target)
         {
-            agent.isStopped = false;
             agent.destination = target;
-        }
-
-        public void StopMoving()
-        {
-            agent.isStopped = true;
+            agent.isStopped = false;
         }
 
         public void Cancel()
         {
-            throw new System.NotImplementedException();
+            agent.isStopped = true;
         }
     }
 }
