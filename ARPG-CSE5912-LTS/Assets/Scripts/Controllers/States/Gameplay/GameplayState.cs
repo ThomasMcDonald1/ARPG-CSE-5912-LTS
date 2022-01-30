@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+using ARPG.Core;
 public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
@@ -73,34 +73,7 @@ public class GameplayState : BaseGameplayState
     {
         if (agent.enabled)
         {
-            if (e.info.collider.gameObject.layer == groundLayer)
-            {
-                agent.destination = e.info.point;
-            }
-            //else if (e.info.collider.gameObject.layer == npcLayer)
-            //{
-            //    Debug.Log("Clicked on npc");
-            //    if (player.Interactable != null)
-            //    {
-            //        //Interact with NPC stuff goes here
-            //        player.Interactable.Interact(player);
-            //    }
-            //    agent.destination = e.info.point;
-
-
-
-            //}
-            else if (e.info.collider.gameObject.layer == enemyLayer)
-            {
-                //fight enemy
-                Debug.Log("Clicked on enmey");
-                if (player.Interactable != null)
-                {
-                    //Interact with NPC stuff goes here
-                    player.Interactable.Interact(player);
-                }
-                agent.destination = e.info.point;
-            }
+            player.GetComponent<PlayerController>().PlayerEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
     }
 

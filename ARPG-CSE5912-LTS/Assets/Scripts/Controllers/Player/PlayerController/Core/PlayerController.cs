@@ -1,0 +1,104 @@
+using UnityEngine;
+using UnityEngine.AI;
+using ARPG.Movement;
+using ARPG.Combat;
+
+/* 
+ * 
+ * This class is intended to be utilized based on the event fired from within GameplayState.cs
+ * The OnClick method (an overrided method) from within GameplayState.cs is triggered, this class is used to
+ * respond to the event.
+ */
+
+namespace ARPG.Core
+{
+    public class PlayerController : MonoBehaviour
+    {
+
+        public string ClassTypeName
+        { get { return classTypeName; } }
+
+        public string WeaponTypeName
+        { get { return weaponTypeName; } }
+
+        private string classTypeName;
+        private string weaponTypeName;
+
+        private IPlayerClass playerClass;
+
+        public void PlayerEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
+        {
+            switch (LayerMask.LayerToName(layer))
+            {
+                case "Walkable":
+                    playerClass.CancelAttack();
+                    GetComponentInChildren<MovementHandler>().MoveToTarget(e.info.point);
+                    break;
+
+                case "NPC":
+                    break;
+
+                case "Enemy":
+                    EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
+                    playerClass.Attack(target);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void Start()
+        {
+            /* 
+                * classTypeName and weaponTypeName are default for now. We need to:
+                *          1.] Find another way to change the class type based on a choice in character selection from the main menu]
+                *          2.] Also need to find a way to change weaponTypeName based on what the player has equipped
+                */
+            classTypeName = "Knight";
+            weaponTypeName = "Unarmed";
+
+            /*foreach (Transform child in transform)
+            {
+                if (child.gameObject.name == classTypeName)
+                {
+                    ClassType = child.gameObject;
+                }
+            }*/
+
+            playerClass = AttachClassScript();
+        }
+
+        private IPlayerClass AttachClassScript()
+        {
+            IPlayerClass playerClass;
+            switch(classTypeName)
+            {
+                case "Knight":
+                    this.gameObject.AddComponent<Knight>();
+                    playerClass = this.gameObject.GetComponent<Knight>();
+                    break;
+                default:
+                    playerClass = null;
+                    break;
+            }
+            return playerClass;
+        }
+
+
+        private void Update()
+        {
+            UpdateAnimator();
+        }
+
+        private void UpdateAnimator()
+        {
+            Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            float speed = localVelocity.z;
+            GetComponent<Animator>().SetFloat("ForwardSpeed", speed);
+        }
+    }
+}
+
+
