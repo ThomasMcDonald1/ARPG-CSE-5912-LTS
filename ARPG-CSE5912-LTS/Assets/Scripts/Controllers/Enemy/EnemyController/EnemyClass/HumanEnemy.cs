@@ -56,11 +56,15 @@ public class HumanEnemy : EnemyClass
         realDistance = Vector3.Distance(playerTrans.position, transform.position);
         realDirection = transform.forward;
         float angle = Vector3.Angle(direction, realDirection);
-        if (realDistance < range && realDistance > bodyRange) //need set health.
+        if (realDistance < range ) //need set health.
         {
-            if (angle < sightRange)
+            if (angle < sightRange && realDistance > bodyRange)
             {
                 runToPlayer();
+            }
+            else
+            {
+                stopRun();
             }
         }
         Debug.Log("okk");
@@ -68,11 +72,16 @@ public class HumanEnemy : EnemyClass
 
     public override void runToPlayer()
     {
+        
+        enemy.isStopped = false;
         //if set speed, here.
         enemy.SetDestination(playerTrans.position);
     }
 
-
+    public override void stopRun()
+    {
+        enemy.isStopped = true;
+    }
     /*
     public virtual void attack()
     {

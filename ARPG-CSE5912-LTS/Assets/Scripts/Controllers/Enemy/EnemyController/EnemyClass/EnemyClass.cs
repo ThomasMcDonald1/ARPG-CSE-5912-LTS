@@ -16,6 +16,8 @@ public abstract class EnemyClass: MonoBehaviour
 
     public abstract void runToPlayer();
 
+    public abstract void stopRun();
+
     public abstract void Attack();
 
     public abstract void CancelAttack(); //far from the born position
