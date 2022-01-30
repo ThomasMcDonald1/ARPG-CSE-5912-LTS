@@ -44,6 +44,13 @@ public class CharacterCreationState : BaseMenuState
         eyeColorButton.onClick.AddListener(() => SetEyeColor());
         skinColorButton.onClick.AddListener(() => SetSkinColor());
         nameField.onEndEdit.AddListener(s => SetName(s));
+
+        ChangeEyebrowButton();
+        ChangeEyeButton();
+        ChangeFacialHairButton();
+        ChangeFacialMarkButton();
+        ChangeHairButton();
+        ChangeSkinButton();
     }
 
     public override void Exit()
@@ -99,7 +106,16 @@ public class CharacterCreationState : BaseMenuState
     {
         Debug.Log("Player hair color changed");
         characterManager.SetHairColor();
+        ChangeHairButton();
         PlayAudio();
+    }
+
+    void ChangeHairButton()
+    {
+        var colors = hairColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.Hair);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Hair);
+        hairColorButton.colors = colors;
     }
 
     void SetEyebrowsStyle(SelectionDirection d)
@@ -113,7 +129,16 @@ public class CharacterCreationState : BaseMenuState
     {
         Debug.Log("Player eyebrow color changed");
         characterManager.SetEyebrowColor();
+        ChangeEyebrowButton();
         PlayAudio();
+    }
+
+    void ChangeEyebrowButton()
+    {
+        var colors = eyebrowColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
+        eyebrowColorButton.colors = colors;
     }
 
     void SetFacialMarkStyle(SelectionDirection d)
@@ -128,6 +153,15 @@ public class CharacterCreationState : BaseMenuState
         Debug.Log("Player face mark color changed");
         characterManager.SetFaceMarkColor();
         PlayAudio();
+        ChangeFacialMarkButton();
+    }
+
+    void ChangeFacialMarkButton()
+    {
+        var colors = faceMarkColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
+        faceMarkColorButton.colors = colors;
     }
 
     void SetFacialHairStyle(SelectionDirection d)
@@ -141,21 +175,48 @@ public class CharacterCreationState : BaseMenuState
     {
         Debug.Log("Player facial hair color changed");
         characterManager.SetFacialHairColor();
-        PlayAudio();
+        ChangeFacialHairButton();
+        PlayAudio();        
+    }
+
+    void ChangeFacialHairButton()
+    {
+        var colors = facialHairColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
+        facialHairColorButton.colors = colors;
     }
 
     void SetEyeColor()
     {
         Debug.Log("Player eye color changed");
         characterManager.SetEyeColor();
+        ChangeEyeButton();
         PlayAudio();
+    }
+
+    void ChangeEyeButton()
+    {
+        var colors = eyeColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.Eyes);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Eyes);
+        eyeColorButton.colors = colors;
     }
    
     void SetSkinColor()
     {
         Debug.Log("Player skin color changed");
         characterManager.SetSkinColor();
+        ChangeSkinButton();
         PlayAudio();
+    }
+
+    void ChangeSkinButton()
+    {
+        var colors = skinColorButton.colors;
+        colors.normalColor = characterManager.GetPartColor(BodyPartNames.Skin);
+        colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Skin);
+        skinColorButton.colors = colors;
     }
 
     void SetName(string n)
