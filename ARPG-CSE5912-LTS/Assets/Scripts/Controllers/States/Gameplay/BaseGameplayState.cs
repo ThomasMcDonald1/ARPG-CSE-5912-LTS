@@ -72,7 +72,7 @@ public class BaseGameplayState : State
 
     }
 
-    protected virtual void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
 
     }

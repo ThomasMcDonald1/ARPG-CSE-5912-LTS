@@ -16,7 +16,7 @@ public class InputController: MonoBehaviour
 
     //Events associated with input being pressed
     public static event EventHandler<InfoEventArgs<RaycastHit>> ClickEvent;
-    public static event EventHandler<InfoEventArgs<bool>> ClickCanceledEvent;
+    public static event EventHandler<InfoEventArgs<RaycastHit>> ClickCanceledEvent;
     public static event EventHandler<InfoEventArgs<int>> SecondaryClickPressedEvent;
     public static event EventHandler<InfoEventArgs<int>> CancelPressedEvent;
     public static event EventHandler<InfoEventArgs<int>> CharacterMenuPressedEvent;
@@ -119,7 +119,7 @@ public class InputController: MonoBehaviour
         if (clickHeld)
         {
             clickHeld = false;
-            ClickCanceledEvent?.Invoke(this, new InfoEventArgs<bool>(clickHeld));
+            ClickCanceledEvent?.Invoke(this, new InfoEventArgs<RaycastHit>());
         }
     }
 

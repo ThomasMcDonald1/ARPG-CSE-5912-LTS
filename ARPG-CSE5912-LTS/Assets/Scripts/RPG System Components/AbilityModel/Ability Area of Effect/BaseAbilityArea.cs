@@ -4,5 +4,6 @@ using UnityEngine;
 
 public abstract class BaseAbilityArea : MonoBehaviour
 {
-    public abstract List<Character> GetCharactersInAOE(RaycastHit hit);
+    public abstract void PerformAOE(RaycastHit hit);
+    public abstract void DisplayAOEArea();
 }
