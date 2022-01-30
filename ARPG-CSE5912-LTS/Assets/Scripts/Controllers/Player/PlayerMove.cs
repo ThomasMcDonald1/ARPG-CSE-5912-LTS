@@ -15,9 +15,12 @@ public class PlayerMove : MonoBehaviour
     public Controls controls;
     private bool interactHeld;
 
+    
+    
     private void Awake()
     {
         controls = new Controls();
+      
     }
 
     void Update()
