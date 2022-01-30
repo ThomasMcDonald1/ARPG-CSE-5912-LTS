@@ -42,7 +42,7 @@ public class PauseGameState : BaseGameplayState
 
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
 
     }

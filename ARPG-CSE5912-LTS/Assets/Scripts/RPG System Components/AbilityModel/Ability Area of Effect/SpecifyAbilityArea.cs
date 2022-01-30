@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class SpecifyAbilityArea : BaseAbilityArea
 {
-    List<Character> characters;
     public int aoeRadius;
 
-    private void Awake()
-    {
-        characters = new List<Character>();
-    }
-
-    public override List<Character> GetCharactersInAOE(RaycastHit hit)
+    public override void PerformAOE(RaycastHit hit)
     {
         Collider[] hitColliders = Physics.OverlapSphere(hit.point, aoeRadius);
         //TODO: Visual representation of overlap sphere
         foreach (Collider hitCollider in hitColliders)
         {
             Character character = hitCollider.gameObject.GetComponent<Character>();
-            characters.Add(character);
+            if (character != null)
+            {
+                //Do ability effects on character
+            }
         }
+    }
 
-        return characters;
+    public override void DisplayAOEArea()
+    {
+        
     }
 }

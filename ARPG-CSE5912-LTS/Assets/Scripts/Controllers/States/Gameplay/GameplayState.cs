@@ -16,6 +16,7 @@ public class GameplayState : BaseGameplayState
     Player player;
     NavMeshAgent agent;
     ContextMenuPanel contextMenuPanel;
+    ActionBar actionBar;
 
     public override void Enter()
     {
@@ -36,6 +37,7 @@ public class GameplayState : BaseGameplayState
         {
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         }
+        actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
     }
 
     public override void Exit()
@@ -104,7 +106,7 @@ public class GameplayState : BaseGameplayState
         }
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
 
     }
@@ -156,7 +158,11 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar1Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
+        if (abilityInSlot != null)
+        {
+            player.CastAbility(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
@@ -223,7 +229,11 @@ public class GameplayState : BaseGameplayState
             ActionButton actionButton = go.GetComponent<ActionButton>();
             if (actionButton != null)
             {
-                Debug.Log("Left Clicked: " + go.name);
+                Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionButton);
+                if (abilityInSlot != null)
+                {
+                    player.CastAbility(abilityInSlot);
+                }
             }           
         }
     }
