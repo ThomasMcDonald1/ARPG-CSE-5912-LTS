@@ -153,6 +153,10 @@ public class CharacterCustomizer //: ScriptableObject
             character.SetPartColor(bp.PartType, bp.IDvalue, bp.ColorProperty, bp.PartColor);
         }
     }
+    private void UpdateNonBodyPartColor(NonBodyPart bp)
+    {
+        character.SetPartColor(faceMark.PartType, faceMark.IDvalue, bp.ColorProperty, bp.PartColor);
+    }
 
     public Color GetPartColor(BodyPartNames bp)
     {
@@ -177,29 +181,35 @@ public class CharacterCustomizer //: ScriptableObject
     {
         hair.Reset();
         ActivateBodyPart(hair);
-        SetHairColor();
 
         eyebrow.Reset();
         ActivateBodyPart(eyebrow);
 
         faceMark.Reset();
-        SetFaceMarkColor();
         ActivateBodyPart(faceMark);
 
         facialHair.Reset();
         ActivateBodyPart(facialHair);
 
         eyes.Reset();
-        SetEyeColor();
+        UpdateNonBodyPartColor(eyes);
 
         skin.Reset();
-        SetSkinColor();
+        UpdateNonBodyPartColor(skin);
     }
 
 
     public void SetGender(Gender g)
     {
         character.SwapGender(g);
+
+        ActivateBodyPart(hair);
+        ActivateBodyPart(eyebrow);
+        ActivateBodyPart(faceMark);
+        ActivateBodyPart(facialHair);
+        UpdateNonBodyPartColor(eyes);
+        UpdateNonBodyPartColor(skin);
+
     }
 
     public void SetHairStyle(SelectionDirection d)
@@ -285,13 +295,13 @@ public class CharacterCustomizer //: ScriptableObject
     public void SetEyeColor()
     {
         eyes.NextColor();
-        character.SetPartColor(faceMark.PartType, faceMark.IDvalue, eyes.ColorProperty, eyes.PartColor);
+        UpdateNonBodyPartColor(eyes);
     }
 
     public void SetSkinColor()
     {
         skin.NextColor();
-        character.SetPartColor(faceMark.PartType, faceMark.IDvalue, skin.ColorProperty, skin.PartColor);
+        UpdateNonBodyPartColor(skin);
     }
 
     public void SetCharacterName(string n)

@@ -229,6 +229,13 @@ public class CharacterCreationState : BaseMenuState
     {
         Debug.Log("Player character reset");
         characterManager.ResetParts();
+
+        ChangeEyebrowButton();
+        ChangeEyeButton();
+        ChangeFacialHairButton();
+        ChangeFacialMarkButton();
+        ChangeHairButton();
+        ChangeSkinButton();
     }
 
     void PlayAudio()
