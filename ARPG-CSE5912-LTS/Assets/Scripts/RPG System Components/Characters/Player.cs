@@ -17,12 +17,13 @@ public class Player : MonoBehaviour
     public List<Ability> abilitiesKnown;
     [SerializeField] Ability basicAttack;
     [SerializeField] Ability fireballTest;
-
+    public HashSet<Vector3> unlockedWaypoints;
     void Awake()
     {
         abilitiesKnown = new List<Ability>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
+        unlockedWaypoints = new HashSet<Vector3>();
     }
 
     void Update()
