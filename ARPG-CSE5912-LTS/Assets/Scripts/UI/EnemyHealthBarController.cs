@@ -12,6 +12,8 @@ public class EnemyHealthBarController : MonoBehaviour
     float lerpSpd;
     // PlayerController_Script Player;  for updating current player health, not using at this point
 
+
+
     private void Start()
     {
         // currHealth = maxHealth;
@@ -22,12 +24,11 @@ public class EnemyHealthBarController : MonoBehaviour
 
         stats.health = stats.maxHealth;
         currHealth = stats.health;
-
     }
 
     private void Update()
     {
-        //if (currHealth > maxHealth) currHealth = maxHealth;
+        if (currHealth > maxHealth) currHealth = maxHealth;
         lerpSpd = 3f * Time.deltaTime;
         HealthBarFiller();
         colorChanger();
