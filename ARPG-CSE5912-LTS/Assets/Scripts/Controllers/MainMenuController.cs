@@ -26,7 +26,7 @@ public class MainMenuController : StateMachine
     // Create character menu obj
     public Camera characterCreationCameraObj;
     [HideInInspector] public Camera characterCreationCamera;
-    public GameObject characterObj, characterPrefab;
+    public GameObject characterObj;
 
     public GameObject backFromCharCreateToMainButtonObj, resetCharaButtonObj, confirmButtonObj;
     public GameObject maleButtonObj, femaleButtonObj;

@@ -74,7 +74,6 @@ public class CharacterCreationState : BaseMenuState
             GetCharacterDetails();
             nameError.SetActive(false);
             Debug.Log("Confirm Button Clicked!");
-            mainMenuController.characterPrefab = mainMenuController.characterObj;
             SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
         }
         else
