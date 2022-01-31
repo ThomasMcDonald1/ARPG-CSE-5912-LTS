@@ -5,6 +5,12 @@ using UnityEngine;
 //This script should be attached to all entities that require stats
 public class Stats : MonoBehaviour
 {
+    //Temp variables for testing
+    public float health;
+    public float maxHealth;
+    public float attackDmg;
+    public float attackSpd;
+    public float attackDuration;
     public int this[StatTypes s]
     {
         get { return _data[(int)s]; }
@@ -45,5 +51,16 @@ public class Stats : MonoBehaviour
             return;
 
         _data[(int)type] = value;
+    }
+    private void Start()
+    {
+        //combat script
+    }
+    private void Update()
+    {
+     if(health <= 0)
+        {
+             Destroy(gameObject);
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour
+public class EnemyHealthBarController : MonoBehaviour
 {
     public Image healthBar;
     public float maxHealth = 100f;
@@ -15,13 +15,14 @@ public class HealthBarController : MonoBehaviour
     private void Start()
     {
         // currHealth = maxHealth;
-       
-            stats = GameObject.FindGameObjectWithTag("Player").GetComponent<Stats>();
 
+        stats = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Stats>();
         maxHealth = stats.maxHealth;
+
+
         stats.health = stats.maxHealth;
         currHealth = stats.health;
-       
+
     }
 
     private void Update()
@@ -30,7 +31,7 @@ public class HealthBarController : MonoBehaviour
         lerpSpd = 3f * Time.deltaTime;
         HealthBarFiller();
         colorChanger();
-        currHealth = stats.health; 
+        currHealth = stats.health;
 
     }
 
@@ -43,20 +44,20 @@ public class HealthBarController : MonoBehaviour
     {
         Color healthC = Color.Lerp(Color.red, Color.green, (currHealth / maxHealth));
         healthBar.color = healthC;
-        
+
     }
     public void HitDamage(float damageRate)
     {
-        if(currHealth > 0)
+        if (currHealth > 0)
         {
             currHealth -= damageRate;
         }
     }
     public void healing(float healingRate)
     {
-        if (currHealth <100)
+        if (currHealth < 100)
         {
-            
+
             currHealth += healingRate;
             if (currHealth > 100)
             {

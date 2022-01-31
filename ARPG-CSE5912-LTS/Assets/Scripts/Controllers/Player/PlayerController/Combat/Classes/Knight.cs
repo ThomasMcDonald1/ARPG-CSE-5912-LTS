@@ -11,12 +11,15 @@ namespace ARPG.Combat
     {
         private GameObject GeneralClass;
         private bool signalAttack;
-
+        public Stats statScript;
+        public int attackSpeedCounter;
         private void Start()
         {
             GeneralClass = GameObject.Find("Class");
             AttackRange = 2f;
             AttackTarget = null;
+            statScript = GetComponent<Stats>();
+            attackSpeedCounter = 0;
         }
 
         private void Update()
@@ -32,6 +35,17 @@ namespace ARPG.Combat
                 {
                     GeneralClass.GetComponent<MovementHandler>().Cancel();
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    if (attackSpeedCounter < 20)
+                    {
+                        attackSpeedCounter++;
+                        Debug.Log("attackspeed counter : " + attackSpeedCounter); 
+                    }
+                    else
+                    {
+                        AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+                        attackSpeedCounter = 0;
+                        Debug.Log("hp decreasing");
+                    }
                 }
                 else if (InTargetRange() && !signalAttack)
                 {
