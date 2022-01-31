@@ -6,7 +6,7 @@ using BattleDrakeStudios.ModularCharacters;
 public enum SelectionDirection { Forward, Backward }
 public enum BodyPartNames { Hair, Eyes, Skin, Eyebrows, FaceMark, FacialHair}
 
-public class CharacterCustomizer //: ScriptableObject
+public class CharacterCustomizer
 {
     private class NonBodyPart
     {
@@ -91,9 +91,10 @@ public class CharacterCustomizer //: ScriptableObject
     private ModularCharacterManager character;
     private BodyPart hair, eyebrow, faceMark, facialHair;
     private NonBodyPart eyes, skin;
-    private string charName;
 
+    private string charName;
     public string CharacterName { get { return charName; } }
+    public Gender CharacterGender { get { return character.CharacterGender; } }
 
     public CharacterCustomizer(ModularCharacterManager character)
     {
@@ -153,6 +154,7 @@ public class CharacterCustomizer //: ScriptableObject
             character.SetPartColor(bp.PartType, bp.IDvalue, bp.ColorProperty, bp.PartColor);
         }
     }
+
     private void UpdateNonBodyPartColor(NonBodyPart bp)
     {
         character.SetPartColor(faceMark.PartType, faceMark.IDvalue, bp.ColorProperty, bp.PartColor);
@@ -177,6 +179,23 @@ public class CharacterCustomizer //: ScriptableObject
         }
     }
 
+    public int GetPartID(BodyPartNames bp)
+    {
+        switch (bp)
+        {
+            case BodyPartNames.Eyebrows:
+                return eyebrow.IDvalue;
+            case BodyPartNames.Hair:
+                return hair.IDvalue;
+            case BodyPartNames.FaceMark:
+                return faceMark.IDvalue;
+            case BodyPartNames.FacialHair:
+                return facialHair.IDvalue;
+            default:
+                return 0;
+        }
+    }
+    
     public void ResetParts()
     {
         hair.Reset();
@@ -198,10 +217,10 @@ public class CharacterCustomizer //: ScriptableObject
         UpdateNonBodyPartColor(skin);
     }
 
-
     public void SetGender(Gender g)
     {
         character.SwapGender(g);
+        faceMark.Reset();
 
         ActivateBodyPart(hair);
         ActivateBodyPart(eyebrow);
@@ -214,56 +233,33 @@ public class CharacterCustomizer //: ScriptableObject
 
     public void SetHairStyle(SelectionDirection d)
     {
-        if (d == SelectionDirection.Forward)
-        {
-            hair.IncrementIndex();
-        }
-        else
-        {
-            hair.DecrementIndex();
-        }
+        if (d == SelectionDirection.Forward) { hair.IncrementIndex(); }
+        else { hair.DecrementIndex(); }
 
         ActivateBodyPart(hair);
     }
 
     public void SetEyebrowStyle(SelectionDirection d)
     {
-        if (d == SelectionDirection.Forward)
-        {
-            eyebrow.IncrementIndex();
-        }
-        else
-        {
-            eyebrow.DecrementIndex();
-        }
+        if (d == SelectionDirection.Forward) { eyebrow.IncrementIndex(); }
+        else { eyebrow.DecrementIndex(); }
 
         ActivateBodyPart(eyebrow);
     }
 
     public void SetFaceMarkStyle(SelectionDirection d)
     {
-        if (d == SelectionDirection.Forward)
-        {
-            faceMark.IncrementIndex();
-        }
-        else
-        {
-            faceMark.DecrementIndex();
-        }
+        if (d == SelectionDirection.Forward) { faceMark.IncrementIndex(); }
+        else { faceMark.DecrementIndex(); }
 
         ActivateBodyPart(faceMark);
+        UpdateNonBodyPartColor(skin);
     }
 
     public void SetFacialHairStyle(SelectionDirection d)
     {
-        if (d == SelectionDirection.Forward)
-        {
-            facialHair.IncrementIndex();
-        }
-        else
-        {
-            facialHair.DecrementIndex();
-        }
+        if (d == SelectionDirection.Forward) { facialHair.IncrementIndex(); }
+        else { facialHair.DecrementIndex(); }
 
         ActivateBodyPart(facialHair);
     }
@@ -314,14 +310,8 @@ public class CharacterCustomizer //: ScriptableObject
 
     public bool NameIsValid()
     {
-        if (string.IsNullOrEmpty(charName) || string.IsNullOrWhiteSpace(charName))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        if (string.IsNullOrEmpty(charName) || string.IsNullOrWhiteSpace(charName)) { return false; }
+        else { return true; }
     }
 
 }

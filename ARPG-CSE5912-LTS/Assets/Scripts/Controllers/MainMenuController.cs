@@ -36,6 +36,7 @@ public class MainMenuController : StateMachine
     public GameObject facialHairForwardButtonObj, facialHairBackwardButtonObj, facialHairColorButtonObj;
     public GameObject eyesColorButtonObj, skinColorButtonObj;
     public GameObject nameFieldObj, nameErrorObj;
+    public CustomCharacter charaScriptableObj;
 
     private void Awake()
     {

@@ -7,6 +7,7 @@ using BattleDrakeStudios.ModularCharacters;
 public class CharacterCreationState : BaseMenuState
 {
     private CharacterCustomizer characterManager;
+    public CustomCharacter customCharacter;
 
     public override void Enter()
     {
@@ -18,6 +19,7 @@ public class CharacterCreationState : BaseMenuState
         {
             characterManager = new CharacterCustomizer(mainMenuController.characterObj.GetComponent<ModularCharacterManager>());
         }
+        customCharacter = mainMenuController.charaScriptableObj;
         nameError.SetActive(false);
         SetUpButtons();
     }
@@ -69,6 +71,7 @@ public class CharacterCreationState : BaseMenuState
     {
         if (characterManager.NameIsValid())
         {
+            GetCharacterDetails();
             nameError.SetActive(false);
             Debug.Log("Confirm Button Clicked!");
             mainMenuController.characterPrefab = mainMenuController.characterObj;
@@ -241,6 +244,33 @@ public class CharacterCreationState : BaseMenuState
     void PlayAudio()
     {
         FindObjectOfType<AudioManager>().Play("MenuClick");
+    }
+
+    void GetCharacterDetails()
+    {
+        var hairId = characterManager.GetPartID(BodyPartNames.Hair);
+        var hairColor = characterManager.GetPartColor(BodyPartNames.Hair);
+
+        var faceMarkID = characterManager.GetPartID(BodyPartNames.FaceMark);
+        var facemarkColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
+
+        var facialHairID = characterManager.GetPartID(BodyPartNames.FacialHair);
+        var facialHairColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
+
+        var eyebrowID = characterManager.GetPartID(BodyPartNames.Eyebrows);
+        var eyebrowColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
+
+        var eyeColor = characterManager.GetPartColor(BodyPartNames.Eyes);
+        var skinColor = characterManager.GetPartColor(BodyPartNames.Skin);
+
+        var gender = characterManager.CharacterGender;
+        var charName = characterManager.CharacterName;
+
+        customCharacter.UpdateIds(hairId, eyebrowID, faceMarkID, facialHairID);
+        customCharacter.UpdateColors(hairColor, eyebrowColor, facemarkColor, facialHairColor, eyeColor, skinColor);
+        customCharacter.UpdateGender(gender);
+        customCharacter.UpdateName(charName);
+
     }
 
 }
