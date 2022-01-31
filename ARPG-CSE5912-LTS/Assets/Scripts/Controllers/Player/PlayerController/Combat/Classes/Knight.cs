@@ -24,12 +24,15 @@ namespace ARPG.Combat
             //rotation data
             smooth = 0.3f;
             yVelocity = 0.0f;
+            GetComponent<Animator>().SetBool("StopAttack", true);
+
         }
 
         private void Update()
         {
             if (AttackTarget != null)
             {
+                GetComponent<Animator>().SetBool("StopAttack", false);
                 if (!InTargetRange())
                 {
                     GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
@@ -46,16 +49,19 @@ namespace ARPG.Combat
 
                     transform.eulerAngles = new Vector3(0, rotationY, 0);
                 }
-                else if (InTargetRange() && !signalAttack)
+                else if (InTargetRange() && !signalAttack)//doesnt get triggered?
                 {
                     GeneralClass.GetComponent<MovementHandler>().Cancel();
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    Debug.Log("triggered");
                     Cancel();
                 }
             }
+            Debug.Log(GetComponent<Animator>().GetBool("StopAttack"));
+
         }
 
-        
+
 
 
         public override void Attack(EnemyTarget target)
@@ -66,6 +72,9 @@ namespace ARPG.Combat
         public override void Cancel()
         {
             AttackTarget = null;
+            GetComponent<Animator>().SetBool("StopAttack", true);
+
+
         }
 
         // Needed for the animation hit event
