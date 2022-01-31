@@ -12,14 +12,18 @@ namespace ARPG.Combat
         private GameObject GeneralClass;
         private bool signalAttack;
         public Stats statScript;
-        public int attackSpeedCounter;
+        float smooth;
+        float yVelocity;
         private void Start()
         {
             GeneralClass = GameObject.Find("Class");
             AttackRange = 2f;
             AttackTarget = null;
             statScript = GetComponent<Stats>();
-            attackSpeedCounter = 0;
+
+            //rotation data
+            smooth = 0.3f;
+            yVelocity = 0.0f;
         }
 
         private void Update()
@@ -35,17 +39,12 @@ namespace ARPG.Combat
                 {
                     GeneralClass.GetComponent<MovementHandler>().Cancel();
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    if (attackSpeedCounter < 20)
-                    {
-                        attackSpeedCounter++;
-                        Debug.Log("attackspeed counter : " + attackSpeedCounter); 
-                    }
-                    else
-                    {
-                        AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
-                        attackSpeedCounter = 0;
-                        Debug.Log("hp decreasing");
-                    }
+                    //rotation toward enemy
+                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                    rotationToLookAt.eulerAngles.y,ref yVelocity,smooth);
+
+                    transform.eulerAngles = new Vector3(0, rotationY, 0);
                 }
                 else if (InTargetRange() && !signalAttack)
                 {
@@ -70,9 +69,12 @@ namespace ARPG.Combat
         }
 
         // Needed for the animation hit event
-        void Hit()
+        public void Hit()
         {
-
+            if (AttackTarget != null)
+            {
+                AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+            }
         }
 
 
