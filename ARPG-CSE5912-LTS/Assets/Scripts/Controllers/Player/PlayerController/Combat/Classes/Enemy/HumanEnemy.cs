@@ -11,21 +11,19 @@ namespace ARPG.Combat
         private bool signalAttack;
 
         public NavMeshAgent enemy;
-        
-        public float currentPlayerHealth;
-        public float currentPlayEnergy;
+
+        public Stats statScript;
 
         private void Start()
         {
             GeneralClass = GameObject.Find("EnemyClass");
+            statScript = GetComponent<Stats>();
+
             AttackRange = 13.0f;
             AttackTarget = null;
 
-            CurrentEnemyHealth = 100.0f;
-            MaxEnemyHealth = 100.0f;
-
             Range = 20.0f;
-            BodyRange = 2.0f;
+            BodyRange = 1.0f;
             SightRange = 90f;
 
             Speed = 2f;
@@ -49,6 +47,11 @@ namespace ARPG.Combat
                 {
                     Debug.Log("run");
                     RunToPlayer();
+                }
+                else if (angle < SightRange && InStopRange())
+                {
+                    StopRun();
+                    GetComponent<Animator>().SetTrigger("AttackTrigger");
                 }
                 else
                 {
@@ -99,6 +102,14 @@ namespace ARPG.Combat
         public override void AttackSignal(bool signal)
         {
             signalAttack = signal;
+        }
+
+        public void Hit()
+        {
+            if (AttackTarget != null)
+            {
+                AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+            }
         }
     }
 
