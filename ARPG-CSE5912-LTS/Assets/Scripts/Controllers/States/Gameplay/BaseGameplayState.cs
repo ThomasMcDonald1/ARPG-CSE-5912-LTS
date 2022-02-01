@@ -29,6 +29,8 @@ public class BaseGameplayState : State
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
+
+        gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
     }
 
     protected override void AddListeners()

@@ -35,6 +35,10 @@ public class GameplayStateController : StateMachine
     // Casting bar
     public CastingBar castingBar;
 
+    // Character model things
+    public GameObject playerModel;
+    public CustomCharacter customCharacter; //scriptable object
+
     //TODO: Maybe a keybinds button, if we have time to add
 
     private void Awake()
