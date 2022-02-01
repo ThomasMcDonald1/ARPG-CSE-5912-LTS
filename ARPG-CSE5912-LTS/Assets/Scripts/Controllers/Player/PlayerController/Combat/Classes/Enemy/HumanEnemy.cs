@@ -31,7 +31,13 @@ namespace ARPG.Combat
 
         private void Update()
         {
+            if (statScript.health <= 0)
+            {
+                GetComponent<Animator>().SetBool("Dead", true);
+            }
+
             SeePlayer();
+            
         }
 
 
@@ -43,7 +49,10 @@ namespace ARPG.Combat
                 Vector3 realDirection = GeneralClass.transform.forward;
                 Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
-                if (angle < SightRange && !InStopRange())
+                if (AttackTarget.GetComponent<Stats>().health <= 0) //When player is dead, stop hit.
+                {
+                    StopRun();
+                }else if (angle < SightRange && !InStopRange())
                 {
                     Debug.Log("run");
                     RunToPlayer();
@@ -109,6 +118,15 @@ namespace ARPG.Combat
             if (AttackTarget != null)
             {
                 AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+            }
+        }
+
+        public void Dead()
+        {
+            //nead a dead animation before destroy.
+            if (statScript.health <= 0)
+            {
+                Destroy(gameObject);
             }
         }
     }

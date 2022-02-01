@@ -52,24 +52,4 @@ public class Stats : MonoBehaviour
 
         _data[(int)type] = value;
     }
-    private void Start()
-    {
-        //combat script
-    }
-    private void Update()
-    {
-     if(health <= 0)
-        {
-            if (gameObject.name == "Player")
-            {
-                //need to do something before like choose respawn
-                gameObject.transform.position = new Vector3(0f, 1.5f, 0f);
-                health = maxHealth;
-            }
-            else if (gameObject.name == "Enemy")
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
 }

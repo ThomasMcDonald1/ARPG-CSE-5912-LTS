@@ -25,36 +25,45 @@ namespace ARPG.Combat
             smooth = 0.3f;
             yVelocity = 0.0f;
             GetComponent<Animator>().SetBool("StopAttack", true);
+            GetComponent<Animator>().SetBool("Dead", false);
 
         }
 
         private void Update()
         {
-            if (AttackTarget != null)
-            {
-                GetComponent<Animator>().SetBool("StopAttack", false);
-                if (!InTargetRange())
-                {
-                    GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                    GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
-                }
-                else if (InTargetRange() && signalAttack)
-                {
-                    GeneralClass.GetComponent<MovementHandler>().Cancel();
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    //rotation toward enemy
-                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                    rotationToLookAt.eulerAngles.y,ref yVelocity,smooth);
 
-                    transform.eulerAngles = new Vector3(0, rotationY, 0);
-                }
-                else if (InTargetRange() && !signalAttack)//doesnt get triggered?
+            if (statScript.health <= 0)
+            {
+                GetComponent<Animator>().SetBool("Dead", true);
+            }else
+            {
+
+                if (AttackTarget != null)
                 {
-                    GeneralClass.GetComponent<MovementHandler>().Cancel();
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    Debug.Log("triggered");
-                    Cancel();
+                    GetComponent<Animator>().SetBool("StopAttack", false);
+                    if (!InTargetRange())
+                    {
+                        GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+                        GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
+                    }
+                    else if (InTargetRange() && signalAttack)
+                    {
+                        GeneralClass.GetComponent<MovementHandler>().Cancel();
+                        GetComponent<Animator>().SetTrigger("AttackTrigger");
+                        //rotation toward enemy
+                        Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                        float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                        rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+
+                        transform.eulerAngles = new Vector3(0, rotationY, 0);
+                    }
+                    else if (InTargetRange() && !signalAttack)//doesnt get triggered?
+                    {
+                        GeneralClass.GetComponent<MovementHandler>().Cancel();
+                        GetComponent<Animator>().SetTrigger("AttackTrigger");
+                        Debug.Log("triggered");
+                        Cancel();
+                    }
                 }
             }
             Debug.Log(GetComponent<Animator>().GetBool("StopAttack"));
@@ -84,6 +93,11 @@ namespace ARPG.Combat
             {
                 AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
             }
+        }
+
+        public void Dead()
+        {
+           //Dead and to the gameover state
         }
 
 
