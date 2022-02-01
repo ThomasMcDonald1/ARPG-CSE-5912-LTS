@@ -29,6 +29,12 @@ public class GameplayStateController : StateMachine
     public GameObject charaPanelButtonObj;
     public GameObject exitPanelToGameButtonObj;
 
+    public GameObject aoeReticleSphere;
+    public GameObject aoeReticleCylinder;
+
+    // Casting bar
+    public CastingBar castingBar;
+
     //TODO: Maybe a keybinds button, if we have time to add
 
     private void Awake()
@@ -38,10 +44,13 @@ public class GameplayStateController : StateMachine
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterPanelCanvas = characterPanelCanvasObj.GetComponent<Canvas>();
 
+
         pauseMenuCanvas.enabled = false;
         gameplayUICanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
         characterPanelCanvas.enabled = false;
+        aoeReticleSphere.SetActive(false);
+        aoeReticleCylinder.SetActive(false);
         ChangeState<GameplayState>();
     }
 }

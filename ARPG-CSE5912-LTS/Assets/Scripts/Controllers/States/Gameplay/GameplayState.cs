@@ -14,7 +14,6 @@ public class GameplayState : BaseGameplayState
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
-    NavMeshAgent agent;
     ContextMenuPanel contextMenuPanel;
     ActionBar actionBar;
 
@@ -31,7 +30,6 @@ public class GameplayState : BaseGameplayState
         npcLayer = LayerMask.NameToLayer("NPC");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
-        agent = player.GetComponent<NavMeshAgent>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
         if (contextMenuPanel != null)
         {
@@ -73,11 +71,11 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (agent.enabled)
+        if (player.agent.enabled)
         {
-            if (e.info.collider.gameObject.layer == groundLayer)
+            if (e.info.collider.gameObject.layer == groundLayer && !player.playerInAbilityTargetSelectionMode)
             {
-                agent.destination = e.info.point;
+                player.MoveToLocation(e.info.point);
             }
             //else if (e.info.collider.gameObject.layer == npcLayer)
             //{
@@ -101,14 +99,17 @@ public class GameplayState : BaseGameplayState
                     //Interact with NPC stuff goes here
                     player.Interactable.Interact(player);
                 }
-                agent.destination = e.info.point;
+                player.MoveToLocation(e.info.point);
             }
         }
     }
 
     protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
-
+        if (player.playerInAbilityTargetSelectionMode)
+        {
+            player.playerInAbilityTargetSelectionMode = false;
+        }
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -161,7 +162,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
         if (abilityInSlot != null)
         {
-            player.CastAbility(abilityInSlot);
+            player.QueueAbilityCast(abilityInSlot);
         }
     }
 
@@ -232,7 +233,7 @@ public class GameplayState : BaseGameplayState
                 Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionButton);
                 if (abilityInSlot != null)
                 {
-                    player.CastAbility(abilityInSlot);
+                    player.QueueAbilityCast(abilityInSlot);
                 }
             }           
         }
