@@ -12,20 +12,22 @@ public class GameplayState : BaseGameplayState
     //public DialogueUI DialogueUI => dialogueUI;
     //public IInteractable Interactable { get; set; }
 
+   
+
     int groundLayer, npcLayer, enemyLayer;
     Player player;
     NavMeshAgent agent;
     ContextMenuPanel contextMenuPanel;
 
     // Test inventory system
-    private InventoryUI inventory;
+    
     public override void Enter()
     {
         base.Enter();
 
-        inventory = new InventoryUI();
 
         Debug.Log("entered GameplayState");
+        
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());

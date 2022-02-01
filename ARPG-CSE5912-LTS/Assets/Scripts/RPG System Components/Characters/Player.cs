@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private DialogueUI dialogueUI;
 
+    [SerializeField] private InventoryUI uiInventory;
+    private Inventory inventory;
     public DialogueUI DialogueUI => dialogueUI;
 
     public IInteractable Interactable { get; set; }
@@ -20,9 +22,12 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        inventory = new Inventory();
+
         abilitiesKnown = new List<Ability>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
+        uiInventory.SetInventory(inventory);
     }
 
     void Update()
