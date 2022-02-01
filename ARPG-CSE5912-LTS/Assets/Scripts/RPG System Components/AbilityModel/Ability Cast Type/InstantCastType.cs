@@ -11,10 +11,13 @@ public class InstantCastType : BaseCastType
         character = GetComponentInParent<Character>();
     }
 
-    public override void WaitCastTime()
+    public override void WaitCastTime(Ability ability)
     {
 
     }
 
-
+    public override void StopCasting()
+    {
+       
+    }
 }
