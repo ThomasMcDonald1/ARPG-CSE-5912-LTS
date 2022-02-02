@@ -18,7 +18,8 @@ public class EnemyHealthBarController : MonoBehaviour
     {
         // currHealth = maxHealth;
 
-        stats = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Stats>();
+        //stats = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Stats>();
+        stats = gameObject.GetComponent<Stats>();
         maxHealth = stats.maxHealth;
 
 

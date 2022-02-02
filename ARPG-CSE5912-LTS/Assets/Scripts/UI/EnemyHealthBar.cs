@@ -12,6 +12,8 @@ public class EnemyHealthBar : MonoBehaviour
     }
     private void LateUpdate()
     {
+        transform.SetPositionAndRotation(transform.position, Quaternion.Euler(new Vector3(30, 45, 0)));//same rotation as camera
+
         //transform.LookAt(Camera.main.transform.position);
         //transform.Rotate(0, 180, 0);
     }

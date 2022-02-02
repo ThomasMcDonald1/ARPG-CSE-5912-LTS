@@ -34,11 +34,25 @@ namespace ARPG.Combat
             if (statScript.health <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
+                StartCoroutine(DestroyHealthBar());
             }
             else
             {
                 SeePlayer();
             }
+        }
+
+        IEnumerator DestroyHealthBar()
+        {
+            //Print the time of when the function is first called.
+            //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+            //yield on a new YieldInstruction that waits for 2 seconds.
+            yield return new WaitForSeconds(1.5f);
+
+            //After we have waited 2 seconds print the time again.
+            //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+            GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
         }
 
 
