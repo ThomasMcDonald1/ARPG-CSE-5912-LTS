@@ -14,6 +14,9 @@ namespace ARPG.Combat
 
         public Stats statScript;
 
+        float smooth;
+        float yVelocity;
+
         private void Start()
         {
             GeneralClass = GameObject.Find("EnemyClass");
@@ -27,6 +30,9 @@ namespace ARPG.Combat
             SightRange = 90f;
 
             Speed = 2f;
+
+            smooth = 0.3f;
+            yVelocity = 0.0f;
         }
 
         private void Update()
@@ -40,8 +46,23 @@ namespace ARPG.Combat
             {
                 SeePlayer();
             }
+            if (AttackTarget != null) {
+                Vector3 realDirection = GeneralClass.transform.forward;
+                Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
+                float angle = Vector3.Angle(direction, realDirection);
+                if (angle < SightRange && InStopRange())
+                {
+                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                    rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                    transform.eulerAngles = new Vector3(0, rotationY, 0);
+
+                }
+            }
+
         }
 
+   
         IEnumerator DestroyHealthBar()
         {
             //Print the time of when the function is first called.
@@ -75,7 +96,10 @@ namespace ARPG.Combat
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
+                    //Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    //float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+
                 }
                 else
                 {
@@ -130,9 +154,15 @@ namespace ARPG.Combat
 
         public void Hit()
         {
+
+
             if (AttackTarget != null)
             {
-                AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+                float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
+                if (distance < 2)
+                {
+                    AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+                }
             }
         }
 

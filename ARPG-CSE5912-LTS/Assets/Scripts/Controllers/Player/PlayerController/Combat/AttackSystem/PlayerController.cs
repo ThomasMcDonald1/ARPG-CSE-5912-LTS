@@ -32,8 +32,11 @@ namespace ARPG.Core
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-                    playerClass.Cancel();
-                    GetComponentInChildren<MovementHandler>().MoveToTarget(e.info.point);
+                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    {
+                        playerClass.Cancel();
+                        GetComponentInChildren<MovementHandler>().MoveToTarget(e.info.point);
+                    }
                     break;
 
                 case "NPC":

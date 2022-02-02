@@ -27,7 +27,7 @@ public class HealthBarController : MonoBehaviour
     private void Update()
     {
         //if (currHealth > maxHealth) currHealth = maxHealth;
-        lerpSpd = 3f * Time.deltaTime;
+        lerpSpd = 10f * Time.deltaTime;
         HealthBarFiller();
         colorChanger();
         currHealth = stats.health; 

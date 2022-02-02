@@ -30,7 +30,7 @@ public class EnemyHealthBarController : MonoBehaviour
     private void Update()
     {
         if (currHealth > maxHealth) currHealth = maxHealth;
-        lerpSpd = 3f * Time.deltaTime;
+        lerpSpd = 1f * Time.deltaTime;
         HealthBarFiller();
         colorChanger();
         currHealth = stats.health;
