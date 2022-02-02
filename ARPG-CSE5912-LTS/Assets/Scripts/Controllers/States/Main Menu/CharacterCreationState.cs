@@ -74,7 +74,7 @@ public class CharacterCreationState : BaseMenuState
             GetCharacterDetails();
             nameError.SetActive(false);
             Debug.Log("Confirm Button Clicked!");
-            SceneManager.LoadScene("AbilitySystemTestScene", LoadSceneMode.Single);
+            SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
         }
         else
         {

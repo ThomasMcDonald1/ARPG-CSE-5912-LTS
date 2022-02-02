@@ -7,6 +7,8 @@ using TMPro;
 
 public class MainMenuRootState : BaseMenuState
 {
+    private SaveSlot selectedSlot;
+
     public override void Enter()
     {
         base.Enter();
@@ -15,6 +17,8 @@ public class MainMenuRootState : BaseMenuState
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
+
+        selectedSlot = null;
 
         SetUpButtons(); 
     }
@@ -41,9 +45,16 @@ public class MainMenuRootState : BaseMenuState
 
     void OnStartGameClicked()
     {
-        Debug.Log("Start Button Clicked!");
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (selectedSlot != null)
+        {
+            Debug.Log("Start Button Clicked!");
+            SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
+            FindObjectOfType<AudioManager>().Play("MenuClick");
+        }
+        else
+        {
+            //TODO: show error message on screen - "Must Select Character or Create New One")
+        }
     }
 
     void OnCreateCharClicked()
