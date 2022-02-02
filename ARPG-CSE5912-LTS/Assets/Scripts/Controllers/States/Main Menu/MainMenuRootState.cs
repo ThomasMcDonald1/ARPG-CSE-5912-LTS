@@ -71,6 +71,8 @@ public class MainMenuRootState : BaseMenuState
 
     void OnSlot1Clicked()
     {
+        selectedSlot = mainMenuController.slot1Data;
+
         var manager = mainMenuController.displayCharacterObj.GetComponent<ModularCharacterManager>();
         ConfigureCharacterDisplay(manager, mainMenuController.slot1Data.characterData);
         mainMenuController.displayCharacterObj.SetActive(true);
