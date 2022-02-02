@@ -26,7 +26,7 @@ namespace ARPG.Combat
             AttackTarget = null;
 
             Range = 20.0f;
-            BodyRange = 1.0f;
+            BodyRange = 1.5f;
             SightRange = 90f;
 
             Speed = 2f;
