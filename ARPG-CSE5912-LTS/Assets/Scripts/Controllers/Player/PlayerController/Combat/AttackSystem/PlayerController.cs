@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using ARPG.Movement;
 using ARPG.Combat;
+using System.Collections;
 
 /* 
  * 
@@ -51,6 +52,20 @@ namespace ARPG.Core
 
         public void PlayerCancelClickEventResponse(object sender, InfoEventArgs<RaycastHit> e)
         {
+            StartCoroutine(StopAttack());
+            
+        }
+        //Delay in coroutine so that play can attack once with a click
+        IEnumerator StopAttack()
+        {
+            //Print the time of when the function is first called.
+            Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+            //yield on a new YieldInstruction that waits for 0.5 seconds.
+            yield return new WaitForSeconds(0.5f);
+
+            //After we have waited 5 seconds print the time again.
+            Debug.Log("Finished Coroutine at timestamp : " + Time.time);
             playerClass.AttackSignal(false);
             if (playerClass.InTargetRange()) { playerClass.Cancel(); }
         }
