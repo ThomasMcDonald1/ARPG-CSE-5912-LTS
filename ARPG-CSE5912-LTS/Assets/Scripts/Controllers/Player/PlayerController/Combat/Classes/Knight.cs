@@ -86,7 +86,21 @@ namespace ARPG.Combat
 
         }
 
-        // Needed for the animation hit event
+        
+
+
+        public override bool InTargetRange()
+        {
+            if (AttackTarget == null) return false;
+            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
+        }
+
+        public override void AttackSignal(bool signal)
+        {
+            signalAttack = signal;
+        }
+        
+        // Needed for the animation event
         public void Hit()
         {
             if (AttackTarget != null)
@@ -100,16 +114,9 @@ namespace ARPG.Combat
            //Dead and to the gameover state
         }
 
-
-        public override bool InTargetRange()
+        public void ProduceItem()
         {
-            if (AttackTarget == null) return false;
-            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
-        }
-
-        public override void AttackSignal(bool signal)
-        {
-            signalAttack = signal;
+            Debug.Log("Item or experience off");
         }
     }
 }

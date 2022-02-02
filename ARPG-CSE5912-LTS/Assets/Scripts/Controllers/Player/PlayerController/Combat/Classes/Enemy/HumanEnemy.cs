@@ -35,9 +35,10 @@ namespace ARPG.Combat
             {
                 GetComponent<Animator>().SetBool("Dead", true);
             }
-
-            SeePlayer();
-            
+            else
+            {
+                SeePlayer();
+            }
         }
 
 
@@ -128,6 +129,11 @@ namespace ARPG.Combat
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void ProduceItem()
+        {
+            Debug.Log("Item dropped");
         }
     }
 
