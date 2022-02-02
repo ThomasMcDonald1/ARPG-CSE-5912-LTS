@@ -64,6 +64,7 @@ public class CharacterCreationState : BaseMenuState
 
     void OnBackButtonClicked()
     {
+        ResetCharacter();
         mainMenuController.ChangeState<MainMenuRootState>();
     }
 

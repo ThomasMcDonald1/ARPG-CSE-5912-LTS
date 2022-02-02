@@ -48,11 +48,14 @@ public class MainMenuRootState : BaseMenuState
         if (selectedSlot != null)
         {
             Debug.Log("Start Button Clicked!");
+            mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
+            Debug.Log("Menu Ver: " + mainMenuController.charaScriptableObj.skinColor);
             SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
             FindObjectOfType<AudioManager>().Play("MenuClick");
         }
         else
         {
+            Debug.Log("Error - tried to start game without selecting character");
             //TODO: show error message on screen - "Must Select Character or Create New One")
         }
     }
@@ -81,6 +84,8 @@ public class MainMenuRootState : BaseMenuState
 
     void ConfigureCharacterDisplay(ModularCharacterManager manager, CustomCharacter customCharacter)
     {
+        manager.SwapGender(customCharacter.gender);
+
         manager.ActivatePart(ModularBodyPart.Hair, customCharacter.hairId);
         manager.SetPartColor(ModularBodyPart.Hair, customCharacter.hairId, "_Color_Hair", customCharacter.hairColor);
 
@@ -100,5 +105,11 @@ public class MainMenuRootState : BaseMenuState
         manager.SetPartColor(ModularBodyPart.Head, customCharacter.faceMarkID, "_Color_Skin", customCharacter.skinColor);
 
         mainMenuController.characterNameObj.GetComponent<TextMeshProUGUI>().text = customCharacter.charName;
+
+        mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
     }
+
+
+
+
 }

@@ -30,6 +30,8 @@ public class BaseGameplayState : State
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
 
+
+        Debug.Log("Gameplay Ver: " + gameplayStateController.customCharacter.skinColor);
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
     }
 
