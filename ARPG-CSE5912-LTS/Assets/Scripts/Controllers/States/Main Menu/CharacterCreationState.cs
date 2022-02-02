@@ -17,7 +17,7 @@ public class CharacterCreationState : BaseMenuState
         mainMenuController.characterCreationCamera.enabled = true;
         if (characterManager ==  null)
         {
-            characterManager = new CharacterCustomizer(mainMenuController.characterObj.GetComponent<ModularCharacterManager>());
+            characterManager = new CharacterCustomizer(mainMenuController.customCharacterObj.GetComponent<ModularCharacterManager>());
         }
         customCharacter = mainMenuController.charaScriptableObj;
         nameError.SetActive(false);
@@ -269,7 +269,6 @@ public class CharacterCreationState : BaseMenuState
         customCharacter.UpdateColors(hairColor, eyebrowColor, facemarkColor, facialHairColor, eyeColor, skinColor);
         customCharacter.UpdateGender(gender);
         customCharacter.UpdateName(charName);
-
     }
 
 }
