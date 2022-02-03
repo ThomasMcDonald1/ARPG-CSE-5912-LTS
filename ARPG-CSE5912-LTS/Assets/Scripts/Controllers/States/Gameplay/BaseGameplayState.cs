@@ -17,6 +17,8 @@ public class BaseGameplayState : State
     public Button exitGameButton;
     public Button charaPanelButton;
     public Button exitPanelToGameButton;
+    public Button yesRespawnButton;
+    public Button noRespawnButton;
 
     protected virtual void Awake()
     {
@@ -29,6 +31,8 @@ public class BaseGameplayState : State
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
+        yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
+        noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
     }
 
     protected override void AddListeners()

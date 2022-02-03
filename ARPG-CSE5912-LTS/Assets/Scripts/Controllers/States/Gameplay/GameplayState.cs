@@ -15,6 +15,7 @@ public class GameplayState : BaseGameplayState
     int groundLayer, npcLayer, enemyLayer;
     Player player;
     NavMeshAgent agent;
+    Animator animator;
     ContextMenuPanel contextMenuPanel;
 
     public override void Enter()
@@ -31,6 +32,7 @@ public class GameplayState : BaseGameplayState
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
         agent = player.GetComponent<NavMeshAgent>();
+        animator = player.GetComponent<Animator>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
         if (contextMenuPanel != null)
         {
@@ -232,5 +234,16 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.ChangeState<CharacterPanelState>();
     }
 
-    
+    void GameOver()
+    {
+        gameplayStateController.ChangeState<GameoverState>();
+    }
+
+    void Update()
+    {
+        if(animator.GetBool("Dead") == true)
+        {
+            GameOver();
+        }
+    }
 }

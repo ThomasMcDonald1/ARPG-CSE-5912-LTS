@@ -25,7 +25,8 @@ namespace ARPG.Core
         private string classTypeName;
         private string weaponTypeName;
 
-        private IPlayerClass playerClass;
+
+        public IPlayerClass playerClass;
 
         public void PlayerOnClickEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
         {

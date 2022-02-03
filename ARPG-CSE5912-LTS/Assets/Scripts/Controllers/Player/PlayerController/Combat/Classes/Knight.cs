@@ -12,6 +12,7 @@ namespace ARPG.Combat
         private GameObject GeneralClass;
         private bool signalAttack;
         public Stats statScript;
+        public bool death;
         float smooth;
         float yVelocity;
         private void Start()
@@ -72,7 +73,6 @@ namespace ARPG.Combat
 
 
 
-
         public override void Attack(EnemyTarget target)
         {
             AttackTarget = target.transform;
@@ -111,7 +111,7 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-           //Dead and to the gameover state
+            //
         }
 
         public void ProduceItem()
