@@ -20,7 +20,7 @@ public class CastingBar : MonoBehaviour
 
     private void OnEnable()
     {
-        Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
+        Player.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
     }
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<Ability> e)

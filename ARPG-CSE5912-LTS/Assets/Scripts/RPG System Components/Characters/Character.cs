@@ -15,54 +15,10 @@ public abstract class Character : MonoBehaviour
     public GameplayStateController gameplayStateController;
     public bool abilityQueued = false;
 
-    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityIsReadyToBeCastEvent;
-
     private void Awake()
     {
         abilitiesKnown = new List<Ability>();
         charactersInRange = new List<Character>();
-    }
-
-    private void OnEnable()
-    {
-        Player.PlayerSelectedGroundTargetLocationEvent += OnPlayerSelectedGroundTargetLocation;
-        Player.PlayerSelectedSingleTargetEvent += OnPlayerSelectedSingleTarget;
-        AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
-    }
-
-    void OnPlayerSelectedGroundTargetLocation(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        BaseAbilityRange abilityRange = e.info.Item2.GetComponent<BaseAbilityRange>();
-        //TODO: make player run to max range of the ability
-        float distFromCharacter = Vector3.Distance(e.info.Item1.point, transform.position);
-        float distToTravel = distFromCharacter - abilityRange.range;
-        if (GetComponent<Player>() != null && distFromCharacter > abilityRange.range)
-        {
-            Debug.Log("Too far away");
-            abilityQueued = true;
-            StartCoroutine(RunWithinRange(e.info.Item1, abilityRange.range, distToTravel, e.info.Item2));
-        }
-        else if (GetComponent<Player>() != null)
-        {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-            abilityArea.PerformAOE(e.info.Item1);
-        }
-    }
-
-    void OnPlayerSelectedSingleTarget(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        //abilityQueued = true;
-        //do a coroutine for running within range of enemy
-    }
-
-    void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        abilityQueued = false;
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-        abilityArea.PerformAOE(e.info.Item1);
     }
 
     //Put any code here that should be shared functionality across every type of character
@@ -82,6 +38,7 @@ public abstract class Character : MonoBehaviour
             {
                 Player player = (Player)this;
                 player.StopAllCoroutines();
+                gameplayStateController.aoeReticleCylinder.SetActive(false);
                 player.playerInSingleTargetAbilitySelectionMode = false;
                 player.playerInAOEAbilityTargetSelectionMode = false;
                 player.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
@@ -139,28 +96,5 @@ public abstract class Character : MonoBehaviour
             }
         }
         return false;
-    }
-
-    private IEnumerator RunWithinRange(RaycastHit hit, float range, float distToTravel, Ability ability)
-    {
-        Debug.Log("Running to within range of point.");
-        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
-        Vector3 dir = hit.point - transform.position;
-        Vector3 normalizedDir = dir.normalized;
-        Vector3 endPoint = transform.position + (normalizedDir * (distToTravel + 0.1f));
-
-        while (abilityQueued)
-        {
-            agent.destination = endPoint;
-            float distFromPlayer = Vector3.Distance(hit.point, transform.position);
-            if (distFromPlayer <= range)
-            {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
-            }
-        
-            yield return null;
-        }
-        
-    }        
-    
+    }      
 }
