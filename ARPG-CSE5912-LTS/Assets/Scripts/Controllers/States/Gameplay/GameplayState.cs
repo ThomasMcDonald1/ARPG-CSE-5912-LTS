@@ -241,7 +241,8 @@ public class GameplayState : BaseGameplayState
 
     void Update()
     {
-        if(animator.GetBool("Dead") == true)
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (animator.GetBool("Dead") == true && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2f && animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"))
         {
             GameOver();
         }
