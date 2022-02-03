@@ -38,8 +38,11 @@ public class Player : Character
 
     int groundLayerMask = 1 << 6;
 
+    //[SerializeField] Camera mainCamera;
+    private Camera mainCamera;
     void Awake()
     {
+<<<<<<< Updated upstream
         agent = GetComponent<NavMeshAgent>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
@@ -95,11 +98,43 @@ public class Player : Character
     {
         //abilityQueued = true;
         //do a coroutine for running within range of enemy
-    }
+=======
+        inventory = new Inventory();
+       
+        abilitiesKnown = new List<Ability>();
+        abilitiesKnown.Add(basicAttack);
+        abilitiesKnown.Add(fireballTest);
+        uiInventory.SetInventory(inventory);
+        mainCamera = Camera.main;
 
+>>>>>>> Stashed changes
+    }
+  
+    private void detectObj()
+    {
+
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    Debug.Log("hit: " + hit.transform.gameObject.tag);
+                    
+                }
+            }
+        }
+        //Debug.Log("In detect obj func");
+        
+    }
     void Update()
     {
         //if (dialogueUI.IsOpen) return;
+        detectObj();
+        //onTriggerEnter();
+        //Debug.Log("In detect obj func");
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if(playerVelocity.magnitude > 0)
         {
