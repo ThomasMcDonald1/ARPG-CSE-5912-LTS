@@ -6,6 +6,7 @@ public enum StatTypes
     //Progression stats
     LVL, //character's level
     EXP, //character's current exp total
+    SKILLPOINTS, //The points used to spend on upgrades in the skill tree
 
     //Main stats (attributes and resistances)
     HEALTH, //character's current hit points
@@ -14,7 +15,6 @@ public enum StatTypes
     MAXENERGY, //character's maximum mana points
     STR, //character's strength
     DEX, //character's dexterity
-    CON, //character's constitution
     INT, //character's intelligence
 
     FIRERES, //character's resistance to fire damage
