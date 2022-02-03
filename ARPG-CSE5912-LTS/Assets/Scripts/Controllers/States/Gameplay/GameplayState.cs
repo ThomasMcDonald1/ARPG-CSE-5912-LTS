@@ -104,6 +104,7 @@ public class GameplayState : BaseGameplayState
         }
     }
 
+<<<<<<< Updated upstream
     protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
         if (player.playerInAOEAbilityTargetSelectionMode)
@@ -114,6 +115,11 @@ public class GameplayState : BaseGameplayState
         {
             player.playerNeedsToReleaseMouseButton = false;
         }
+=======
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> r)
+    {
+   
+>>>>>>> Stashed changes
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)

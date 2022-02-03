@@ -74,7 +74,11 @@ public class BaseGameplayState : State
 
     }
 
+<<<<<<< Updated upstream
     protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
+=======
+    protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> r)
+>>>>>>> Stashed changes
     {
 
     }
