@@ -24,7 +24,7 @@ public abstract class BaseCastType : MonoBehaviour
 
     private void OnEnable()
     {
-        Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
+        Player.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
         Player.PlayerBeganMovingEvent += OnPlayerBeganMoving;
     }
 
