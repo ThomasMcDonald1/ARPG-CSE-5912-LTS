@@ -73,7 +73,7 @@ public class GameplayState : BaseGameplayState
     {
         if (player.agent.enabled)
         {
-            if (e.info.collider.gameObject.layer == groundLayer && !player.playerInAbilityTargetSelectionMode)
+            if (e.info.collider.gameObject.layer == groundLayer && !player.playerInAOEAbilityTargetSelectionMode)
             {
                 player.MoveToLocation(e.info.point);
             }
@@ -93,7 +93,7 @@ public class GameplayState : BaseGameplayState
             else if (e.info.collider.gameObject.layer == enemyLayer)
             {
                 //fight enemy
-                Debug.Log("Clicked on enmey");
+                //Debug.Log("Clicked on enmey");
                 if (player.Interactable != null)
                 {
                     //Interact with NPC stuff goes here
@@ -106,9 +106,13 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (player.playerInAbilityTargetSelectionMode)
+        if (player.playerInAOEAbilityTargetSelectionMode)
         {
-            player.playerInAbilityTargetSelectionMode = false;
+            player.playerInAOEAbilityTargetSelectionMode = false;
+        }
+        if (player.playerNeedsToReleaseMouseButton)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
         }
     }
 
@@ -162,63 +166,119 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
         if (abilityInSlot != null)
         {
+            player.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
 
     protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton2);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar3Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton3);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar4Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton4);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar5Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton5);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar6Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton6);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar7Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton7);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar8Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton8);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar9Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton9);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar10Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton10);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar11Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton11);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnActionBar12Pressed(object sender, InfoEventArgs<int> e)
     {
-
+        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton12);
+        if (abilityInSlot != null)
+        {
+            player.playerNeedsToReleaseMouseButton = false;
+            player.QueueAbilityCast(abilityInSlot);
+        }
     }
 
     protected override void OnUIElementLeftClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
@@ -233,6 +293,7 @@ public class GameplayState : BaseGameplayState
                 Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionButton);
                 if (abilityInSlot != null)
                 {
+                    player.playerNeedsToReleaseMouseButton = true;
                     player.QueueAbilityCast(abilityInSlot);
                 }
             }           

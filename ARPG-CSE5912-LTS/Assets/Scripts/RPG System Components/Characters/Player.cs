@@ -15,17 +15,24 @@ public class Player : Character
     private Vector3 playerVelocity;
     private bool isMoving;
     private bool soundPlaying = false;
-    public bool playerInAbilityTargetSelectionMode;
+    Coroutine aoeAbilitySelectionMode;
+    Coroutine singleTargetSelectionMode;
+    public bool playerInAOEAbilityTargetSelectionMode;
+    public bool playerInSingleTargetAbilitySelectionMode;
+    public bool playerNeedsToReleaseMouseButton;
 
     [SerializeField] MouseCursorChanger cursorChanger;
 
     [SerializeField] Ability basicAttack;
     [SerializeField] Ability fireballTest;
+    [SerializeField] Ability bowAbilityTest;
 
     public HashSet<Vector3> unlockedWaypoints;
 
     public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedGroundTargetLocationEvent;
+    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedSingleTargetEvent;
     public static event EventHandler<InfoEventArgs<int>> PlayerBeganMovingEvent;
+
     int groundLayerMask = 1 << 6;
 
     void Awake()
@@ -33,7 +40,21 @@ public class Player : Character
         agent = GetComponent<NavMeshAgent>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
+        abilitiesKnown.Add(bowAbilityTest);
         unlockedWaypoints = new HashSet<Vector3>();
+    }
+
+    private void OnEnable()
+    {
+        InputController.CancelPressedEvent += OnCancelPressed;
+    }
+
+    private void OnCancelPressed(object sender, InfoEventArgs<int> e)
+    {
+        playerInAOEAbilityTargetSelectionMode = false;
+        playerInSingleTargetAbilitySelectionMode = false;
+        StopCoroutine(singleTargetSelectionMode);
+        StopCoroutine(aoeAbilitySelectionMode);
     }
 
     void Update()
@@ -63,7 +84,7 @@ public class Player : Character
 
     public void MoveToLocation(Vector3 location)
     {
-        if (!playerInAbilityTargetSelectionMode)
+        if (!playerInAOEAbilityTargetSelectionMode && !playerInSingleTargetAbilitySelectionMode)
         {
             PlayerBeganMovingEvent?.Invoke(this, new InfoEventArgs<int>(0));
             agent.destination = location;
@@ -77,45 +98,59 @@ public class Player : Character
 
         if (requiresCharacter)
         {
-            playerInAbilityTargetSelectionMode = true;
-            StartCoroutine(WaitForPlayerClick(ability));
+            playerInAOEAbilityTargetSelectionMode = true;
+            singleTargetSelectionMode = StartCoroutine(WaitForPlayerClick(ability));
+        }
+        else
+        {
+            playerInAOEAbilityTargetSelectionMode = true;
+            aoeAbilitySelectionMode = StartCoroutine(WaitForPlayerClickAOE(ability));
+        }
+    }
 
+    private IEnumerator WaitForPlayerClick(Ability ability)
+    {
+        playerInSingleTargetAbilitySelectionMode = true;
+        while (playerInSingleTargetAbilitySelectionMode)
+        {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 GameObject go = hit.collider.gameObject;
                 Character target = go.GetComponent<Character>();
-
-                if (target != null)
+                //TODO: If ability requires enemy or ally to be clicked, excluding the other, check that first
+                if (target != null && Mouse.current.leftButton.wasReleasedThisFrame)
                 {
+                    playerInSingleTargetAbilitySelectionMode = false;
+                    cursorChanger.ChangeCursorToDefaultGraphic();
+                    Debug.Log("Clicked on: " + target.name + " as ability selection target.");
                     bool targetInRange = CheckCharacterInRange(target);
-                    if (targetInRange)
+                    if (!targetInRange)
                     {
+                        PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
                         //do more stuff
                     }
                 }
             }
-        }
-        else
-        {
-            playerInAbilityTargetSelectionMode = true;
-            StartCoroutine(WaitForPlayerClick(ability));
+
+            yield return null;
         }
     }
 
-    private IEnumerator WaitForPlayerClick(Ability ability)
-    {
+    private IEnumerator WaitForPlayerClickAOE(Ability ability)
+        {
         BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
         BaseAbilityRange abilityRange = ability.GetComponent<BaseAbilityRange>();
         bool playerHasNotClicked = true;
+
         while (playerHasNotClicked)
         {
             if (abilityArea != null)
             {
                 abilityArea.DisplayAOEArea();
             }
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (!playerNeedsToReleaseMouseButton && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 playerHasNotClicked = false;
                 cursorChanger.ChangeCursorToDefaultGraphic();
