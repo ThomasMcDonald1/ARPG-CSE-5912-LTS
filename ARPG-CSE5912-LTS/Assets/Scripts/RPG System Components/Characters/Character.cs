@@ -27,6 +27,7 @@ public abstract class Character : MonoBehaviour
     private void OnEnable()
     {
         Player.PlayerSelectedGroundTargetLocationEvent += OnPlayerSelectedGroundTargetLocation;
+        Player.PlayerSelectedSingleTargetEvent += OnPlayerSelectedSingleTarget;
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
     }
 
@@ -37,16 +38,23 @@ public abstract class Character : MonoBehaviour
         //TODO: make player run to max range of the ability
         float distFromCharacter = Vector3.Distance(e.info.Item1.point, transform.position);
         float distToTravel = distFromCharacter - abilityRange.range;
-        if (distFromCharacter > abilityRange.range)
+        if (GetComponent<Player>() != null && distFromCharacter > abilityRange.range)
         {
+            Debug.Log("Too far away");
             abilityQueued = true;
             StartCoroutine(RunWithinRange(e.info.Item1, abilityRange.range, distToTravel, e.info.Item2));
         }
-        else
+        else if (GetComponent<Player>() != null)
         {
             AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
             abilityArea.PerformAOE(e.info.Item1);
         }
+    }
+
+    void OnPlayerSelectedSingleTarget(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
+    {
+        //abilityQueued = true;
+        //do a coroutine for running within range of enemy
     }
 
     void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
@@ -73,6 +81,9 @@ public abstract class Character : MonoBehaviour
             if (this is Player)
             {
                 Player player = (Player)this;
+                player.StopAllCoroutines();
+                player.playerInSingleTargetAbilitySelectionMode = false;
+                player.playerInAOEAbilityTargetSelectionMode = false;
                 player.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
             }
             else 
@@ -132,6 +143,7 @@ public abstract class Character : MonoBehaviour
 
     private IEnumerator RunWithinRange(RaycastHit hit, float range, float distToTravel, Ability ability)
     {
+        Debug.Log("Running to within range of point.");
         BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
         Vector3 dir = hit.point - transform.position;
         Vector3 normalizedDir = dir.normalized;

@@ -39,7 +39,7 @@ public class ContextMenuPanel : MonoBehaviour
             string nameToSet = ability.name;
             GameObject menuEntryObj = Instantiate(contextMenuEntryPrefab);
             menuEntryObj.transform.SetParent(contextMenuEntriesObj.transform);
-            UnityEngine.UI.Image contextMenuEntryIcon = menuEntryObj.GetComponentInChildren<UnityEngine.UI.Image>();
+            Image contextMenuEntryIcon = menuEntryObj.GetComponentInChildren<UnityEngine.UI.Image>();
             TextMeshProUGUI contextMenuEntryTextHolder = menuEntryObj.GetComponentInChildren<TextMeshProUGUI>();
             contextMenuEntryIcon.sprite = iconToSet;
             contextMenuEntryTextHolder.text = nameToSet;
