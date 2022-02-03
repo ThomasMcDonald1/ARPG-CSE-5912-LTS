@@ -13,11 +13,13 @@ public class PassiveTreeUI : MonoBehaviour
         foreach(Transform child in transform)
         {
             Button btn = child.GetComponent<Button>();
-            btn.onClick.AddListener(delegate { TaskOnClick(child.name); });
+            var something = btn.gameObject.transform.Find("Background");
+            Debug.Log(something);
+            btn.onClick.AddListener(delegate { TaskOnClick(child.name, btn.gameObject.transform.Find("Background")); });
         }
     }
-	void TaskOnClick(string name){
+	void TaskOnClick(string name, Transform background){
         Debug.Log(name);
-        passiveSkills.UnlockPassive(name);
+        passiveSkills.UnlockPassive(name, background);
 	}
 }
