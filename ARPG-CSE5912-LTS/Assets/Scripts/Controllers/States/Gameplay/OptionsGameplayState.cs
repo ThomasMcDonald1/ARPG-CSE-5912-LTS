@@ -33,7 +33,7 @@ public class OptionsGameplayState : BaseGameplayState
 
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
 
     }

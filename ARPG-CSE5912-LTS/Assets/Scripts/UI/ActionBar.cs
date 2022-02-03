@@ -6,22 +6,22 @@ using UnityEngine.InputSystem;
 
 public class ActionBar : MonoBehaviour
 {
-    //[SerializeField] GameObject healthBar;
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-      
-    //}
+    public ActionButton actionButton1;
+    public ActionButton actionButton2;
+    public ActionButton actionButton3;
+    public ActionButton actionButton4;
+    public ActionButton actionButton5;
+    public ActionButton actionButton6;
+    public ActionButton actionButton7;
+    public ActionButton actionButton8;
+    public ActionButton actionButton9;
+    public ActionButton actionButton10;
+    public ActionButton actionButton11;
+    public ActionButton actionButton12;
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    var keyboard = Keyboard.current;
-    //    if (keyboard.digit1Key.wasPressedThisFrame)
-    //    {
-    //        healthBar.GetComponent<HealthBarController>().healing(20);
-    //    }
 
-    //}
-   
+    public Ability GetAbilityOnActionButton(ActionButton actionButton)
+    {
+        return actionButton.abilityAssigned;
+    }   
 }

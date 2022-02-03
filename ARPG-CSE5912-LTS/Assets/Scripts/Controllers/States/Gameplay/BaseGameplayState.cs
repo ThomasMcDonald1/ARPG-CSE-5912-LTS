@@ -29,6 +29,8 @@ public class BaseGameplayState : State
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
+
+        gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
     }
 
     protected override void AddListeners()
@@ -72,7 +74,7 @@ public class BaseGameplayState : State
 
     }
 
-    protected virtual void OnClickCanceled(object sender, InfoEventArgs<bool> e)
+    protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
 
     }
