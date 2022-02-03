@@ -5,23 +5,23 @@ using UnityEngine;
 //This script should be attached to all entities that require stats
 public class Stats : MonoBehaviour
 {
-    //Temp variables for testing
-    public float health;
-    public float maxHealth;
-    public float attackDmg;
-    public float attackSpd;
-    public float attackDuration;
+    ////Temp variables for testing
+    //public float health;
+    //public float maxHealth;
+    //public float attackDmg;
+    //public float attackSpd;
+    //public float attackDuration;
     public int this[StatTypes s]
     {
         get { return _data[(int)s]; }
         set { SetValue(s, value, true); }
     }
-    int[] _data = new int[(int)StatTypes.Count];
+    public int[] _data = new int[(int)StatTypes.Count];
 
     //Could add events here for checking whether a stat will change, and whether a stat did change, in case something else should modify it first
 
 
-    public int GetValue(StatTypes type)
+    public float GetValue(StatTypes type)
     {
         return this[type];
     }
@@ -46,7 +46,7 @@ public class Stats : MonoBehaviour
     //Assign the initial value for a stat, use this to ensure you don't accidentally allow exceptions when setting up characters
     public void InitializeValue(StatTypes type, int value)
     {
-        int oldValue = this[type];
+        float oldValue = this[type];
         if (oldValue == value)
             return;
 

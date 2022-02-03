@@ -25,15 +25,24 @@ namespace ARPG.Combat
             //rotation data
             smooth = 0.3f;
             yVelocity = 0.0f;
+
+            //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
             GetComponent<Animator>().SetBool("StopAttack", true);
             GetComponent<Animator>().SetBool("Dead", false);
+
+            //Stats
+            statScript[StatTypes.MAXHEALTH] = 11000;
+            statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
+            statScript[StatTypes.PHYATK] = 120;
+            statScript[StatTypes.PHYDEF] = 30;
+            statScript[StatTypes.ATKSPD] = 12;
 
         }
 
         private void Update()
         {
 
-            if (statScript.health <= 0)
+            if (statScript[StatTypes.HEALTH] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
             }else
@@ -105,7 +114,9 @@ namespace ARPG.Combat
         {
             if (AttackTarget != null)
             {
-                AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+        
+                //int totalDmg = ((float)statScript[StatTypes.PHYATK]*(120/(120 + ))
+                AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= statScript[StatTypes.PHYATK];
             }
         }
 

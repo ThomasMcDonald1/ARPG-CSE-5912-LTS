@@ -31,16 +31,24 @@ namespace ARPG.Combat
 
             Speed = 2f;
 
+            //rotation data
             smooth = 0.3f;
             yVelocity = 0.0f;
+
+            //Stats
+            statScript[StatTypes.MAXHEALTH] = 2600;
+            statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
+            statScript[StatTypes.PHYATK] = 120;
+            statScript[StatTypes.PHYDEF] = 30;
+            statScript[StatTypes.ATKSPD] = 120;
         }
 
         private void Update()
         {
-            if (statScript.health <= 0)
+            if (statScript[StatTypes.HEALTH] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
-                StartCoroutine(DestroyHealthBar());
+                GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
             }
             else
             {
@@ -85,7 +93,7 @@ namespace ARPG.Combat
                 Vector3 realDirection = GeneralClass.transform.forward;
                 Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
-                if (AttackTarget.GetComponent<Stats>().health <= 0) //When player is dead, stop hit.
+                if (AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] <= 0) //When player is dead, stop hit.
                 {
                     StopRun();
                 }else if (angle < SightRange && !InStopRange())
@@ -161,7 +169,7 @@ namespace ARPG.Combat
                 float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
                 if (distance < 2)
                 {
-                    AttackTarget.GetComponent<Stats>().health -= statScript.attackDmg;
+                    AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= statScript[StatTypes.PHYATK];
                 }
             }
         }
@@ -169,7 +177,7 @@ namespace ARPG.Combat
         public void Dead()
         {
             //nead a dead animation before destroy.
-            if (statScript.health <= 0)
+            if (statScript[StatTypes.HEALTH] <= 0)
             {
                 Destroy(gameObject);
             }
