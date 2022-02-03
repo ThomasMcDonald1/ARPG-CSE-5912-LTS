@@ -11,7 +11,7 @@ public class Ability : MonoBehaviour
 
     public bool CanPerform()
     {
-        //TODO: Check if an ability can be performed here
+        //TODO: Check if an ability can be performed here (against things like being stunned, silenced, etc)
         return true;
     }
 

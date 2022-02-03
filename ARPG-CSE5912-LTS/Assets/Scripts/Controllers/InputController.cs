@@ -101,7 +101,6 @@ public class InputController: MonoBehaviour
 
     private void OnClickPressed(InputAction.CallbackContext context)
     {
-        //Check if cursor is over a UI gameobject
         if (EventSystem.current.IsPointerOverGameObject())
         {
             List<RaycastResult> results = GetUIElementsClicked();

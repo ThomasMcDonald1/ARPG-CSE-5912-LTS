@@ -37,7 +37,7 @@ public abstract class Character : MonoBehaviour
         //TODO: make player run to max range of the ability
         float distFromCharacter = Vector3.Distance(e.info.Item1.point, transform.position);
         float distToTravel = distFromCharacter - abilityRange.range;
-        if (distFromCharacter > abilityRange.range)
+        if (gameObject.GetComponent<Player>() != null && distFromCharacter > abilityRange.range)
         {
             abilityQueued = true;
             StartCoroutine(RunWithinRange(e.info.Item1, abilityRange.range, distToTravel, e.info.Item2));
@@ -145,10 +145,7 @@ public abstract class Character : MonoBehaviour
             {
                 AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
             }
-        
             yield return null;
         }
-        
-    }        
-    
+    }
 }
