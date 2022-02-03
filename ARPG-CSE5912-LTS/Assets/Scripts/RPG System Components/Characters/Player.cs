@@ -22,16 +22,18 @@ public class Player : Character
     [SerializeField] Ability basicAttack;
     [SerializeField] Ability fireballTest;
 
+    public HashSet<Vector3> unlockedWaypoints;
+
     public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedGroundTargetLocationEvent;
     public static event EventHandler<InfoEventArgs<int>> PlayerBeganMovingEvent;
     int groundLayerMask = 1 << 6;
-
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
+        unlockedWaypoints = new HashSet<Vector3>();
     }
 
     void Update()
