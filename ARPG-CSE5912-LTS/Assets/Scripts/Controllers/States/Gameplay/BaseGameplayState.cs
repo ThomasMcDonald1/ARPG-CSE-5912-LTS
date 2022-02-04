@@ -33,6 +33,8 @@ public class BaseGameplayState : State
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
         exitInventoryButton = gameplayStateController.exitInventoryMenuObj.GetComponent<Button>();
         changeToInventoryMenu = gameplayStateController.openInventoryMenuObj.GetComponent<Button>();
+
+        gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
     }
 
     protected override void AddListeners()

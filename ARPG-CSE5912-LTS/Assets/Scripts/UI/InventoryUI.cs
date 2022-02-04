@@ -13,7 +13,7 @@ public class InventoryUI:MonoBehaviour
     private void Awake()
     {
         itemSlotContainer = transform.Find("itemSlotContainer");
-        itemSlotTemplate = itemSlotContainer.Find("ItemButton");
+        //itemSlotTemplate = itemSlotContainer.Find("ItemButton");
     }
     public void SetInventory(Inventory inventory)
     {
