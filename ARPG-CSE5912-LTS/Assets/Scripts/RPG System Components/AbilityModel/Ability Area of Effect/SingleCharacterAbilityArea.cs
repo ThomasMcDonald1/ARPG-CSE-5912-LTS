@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class SingleCharacterAbilityArea : BaseAbilityArea
 {
-    public override void PerformAOE(RaycastHit hit)
+    List<Character> characters;
+
+    private void Awake()
     {
-        Character character = hit.collider.gameObject.GetComponent<Character>();
-        if (character != null)
-        {
-            //Do ability effects on character
-        }
+        characters = new List<Character>();
     }
 
-    public override void DisplayAOEArea()
+    public override List<Character> GetCharactersInAOE(RaycastHit hit)
     {
-        //Doing nothing is probably best for this area type
+        characters.Add(hit.collider.gameObject.GetComponent<Character>());
+        return characters;
     }
 }

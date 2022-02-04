@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +5,6 @@ using UnityEngine;
 //This script should be attached to all entities that require stats
 public class Stats : MonoBehaviour
 {
-    public static event EventHandler<InfoEventArgs<int>> ExpWillBeGivenEvent;
-    public static event EventHandler<InfoEventArgs<int>> ExpHasBeenGivenEvent;
-
     public int this[StatTypes s]
     {
         get { return _data[(int)s]; }

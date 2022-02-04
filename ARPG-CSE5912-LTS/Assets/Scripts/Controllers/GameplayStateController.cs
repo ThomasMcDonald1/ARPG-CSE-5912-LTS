@@ -9,11 +9,13 @@ public class GameplayStateController : StateMachine
     public GameObject gameplayUICanvasObj;
     public GameObject optionsMenuCanvasObj;
     public GameObject characterPanelCanvasObj;
+    public GameObject inventoryCanvasObj;
 
     [HideInInspector] public Canvas pauseMenuCanvas;
     [HideInInspector] public Canvas gameplayUICanvas;
     [HideInInspector] public Canvas optionsMenuCanvas;
     [HideInInspector] public Canvas characterPanelCanvas;
+    [HideInInspector] public Canvas inventoryCanvas;
 
     // Button to pause game and bring up pause menu
     public GameObject pauseMenuButtonObj;
@@ -28,16 +30,10 @@ public class GameplayStateController : StateMachine
     // Character panel buttons
     public GameObject charaPanelButtonObj;
     public GameObject exitPanelToGameButtonObj;
+   
+    public GameObject openInventoryMenuObj;
+    public GameObject exitInventoryMenuObj;
 
-    public GameObject aoeReticleSphere;
-    public GameObject aoeReticleCylinder;
-
-    // Casting bar
-    public CastingBar castingBar;
-
-    // Character model things
-    public GameObject playerModel;
-    public CustomCharacter customCharacter; //scriptable object
 
     //TODO: Maybe a keybinds button, if we have time to add
 
@@ -47,14 +43,13 @@ public class GameplayStateController : StateMachine
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterPanelCanvas = characterPanelCanvasObj.GetComponent<Canvas>();
-
+        inventoryCanvas = inventoryCanvasObj.GetComponent<Canvas>();
 
         pauseMenuCanvas.enabled = false;
         gameplayUICanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
         characterPanelCanvas.enabled = false;
-        aoeReticleSphere.SetActive(false);
-        aoeReticleCylinder.SetActive(false);
+        inventoryCanvas.enabled = false;
         ChangeState<GameplayState>();
     }
 }
