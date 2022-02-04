@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using ARPG.Movement;
 using ARPG.Combat;
+using ARPG.NPC;
 
 /* 
  * 
@@ -36,6 +37,8 @@ namespace ARPG.Core
                     break;
 
                 case "NPC":
+                    playerClass.AttackSignal(false);
+
                     break;
 
                 case "Enemy":
