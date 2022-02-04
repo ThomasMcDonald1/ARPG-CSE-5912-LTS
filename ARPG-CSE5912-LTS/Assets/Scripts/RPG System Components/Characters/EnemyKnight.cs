@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace ARPG.Combat
 {
-    public class HumanEnemy : Enemy
+    public class EnemyKnight : Enemy
     {
 
 

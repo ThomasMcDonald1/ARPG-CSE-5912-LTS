@@ -25,7 +25,7 @@ namespace ARPG.Core
 
         private void Start()
         {
-            classTypeName = "HumanEnemy";
+            classTypeName = "EnemyKnight";
             weaponTypeName = "Unarmed";
 
             enemyClass = AttachClassScript();
@@ -38,9 +38,9 @@ namespace ARPG.Core
             Enemy enemyClass;
             switch(classTypeName)
             {
-                case "HumanEnemy":
-                    this.gameObject.AddComponent<HumanEnemy>();
-                    enemyClass = this.gameObject.GetComponent<HumanEnemy>();
+                case "EnemyKnight":
+                    this.gameObject.AddComponent<EnemyKnight>();
+                    enemyClass = this.gameObject.GetComponent<EnemyKnight>();
                     break;
                 default:
                     enemyClass = null;
