@@ -1,27 +1,56 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpecifyAbilityArea : BaseAbilityArea
 {
-    List<Character> characters;
     public int aoeRadius;
+    Player player;
+    int groundLayerMask = 1 << 6;
 
     private void Awake()
     {
-        characters = new List<Character>();
+        player = GetComponentInParent<Player>();
     }
 
-    public override List<Character> GetCharactersInAOE(RaycastHit hit)
+    private void FixedUpdate()
     {
+        if (abilityAreaNeedsShown)
+        {
+            //Get the point upon which to center the indicator
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit, groundLayerMask))
+            {
+                player.gameplayStateController.aoeReticleCylinder.transform.position = hit.point;
+            }
+        }
+    }
+
+    public override void PerformAOE(RaycastHit hit)
+    {
+        Debug.Log("AOE ability centered on: " + hit.point);
+        //TODO: Make overlap sphere the same size as the targeting reticle
         Collider[] hitColliders = Physics.OverlapSphere(hit.point, aoeRadius);
-        //TODO: Visual representation of overlap sphere
+
         foreach (Collider hitCollider in hitColliders)
         {
+            Debug.Log("Collider hit: " + hitCollider.name);
             Character character = hitCollider.gameObject.GetComponent<Character>();
-            characters.Add(character);
-        }
+            if (character != null)
+            {
+                //Do ability effects on character
 
-        return characters;
+            }
+        }
+    }
+
+    public override void DisplayAOEArea()
+    {
+        player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
+        player.gameplayStateController.aoeReticleCylinder.SetActive(true);
+        abilityAreaNeedsShown = true;
     }
 }

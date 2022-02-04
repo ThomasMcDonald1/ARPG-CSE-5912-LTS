@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class SaveSlot : ScriptableObject
 {
+    private void OnEnable()
+    {
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
+    }
+
     public bool containsData;
     public int slotNumber;
     public CustomCharacter characterData;

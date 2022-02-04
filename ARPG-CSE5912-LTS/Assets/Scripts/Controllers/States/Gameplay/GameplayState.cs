@@ -10,17 +10,16 @@ public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
     //public DialogueUI DialogueUI => dialogueUI;
-    //public IInteractable Interactable { get; set; }
-
-   
+    //public IInteractable Interactable { get; set; }   
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
     NavMeshAgent agent;
     ContextMenuPanel contextMenuPanel;
+    ActionBar actionBar;
 
     // Test inventory system
-    
+
     public override void Enter()
     {
         base.Enter();
@@ -43,6 +42,7 @@ public class GameplayState : BaseGameplayState
         {
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         }
+        actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
     }
 
     public override void Exit()

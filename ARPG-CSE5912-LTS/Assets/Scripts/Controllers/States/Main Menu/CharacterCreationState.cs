@@ -76,9 +76,10 @@ public class CharacterCreationState : BaseMenuState
             Debug.Log("Now entering game");
             GetCharacterDetails();
             nameError.SetActive(false);
-            selectedSlot = FindEmptySlot();
-            selectedSlot.containsData = true;
-            selectedSlot.characterData.CopyCharacterData(customCharacter);
+            int slotNum = FindEmptySlot();
+            mainMenuController.saveSlotDataObjs[slotNum].containsData = true;
+            mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
+            selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];
             Debug.Log("Slot " + selectedSlot.slotNumber + " should have data: " + selectedSlot.containsData);
             SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
         }
@@ -90,16 +91,16 @@ public class CharacterCreationState : BaseMenuState
         PlayAudio();
     }
 
-    SaveSlot FindEmptySlot()
+    int FindEmptySlot()
     {
         for (int i = 0; i < mainMenuController.saveSlotDataObjs.Count; i++)
         {
             if (!mainMenuController.saveSlotDataObjs[i].containsData)
             {
-                return mainMenuController.saveSlotDataObjs[i];
+                return i;
             }
         }
-        return null; //should never be here
+        return -1; //should never be here
     }
 
     void SetGenderMale()
