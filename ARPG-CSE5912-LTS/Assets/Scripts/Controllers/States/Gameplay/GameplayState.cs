@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using ARPG.Core;
+
+// Delete later
+using UnityEngine.UI;
 public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
@@ -75,6 +78,8 @@ public class GameplayState : BaseGameplayState
         {
             player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
+        GameObject.Find("HealthGlobe").GetComponent<Slider>().value -= 0.1f;
+        GameObject.Find("EnergyGlobe").GetComponent<Slider>().value -= 0.1f;
     }
 
     protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
@@ -83,6 +88,8 @@ public class GameplayState : BaseGameplayState
         {
             player.GetComponent<PlayerController>().PlayerCancelClickEventResponse(sender, e);
         }
+        GameObject.Find("HealthGlobe").GetComponent<Slider>().value += 1f;
+        GameObject.Find("EnergyGlobe").GetComponent<Slider>().value += 1f;
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)

@@ -53,11 +53,11 @@ namespace ARPG.Combat
                 {
                     GeneralClass.GetComponent<MovementHandler>().Cancel();
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    Debug.Log("triggered");
+                    //Debug.Log("triggered");
                     Cancel();
                 }
             }
-            Debug.Log(GetComponent<Animator>().GetBool("StopAttack"));
+            //Debug.Log(GetComponent<Animator>().GetBool("StopAttack"));
 
         }
 
