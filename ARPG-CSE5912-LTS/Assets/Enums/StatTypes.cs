@@ -12,6 +12,14 @@ public enum StatTypes
     MAXHEALTH, //character's maximum hit points
     ENERGY, //character's current mana points
     MAXENERGY, //character's maximum mana points
+    PHYATK,
+    MAGPWR,
+    PHYDEF,
+    MAGDEF,
+
+
+
+
     STR, //character's strength
     DEX, //character's dexterity
     CON, //character's constitution
