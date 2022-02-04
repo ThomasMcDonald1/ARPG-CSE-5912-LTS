@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SaveSlot : ScriptableObject
 {
+    public bool containsData;
     public int slotNumber;
     public CustomCharacter characterData;
     

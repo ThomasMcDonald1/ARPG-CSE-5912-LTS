@@ -72,23 +72,10 @@ public class CustomCharacter : ScriptableObject
 
     public void CopyCharacterData(CustomCharacter toCopy)
     {
-        /*this.gender = toCopy.gender;
-        this.charName = toCopy.charName;
-        this.hairId = toCopy.hairId;
-        this.hairColor = toCopy.hairColor;
-        this.eyebrowID = toCopy.eyebrowID;
-        this.eyebrowColor = toCopy.eyebrowColor;
-        this.facialHairID = toCopy.facialHairID;
-        this.facialHairColor = toCopy.facialHairColor;
-        this.faceMarkID = toCopy.faceMarkID;
-        this.facemarkColor = toCopy.facemarkColor;
-        this.skinColor = toCopy.skinColor;
-        this.eyeColor = toCopy.eyeColor;*/
         UpdateGender(toCopy.gender);
         UpdateIds(toCopy.hairId, toCopy.eyebrowID, toCopy.faceMarkID, toCopy.facialHairID);
         UpdateColors(toCopy.hairColor, toCopy.eyebrowColor, toCopy.facemarkColor, toCopy.facialHairColor, toCopy.eyeColor, toCopy.skinColor);
         UpdateName(toCopy.charName);
-
     }
 
 }

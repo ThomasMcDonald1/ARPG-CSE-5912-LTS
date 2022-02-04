@@ -21,10 +21,11 @@ public class MainMenuController : StateMachine
     public GameObject exitGameButtonObj;
 
     // Character slots
+    public GameObject startErrorObj, slotsFullErrorObj, deleteCharaErrorObj;
     public GameObject displayCharacterObj;
     public GameObject characterNameObj;
-    public GameObject slot1ButtonObj;
-    public SaveSlot slot1Data;
+    public List<GameObject> saveSlotButtonObjs;
+    public List<SaveSlot> saveSlotDataObjs;
 
     // Options menu buttons
     public GameObject backFromOptionsToMainButtonObj;

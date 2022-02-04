@@ -70,18 +70,36 @@ public class CharacterCreationState : BaseMenuState
 
     void OnConfirmButtonClicked()
     {
+        Debug.Log("Confirm Button Clicked!");
         if (characterManager.NameIsValid())
         {
+            Debug.Log("Now entering game");
             GetCharacterDetails();
             nameError.SetActive(false);
-            Debug.Log("Confirm Button Clicked!");
+            selectedSlot = FindEmptySlot();
+            selectedSlot.containsData = true;
+            selectedSlot.characterData.CopyCharacterData(customCharacter);
+            Debug.Log("Slot " + selectedSlot.slotNumber + " should have data: " + selectedSlot.containsData);
             SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
         }
         else
         {
+            Debug.Log("Error: need a name!");
             nameError.SetActive(true);
         }
         PlayAudio();
+    }
+
+    SaveSlot FindEmptySlot()
+    {
+        for (int i = 0; i < mainMenuController.saveSlotDataObjs.Count; i++)
+        {
+            if (!mainMenuController.saveSlotDataObjs[i].containsData)
+            {
+                return mainMenuController.saveSlotDataObjs[i];
+            }
+        }
+        return null; //should never be here
     }
 
     void SetGenderMale()
