@@ -63,6 +63,23 @@ public class InputController: MonoBehaviour
 
     private void Update()
     {
+        if (gameplayUICanvas == null)
+        {
+            gameplayUICanvas = GameObject.Find("GameplayUICanvas");
+            if(gameplayUICanvas != null)
+            {
+                uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+            }
+            else
+            {
+                gameplayUICanvas = GameObject.Find("MainMenuCanvas");
+                if (gameplayUICanvas != null)
+                {
+                    uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+                }
+            }
+        }
+
         if (EventSystem.current.IsPointerOverGameObject() && Mouse.current.rightButton.wasReleasedThisFrame)
         {
             List<RaycastResult> results = GetUIElementsClicked();
@@ -238,6 +255,7 @@ public class InputController: MonoBehaviour
             position = Mouse.current.position.ReadValue()
         };
         List<RaycastResult> results = new List<RaycastResult>();
+
         uiRaycaster.Raycast(eventData, results);
 
         return results;
