@@ -23,32 +23,18 @@ public class MainMenuController : StateMachine
     // Options menu buttons
     public GameObject backFromOptionsToMainButtonObj;
 
-    // Create character menu obj
-    public Camera characterCreationCameraObj;
-    [HideInInspector] public Camera characterCreationCamera;
-    public GameObject characterObj;
-
-    public GameObject backFromCharCreateToMainButtonObj, resetCharaButtonObj, confirmButtonObj;
-    public GameObject maleButtonObj, femaleButtonObj;
-    public GameObject hairForwardButtonObj, hairBackwardButtonObj, hairColorButtonObj;
-    public GameObject eyebrowsForwardButtonObj, eyebrowsBackwardButtonObj, eyebrowsColorButtonObj;
-    public GameObject faceForwardButtonObj, faceBackwardButtonObj, faceColorButtonObj;
-    public GameObject facialHairForwardButtonObj, facialHairBackwardButtonObj, facialHairColorButtonObj;
-    public GameObject eyesColorButtonObj, skinColorButtonObj;
-    public GameObject nameFieldObj, nameErrorObj;
-    public CustomCharacter charaScriptableObj;
+    // Create character menu buttons
+    public GameObject backFromCharCreateToMainButtonObj;
 
     private void Awake()
     {
         mainMenuCanvas = mainMenuCanvasObj.GetComponent<Canvas>();
         createCharMenuCanvas = createCharMenuCanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
-        characterCreationCamera = characterCreationCameraObj.GetComponent<Camera>();
 
         mainMenuCanvas.enabled = false;
         createCharMenuCanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
-        characterCreationCamera.enabled = false;
         ChangeState<MainMenuRootState>();
     }
 }

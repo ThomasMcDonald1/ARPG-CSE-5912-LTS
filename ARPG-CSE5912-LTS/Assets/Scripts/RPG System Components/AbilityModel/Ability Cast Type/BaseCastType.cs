@@ -1,46 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class BaseCastType : MonoBehaviour
 {
-    GameplayStateController gameplayStateController;
-    [HideInInspector] public CastingBar castingBar;
-    public float castTime;
+    public int castTime;
 
-    public abstract void WaitCastTime(Ability ability);
-    public abstract void StopCasting();
-
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityCastTimeWasCompletedEvent;
-
-    private void Awake()
-    {
-        gameplayStateController = GetComponentInParent<GameplayStateController>();
-        castingBar = gameplayStateController.castingBar;
-        castingBar.castBarCanvas.SetActive(false);
-    }
-
-    private void OnEnable()
-    {
-        Player.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
-        Player.PlayerBeganMovingEvent += OnPlayerBeganMoving;
-    }
-
-    private void OnPlayerBeganMoving(object sender, InfoEventArgs<int> e)
-    {
-        StopCasting();
-    }
-
-    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<Ability> e)
-    {
-        WaitCastTime(e.info);
-    }
-
-    public void CompleteCast(Ability ability)
-    {
-        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<Ability>(ability));
-    }
-
+    //TODO: Not sure how to go about doing this yet. Need to do different kinds of casts depending on what type of ability it is
+    // 1) casts could be instant
+    // 2) casts could require standing still as you wait for a cast timer to finish, then the full effect could happen at the end of the cast
+    // 3) casts could be channeled, having a pulsating effect that takes place several times within the cast
+    //For now, I have it set as an abstract class where the concrete classes that implement it will have to figure out how the ability should be cast
+    public abstract void WaitCastTime();
 }

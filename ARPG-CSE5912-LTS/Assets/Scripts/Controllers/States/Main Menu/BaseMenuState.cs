@@ -18,16 +18,7 @@ public class BaseMenuState : State
     public Button backFromOptionsToMainButton;
 
     // character creation buttons
-    public Button backFromCharCreateToMainButton, resetCharaButton, confirmButton;
-    public Button maleButton, femaleButton;
-    public Button hairForwardButton, hairBackwardButton, hairColorButton;
-    public Button eyebrowForwardButton, eyebrowBackwardButton, eyebrowColorButton;
-    public Button faceMarkForwardButton, faceMarkBackwardButton, faceMarkColorButton;
-    public Button facialHairForwardButton, facialHairBackwardButton, facialHairColorButton;
-    public Button eyeColorButton, skinColorButton;
-    public InputField nameField;
-    public GameObject nameError;
-
+    public Button backFromCharCreateToMainButton;
 
     protected virtual void Awake()
     {
@@ -41,28 +32,8 @@ public class BaseMenuState : State
 
         //options
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();
-
+        
         //character creation
         backFromCharCreateToMainButton = mainMenuController.backFromCharCreateToMainButtonObj.GetComponent<Button>();
-        resetCharaButton = mainMenuController.resetCharaButtonObj.GetComponent<Button>();
-        confirmButton = mainMenuController.confirmButtonObj.GetComponent<Button>();
-        maleButton = mainMenuController.maleButtonObj.GetComponent<Button>();
-        femaleButton = mainMenuController.femaleButtonObj.GetComponent<Button>();
-        hairForwardButton = mainMenuController.hairForwardButtonObj.GetComponent<Button>();
-        hairBackwardButton = mainMenuController.hairBackwardButtonObj.GetComponent<Button>();
-        hairColorButton = mainMenuController.hairColorButtonObj.GetComponent<Button>();
-        eyebrowForwardButton = mainMenuController.eyebrowsForwardButtonObj.GetComponent<Button>();
-        eyebrowBackwardButton = mainMenuController.eyebrowsBackwardButtonObj.GetComponent<Button>();
-        eyebrowColorButton = mainMenuController.eyebrowsColorButtonObj.GetComponent<Button>();
-        faceMarkForwardButton = mainMenuController.faceForwardButtonObj.GetComponent<Button>();
-        faceMarkBackwardButton = mainMenuController.faceBackwardButtonObj.GetComponent<Button>();
-        faceMarkColorButton = mainMenuController.faceColorButtonObj.GetComponent<Button>();
-        facialHairForwardButton = mainMenuController.facialHairForwardButtonObj.GetComponent<Button>();
-        facialHairBackwardButton = mainMenuController.facialHairBackwardButtonObj.GetComponent<Button>();
-        facialHairColorButton = mainMenuController.facialHairColorButtonObj.GetComponent<Button>();
-        eyeColorButton = mainMenuController.eyesColorButtonObj.GetComponent<Button>();
-        skinColorButton = mainMenuController.skinColorButtonObj.GetComponent<Button>();
-        nameField = mainMenuController.nameFieldObj.GetComponent<InputField>();
-        nameError = mainMenuController.nameErrorObj;
     }
 }

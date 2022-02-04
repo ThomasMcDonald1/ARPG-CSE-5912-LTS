@@ -12,15 +12,22 @@ public class GameplayState : BaseGameplayState
     //public DialogueUI DialogueUI => dialogueUI;
     //public IInteractable Interactable { get; set; }
 
+   
+
     int groundLayer, npcLayer, enemyLayer;
     Player player;
+    NavMeshAgent agent;
     ContextMenuPanel contextMenuPanel;
-    ActionBar actionBar;
 
+    // Test inventory system
+    
     public override void Enter()
     {
         base.Enter();
+
+
         Debug.Log("entered GameplayState");
+        
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
@@ -30,12 +37,12 @@ public class GameplayState : BaseGameplayState
         npcLayer = LayerMask.NameToLayer("NPC");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
+        agent = player.GetComponent<NavMeshAgent>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
         if (contextMenuPanel != null)
         {
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         }
-        actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
     }
 
     public override void Exit()
@@ -71,11 +78,11 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (player.agent.enabled)
+        if (agent.enabled)
         {
-            if (e.info.collider.gameObject.layer == groundLayer && !player.playerInAOEAbilityTargetSelectionMode)
+            if (e.info.collider.gameObject.layer == groundLayer)
             {
-                player.MoveToLocation(e.info.point);
+                agent.destination = e.info.point;
             }
             //else if (e.info.collider.gameObject.layer == npcLayer)
             //{
@@ -93,27 +100,20 @@ public class GameplayState : BaseGameplayState
             else if (e.info.collider.gameObject.layer == enemyLayer)
             {
                 //fight enemy
-                //Debug.Log("Clicked on enmey");
+                Debug.Log("Clicked on enmey");
                 if (player.Interactable != null)
                 {
                     //Interact with NPC stuff goes here
                     player.Interactable.Interact(player);
                 }
-                player.MoveToLocation(e.info.point);
+                agent.destination = e.info.point;
             }
         }
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> r)
     {
-        if (player.playerInAOEAbilityTargetSelectionMode)
-        {
-            player.playerInAOEAbilityTargetSelectionMode = false;
-        }
-        if (player.playerNeedsToReleaseMouseButton)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-        }
+   
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -163,122 +163,62 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar1Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton2);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar3Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton3);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar4Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton4);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar5Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton5);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar6Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton6);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar7Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton7);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar8Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton8);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar9Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton9);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar10Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton10);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar11Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton11);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnActionBar12Pressed(object sender, InfoEventArgs<int> e)
     {
-        Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton12);
-        if (abilityInSlot != null)
-        {
-            player.playerNeedsToReleaseMouseButton = false;
-            player.QueueAbilityCast(abilityInSlot);
-        }
+
     }
 
     protected override void OnUIElementLeftClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
@@ -290,12 +230,7 @@ public class GameplayState : BaseGameplayState
             ActionButton actionButton = go.GetComponent<ActionButton>();
             if (actionButton != null)
             {
-                Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionButton);
-                if (abilityInSlot != null)
-                {
-                    player.playerNeedsToReleaseMouseButton = true;
-                    player.QueueAbilityCast(abilityInSlot);
-                }
+                Debug.Log("Left Clicked: " + go.name);
             }           
         }
     }
