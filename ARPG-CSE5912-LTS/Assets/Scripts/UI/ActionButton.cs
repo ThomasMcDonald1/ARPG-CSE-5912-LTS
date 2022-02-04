@@ -12,15 +12,11 @@ public class ActionButton : MonoBehaviour
     private void Awake()
     {
         iconObjImage = iconObj.GetComponent<Image>();
-        iconObjImage.enabled = false;
     }
 
     public void SetIcon()
     {
         if (abilityAssigned != null)
-        {
             iconObjImage.sprite = abilityAssigned.icon;
-            iconObjImage.enabled = true;
-        }
     }
 }

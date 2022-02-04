@@ -20,12 +20,15 @@ public class Player : Character
     public bool playerInAOEAbilityTargetSelectionMode;
     public bool playerInSingleTargetAbilitySelectionMode;
     public bool playerNeedsToReleaseMouseButton;
+    private Inventory inventory;
+    private Camera mainCamera;
 
     [SerializeField] MouseCursorChanger cursorChanger;
 
     [SerializeField] Ability basicAttack;
     [SerializeField] Ability fireballTest;
     [SerializeField] Ability bowAbilityTest;
+    [SerializeField] private InventoryUI uiInventory;
 
     public HashSet<Vector3> unlockedWaypoints;
 
@@ -45,9 +48,37 @@ public class Player : Character
         abilitiesKnown.Add(fireballTest);
         abilitiesKnown.Add(bowAbilityTest);
         unlockedWaypoints = new HashSet<Vector3>();
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        mainCamera = Camera.main;
+        ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.Coin, amount = 1 });
     }
+    private void detectObj()
+    {
 
-    private void OnEnable()
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    Debug.Log("hit: " + hit.transform.gameObject.tag);
+                    if (hit.transform.gameObject.tag == "InventoryItem")
+                    {
+                        InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
+                        inventory.AddItem(item);
+                        hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
+
+                    }
+
+                }
+            }
+        }
+    }
+        //Debug.Log("In detect obj func");
+        private void OnEnable()
     {
         InputController.CancelPressedEvent += OnCancelPressed;
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
@@ -119,6 +150,7 @@ public class Player : Character
             FindObjectOfType<AudioManager>().Stop("Footsteps");
             soundPlaying = false;
         }
+        detectObj();
 
     }
 
