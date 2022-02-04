@@ -188,6 +188,9 @@ public class MainMenuRootState : BaseMenuState
         {
             Debug.Log("Deleting slot " + selectedSlot.slotNumber);
             mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber-1].containsData = false;
+            selectedSlot = null;
+            mainMenuController.displayCharacterObj.SetActive(false);
+            mainMenuController.characterNameObj.SetActive(false);
         }
         SetSlotVisibility();
     }
