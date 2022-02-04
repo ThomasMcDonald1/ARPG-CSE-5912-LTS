@@ -5,46 +5,25 @@ using UnityEngine.AI;
 
 namespace ARPG.Combat
 {
-    public class HumanEnemy : EnemyClass
+    public abstract class Enemy : Character
     {
         private GameObject GeneralClass;
-        private bool signalAttack;
-
         public NavMeshAgent enemy;
 
-        public Stats statScript;
+        public virtual float AttackRange { get; set; }
+        public virtual float Range { get; set; }
+        public virtual float BodyRange { get; set; }
+        public virtual float SightRange { get; set; }
+        public virtual float Speed { get; set; }
 
-        float smooth;
-        float yVelocity;
-
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             GeneralClass = GameObject.Find("EnemyClass");
-            statScript = GetComponent<Stats>();
-
-            AttackRange = 13.0f;
-            AttackTarget = null;
-
-            Range = 20.0f;
-            BodyRange = 1.5f;
-            SightRange = 90f;
-
-            Speed = 2f;
-
-            //rotation data
-            smooth = 0.3f;
-            yVelocity = 0.0f;
-
-            //Stats
-            statScript[StatTypes.MAXHEALTH] = 2600;
-            statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
-            statScript[StatTypes.PHYATK] = 120;
-            statScript[StatTypes.PHYDEF] = 30;
-            statScript[StatTypes.ATKSPD] = 120;
         }
-
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             if (statScript[StatTypes.HEALTH] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
@@ -54,7 +33,8 @@ namespace ARPG.Combat
             {
                 SeePlayer();
             }
-            if (AttackTarget != null) {
+            if (AttackTarget != null)
+            {
                 Vector3 realDirection = GeneralClass.transform.forward;
                 Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
@@ -70,22 +50,7 @@ namespace ARPG.Combat
 
         }
 
-   
-        IEnumerator DestroyHealthBar()
-        {
-            //Print the time of when the function is first called.
-            //Debug.Log("Started Coroutine at timestamp : " + Time.time);
-
-            //yield on a new YieldInstruction that waits for 2 seconds.
-            yield return new WaitForSeconds(1.5f);
-
-            //After we have waited 2 seconds print the time again.
-            //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-            GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
-        }
-
-
-        public override void SeePlayer()
+        public  void SeePlayer()
         {
             if (InTargetRange()) //need set health.
             {
@@ -96,7 +61,8 @@ namespace ARPG.Combat
                 if (AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] <= 0) //When player is dead, stop hit.
                 {
                     StopRun();
-                }else if (angle < SightRange && !InStopRange())
+                }
+                else if (angle < SightRange && !InStopRange())
                 {
                     Debug.Log("run");
                     RunToPlayer();
@@ -117,7 +83,7 @@ namespace ARPG.Combat
             Debug.Log("okk");
         }
 
-        public override void RunToPlayer()
+        public  void RunToPlayer()
         {
             if (InTargetRange())
             {
@@ -128,38 +94,32 @@ namespace ARPG.Combat
             }
         }
 
-        public override void StopRun()
+        public void StopRun()
         {
             enemy.isStopped = true;
         }
 
-        public override void Attack(EnemyTarget target)
+        public virtual float CurrentEnemyHealth { get; set; }
+        public virtual float MaxEnemyHealth { get; set; }
+        public void Attack(EnemyTarget target)
         {
             AttackTarget = target.transform;
         }
 
-        public override void Cancel()
+        public void Cancel()
         {
             AttackTarget = null;
         }
-
-        public override bool InTargetRange()
+        public  bool InTargetRange()
         {
             if (AttackTarget == null) return false;
             return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         }
-
-        public override bool InStopRange()
+        public  bool InStopRange()
         {
             if (AttackTarget == null) return false;
             return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < BodyRange;
         }
-
-        public override void AttackSignal(bool signal)
-        {
-            signalAttack = signal;
-        }
-
         public void Hit()
         {
 
@@ -188,5 +148,4 @@ namespace ARPG.Combat
             Debug.Log("Item dropped");
         }
     }
-
 }

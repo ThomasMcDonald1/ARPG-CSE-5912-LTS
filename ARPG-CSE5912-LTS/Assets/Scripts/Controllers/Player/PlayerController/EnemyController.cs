@@ -20,7 +20,7 @@ namespace ARPG.Core
         private string classTypeName;
         private string weaponTypeName;
 
-        private EnemyClass enemyClass;
+        private Enemy enemyClass;
 
 
         private void Start()
@@ -33,9 +33,9 @@ namespace ARPG.Core
            
         }
 
-        private EnemyClass AttachClassScript()
+        private Enemy AttachClassScript()
         {
-            EnemyClass enemyClass;
+            Enemy enemyClass;
             switch(classTypeName)
             {
                 case "HumanEnemy":

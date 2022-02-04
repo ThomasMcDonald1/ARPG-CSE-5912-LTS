@@ -2237,10 +2237,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 445597861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e8aa8afdc3b4b343b744e18e194126a, type: 3}
+  m_Script: {fileID: 11500000, guid: a634be0bb36526d4b947642ccd9b7e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 970424912}
+--- !u!114 &445597864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445597861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51706366afdc28b4398b50749dc174ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2030676112}
 --- !u!54 &445597870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4914,7 +4927,6 @@ GameObject:
   - component: {fileID: 974740685}
   - component: {fileID: 974740688}
   - component: {fileID: 974740687}
-  - component: {fileID: 974740686}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: HealthBar
@@ -4941,19 +4953,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.98625183, y: -0.7231598}
   m_SizeDelta: {x: -10, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &974740686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974740684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a634be0bb36526d4b947642ccd9b7e7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 974740687}
 --- !u!114 &974740687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8342,7 +8341,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5616951643612891031, guid: c58cf7fcd662a484c8096274db4f4f73, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c58cf7fcd662a484c8096274db4f4f73, type: 3}
 --- !u!1 &1618049467
 GameObject:
@@ -9352,7 +9352,7 @@ PrefabInstance:
     - target: {fileID: 4953618401226553472, guid: 9784a1e7e764bd8498f19797497f863f, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2030676113}
     - target: {fileID: 4953618401226553478, guid: 9784a1e7e764bd8498f19797497f863f, type: 3}
       propertyPath: m_Name
       value: ContextMenuPanel
@@ -10111,6 +10111,19 @@ MonoBehaviour:
   abilitiesKnown: []
   basicAttack: {fileID: 0}
   fireballTest: {fileID: 0}
+--- !u!114 &2030676118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030676110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a634be0bb36526d4b947642ccd9b7e7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 970424912}
 --- !u!1 &2032891299
 GameObject:
   m_ObjectHideFlags: 0

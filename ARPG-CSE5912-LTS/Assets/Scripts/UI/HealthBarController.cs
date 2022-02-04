@@ -15,13 +15,13 @@ public class HealthBarController : MonoBehaviour
     private void Start()
     {
         // currHealth = maxHealth;
-       
-        stats = GameObject.FindGameObjectWithTag("Player").GetComponent<Stats>();
+
+        stats = gameObject.GetComponent<Stats>();
 
         //maxHealth = stats.maxHealth;
         //stats.health = stats.maxHealth;
         //currHealth = stats.health;
-       
+
     }
 
     private void Update()
