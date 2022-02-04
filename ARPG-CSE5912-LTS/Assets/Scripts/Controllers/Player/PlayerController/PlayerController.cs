@@ -11,8 +11,7 @@ using System.Collections;
  * respond to the event.
  */
 
-namespace ARPG.Core
-{
+
     public class PlayerController : MonoBehaviour
     {
 
@@ -26,9 +25,13 @@ namespace ARPG.Core
         private string weaponTypeName;
 
 
-        public IPlayerClass playerClass;
+        public Player playerClass;
+    private void Awake()
+    {
+        playerClass = this.GetComponent<Knight>();
+    }
 
-        public void PlayerOnClickEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
+    public void PlayerOnClickEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
         {
             switch (LayerMask.LayerToName(layer))
             {
@@ -92,24 +95,24 @@ namespace ARPG.Core
                 }
             }*/
 
-            playerClass = AttachClassScript();
+            //playerClass = AttachClassScript();
         }
 
-        private IPlayerClass AttachClassScript()
-        {
-            IPlayerClass playerClass;
-            switch(classTypeName)
-            {
-                case "Knight":
-                    this.gameObject.AddComponent<Knight>();
-                    playerClass = this.gameObject.GetComponent<Knight>();
-                    break;
-                default:
-                    playerClass = null;
-                    break;
-            }
-            return playerClass;
-        }
+        //private IPlayerClass AttachClassScript()
+        //{
+        //    IPlayerClass playerClass;
+        //    switch(classTypeName)
+        //    {
+        //        case "Knight":
+        //            this.gameObject.AddComponent<Knight>();
+        //            playerClass = this.gameObject.GetComponent<Knight>();
+        //            break;
+        //        default:
+        //            playerClass = null;
+        //            break;
+        //    }
+        //    return playerClass;
+        //}
 
 
         private void Update()
@@ -125,6 +128,6 @@ namespace ARPG.Core
             GetComponent<Animator>().SetFloat("ForwardSpeed", speed);
         }
     }
-}
+
 
 
