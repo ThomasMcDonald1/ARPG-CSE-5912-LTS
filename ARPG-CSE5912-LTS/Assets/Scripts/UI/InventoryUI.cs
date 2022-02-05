@@ -21,12 +21,12 @@ public class InventoryUI:MonoBehaviour
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItems();
     }
-    public void Inventory_OnItemListChanged(object sender, System.EventArgs e)
+    private void Inventory_OnItemListChanged(object sender, System.EventArgs e)
     {
         RefreshInventoryItems();
 
     }
-    public void RefreshInventoryItems()
+    private void RefreshInventoryItems()
     {
         foreach(Transform child in itemSlotContainer)
         {
