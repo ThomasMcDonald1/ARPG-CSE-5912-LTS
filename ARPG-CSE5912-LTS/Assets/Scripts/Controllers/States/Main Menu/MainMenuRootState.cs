@@ -15,9 +15,7 @@ public class MainMenuRootState : BaseMenuState
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
-        mainMenuController.startErrorObj.SetActive(false);
-        mainMenuController.deleteCharaErrorObj.SetActive(false);
-        mainMenuController.slotsFullErrorObj.SetActive(false);
+        ClearErrorMessages();
 
         selectedSlot = null;
 
@@ -65,9 +63,9 @@ public class MainMenuRootState : BaseMenuState
 
     void OnStartGameClicked()
     {
+        ClearErrorMessages();
         if (selectedSlot != null)
         {
-            mainMenuController.startErrorObj.SetActive(false);
             Debug.Log("Start Button Clicked!");
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
             SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
@@ -82,6 +80,7 @@ public class MainMenuRootState : BaseMenuState
 
     void OnCreateCharClicked()
     {
+        ClearErrorMessages();
         if (!CheckIfSlotsFull())
         {
             mainMenuController.ChangeState<CharacterCreationState>();
@@ -108,12 +107,14 @@ public class MainMenuRootState : BaseMenuState
 
     void OnOptionsClicked()
     {
+        ClearErrorMessages();
         mainMenuController.ChangeState<OptionsState>();
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnSlotClicked(int slotNumber)
     {
+        ClearErrorMessages();
         var manager = mainMenuController.displayCharacterObj.GetComponent<ModularCharacterManager>();
         selectedSlot = mainMenuController.saveSlotDataObjs[slotNumber - 1];
 
@@ -123,10 +124,6 @@ public class MainMenuRootState : BaseMenuState
             mainMenuController.displayCharacterObj.SetActive(true);
             mainMenuController.characterNameObj.SetActive(true);
         }
-
-        mainMenuController.startErrorObj.SetActive(false);
-        mainMenuController.deleteCharaErrorObj.SetActive(false);
-        mainMenuController.slotsFullErrorObj.SetActive(false);
     }
 
     void ConfigureCharacterDisplay(ModularCharacterManager manager, CustomCharacter customCharacter)
@@ -179,6 +176,7 @@ public class MainMenuRootState : BaseMenuState
 
     void OnDeleteCharacterSelected()
     {
+        ClearErrorMessages();
         if (selectedSlot == null)
         {
             Debug.Log("Error - must select character to delete first.");
@@ -195,5 +193,11 @@ public class MainMenuRootState : BaseMenuState
         SetSlotVisibility();
     }
 
+    void ClearErrorMessages()
+    {
+        mainMenuController.startErrorObj.SetActive(false);
+        mainMenuController.deleteCharaErrorObj.SetActive(false);
+        mainMenuController.slotsFullErrorObj.SetActive(false);
+    }
 
 }
