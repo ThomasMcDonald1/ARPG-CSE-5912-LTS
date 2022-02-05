@@ -47,15 +47,14 @@ public class Player : Character
     }
     void Awake()
     {
-        
-
-       
-
         agent = GetComponent<NavMeshAgent>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
 
         inventory = new Inventory();
+        //test for either inventory not set to an object or uiInventory.
+        inventory.AddItem(new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+
         uiInventory.SetInventory(inventory);
         mainCamera = Camera.main;
         ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
