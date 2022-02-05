@@ -81,7 +81,7 @@ public class CharacterCreationState : BaseMenuState
             mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
             selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];
             Debug.Log("Slot " + selectedSlot.slotNumber + " should have data: " + selectedSlot.containsData);
-            SceneManager.LoadScene("UpdateCharacterGameScene", LoadSceneMode.Single);
+            SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
         }
         else
         {

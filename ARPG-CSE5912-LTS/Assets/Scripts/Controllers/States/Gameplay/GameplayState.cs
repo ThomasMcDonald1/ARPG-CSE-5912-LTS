@@ -57,7 +57,7 @@ public class GameplayState : BaseGameplayState
     void OnExitToMenuClicked()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("MenuCharacterDisplay", LoadSceneMode.Single);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
