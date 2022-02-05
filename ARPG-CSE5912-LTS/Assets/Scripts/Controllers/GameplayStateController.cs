@@ -55,6 +55,7 @@ public class GameplayStateController : StateMachine
 
     private void Awake()
     {
+
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();

@@ -39,7 +39,7 @@ using System.Collections;
                     if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
                         playerClass.Cancel();
-                        GetComponentInChildren<MovementHandler>().MoveToTarget(e.info.point);
+                        GetComponent<MovementHandler>().MoveToTarget(e.info.point);
                     }
                     break;
 

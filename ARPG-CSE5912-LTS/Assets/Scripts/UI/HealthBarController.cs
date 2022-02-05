@@ -11,6 +11,7 @@ public class HealthBarController : MonoBehaviour
 
     float lerpSpd;
     // PlayerController_Script Player;  for updating current player health, not using at this point
+    Stats stats;
 
     private void Start()
     {
