@@ -9,6 +9,9 @@ using ARPG.Movement;
 public class Player : Character
 {
     [SerializeField] private DialogueUI dialogueUI;
+    [SerializeField] private InventoryUI uiInventory;
+    private Inventory inventory;
+    private Camera mainCamera;
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }
 
@@ -44,13 +47,47 @@ public class Player : Character
     }
     void Awake()
     {
+        
+
+       
+
         agent = GetComponent<NavMeshAgent>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
-    }
 
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        mainCamera = Camera.main;
+        ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+    }
+    private void playUpItem()
+    {
+
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit hit;
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    Debug.Log("hit: " + hit.transform.gameObject.tag);
+                    if (hit.transform.gameObject.tag == "InventoryItem")
+                    {
+                        InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
+                        inventory.AddItem(item);
+                        hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
+
+                    }
+
+                }
+            }
+        }
+    }
     protected override void Update()
     {
+        //inventory system
+        playUpItem();
         //Sound
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)

@@ -11,8 +11,6 @@ public class Inventory
     {
         itemList = new List<InventoryItems>();
         
-
-
         // Debug.Log(itemList.Count);
     }
     public void AddItem(InventoryItems item)
