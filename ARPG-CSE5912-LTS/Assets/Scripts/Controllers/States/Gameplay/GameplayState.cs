@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-
+using ARPG.Core;
 public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
@@ -15,6 +15,7 @@ public class GameplayState : BaseGameplayState
     int groundLayer, npcLayer, enemyLayer;
     Player player;
     NavMeshAgent agent;
+    Animator animator;
     ContextMenuPanel contextMenuPanel;
     ActionBar actionBar;
 
@@ -37,6 +38,7 @@ public class GameplayState : BaseGameplayState
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
         agent = player.GetComponent<NavMeshAgent>();
+        animator = player.GetComponent<Animator>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
         if (contextMenuPanel != null)
         {
@@ -80,40 +82,16 @@ public class GameplayState : BaseGameplayState
     {
         if (agent.enabled)
         {
-            if (e.info.collider.gameObject.layer == groundLayer)
-            {
-                agent.destination = e.info.point;
-            }
-            //else if (e.info.collider.gameObject.layer == npcLayer)
-            //{
-            //    Debug.Log("Clicked on npc");
-            //    if (player.Interactable != null)
-            //    {
-            //        //Interact with NPC stuff goes here
-            //        player.Interactable.Interact(player);
-            //    }
-            //    agent.destination = e.info.point;
-
-
-
-            //}
-            else if (e.info.collider.gameObject.layer == enemyLayer)
-            {
-                //fight enemy
-                Debug.Log("Clicked on enmey");
-                if (player.Interactable != null)
-                {
-                    //Interact with NPC stuff goes here
-                    player.Interactable.Interact(player);
-                }
-                agent.destination = e.info.point;
-            }
+            player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
     }
 
-    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> r)
+    protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
     {
-   
+        if (agent.enabled)
+        {
+            player.GetComponent<PlayerController>().PlayerCancelClickEventResponse(sender, e);
+        }
     }
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -263,5 +241,17 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.ChangeState<CharacterPanelState>();
     }
 
-    
+    void GameOver()
+    {
+        gameplayStateController.ChangeState<GameoverState>();
+    }
+
+    void Update()
+    {
+        //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (animator.GetBool("Dead") == true && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 2f && animator.GetCurrentAnimatorStateInfo(0).IsName("Dead"))
+        {
+            GameOver();
+        }
+    }
 }

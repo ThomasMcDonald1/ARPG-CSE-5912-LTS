@@ -10,11 +10,13 @@ public class GameplayStateController : StateMachine
     public GameObject optionsMenuCanvasObj;
     public GameObject characterPanelCanvasObj;
     public GameObject inventoryCanvasObj;
+    public GameObject gameoverCanvasObj;
 
     [HideInInspector] public Canvas pauseMenuCanvas;
     [HideInInspector] public Canvas gameplayUICanvas;
     [HideInInspector] public Canvas optionsMenuCanvas;
     [HideInInspector] public Canvas characterPanelCanvas;
+    [HideInInspector] public Canvas gameoverCanvas;
     [HideInInspector] public Canvas inventoryCanvas;
 
     // Button to pause game and bring up pause menu
@@ -45,14 +47,20 @@ public class GameplayStateController : StateMachine
     public CustomCharacter customCharacter; //scriptable object
 
 
+    //Gameover panel button
+    public GameObject yesRespawnButtonObj;
+    public GameObject noRespawnButtonObj;
+
     //TODO: Maybe a keybinds button, if we have time to add
 
     private void Awake()
     {
+
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterPanelCanvas = characterPanelCanvasObj.GetComponent<Canvas>();
+        gameoverCanvas = gameoverCanvasObj.GetComponent<Canvas>();
         inventoryCanvas = inventoryCanvasObj.GetComponent<Canvas>();
 
         pauseMenuCanvas.enabled = false;
@@ -62,6 +70,8 @@ public class GameplayStateController : StateMachine
         inventoryCanvas.enabled = false;
         aoeReticleSphere.SetActive(false);
         aoeReticleCylinder.SetActive(false);
+        gameoverCanvas.enabled = false;
+
         ChangeState<GameplayState>();
     }
 }

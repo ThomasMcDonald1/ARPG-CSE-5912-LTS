@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+
 //The most fundamental level of defining a character. Encompasses Player character, NPCs, and enemies.
 public abstract class Character : MonoBehaviour
 {
@@ -57,6 +58,22 @@ public abstract class Character : MonoBehaviour
         abilityArea.PerformAOE(e.info.Item1);
     }
 
+    public Stats statScript;
+
+    public float smooth;
+    public float yVelocity;
+    public virtual Transform AttackTarget { get; set; }
+
+    protected virtual void Start()
+    {
+        smooth = 0.3f;
+        yVelocity = 0.0f;
+        AttackTarget = null;
+        statScript = GetComponent<Stats>();
+    }
+    protected virtual void Update()
+    {
+    }
     //Put any code here that should be shared functionality across every type of character
     public void QueueAbilityCast(Ability abilityToCast)
     {
