@@ -93,7 +93,7 @@ public class Player : Character
             FindObjectOfType<AudioManager>().Stop("Footsteps");
             soundPlaying = false;
         }
-
+        //Debug.Log(AttackTarget);
         //Combat
         if (stats[StatTypes.HEALTH] <= 0)
         {
