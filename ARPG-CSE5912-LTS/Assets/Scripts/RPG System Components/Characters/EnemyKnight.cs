@@ -14,7 +14,7 @@ namespace ARPG.Combat
             base.Start();
             AttackRange = 13.0f;
             Range = 20.0f;
-            BodyRange = 2f;
+            BodyRange = 1.5f;
             SightRange = 90f;
             Speed = 2f;
 

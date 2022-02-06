@@ -84,10 +84,6 @@ public class GameplayState : BaseGameplayState
         {
             player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
-        else if (agent.enabled && e.info.collider.gameObject.layer == enemyLayer && !player.playerInAOEAbilityTargetSelectionMode)
-        {
-            player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
-        }
     }
 
     protected override void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
