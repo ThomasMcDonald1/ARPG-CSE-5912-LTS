@@ -30,7 +30,7 @@ public class Player : Character
     int groundLayerMask = 1 << 6;
 
     //Combat
-    private GameObject GeneralClass;
+    //private GameObject GeneralClass;
     public virtual float AttackRange { get; set; }
     private bool signalAttack;
 
@@ -38,7 +38,7 @@ public class Player : Character
     {
         base.Start();
        
-        GeneralClass = GameObject.Find("Class");
+        //GeneralClass = GameObject.Find("Class");
 
         //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
         GetComponent<Animator>().SetBool("StopAttack", true);
@@ -122,12 +122,15 @@ public class Player : Character
                 GetComponent<Animator>().SetBool("StopAttack", false);
                 if (!InTargetRange())
                 {
-                    GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                    GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
+                    //GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+                    //GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
+                    this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+                    this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
                 }
                 else if (InTargetRange() && signalAttack)
                 {
-                    GeneralClass.GetComponent<MovementHandler>().Cancel();
+                    //GeneralClass.GetComponent<MovementHandler>().Cancel();
+                    this.GetComponent<MovementHandler>().Cancel();
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
 
                     //rotation toward enemy
@@ -162,7 +165,9 @@ public class Player : Character
     public bool InTargetRange()
     {
         if (AttackTarget == null) return false;
-        return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
+        //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
+        return Vector3.Distance(this.transform.position, AttackTarget.position) < AttackRange;
+
     }
 
     public void AttackSignal(bool signal)
