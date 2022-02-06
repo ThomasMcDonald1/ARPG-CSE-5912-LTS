@@ -18,10 +18,23 @@ public class ActionBar : MonoBehaviour
     public ActionButton actionButton10;
     public ActionButton actionButton11;
     public ActionButton actionButton12;
+    public ActionButton actionButtonLeft;
+    public ActionButton actionButtonRight;
+    [SerializeField] Ability defaultLeft;
 
+    private void Awake()
+    {
+        SetDefaults();
+    }
 
     public Ability GetAbilityOnActionButton(ActionButton actionButton)
     {
         return actionButton.abilityAssigned;
-    }   
+    }
+
+    void SetDefaults()
+    {
+        actionButtonLeft.abilityAssigned = defaultLeft;
+        actionButtonLeft.SetIcon();
+    }
 }

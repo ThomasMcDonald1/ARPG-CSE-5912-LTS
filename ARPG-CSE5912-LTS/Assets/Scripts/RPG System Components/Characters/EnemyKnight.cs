@@ -19,11 +19,11 @@ namespace ARPG.Combat
             Speed = 2f;
 
             //Stats
-            statScript[StatTypes.MAXHEALTH] = 2600;
-            statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
-            statScript[StatTypes.PHYATK] = 120;
-            statScript[StatTypes.PHYDEF] = 30;
-            statScript[StatTypes.ATKSPD] = 120;
+            stats[StatTypes.MAXHEALTH] = 2600;
+            stats[StatTypes.HEALTH] = stats[StatTypes.MAXHEALTH];
+            stats[StatTypes.PHYATK] = 120;
+            stats[StatTypes.PHYDEF] = 30;
+            stats[StatTypes.ATKSPD] = 120;
         }
 
         protected override void Update()

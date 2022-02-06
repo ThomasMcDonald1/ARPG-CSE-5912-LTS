@@ -15,11 +15,7 @@ public class CastTimerCastType : BaseCastType
     private IEnumerator CastTimeCoroutine(Ability ability)
     {
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
-        //float castTimer = 0;
-        //while (castTimer < baseCastType.castTime)
-        //{
 
-        //}
         float displayTime = baseCastType.castTime;
         float rate = 1.0f / baseCastType.castTime;
         float progress = 0.0f;
@@ -34,7 +30,7 @@ public class CastTimerCastType : BaseCastType
 
             yield return null;
         }
-        //TODO: Fire event that cast wasn't canceled aka cast should go off
+        CompleteCast(ability);
         castingBar.castBarCanvas.SetActive(false);
     }
 

@@ -6,11 +6,11 @@
             base.Start();
             AttackRange = 2f;
             //Stats
-            statScript[StatTypes.MAXHEALTH] = 11000;
-            statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
-            statScript[StatTypes.PHYATK] = 120;
-            statScript[StatTypes.PHYDEF] = 30;
-            statScript[StatTypes.ATKSPD] = 12;
+            stats[StatTypes.MAXHEALTH] = 11000;
+            stats[StatTypes.HEALTH] = stats[StatTypes.MAXHEALTH];
+            stats[StatTypes.PHYATK] = 120;
+            stats[StatTypes.PHYDEF] = 30;
+            stats[StatTypes.ATKSPD] = 12;
         }
 
         protected override void Update()

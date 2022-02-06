@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    public UnityEngine.UI.Image healthBar;
+    public Image healthBar;
     //public float maxHealth = 100f;
     //public float currHealth;
 
     float lerpSpd;
     // PlayerController_Script Player;  for updating current player health, not using at this point
     Stats stats;
+    //[SerializeField] Player player;
 
-    private void Start()
+    private void Awake()
     {
         // currHealth = maxHealth;
-
-        stats = gameObject.GetComponent<Stats>();
+        stats = GetComponent<Stats>();
 
         //maxHealth = stats.maxHealth;
         //stats.health = stats.maxHealth;
