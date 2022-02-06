@@ -4,6 +4,7 @@
         protected override void Start()
         {
             base.Start();
+    
             AttackRange = 2f;
             //Stats
             stats[StatTypes.MAXHEALTH] = 11000;

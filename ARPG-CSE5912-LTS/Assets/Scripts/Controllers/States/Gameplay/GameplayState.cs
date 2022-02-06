@@ -80,7 +80,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
-        if (agent.enabled && e.info.collider.gameObject.layer == groundLayer && !player.playerInAOEAbilityTargetSelectionMode)
+        //updated to include enemylayer as well
+        if (agent.enabled && (e.info.collider.gameObject.layer == groundLayer || e.info.collider.gameObject.layer == enemyLayer) && !player.playerInAOEAbilityTargetSelectionMode)
         {
             player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
