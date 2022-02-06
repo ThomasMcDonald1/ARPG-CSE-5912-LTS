@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InputController: MonoBehaviour
+public class InputController : MonoBehaviour
 {
     private static InputController instance;
     public static InputController Instance { get { return instance; } }
@@ -63,23 +63,6 @@ public class InputController: MonoBehaviour
 
     private void Update()
     {
-        if (gameplayUICanvas == null)
-        {
-            gameplayUICanvas = GameObject.Find("GameplayUICanvas");
-            if (gameplayUICanvas != null)
-            {
-                uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
-            }
-            else
-            {
-                gameplayUICanvas = GameObject.Find("MainMenuCanvas");
-                if (gameplayUICanvas != null)
-                {
-                    uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
-                }
-            }
-        }
-
         if (EventSystem.current.IsPointerOverGameObject() && Mouse.current.rightButton.wasReleasedThisFrame)
         {
             List<RaycastResult> results = GetUIElementsClicked();
@@ -118,7 +101,6 @@ public class InputController: MonoBehaviour
 
     private void OnClickPressed(InputAction.CallbackContext context)
     {
-        //Check if cursor is over a UI gameobject
         if (EventSystem.current.IsPointerOverGameObject())
         {
             List<RaycastResult> results = GetUIElementsClicked();

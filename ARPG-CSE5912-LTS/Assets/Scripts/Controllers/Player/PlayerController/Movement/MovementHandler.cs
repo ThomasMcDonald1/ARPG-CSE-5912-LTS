@@ -1,4 +1,5 @@
 using ARPG.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,26 @@ namespace ARPG.Movement
     {
         public NavMeshAgent NavMeshAgent { get { return agent; } }
         NavMeshAgent agent;
+        Player player;
+
+        public static event EventHandler<InfoEventArgs<int>> PlayerBeganMovingEvent;
+
 
         private void Start()
         {
-            agent = GetComponentInParent<NavMeshAgent>();    
+            agent = GetComponentInParent<NavMeshAgent>();
+            player = GetComponent<Player>();
         }
 
         public void MoveToTarget(Vector3 target)
         {
-            agent.destination = target;
-            agent.isStopped = false;
+            if (!player.playerInAOEAbilityTargetSelectionMode && !player.playerInSingleTargetAbilitySelectionMode)
+            {
+                PlayerBeganMovingEvent?.Invoke(this, new InfoEventArgs<int>(0));
+                agent.destination = target;
+                player.abilityQueued = false;
+                agent.isStopped = false;
+            }
         }
 
         public void Cancel()

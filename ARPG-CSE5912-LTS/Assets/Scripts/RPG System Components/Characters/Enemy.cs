@@ -24,7 +24,7 @@ namespace ARPG.Combat
         protected override void Update()
         {
             base.Update();
-            if (statScript[StatTypes.HEALTH] <= 0)
+            if (stats[StatTypes.HEALTH] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
                 GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
@@ -54,7 +54,7 @@ namespace ARPG.Combat
         {
             if (InTargetRange()) //need set health.
             {
-                Debug.Log("yeah");
+                //Debug.Log("yeah");
                 Vector3 realDirection = GeneralClass.transform.forward;
                 Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
@@ -64,7 +64,7 @@ namespace ARPG.Combat
                 }
                 else if (angle < SightRange && !InStopRange())
                 {
-                    Debug.Log("run");
+                    //Debug.Log("run");
                     RunToPlayer();
                 }
                 else if (angle < SightRange && InStopRange())
@@ -80,7 +80,7 @@ namespace ARPG.Combat
                     StopRun();
                 }
             }
-            Debug.Log("okk");
+            //Debug.Log("okk");
         }
 
         public  void RunToPlayer()
@@ -129,7 +129,7 @@ namespace ARPG.Combat
                 float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
                 if (distance < 2)
                 {
-                    AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= statScript[StatTypes.PHYATK];
+                    AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= stats[StatTypes.PHYATK];
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace ARPG.Combat
         public void Dead()
         {
             //nead a dead animation before destroy.
-            if (statScript[StatTypes.HEALTH] <= 0)
+            if (stats[StatTypes.HEALTH] <= 0)
             {
                 Destroy(gameObject);
             }
