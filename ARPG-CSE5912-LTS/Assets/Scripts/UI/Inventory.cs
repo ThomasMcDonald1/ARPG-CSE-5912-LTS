@@ -1,26 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class Inventory 
+public class Inventory : MonoBehaviour
 {
-    private List<InventoryItems> itemList;
-    public event EventHandler OnItemListChanged;
-    public Inventory()
-    {
-        itemList = new List<InventoryItems>();
-        
-        // Debug.Log(itemList.Count);
+	#region Singleton
+
+	public static Inventory instance;
+
+	void Awake()
+	{
+		instance = this;
+	}
+
+	#endregion
+	public delegate void OnItemChanged();
+	public OnItemChanged onItemChangedCallback;
+	// Our current list of items in the inventory
+	public List<Ite> items = new List<Ite>();
+	public int space = 24;
+
+	// Add a new item if enough room
+	public void Add(Ite item)
+	{
+		Debug.Log("add was called");
+		if (item.showInInventory)
+        {
+            if (items.Count >= space)
+            {
+                Debug.Log("Not enough room.");
+                return;
+            }
+
+            items.Add(item);
+
+            if (onItemChangedCallback != null)
+                onItemChangedCallback.Invoke();
+        }
     }
-    public void AddItem(InventoryItems item)
-    {
-        itemList.Add(item);
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
-    }
-    
-    public List<InventoryItems> GetItemList()
-    {
-        return itemList;
+
+	// Remove an item
+	public void Remove(Ite item)
+	{
+		items.Remove(item);
+
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
     }
 }
