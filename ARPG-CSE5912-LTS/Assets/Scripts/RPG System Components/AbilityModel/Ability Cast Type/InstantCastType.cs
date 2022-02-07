@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class InstantCastType : BaseCastType
 {
-    Character character;
+    //Character character;
 
-    private void Awake()
-    {
-        character = GetComponentInParent<Character>();
-    }
+    //private void Awake()
+    //{
+    //    character = GetComponentInParent<Character>();
+    //}
 
     public override void WaitCastTime(Ability ability)
     {
-
+        CompleteCast(ability);
     }
 
     public override void StopCasting()
