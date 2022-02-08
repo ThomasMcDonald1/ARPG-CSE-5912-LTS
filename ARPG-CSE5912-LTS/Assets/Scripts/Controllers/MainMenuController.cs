@@ -20,13 +20,20 @@ public class MainMenuController : StateMachine
     public GameObject optionsButtonObj;
     public GameObject exitGameButtonObj;
 
+    // Character slots
+    public GameObject startErrorObj, slotsFullErrorObj, deleteCharaErrorObj;
+    public GameObject displayCharacterObj;
+    public GameObject characterNameObj;
+    public List<GameObject> saveSlotButtonObjs;
+    public List<SaveSlot> saveSlotDataObjs;
+
     // Options menu buttons
     public GameObject backFromOptionsToMainButtonObj;
 
     // Create character menu obj
     public Camera characterCreationCameraObj;
     [HideInInspector] public Camera characterCreationCamera;
-    public GameObject characterObj;
+    public GameObject customCharacterObj;
 
     public GameObject backFromCharCreateToMainButtonObj, resetCharaButtonObj, confirmButtonObj;
     public GameObject maleButtonObj, femaleButtonObj;

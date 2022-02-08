@@ -17,6 +17,10 @@ public class BaseGameplayState : State
     public Button exitGameButton;
     public Button charaPanelButton;
     public Button exitPanelToGameButton;
+    public Button yesRespawnButton;
+    public Button noRespawnButton;
+    public Button exitInventoryButton;
+    public Button changeToInventoryMenu;
 
     protected virtual void Awake()
     {
@@ -29,8 +33,12 @@ public class BaseGameplayState : State
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
+        exitInventoryButton = gameplayStateController.exitInventoryMenuObj.GetComponent<Button>();
+        changeToInventoryMenu = gameplayStateController.openInventoryMenuObj.GetComponent<Button>();
 
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
+        yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
+        noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
     }
 
     protected override void AddListeners()
@@ -74,7 +82,7 @@ public class BaseGameplayState : State
 
     }
 
-    protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> e)
+    protected virtual void OnClickCanceled(object sender, InfoEventArgs<RaycastHit> r)
     {
 
     }

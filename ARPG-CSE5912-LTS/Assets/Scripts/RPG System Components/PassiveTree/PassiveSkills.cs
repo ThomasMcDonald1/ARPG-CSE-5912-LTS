@@ -26,7 +26,7 @@ public class PassiveSkills
         var values = passiveNode.StatValues;
         for (int i = 0; i < stats.Length; i++)
         {
-            playerStats[StatTypes.SKILLPOINTS] -= 1;
+            // playerStats[StatTypes.SKILLPOINTS] -= 1;
             playerStats[stats[i]] += values[i];
             passiveNode.Unlocked = true;
             UpdateVisual(background);
@@ -35,6 +35,7 @@ public class PassiveSkills
     }
     private bool Unlockable(PassiveNode node)
     {
+        // if (playerStats[StatTypes.SKILLPINTS] < 1) return false;
         if (node.Prerequisites.Length == 0) return true;
         foreach (var prereq in node.Prerequisites)
         {

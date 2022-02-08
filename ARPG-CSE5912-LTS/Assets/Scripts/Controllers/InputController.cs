@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InputController: MonoBehaviour
+public class InputController : MonoBehaviour
 {
     private static InputController instance;
     public static InputController Instance { get { return instance; } }
@@ -101,7 +101,6 @@ public class InputController: MonoBehaviour
 
     private void OnClickPressed(InputAction.CallbackContext context)
     {
-        //Check if cursor is over a UI gameobject
         if (EventSystem.current.IsPointerOverGameObject())
         {
             List<RaycastResult> results = GetUIElementsClicked();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterPanelState : BaseGameplayState
 {
+
     public override void Enter()
     {
         base.Enter();
@@ -15,6 +16,9 @@ public class CharacterPanelState : BaseGameplayState
             if (s.name != "Theme") s.source.Stop();
         }
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
+        exitInventoryButton.onClick.AddListener(() => CloseInventory());
+        changeToInventoryMenu.onClick.AddListener(() => InventoryStartUp());
+
     }
 
     public override void Exit()
@@ -28,5 +32,23 @@ public class CharacterPanelState : BaseGameplayState
     {
         gameplayStateController.ChangeState<GameplayState>();
         FindObjectOfType<AudioManager>().Play("MenuClick");
+    }
+
+
+    void InventoryStartUp()
+    {
+        gameplayStateController.inventoryCanvas.enabled = true;
+        gameplayStateController.characterPanelCanvas.enabled = false;
+    }
+    void CloseInventory()
+    {
+        gameplayStateController.inventoryCanvas.enabled = false;
+
+        gameplayStateController.ChangeState<GameplayState>();
+
+
+        //characterPanel.enabled = false;
+
+
     }
 }

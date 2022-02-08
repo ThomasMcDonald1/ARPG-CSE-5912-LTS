@@ -13,6 +13,8 @@ public class BaseMenuState : State
     public Button deleteCharButton;
     public Button optionsButton;
     public Button exitGameButton;
+    public Button slot1Button, slot2Button, slot3Button, slot4Button, slot5Button, slot6Button;
+    public SaveSlot selectedSlot;
 
     // options menu buttons
     public Button backFromOptionsToMainButton;
@@ -38,6 +40,14 @@ public class BaseMenuState : State
         deleteCharButton = mainMenuController.deleteCharButtonObj.GetComponent<Button>();
         optionsButton = mainMenuController.optionsButtonObj.GetComponent<Button>();
         exitGameButton = mainMenuController.exitGameButtonObj.GetComponent<Button>();
+
+        //save slots
+        slot1Button = mainMenuController.saveSlotButtonObjs[0].GetComponent<Button>();
+        slot2Button = mainMenuController.saveSlotButtonObjs[1].GetComponent<Button>();
+        slot3Button = mainMenuController.saveSlotButtonObjs[2].GetComponent<Button>();
+        slot4Button = mainMenuController.saveSlotButtonObjs[3].GetComponent<Button>();
+        slot5Button = mainMenuController.saveSlotButtonObjs[4].GetComponent<Button>();
+        slot6Button = mainMenuController.saveSlotButtonObjs[5].GetComponent<Button>();
 
         //options
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();

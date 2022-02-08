@@ -96,6 +96,11 @@ public class CharacterCustomizer
     public string CharacterName { get { return charName; } }
     public Gender CharacterGender { get { return character.CharacterGender; } }
 
+    private Dictionary<BodyPartNames, string> colorProperties = new Dictionary<BodyPartNames, string>()
+        { { BodyPartNames.Hair, "_Color_Hair" },  {BodyPartNames.Eyebrows, "_Color_Hair" },  {BodyPartNames.FaceMark, "_Color_BodyArt" },
+        {BodyPartNames.FacialHair, "_Color_Hair" },  {BodyPartNames.Eyes, "_Color_Eye" },  {BodyPartNames.Skin, "_Color_Skin" } };
+
+
     public CharacterCustomizer(ModularCharacterManager character)
     {
         this.character = character;
@@ -313,6 +318,7 @@ public class CharacterCustomizer
         if (string.IsNullOrEmpty(charName) || string.IsNullOrWhiteSpace(charName)) { return false; }
         else { return true; }
     }
+
 
 }
 

@@ -45,6 +45,9 @@ public class DamageAbilityEffect : BaseAbilityEffect
         //If we want an upper limit on damage, we can clamp it like this
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
 
+        //TODO: You could also modify ALL damage done in the game by multiplying this by the variable 'globalDamageBalanceAdjustment' which can be
+        //changed in the BaseAbilityEffect script
+
         return finalCalculatedDamage;
     }
 }

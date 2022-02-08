@@ -5,18 +5,22 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+
 //The most fundamental level of defining a character. Encompasses Player character, NPCs, and enemies.
 public abstract class Character : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    [HideInInspector] public NavMeshAgent agent;
 
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
     public GameplayStateController gameplayStateController;
-    public bool abilityQueued = false;
+    [HideInInspector] public bool abilityQueued = false;
 
-    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityIsReadyToBeCastEvent;
+    [HideInInspector] public Stats stats;
+
+    public float smooth;
+    public float yVelocity;
+    public virtual Transform AttackTarget { get; set; }
 
     private void Awake()
     {
@@ -24,37 +28,17 @@ public abstract class Character : MonoBehaviour
         charactersInRange = new List<Character>();
     }
 
-    private void OnEnable()
+    protected virtual void Start()
     {
-        Player.PlayerSelectedGroundTargetLocationEvent += OnPlayerSelectedGroundTargetLocation;
-        AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
+        smooth = 0.3f;
+        yVelocity = 0.0f;
+        AttackTarget = null;
+        stats = GetComponent<Stats>();
     }
 
-    void OnPlayerSelectedGroundTargetLocation(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
+    protected virtual void Update()
     {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        BaseAbilityRange abilityRange = e.info.Item2.GetComponent<BaseAbilityRange>();
-        //TODO: make player run to max range of the ability
-        float distFromCharacter = Vector3.Distance(e.info.Item1.point, transform.position);
-        float distToTravel = distFromCharacter - abilityRange.range;
-        if (distFromCharacter > abilityRange.range)
-        {
-            abilityQueued = true;
-            StartCoroutine(RunWithinRange(e.info.Item1, abilityRange.range, distToTravel, e.info.Item2));
-        }
-        else
-        {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-            abilityArea.PerformAOE(e.info.Item1);
-        }
-    }
 
-    void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        abilityQueued = false;
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-        abilityArea.PerformAOE(e.info.Item1);
     }
 
     //Put any code here that should be shared functionality across every type of character
@@ -73,9 +57,13 @@ public abstract class Character : MonoBehaviour
             if (this is Player)
             {
                 Player player = (Player)this;
+                player.StopAllCoroutines();
+                gameplayStateController.aoeReticleCylinder.SetActive(false);
+                player.playerInSingleTargetAbilitySelectionMode = false;
+                player.playerInAOEAbilityTargetSelectionMode = false;
                 player.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
             }
-            else 
+            else
             {
                 //Enemy enemy = (Enemy)this;
                 //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
@@ -128,27 +116,5 @@ public abstract class Character : MonoBehaviour
             }
         }
         return false;
-    }
-
-    private IEnumerator RunWithinRange(RaycastHit hit, float range, float distToTravel, Ability ability)
-    {
-        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
-        Vector3 dir = hit.point - transform.position;
-        Vector3 normalizedDir = dir.normalized;
-        Vector3 endPoint = transform.position + (normalizedDir * (distToTravel + 0.1f));
-
-        while (abilityQueued)
-        {
-            agent.destination = endPoint;
-            float distFromPlayer = Vector3.Distance(hit.point, transform.position);
-            if (distFromPlayer <= range)
-            {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
-            }
-        
-            yield return null;
-        }
-        
-    }        
-    
+    } 
 }

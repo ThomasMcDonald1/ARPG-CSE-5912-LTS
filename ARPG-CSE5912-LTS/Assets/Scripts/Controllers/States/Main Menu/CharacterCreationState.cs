@@ -15,9 +15,9 @@ public class CharacterCreationState : BaseMenuState
         Debug.Log("entered character creation menu state");
         mainMenuController.createCharMenuCanvas.enabled = true;
         mainMenuController.characterCreationCamera.enabled = true;
-        if (characterManager ==  null)
+        if (characterManager == null)
         {
-            characterManager = new CharacterCustomizer(mainMenuController.characterObj.GetComponent<ModularCharacterManager>());
+            characterManager = new CharacterCustomizer(mainMenuController.customCharacterObj.GetComponent<ModularCharacterManager>());
         }
         customCharacter = mainMenuController.charaScriptableObj;
         nameError.SetActive(false);
@@ -59,28 +59,48 @@ public class CharacterCreationState : BaseMenuState
     {
         base.Exit();
         mainMenuController.createCharMenuCanvas.enabled = false;
-        mainMenuController.characterCreationCamera.enabled = false;        
+        mainMenuController.characterCreationCamera.enabled = false;
     }
 
     void OnBackButtonClicked()
     {
+        ResetCharacter();
         mainMenuController.ChangeState<MainMenuRootState>();
     }
 
     void OnConfirmButtonClicked()
     {
+        Debug.Log("Confirm Button Clicked!");
         if (characterManager.NameIsValid())
         {
+            Debug.Log("Now entering game");
             GetCharacterDetails();
             nameError.SetActive(false);
-            Debug.Log("Confirm Button Clicked!");
-            SceneManager.LoadScene("AbilitySystemTestScene", LoadSceneMode.Single);
+            int slotNum = FindEmptySlot();
+            mainMenuController.saveSlotDataObjs[slotNum].containsData = true;
+            mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
+            selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];
+            Debug.Log("Slot " + selectedSlot.slotNumber + " should have data: " + selectedSlot.containsData);
+            SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
         }
         else
         {
+            Debug.Log("Error: need a name!");
             nameError.SetActive(true);
         }
         PlayAudio();
+    }
+
+    int FindEmptySlot()
+    {
+        for (int i = 0; i < mainMenuController.saveSlotDataObjs.Count; i++)
+        {
+            if (!mainMenuController.saveSlotDataObjs[i].containsData)
+            {
+                return i;
+            }
+        }
+        return -1; //should never be here
     }
 
     void SetGenderMale()
@@ -178,7 +198,7 @@ public class CharacterCreationState : BaseMenuState
         Debug.Log("Player facial hair color changed");
         characterManager.SetFacialHairColor();
         ChangeFacialHairButton();
-        PlayAudio();        
+        PlayAudio();
     }
 
     void ChangeFacialHairButton()
@@ -204,7 +224,7 @@ public class CharacterCreationState : BaseMenuState
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Eyes);
         eyeColorButton.colors = colors;
     }
-   
+
     void SetSkinColor()
     {
         Debug.Log("Player skin color changed");
@@ -269,7 +289,6 @@ public class CharacterCreationState : BaseMenuState
         customCharacter.UpdateColors(hairColor, eyebrowColor, facemarkColor, facialHairColor, eyeColor, skinColor);
         customCharacter.UpdateGender(gender);
         customCharacter.UpdateName(charName);
-
     }
 
 }

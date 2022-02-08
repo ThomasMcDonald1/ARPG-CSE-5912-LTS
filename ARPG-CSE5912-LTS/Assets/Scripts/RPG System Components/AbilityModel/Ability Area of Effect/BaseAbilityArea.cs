@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class BaseAbilityArea : MonoBehaviour
 {
-    [HideInInspector] public bool abilityAreaNeedsShown = false;
+    public bool abilityAreaNeedsShown = false;
     public abstract void PerformAOE(RaycastHit hit);
     public abstract void DisplayAOEArea();
 }
