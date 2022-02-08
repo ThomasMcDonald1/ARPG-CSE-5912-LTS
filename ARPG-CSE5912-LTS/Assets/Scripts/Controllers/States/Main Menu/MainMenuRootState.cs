@@ -7,14 +7,18 @@ using TMPro;
 
 public class MainMenuRootState : BaseMenuState
 {
+    private const int SLOTS_VISIBLE = 4;
+
     public override void Enter()
     {
         base.Enter();
         Debug.Log("entered main menu root state");
         mainMenuController.mainMenuCanvas.enabled = true;
+        mainMenuController.deleteCharacterCanvas.enabled = false;
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
+
         ClearErrorMessages();
 
         selectedSlot = null;
@@ -35,6 +39,8 @@ public class MainMenuRootState : BaseMenuState
         slot5Button.onClick.AddListener(() => OnSlotClicked(5));
         slot6Button.onClick.AddListener(() => OnSlotClicked(6));
         deleteCharButton.onClick.AddListener(() => OnDeleteCharacterSelected());
+        yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
+        noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
     }
 
     void SetSlotVisibility()
@@ -52,7 +58,35 @@ public class MainMenuRootState : BaseMenuState
                 mainMenuController.saveSlotButtonObjs[slotNum].SetActive(false);
             }
         }
+        AdjustScrollArea();
     }
+
+    int GetNumberOfSaveSlots()
+    {
+        int count = 0;
+        for (int slotNum = 0; slotNum < mainMenuController.saveSlotDataObjs.Count; slotNum++)
+        {
+            if (mainMenuController.saveSlotDataObjs[slotNum].containsData)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void AdjustScrollArea()
+    {
+        int count = GetNumberOfSaveSlots();
+        if (count >= SLOTS_VISIBLE)
+        {
+            charaScroll.sizeDelta = new Vector2(charaScroll.sizeDelta.x, 430f / 6f * count);
+        }
+        else
+        {
+            charaScroll.sizeDelta = new Vector2(charaScroll.sizeDelta.x, 430f / 6f * SLOTS_VISIBLE);
+        }
+    }
+
 
     public override void Exit()
     {
@@ -184,12 +218,30 @@ public class MainMenuRootState : BaseMenuState
         }
         else
         {
-            Debug.Log("Deleting slot " + selectedSlot.slotNumber);
-            mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber-1].containsData = false;
-            selectedSlot = null;
-            mainMenuController.displayCharacterObj.SetActive(false);
-            mainMenuController.characterNameObj.SetActive(false);
+            mainMenuController.deleteCharacterCanvas.enabled = true;
         }
+        SetSlotVisibility();
+    }
+
+    void OnYesDeleteClicked()
+    {
+        Debug.Log("Character deletion confirmed. Deleting character in slot " + selectedSlot.slotNumber);
+
+        mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber - 1].containsData = false;
+        selectedSlot = null;
+        mainMenuController.displayCharacterObj.SetActive(false);
+        mainMenuController.characterNameObj.SetActive(false);
+
+        mainMenuController.deleteCharacterCanvas.enabled = false;
+
+        SetSlotVisibility();
+    }
+
+    void OnNoDeleteClicked()
+    {
+        Debug.Log("Character deletion was cancelled");
+        mainMenuController.deleteCharacterCanvas.enabled = false;
+
         SetSlotVisibility();
     }
 
