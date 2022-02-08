@@ -12,9 +12,11 @@ public class MainMenuRootState : BaseMenuState
         base.Enter();
         Debug.Log("entered main menu root state");
         mainMenuController.mainMenuCanvas.enabled = true;
+        mainMenuController.deleteCharacterCanvas.enabled = false;
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
+
         ClearErrorMessages();
 
         selectedSlot = null;
@@ -35,6 +37,8 @@ public class MainMenuRootState : BaseMenuState
         slot5Button.onClick.AddListener(() => OnSlotClicked(5));
         slot6Button.onClick.AddListener(() => OnSlotClicked(6));
         deleteCharButton.onClick.AddListener(() => OnDeleteCharacterSelected());
+        yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
+        noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
     }
 
     void SetSlotVisibility()
@@ -184,12 +188,30 @@ public class MainMenuRootState : BaseMenuState
         }
         else
         {
-            Debug.Log("Deleting slot " + selectedSlot.slotNumber);
-            mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber-1].containsData = false;
-            selectedSlot = null;
-            mainMenuController.displayCharacterObj.SetActive(false);
-            mainMenuController.characterNameObj.SetActive(false);
+            mainMenuController.deleteCharacterCanvas.enabled = true;
         }
+        SetSlotVisibility();
+    }
+
+    void OnYesDeleteClicked()
+    {
+        Debug.Log("Character deletion confirmed. Deleting character in slot " + selectedSlot.slotNumber);
+
+        mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber - 1].containsData = false;
+        selectedSlot = null;
+        mainMenuController.displayCharacterObj.SetActive(false);
+        mainMenuController.characterNameObj.SetActive(false);
+
+        mainMenuController.deleteCharacterCanvas.enabled = false;
+
+        SetSlotVisibility();
+    }
+
+    void OnNoDeleteClicked()
+    {
+        Debug.Log("Character deletion was cancelled");
+        mainMenuController.deleteCharacterCanvas.enabled = false;
+
         SetSlotVisibility();
     }
 
