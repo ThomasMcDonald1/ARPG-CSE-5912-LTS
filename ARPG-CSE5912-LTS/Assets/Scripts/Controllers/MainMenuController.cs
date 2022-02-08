@@ -29,6 +29,7 @@ public class MainMenuController : StateMachine
     public GameObject yesDeleteObj, noDeleteObj;
     public List<GameObject> saveSlotButtonObjs;
     public List<SaveSlot> saveSlotDataObjs;
+    public GameObject slotContainerObj;
 
     // Options menu buttons
     public GameObject backFromOptionsToMainButtonObj;

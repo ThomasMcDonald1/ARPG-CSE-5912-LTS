@@ -7,6 +7,8 @@ using TMPro;
 
 public class MainMenuRootState : BaseMenuState
 {
+    private const int SLOTS_VISIBLE = 4;
+
     public override void Enter()
     {
         base.Enter();
@@ -56,7 +58,35 @@ public class MainMenuRootState : BaseMenuState
                 mainMenuController.saveSlotButtonObjs[slotNum].SetActive(false);
             }
         }
+        AdjustScrollArea();
     }
+
+    int GetNumberOfSaveSlots()
+    {
+        int count = 0;
+        for (int slotNum = 0; slotNum < mainMenuController.saveSlotDataObjs.Count; slotNum++)
+        {
+            if (mainMenuController.saveSlotDataObjs[slotNum].containsData)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    void AdjustScrollArea()
+    {
+        int count = GetNumberOfSaveSlots();
+        if (count >= SLOTS_VISIBLE)
+        {
+            charaScroll.sizeDelta = new Vector2(charaScroll.sizeDelta.x, 430f / 6f * count);
+        }
+        else
+        {
+            charaScroll.sizeDelta = new Vector2(charaScroll.sizeDelta.x, 430f / 6f * SLOTS_VISIBLE);
+        }
+    }
+
 
     public override void Exit()
     {
