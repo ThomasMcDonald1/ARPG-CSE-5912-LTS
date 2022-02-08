@@ -14,6 +14,7 @@ public class GameplayState : BaseGameplayState
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
+    PlayerAbilityController playerAbilityController;
     NavMeshAgent agent;
     Animator animator;
     ContextMenuPanel contextMenuPanel;
@@ -45,6 +46,7 @@ public class GameplayState : BaseGameplayState
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         }
         actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
+        playerAbilityController = player.GetComponent<PlayerAbilityController>();
     }
 
     public override void Exit()
@@ -81,7 +83,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
         //updated to include enemylayer as well
-        if (agent.enabled && (e.info.collider.gameObject.layer == groundLayer || e.info.collider.gameObject.layer == enemyLayer) && !player.playerInAOEAbilityTargetSelectionMode)
+        if (agent.enabled && (e.info.collider.gameObject.layer == groundLayer || e.info.collider.gameObject.layer == enemyLayer) && !playerAbilityController.playerInAOEAbilityTargetSelectionMode)
         {
             player.GetComponent<PlayerController>().PlayerOnClickEventResponse(e.info.collider.gameObject.layer, sender, e);
         }
@@ -93,13 +95,13 @@ public class GameplayState : BaseGameplayState
         {
             player.GetComponent<PlayerController>().PlayerCancelClickEventResponse(sender, e);
         }
-        if (player.playerInAOEAbilityTargetSelectionMode)
+        if (playerAbilityController.playerInAOEAbilityTargetSelectionMode)
         {
-            player.playerInAOEAbilityTargetSelectionMode = false;
+            playerAbilityController.playerInAOEAbilityTargetSelectionMode = false;
         }
-        if (player.playerNeedsToReleaseMouseButton)
+        if (playerAbilityController.playerNeedsToReleaseMouseButton)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
         }
     }
 
@@ -153,7 +155,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -163,7 +165,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton2);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -173,7 +175,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton3);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -183,7 +185,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton4);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -193,7 +195,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton5);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -203,7 +205,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton6);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -213,7 +215,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton7);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -223,7 +225,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton8);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -233,7 +235,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton9);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -243,7 +245,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton10);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -253,7 +255,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton11);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -263,7 +265,7 @@ public class GameplayState : BaseGameplayState
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton12);
         if (abilityInSlot != null)
         {
-            player.playerNeedsToReleaseMouseButton = false;
+            playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
         }
     }
@@ -280,7 +282,7 @@ public class GameplayState : BaseGameplayState
                 Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionButton);
                 if (abilityInSlot != null)
                 {
-                    player.playerNeedsToReleaseMouseButton = true;
+                    playerAbilityController.playerNeedsToReleaseMouseButton = true;
                     player.QueueAbilityCast(abilityInSlot);
                 }
             }

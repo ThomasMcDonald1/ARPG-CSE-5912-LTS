@@ -44,7 +44,7 @@ public class GameoverState : BaseGameplayState
         statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
         animator.SetBool("Dead", false);
         gameplayStateController.ChangeState<GameplayState>();
-        Debug.Log(playerController.playerClass.AttackTarget);
+        Debug.Log(playerController.player.AttackTarget);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 

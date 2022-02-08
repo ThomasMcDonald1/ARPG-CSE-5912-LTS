@@ -31,6 +31,7 @@ public enum StatTypes
     POISONRES, //character's resistance to poison damage
 
     //Secondary & Derived stats (from attributes and gear)
+    ATTACKRANGE, //The attack range gotten from the equipped weapon
     ARMOR, //The total armor from gear equipped
     ATKSPD, //Attack speed of equipped weapon plus bonuses from passives, etc
     CRITCHANCE, //Chance that a physical attack will become a critical hit

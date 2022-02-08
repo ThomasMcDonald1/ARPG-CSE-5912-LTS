@@ -25,10 +25,10 @@ using System.Collections;
         private string weaponTypeName;
 
 
-        public Player playerClass;
+        public Player player;
     private void Awake()
     {
-        playerClass = this.GetComponent<Knight>();
+        player = GetComponent<Player>();
     }
 
     public void PlayerOnClickEventResponse(int layer, object sender, InfoEventArgs<RaycastHit> e)
@@ -38,7 +38,7 @@ using System.Collections;
                 case "Walkable":
                     if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
-                        playerClass.Cancel();
+                        player.Cancel();
                         GetComponent<MovementHandler>().MoveToTarget(e.info.point);
                     }
                     break;
@@ -47,9 +47,9 @@ using System.Collections;
                     break;
 
                 case "Enemy":
-                    playerClass.AttackSignal(true);
+                    player.AttackSignal(true);
                     EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
-                    playerClass.Attack(target);
+                    player.Attack(target);
                     break;
 
                 default:
@@ -73,8 +73,8 @@ using System.Collections;
 
             //After we have waited 5 seconds print the time again.
             //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-            playerClass.AttackSignal(false);
-            if (playerClass.InTargetRange()) { playerClass.Cancel(); }
+            player.AttackSignal(false);
+            if (player.InTargetRange()) { player.Cancel(); }
         }
 
         private void Start()
