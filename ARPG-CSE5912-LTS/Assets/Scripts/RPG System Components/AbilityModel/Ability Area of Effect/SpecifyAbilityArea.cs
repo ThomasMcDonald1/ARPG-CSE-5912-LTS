@@ -31,17 +31,17 @@ public class SpecifyAbilityArea : BaseAbilityArea
 
     public override void PerformAOE(RaycastHit hit)
     {
-        Debug.Log("AOE ability centered on: " + hit.point);
+        //Debug.Log("AOE ability centered on: " + hit.point);
         //TODO: Make overlap sphere the same size as the targeting reticle
         Collider[] hitColliders = Physics.OverlapSphere(hit.point, aoeRadius);
 
         foreach (Collider hitCollider in hitColliders)
         {
-            Debug.Log("Collider hit: " + hitCollider.name);
             Character character = hitCollider.gameObject.GetComponent<Character>();
             if (character != null)
             {
-                //Do ability effects on character
+                Debug.Log("Collider hit: " + hitCollider.name);
+                
 
             }
         }

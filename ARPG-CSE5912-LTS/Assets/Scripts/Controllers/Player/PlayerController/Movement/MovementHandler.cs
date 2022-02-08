@@ -11,7 +11,7 @@ namespace ARPG.Movement
     {
         public NavMeshAgent NavMeshAgent { get { return agent; } }
         NavMeshAgent agent;
-        Player player;
+        PlayerAbilityController playerAbilityController;
 
         public static event EventHandler<InfoEventArgs<int>> PlayerBeganMovingEvent;
 
@@ -19,16 +19,16 @@ namespace ARPG.Movement
         private void Start()
         {
             agent = GetComponentInParent<NavMeshAgent>();
-            player = GetComponent<Player>();
+            playerAbilityController = GetComponent<PlayerAbilityController>();
         }
 
         public void MoveToTarget(Vector3 target)
         {
-            if (!player.playerInAOEAbilityTargetSelectionMode && !player.playerInSingleTargetAbilitySelectionMode)
+            if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
             {
                 PlayerBeganMovingEvent?.Invoke(this, new InfoEventArgs<int>(0));
                 agent.destination = target;
-                player.abilityQueued = false;
+                playerAbilityController.abilityQueued = false;
                 agent.isStopped = false;
             }
         }

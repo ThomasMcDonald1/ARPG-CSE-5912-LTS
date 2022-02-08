@@ -8,13 +8,9 @@ using UnityEngine.EventSystems;
 public class InventoryUI:MonoBehaviour
 {
     private Inventory inventory;
-    private Transform itemSlotContainer;
-    private Transform itemSlotTemplate;
-    private void Awake()
-    {
-        itemSlotContainer = transform.Find("itemSlotContainer");
-        itemSlotTemplate = itemSlotContainer.Find("ItemButton");
-    }
+    [SerializeField] private Transform itemSlotContainer;
+    [SerializeField] private Transform itemSlotTemplate;
+
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;

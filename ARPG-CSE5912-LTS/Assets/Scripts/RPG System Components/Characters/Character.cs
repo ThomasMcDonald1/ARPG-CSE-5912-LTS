@@ -14,9 +14,10 @@ public abstract class Character : MonoBehaviour
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
     public GameplayStateController gameplayStateController;
+    PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
 
-    [HideInInspector] public Stats stats;
+    public Stats stats;
 
     public float smooth;
     public float yVelocity;
@@ -30,10 +31,11 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
+        stats = GetComponent<Stats>();
+        playerAbilityController = GetComponent<PlayerAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
         AttackTarget = null;
-        stats = GetComponent<Stats>();
     }
 
     protected virtual void Update()
@@ -59,9 +61,9 @@ public abstract class Character : MonoBehaviour
                 Player player = (Player)this;
                 player.StopAllCoroutines();
                 gameplayStateController.aoeReticleCylinder.SetActive(false);
-                player.playerInSingleTargetAbilitySelectionMode = false;
-                player.playerInAOEAbilityTargetSelectionMode = false;
-                player.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
+                playerAbilityController.playerInSingleTargetAbilitySelectionMode = false;
+                playerAbilityController.playerInAOEAbilityTargetSelectionMode = false;
+                playerAbilityController.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
             }
             else
             {
