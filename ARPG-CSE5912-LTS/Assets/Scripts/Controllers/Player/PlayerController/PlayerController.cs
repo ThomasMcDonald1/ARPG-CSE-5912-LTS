@@ -36,14 +36,16 @@ using System.Collections;
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
-                        player.Cancel();
+                        playerClass.AttackCancel();
                         GetComponent<MovementHandler>().MoveToTarget(e.info.point);
                     }
                     break;
 
                 case "NPC":
+                    NPC npcTarget = e.info.transform.GetComponent<NPC>();
+                    Debug.Log("Clicked on NPC!");
                     break;
 
                 case "Enemy":
@@ -73,8 +75,8 @@ using System.Collections;
 
             //After we have waited 5 seconds print the time again.
             //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-            player.AttackSignal(false);
-            if (player.InTargetRange()) { player.Cancel(); }
+            playerClass.AttackSignal(false);
+            if (playerClass.InCombatTargetRange()) { playerClass.AttackCancel(); }
         }
 
         private void Start()
