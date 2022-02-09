@@ -11,7 +11,7 @@ public class PlayerAbilityController : Player
     public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
     public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedGroundTargetLocationEvent;
     public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedSingleTargetEvent;
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityIsReadyToBeCastEvent;
+    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityIsReadyToBeCastEvent;
 
     Coroutine aoeAbilitySelectionMode;
     Coroutine singleTargetSelectionMode;
@@ -23,13 +23,14 @@ public class PlayerAbilityController : Player
     [SerializeField] Ability fireballTest;
     [SerializeField] Ability bowAbilityTest;
 
-    MouseCursorChanger cursorChanger;
+    Player player;
+
     int groundLayerMask = 1 << 6;
 
 
     private void Awake()
     {
-        cursorChanger = gameplayStateController.GetComponent<MouseCursorChanger>();
+        player = GetComponent<Player>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
         abilitiesKnown.Add(bowAbilityTest);
@@ -41,6 +42,7 @@ public class PlayerAbilityController : Player
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
         PlayerSelectedGroundTargetLocationEvent += OnPlayerSelectedGroundTargetLocation;
         PlayerSelectedSingleTargetEvent += OnPlayerSelectedSingleTarget;
+        CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCastTimerCast;
     }
 
     private void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -55,8 +57,7 @@ public class PlayerAbilityController : Player
     {
         BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
         abilityQueued = false;
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-        abilityArea.PerformAOE(e.info.Item1);
+        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((e.info.Item2, e.info.Item1, player)));
     }
 
     void OnPlayerSelectedGroundTargetLocation(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
@@ -74,8 +75,7 @@ public class PlayerAbilityController : Player
         }
         else if (GetComponent<Player>() != null)
         {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<Ability>(e.info.Item2));
-            abilityArea.PerformAOE(e.info.Item1);
+            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((e.info.Item2, e.info.Item1, player)));
         }
     }
 
@@ -83,6 +83,12 @@ public class PlayerAbilityController : Player
     {
         //abilityQueued = true;
         //do a coroutine for running within range of enemy
+    }
+
+    void OnCompletedCastTimerCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
+    {
+        Debug.Log("Cast timer cast completed");
+        GetColliders(e.info.Item2, e.info.Item1, player);
     }
 
     public void PlayerQueueAbilityCastSelectionRequired(Ability ability, bool requiresCharacter)
@@ -98,6 +104,44 @@ public class PlayerAbilityController : Player
         {
             playerInAOEAbilityTargetSelectionMode = true;
             aoeAbilitySelectionMode = StartCoroutine(WaitForPlayerClickAOE(ability));
+        }
+    }
+
+    void GetColliders(RaycastHit hit, Ability ability, Character caster)
+    {
+        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
+        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(hit, caster);
+        DeductCastingCost(ability);
+        ApplyAbilityEffects(charactersCollided, ability);
+    }
+
+    void DeductCastingCost(Ability ability)
+    {
+        BaseAbilityCost cost = ability.GetComponent<BaseAbilityCost>();
+        AbilityEnergyCost energyCost = (AbilityEnergyCost)cost;
+        //AbilityHealthCost healthCost = (AbilityHealthCost)cost;
+        //etc
+        if (energyCost != null)
+        {
+            stats[StatTypes.ENERGY] -= cost.cost;
+        }
+    }
+
+    void ApplyAbilityEffects(List<Character> targets, Ability ability)
+    {
+        BaseAbilityEffect[] effects = ability.GetComponentsInChildren<BaseAbilityEffect>();
+        for (int i = 0; i < targets.Count; i++)
+        {
+            for (int j = 0; j < effects.Length; j++)
+            {
+                BaseAbilityEffect effect = effects[j];
+                AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
+                if (specialTargeter.IsTarget(targets[i]))
+                {
+                    Debug.Log("Applying ability effects to " + targets[i].name);
+                    effect.Apply(targets[i]);
+                }
+            }
         }
     }
 
@@ -143,7 +187,6 @@ public class PlayerAbilityController : Player
                     if (!targetInRange)
                     {
                         PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
-                        //do more stuff
                     }
                 }
             }

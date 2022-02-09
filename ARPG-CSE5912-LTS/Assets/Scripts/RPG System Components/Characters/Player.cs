@@ -10,6 +10,8 @@ public class Player : Character
 {
     [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private InventoryUI uiInventory;
+    public MouseCursorChanger cursorChanger;
+
     private Inventory inventory;
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }

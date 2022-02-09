@@ -23,10 +23,10 @@ public class CastingBar : MonoBehaviour
         PlayerAbilityController.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
     }
 
-    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<Ability> e)
+    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
     {
         castBarCanvas.SetActive(true);
-        abilityIcon.sprite = e.info.icon;
-        abilityNameText.text = e.info.name;
+        abilityIcon.sprite = e.info.Item1.icon;
+        abilityNameText.text = e.info.Item1.name;
     }
 }
