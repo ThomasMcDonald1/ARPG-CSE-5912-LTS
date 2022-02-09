@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SingleCharacterAbilityArea : BaseAbilityArea
 {
-    public override void PerformAOE(RaycastHit hit)
+    public override List<Character> PerformAOECheckToGetColliders(RaycastHit hit, Character caster)
     {
+        List<Character> charList = new List<Character>();
         Character character = hit.collider.gameObject.GetComponent<Character>();
         if (character != null)
         {
-            //Do ability effects on character
+            charList.Add(character);
         }
+        return charList;
     }
 
     public override void DisplayAOEArea()

@@ -21,13 +21,17 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     //Apply the ability's effect to the target
     public void Apply(Character target)
     {
-        if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
-            return;
+        //if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
+        //    return;
 
         if (GetComponent<BaseHitRate>().RollForHit(target))
         {
-            //Maybe broadcast an event that the target was hit
+            //Can invoke an event that the target was hit for floating combat text, etc
             OnApply(target);
+        }
+        else
+        {
+            //Missed! Can invoke miss event here for floating combat text, etc
         }
     }
 
