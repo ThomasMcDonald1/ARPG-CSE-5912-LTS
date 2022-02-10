@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
     // Our current list of items in the inventory
+    public Hashtable amount = new Hashtable();
     public List<Ite> items = new List<Ite>();
     public int space = 24;
 
@@ -38,12 +40,13 @@ public class Inventory : MonoBehaviour
                 {
                    
                     //Debug.Log(item.type + "has: " + items.Count);
-                    if ((int)inventoryItem.type == (int)item.type)
+                    if (inventoryItem.name.Equals(item.name))
                     {
                         //Debug.Log("Room:  " + items.Count);
 
 
-                        inventoryItem.amount += 1;
+                        int num = (int)amount[item] + 1;
+                        amount[item] = num;
                         //Debug.Log(item.type + "has: " + inventoryItem.amount);
 
                         iteInInventory = true;
@@ -54,20 +57,24 @@ public class Inventory : MonoBehaviour
                     
                 }
             }
-            if (!item.stackable)
+            if (!item.stackable || !iteInInventory)
             {
+                amount.Add(item, 1);
                 items.Add(item);
 
                 if (onItemChangedCallback != null)
                     onItemChangedCallback.Invoke();
-            }else if(!iteInInventory && item.stackable)
-            {
-                item.amount += 1;
-                items.Add(item);
-               
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke();
             }
+            //}else if(!iteInInventory && item.stackable)
+            //{
+            //   // item.amount += 1;
+            //    //int num = (int)amount[item] + 1;
+            //    amount.Add(item, 1);
+            //    items.Add(item);
+               
+            //    if (onItemChangedCallback != null)
+            //        onItemChangedCallback.Invoke();
+            //}
         }
     }
 
@@ -126,7 +133,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (Ite item in items)
         {
-            Debug.Log(item.type + " amount: " + item.amount);
+           // Debug.Log(item.name + " amount: " + item.amount);
         }
     }
     // Remove an item

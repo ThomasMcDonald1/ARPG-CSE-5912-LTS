@@ -23,17 +23,21 @@ public class InventoryUI : MonoBehaviour
     }
     void UpdateUI()
     {
-        for(int i = 0; i < slots.Length; i++)
+        //for(int i = 0; i < inventory.items.Count; i++)
+        //{
+
+        //}
+        for (int i = 0; i < slots.Length; i++)
         {
-            if( i  < inventory.items.Count)
+            if (i < inventory.items.Count)
             {
-                Debug.Log(inventory.items[i].type + " index: "+i+" amount: " + inventory.items[i].amount);
+                Debug.Log(inventory.items[i].name + " index: " + i + " amount: " + inventory.amount[inventory.items[i]]);
                 if (inventory.items[i].stackable)
                 {
                     GameObject amount = slots[i].transform.GetChild(1).gameObject;
                     TextMeshProUGUI text = amount.GetComponent<TextMeshProUGUI>();
-                    
-                    text.SetText(inventory.items[i].amount.ToString());
+
+                    text.SetText(inventory.amount[inventory.items[i]].ToString());
                     amount.SetActive(true);
 
                 }

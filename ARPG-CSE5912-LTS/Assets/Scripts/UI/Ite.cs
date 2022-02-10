@@ -10,20 +10,7 @@ public class Ite : ScriptableObject
 	public Sprite icon = null;              // Item icon
 	public bool showInInventory = true;
 	public bool stackable;
-	public int amount = 1;
-	public GearTypes type;
-
-	public enum GearTypes
-	{
-		Lance,
-		Gloves,
-		Shoulders,
-		Belt,
-		Shoes,
-		Shield
-		//All your characters gear slots, head, feet, weapon
-	}
-	// Called when the item is pressed in the inventory
+	//public int amount = 1;
 	public virtual void Use()
 	{
 		// Use the item
