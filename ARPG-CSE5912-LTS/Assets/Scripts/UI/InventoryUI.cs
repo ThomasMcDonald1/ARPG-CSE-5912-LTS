@@ -40,7 +40,6 @@ public class InventoryUI : MonoBehaviour
 
 
                     text.SetText(inventory.amount[inventory.items[i]].ToString());
-                   // amount.SetActive(true);
 
                 }
                 else
