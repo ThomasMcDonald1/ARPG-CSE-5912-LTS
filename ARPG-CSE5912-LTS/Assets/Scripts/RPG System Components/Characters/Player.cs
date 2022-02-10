@@ -72,7 +72,7 @@ public class Player : Character
         }
 
         //Combat
-        if (stats[StatTypes.HEALTH] <= 0)
+        if (stats[StatTypes.HP] <= 0)
         {
             GetComponent<Animator>().SetBool("Dead", true);
         }
@@ -154,7 +154,7 @@ public class Player : Character
     {
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
-        return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.ATTACKRANGE];
+        return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.AttackRange];
 
     }
 
@@ -169,7 +169,7 @@ public class Player : Character
         if (AttackTarget != null)
         {
 
-            AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= stats[StatTypes.PHYATK];
+            AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
         }
     }
 

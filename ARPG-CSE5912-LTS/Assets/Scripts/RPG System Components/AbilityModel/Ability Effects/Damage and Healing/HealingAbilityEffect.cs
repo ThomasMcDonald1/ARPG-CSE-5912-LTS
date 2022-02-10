@@ -11,7 +11,7 @@ public class HealingAbilityEffect : BaseAbilityEffect
         MagicalAbilityPower magPow = (MagicalAbilityPower)power;
 
         float healing;
-        float multiplier = power.multiplier;
+        float multiplier = power.baseDamageOrHealing;
         float healStatValue = 1;
         if (magPow != null)
         {

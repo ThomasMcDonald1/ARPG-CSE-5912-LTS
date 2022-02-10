@@ -10,11 +10,11 @@ public class PhysicalAbilityPower : BaseAbilityPower
     }
     protected override int GetBaseDefense(Character target)
     {
-        return target.GetComponent<Stats>()[StatTypes.ARMOR];
+        return target.GetComponent<Stats>()[StatTypes.Armor];
     }
 
     protected override float GetMultiplier()
     {
-        return multiplier;
+        return baseDamageOrHealing;
     }
 }

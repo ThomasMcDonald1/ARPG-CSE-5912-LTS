@@ -24,7 +24,7 @@ namespace ARPG.Combat
         protected override void Update()
         {
             base.Update();
-            if (stats[StatTypes.HEALTH] <= 0)
+            if (stats[StatTypes.HP] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
                 GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
@@ -58,7 +58,7 @@ namespace ARPG.Combat
                 Vector3 realDirection = GeneralClass.transform.forward;
                 Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
-                if (AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] <= 0) //When player is dead, stop hit.
+                if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
                 {
                     StopRun();
                 }
@@ -129,7 +129,7 @@ namespace ARPG.Combat
                 float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
                 if (distance < 2)
                 {
-                    AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= stats[StatTypes.PHYATK];
+                    AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace ARPG.Combat
         public void Dead()
         {
             //nead a dead animation before destroy.
-            if (stats[StatTypes.HEALTH] <= 0)
+            if (stats[StatTypes.HP] <= 0)
             {
                 Destroy(gameObject);
             }

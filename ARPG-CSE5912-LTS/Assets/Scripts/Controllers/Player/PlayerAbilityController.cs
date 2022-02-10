@@ -88,6 +88,7 @@ public class PlayerAbilityController : Player
     void OnCompletedCastTimerCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
     {
         Debug.Log("Cast timer cast completed");
+        DeductCastingCost(e.info.Item1);
         GetColliders(e.info.Item2, e.info.Item1, player);
     }
 
@@ -111,7 +112,6 @@ public class PlayerAbilityController : Player
     {
         BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
         List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(hit, caster);
-        DeductCastingCost(ability);
         ApplyAbilityEffects(charactersCollided, ability);
     }
 
@@ -123,7 +123,7 @@ public class PlayerAbilityController : Player
         //etc
         if (energyCost != null)
         {
-            stats[StatTypes.ENERGY] -= cost.cost;
+            stats[StatTypes.Mana] -= cost.cost;
         }
     }
 
