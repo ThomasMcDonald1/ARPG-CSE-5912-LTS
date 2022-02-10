@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
                 {
                    
                     //Debug.Log(item.type + "has: " + items.Count);
-                    if (inventoryItem.name.Equals(item.name))
+                    if (inventoryItem.name.Equals(item.name) && amount.ContainsKey(item))
                     {
                         //Debug.Log("Room:  " + items.Count);
 
@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
                         amount[item] = num;
                         //Debug.Log(item.type + "has: " + inventoryItem.amount);
 
-                        iteInInventory = true;
+                       // iteInInventory = true;
                        
 
                     }
@@ -57,24 +57,25 @@ public class Inventory : MonoBehaviour
                     
                 }
             }
-            if (!item.stackable || !iteInInventory)
+            if (!item.stackable)
             {
+                items.Add(item);
+                Debug.Log("the unstackable Item is " + item.name);
+
+                if (onItemChangedCallback != null)
+                    onItemChangedCallback.Invoke();
+
+            }
+            else if (item.stackable && !amount.ContainsKey(item))
+            {
+                // item.amount += 1;
+                //int num = (int)amount[item] + 1;
                 amount.Add(item, 1);
                 items.Add(item);
 
                 if (onItemChangedCallback != null)
                     onItemChangedCallback.Invoke();
             }
-            //}else if(!iteInInventory && item.stackable)
-            //{
-            //   // item.amount += 1;
-            //    //int num = (int)amount[item] + 1;
-            //    amount.Add(item, 1);
-            //    items.Add(item);
-               
-            //    if (onItemChangedCallback != null)
-            //        onItemChangedCallback.Invoke();
-            //}
         }
     }
 
@@ -139,7 +140,21 @@ public class Inventory : MonoBehaviour
     // Remove an item
     public void Remove(Ite item)
     {
-        items.Remove(item);
+        if (!item.stackable)
+        {
+            items.Remove(item);
+        }
+        else if ((int)amount[item] > 1)
+        {
+            int num = (int)amount[item] - 1;
+            amount[item] = num;
+        }
+        else if ((int)amount[item] == 1)
+        {
+            amount[item] = "";
+            items.Remove(item);
+            amount.Remove(item);
+        }
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
