@@ -27,7 +27,8 @@
         Gloves,
         Shoulders,
         Belt,
-        Shoes
+        Shoes,
+        Shield
         //All your characters gear slots, head, feet, weapon
     }
 

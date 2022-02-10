@@ -34,7 +34,7 @@ namespace LootLabels {
         public bool ForceVisible = false;  //bool to check if showloot button is pushed 
 
         private void Awake() {
-            iconsEnabled = LabelManager.singleton.EnableIcons;
+           // iconsEnabled = LabelManager.singleton.EnableIcons;
         }
 
         private void Update() {

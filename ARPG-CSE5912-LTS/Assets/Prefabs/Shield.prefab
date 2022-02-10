@@ -13,6 +13,10 @@ GameObject:
   - component: {fileID: 5024883893936103306}
   - component: {fileID: 5037814909588349062}
   - component: {fileID: 5037814909588349057}
+  - component: {fileID: 2836135369829578050}
+  - component: {fileID: 926504618}
+  - component: {fileID: 926504619}
+  - component: {fileID: 4601726291620209249}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -27,7 +31,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5038750067307624488}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.91, y: -2.31, z: -5.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -110,3 +114,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnteredTrigger: 0
   item: {fileID: 11400000, guid: eff8f48eab7a2b14bb756c981f6d2456, type: 2}
+--- !u!114 &2836135369829578050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5038750067307624488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &926504618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5038750067307624488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee50ca543e960c4aa0927c9e2f4b299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelHeight: 25
+  objectToFollow: {fileID: 5038750067307624488}
+  rarityColor: {r: 0.9245283, g: 0.05582052, b: 0.05582052, a: 1}
+  stack: 0
+  autoHide: 0
+  clampToScreen: 0
+  disableOnClick: 0
+--- !u!114 &926504619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5038750067307624488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184487e0de42b3498946a9d44f537d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighlightThis: 1
+  outline: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
+  mouseoverColor: {r: 1, g: 0.81960785, b: 0.3529412, a: 1}
+--- !u!114 &4601726291620209249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5038750067307624488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ecc55e63ab3214cb09dd34cb8c08ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LootOnCollision: 0
+  Premade: 1
+  gearType: 4
+  gearRarity: 3
+  gear:
+    ItemName: Poor Gloves
+    ModelName: LootLabels/3D models/Gloves1
+    IconName: LootLabels/Icons/UI_Icon_InvGloves
+    ItemType: 0
+    ItemRarity: 0
+    GearType: 0

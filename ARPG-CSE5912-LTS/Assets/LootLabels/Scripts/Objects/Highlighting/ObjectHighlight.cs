@@ -92,7 +92,8 @@ namespace LootLabels {
             if (GetComponent<Renderer>()) {
                 //GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                 GetComponent<Renderer>().material.shader = outline;
-                GetComponent<Renderer>().material.SetColor("_OutlineColor", mouseoverColor);
+                GetComponent<Renderer>().material.SetColor("_color_emission", mouseoverColor);
+                GetComponent<Renderer>().material.SetColor("_color_texture", mouseoverColor);
             }
         }
 

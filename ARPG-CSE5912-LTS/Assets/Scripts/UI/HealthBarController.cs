@@ -39,7 +39,6 @@ public class HealthBarController : MonoBehaviour
     public void HealthBarFiller()
     {
         //Debug.Log("Health" + stats[StatTypes.HEALTH]);
-        Debug.Log("Max Health" + stats[StatTypes.MAXHEALTH]);
         //need float division
         healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, (float)stats[StatTypes.HEALTH] / (float)stats[StatTypes.MAXHEALTH], lerpSpd);
     }
