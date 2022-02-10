@@ -9,8 +9,6 @@ public class BaseAbilityCost : MonoBehaviour
     public bool CheckCharacterHasResourceCostForCastingAbility(Character caster)
     {
         Stats stats = caster.GetComponent<Stats>();
-        return stats[StatTypes.ENERGY] >= cost;
+        return stats[StatTypes.Mana] >= cost;
     }
-
-
 }

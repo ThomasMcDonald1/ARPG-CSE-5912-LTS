@@ -29,10 +29,10 @@ public class ActionBar : MonoBehaviour
         actionButton8, actionButton9, actionButton10, actionButton11, actionButton12, actionButtonLeft, actionButtonRight};
     }
 
-    private void Start()
-    {
-        SetDefaults();
-    }
+    //private void Start()
+    //{
+    //    SetDefaults();
+    //}
 
     void Update()
     {

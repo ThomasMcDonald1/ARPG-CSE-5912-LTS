@@ -24,14 +24,14 @@ public class EnemyHealthBarController : MonoBehaviour
         stats = gameObject.GetComponent<Stats>();
         //maxHealth = stats.maxHealth;
 
-        Debug.Log(stats[StatTypes.MAXHEALTH]);
+        Debug.Log(stats[StatTypes.MaxHP]);
         //stats.health = stats.maxHealth;
         //currHealth = stats.health;
     }
 
     private void Update()
     {
-        if (stats[StatTypes.HEALTH] > stats[StatTypes.MAXHEALTH]) stats[StatTypes.HEALTH] = stats[StatTypes.MAXHEALTH];
+        if (stats[StatTypes.HP] > stats[StatTypes.MaxHP]) stats[StatTypes.HP] = stats[StatTypes.MaxHP];
         lerpSpd = 10f * Time.deltaTime;
         HealthBarFiller();
         colorChanger();
@@ -43,14 +43,14 @@ public class EnemyHealthBarController : MonoBehaviour
     public void HealthBarFiller()
     {
         //Debug.Log("Health" + stats[StatTypes.HEALTH]);
-        Debug.Log("Max Health" + stats[StatTypes.MAXHEALTH]);
+        Debug.Log("Max Health" + stats[StatTypes.MaxHP]);
         //need float division
-        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, (float)stats[StatTypes.HEALTH] / (float)stats[StatTypes.MAXHEALTH], lerpSpd);
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, (float)stats[StatTypes.HP] / (float)stats[StatTypes.MaxHP], lerpSpd);
     }
     public void colorChanger()
     {
         //need fload division
-        Color healthC = Color.Lerp(Color.red, Color.green, (float)stats[StatTypes.HEALTH] / (float)stats[StatTypes.MAXHEALTH]);
+        Color healthC = Color.Lerp(Color.red, Color.green, (float)stats[StatTypes.HP] / (float)stats[StatTypes.MaxHP]);
         healthBar.color = healthC;
 
     }

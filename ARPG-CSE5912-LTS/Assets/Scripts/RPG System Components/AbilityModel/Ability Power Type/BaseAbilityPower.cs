@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseAbilityPower : MonoBehaviour
 {
-    public float multiplier = 1;
+    public float baseDamageOrHealing;
 
     protected abstract int GetBaseAttack();
     protected abstract int GetBaseDefense(Character target);

@@ -10,6 +10,6 @@ public class AbilityEnergyCost : BaseAbilityCost
     void OnDidPerform(object sender, object args)
     {
         Stats stats = GetComponentInParent<Stats>();
-        stats[StatTypes.ENERGY] -= cost;
+        stats[StatTypes.Mana] -= cost;
     }
 }
