@@ -29,9 +29,9 @@ public class Player : Character
     {
         Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+       // inventory = new Inventory();
+       // uiInventory.SetInventory(inventory);
+       // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
     }
 
     protected override void Start()
@@ -49,7 +49,7 @@ public class Player : Character
     protected override void Update()
     {
         //inventory system
-        playUpItem();
+       // playUpItem();
         //Sound
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)
@@ -113,30 +113,30 @@ public class Player : Character
         }
     }
 
-    private void playUpItem()
-    {
+    //private void playUpItem()
+    //{
 
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider != null)
-                {
-                    //Debug.Log("hit: " + hit.transform.gameObject.tag);
-                    if (hit.transform.gameObject.tag == "InventoryItem")
-                    {
-                        InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
-                        inventory.AddItem(item);
-                        hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
+    //    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+    //    RaycastHit hit;
+    //    if (Mouse.current.leftButton.wasReleasedThisFrame)
+    //    {
+    //        if (Physics.Raycast(ray, out hit))
+    //        {
+    //            if (hit.collider != null)
+    //            {
+    //                //Debug.Log("hit: " + hit.transform.gameObject.tag);
+    //                if (hit.transform.gameObject.tag == "InventoryItem")
+    //                {
+    //                    InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
+    //                    inventory.AddItem(item);
+    //                    hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
 
-                    }
+    //                }
 
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
 
     public void Attack(EnemyTarget target)
