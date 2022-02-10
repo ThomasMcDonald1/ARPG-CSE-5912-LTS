@@ -39,6 +39,8 @@ namespace LootLabels {
                     return modelPath + "Belt";
                 case GearTypes.Shoes:
                     return modelPath + "Shoes";
+                case GearTypes.Lance:
+                    return modelPath + "Lance";
                 default:
                     Debug.Log("Case not implemented");
                     return modelPath + "Gloves1";

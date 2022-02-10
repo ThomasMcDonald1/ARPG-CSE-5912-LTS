@@ -9,7 +9,20 @@ public class Ite : ScriptableObject
 	new public string name = "New Item";    // Name of the item
 	public Sprite icon = null;              // Item icon
 	public bool showInInventory = true;
+	public bool stackable;
+	public int amount = 1;
+	public GearTypes type;
 
+	public enum GearTypes
+	{
+		Lance,
+		Gloves,
+		Shoulders,
+		Belt,
+		Shoes,
+		Shield
+		//All your characters gear slots, head, feet, weapon
+	}
 	// Called when the item is pressed in the inventory
 	public virtual void Use()
 	{
@@ -23,5 +36,5 @@ public class Ite : ScriptableObject
 	//{
 	//	Inventory.instance.Remove(this);
 	//}
-
+	
 }

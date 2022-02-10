@@ -16,7 +16,7 @@ namespace LootLabels {
             if (Premade) {
                 gear = new BaseGear(gearRarity, gearType, ResourceManager.singleton.GetModelName(gearType), ResourceManager.singleton.GetIconName(gearType));
             }
-
+            
             CreateLabel();
         }
 

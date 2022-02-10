@@ -24,6 +24,7 @@
     //types of gear
     //each item is a separate gear slot, if you need more types that can go in a single slot add another enum
     public enum GearTypes {
+        Lance,
         Gloves,
         Shoulders,
         Belt,
