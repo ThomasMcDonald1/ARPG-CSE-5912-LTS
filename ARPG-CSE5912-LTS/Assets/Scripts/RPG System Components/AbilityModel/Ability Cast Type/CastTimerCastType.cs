@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,14 @@ using UnityEngine.UI;
 public class CastTimerCastType : BaseCastType
 {
     Coroutine castingRoutine;
+    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityCastTimeWasCompletedEvent;
 
-    public override void WaitCastTime(Ability ability)
+    public override void WaitCastTime(Ability ability, RaycastHit hit, Character caster)
     {
-        castingRoutine = StartCoroutine(CastTimeCoroutine(ability));
+        castingRoutine = StartCoroutine(CastTimeCoroutine(ability, hit, caster));
     }
 
-    private IEnumerator CastTimeCoroutine(Ability ability)
+    private IEnumerator CastTimeCoroutine(Ability ability, RaycastHit hit, Character caster)
     {
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
 
@@ -30,7 +32,7 @@ public class CastTimerCastType : BaseCastType
 
             yield return null;
         }
-        CompleteCast(ability);
+        CompleteCast(ability, hit, caster);
         castingBar.castBarCanvas.SetActive(false);
     }
 
@@ -42,5 +44,10 @@ public class CastTimerCastType : BaseCastType
             castingBar.castBarCanvas.SetActive(false);
             castingRoutine = null;
         }
+    }
+
+    protected override void CompleteCast(Ability ability, RaycastHit hit, Character caster)
+    {
+        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
     }
 }

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleDrakeStudios.ModularCharacters;
+using System;
 
 [CreateAssetMenu(fileName = "CustomCharacter", menuName = "ScriptableObjects/CustomCharacter", order = 1)]
 
 public class CustomCharacter : ScriptableObject
 {
+
     private void OnEnable()
     {
         hideFlags = HideFlags.DontUnloadUnusedAsset;

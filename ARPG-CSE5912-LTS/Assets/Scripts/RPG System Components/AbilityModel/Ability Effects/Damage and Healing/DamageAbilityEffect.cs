@@ -4,50 +4,106 @@ using UnityEngine;
 
 public class DamageAbilityEffect : BaseAbilityEffect
 {
+    //public int minEffectDamage;
+    //public int maxEffectDamage;
+
     protected override int OnApply(Character target)
     {
         Character caster = GetComponentInParent<Character>();
-        BaseAbilityPower power = GetComponent<BaseAbilityPower>();
-        MagicalAbilityPower magPow = (MagicalAbilityPower)power;
-        PhysicalAbilityPower physPow = (PhysicalAbilityPower)power;
+        BaseAbilityPower power = GetComponentInParent<BaseAbilityPower>();
+        
+        int baseDamageScaler = 5;
+        float casterLevel = GetStat(target, StatTypes.LVL);
+        float baseDamage = power.baseDamageOrHealing;
 
-        //To store the damage calculated
-        float damage = 0;
-        //Multiply this into the damage. This is a base multiplier defined for the ability (so each ability can be balanced differently)
-        float multiplier = power.multiplier;
+        //Calculate the caster's total attack damage pre-mitigation
+        float damage = (baseDamage * casterLevel + baseDamage / casterLevel) / (baseDamageScaler + (casterLevel * 0.01f));
+        //Get armor pen values from caster
+        //float casterFlatArmorPen = GetStat(caster, StatTypes.FlatArmorPen);
+        float casterPercentArmorPen = GetStat(caster, StatTypes.PercentArmorPen);
+        //Get magic pen values from caster
+        float casterFlatMagicPen = GetStat(caster, StatTypes.FlatMagicPen);
+        float casterPercentMagicPen = GetStat(caster, StatTypes.PercentMagicPen);
+        float finalDamageWithPen = 0;
+        //Calculate the enemy's defense pre-penetration
+        float enemyDefense = 0;
 
-        //If the attack has base physical damage in it (before modifiers from outside sources), then calculate some physical junk
-        if (physPow != null)
+        //If this ability effect is physical damage
+        if (power.IsPhysicalPower())
         {
-            //Get some stats for attacker and defender like this
-            float casterATK = GetStat(caster, StatTypes.STR);
-            float enemyDefense = GetStat(target, StatTypes.ARMOR);
+            enemyDefense = GetStat(target, StatTypes.Armor);
+
+            //Calculate the defender's total defense pre-armor pen
+
+            //TODO: May not need this. It might be added already into Armor.
+            float targetPercentArmorBonus = GetStat(target, StatTypes.PercentArmorBonus);
+            enemyDefense *= (1 + targetPercentArmorBonus);
+
+            //Apply caster physical penetration
+            enemyDefense *= (1 - casterPercentArmorPen);
+        }
+        //If this ability effect is magical damage
+        else if (power.IsMagicPower())
+        {
+            BaseAbilityEffectElement effectElement = GetComponent<BaseAbilityEffectElement>();
+            StatTypes elementResistance = effectElement.GetAbilityEffectElementResistTarget();
+            enemyDefense = GetStat(target, elementResistance);
+            float targetPercentAllResist = GetStat(target, StatTypes.PercentAllResistBonus);
+            float targetPercentSpecificResist = GetSpecificPercentResistBonus(elementResistance, target);
+            //TODO: multiply (1 + summed %resist bonuses from equipment and other bonuses)
+            enemyDefense *= (1 + targetPercentAllResist + targetPercentSpecificResist);
+            //Apply caster magic penetration
+            enemyDefense *= (1 - casterPercentMagicPen);
         }
 
-        //If the attack has base magical damage in it (before modifiers from outside sources), then calculate some magic junk
-        if (magPow != null)
+        //Calculate the final damage the caster would do post-penetration
+        if (power.IsPhysicalPower())
         {
-            //Get stats like above
-            float casterATK = GetStat(caster, StatTypes.INT);
-            //TODO: Add checks for what element an attack is (FIRE RES is just as an example)
-            float enemyDefense = GetStat(target, StatTypes.FIRERES);
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense));
+        }
+        else if (power.IsMagicPower())
+        {
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense));
         }
 
-        //TODO: damage = calculations involving caster stats and defender stats gotten above, if necessary, times the multiplier if that should happen before modifiers
-
-        //TODO: Pull in modifiers from equipment and such, and do those calculations
-
-        //TODO: Combine things to calculate final damage
+        //Add some randomization
+        float damageRandomFloor = finalDamageWithPen * 0.95f;
+        float damageRandomCeiling = finalDamageWithPen * 1.05f;
+        finalDamageWithPen = Random.Range(damageRandomFloor, damageRandomCeiling);
 
         //round damage to an integer to return
-        int finalCalculatedDamage = Mathf.RoundToInt(damage);
+        int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
 
         //If we want an upper limit on damage, we can clamp it like this
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
 
         //TODO: You could also modify ALL damage done in the game by multiplying this by the variable 'globalDamageBalanceAdjustment' which can be
         //changed in the BaseAbilityEffect script
-
+        Debug.Log("Damage dealt to " + target.name + ": " + finalCalculatedDamage);
         return finalCalculatedDamage;
+    }
+
+    private float GetSpecificPercentResistBonus(StatTypes resist, Character target)
+    {
+        float result = 0;
+
+        switch (resist)
+        {
+            case StatTypes.FireRes:
+                result = GetStat(target, StatTypes.PercentFireResistBonus);
+                break;
+            case StatTypes.ColdRes:
+                result = GetStat(target, StatTypes.PercentColdResistBonus);
+                break;
+            case StatTypes.LightningRes:
+                result = GetStat(target, StatTypes.PercentLightningResistBonus);
+                break;
+            case StatTypes.PoisonRes:
+                result = GetStat(target, StatTypes.PercentPoisonResistBonus);
+                break;
+            default:
+                break;
+        }
+        return result;
     }
 }

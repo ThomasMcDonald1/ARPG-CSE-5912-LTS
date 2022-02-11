@@ -41,10 +41,10 @@ public class GameoverState : BaseGameplayState
     {
         agent.isStopped = true;
         transform.position = new Vector3(0f, 1.5f, 0f);//could add some other position later(like savepoint??)
-        statScript[StatTypes.HEALTH] = statScript[StatTypes.MAXHEALTH];
+        statScript[StatTypes.HP] = statScript[StatTypes.MaxHP];
         animator.SetBool("Dead", false);
         gameplayStateController.ChangeState<GameplayState>();
-        Debug.Log(playerController.playerClass.AttackTarget);
+        Debug.Log(playerController.player.AttackTarget);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 

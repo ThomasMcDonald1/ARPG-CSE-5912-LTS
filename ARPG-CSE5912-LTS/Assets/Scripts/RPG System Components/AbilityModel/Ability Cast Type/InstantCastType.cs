@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +12,20 @@ public class InstantCastType : BaseCastType
     //    character = GetComponentInParent<Character>();
     //}
 
-    public override void WaitCastTime(Ability ability)
+    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityInstantCastWasCompletedEvent;
+
+    public override void WaitCastTime(Ability ability, RaycastHit hit, Character character)
     {
-        CompleteCast(ability);
+        CompleteCast(ability, hit, character);
     }
 
     public override void StopCasting()
     {
        
+    }
+
+    protected override void CompleteCast(Ability ability, RaycastHit hit, Character caster)
+    {
+       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
     }
 }

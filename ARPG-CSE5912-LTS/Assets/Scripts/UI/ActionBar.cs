@@ -21,10 +21,25 @@ public class ActionBar : MonoBehaviour
     public ActionButton actionButtonLeft;
     public ActionButton actionButtonRight;
     [SerializeField] Ability defaultLeft;
+    List<ActionButton> actionButtons;
 
-    private void Awake()
+    void Awake()
     {
-        SetDefaults();
+        actionButtons = new List<ActionButton> { actionButton1, actionButton2, actionButton3, actionButton4, actionButton5, actionButton6, actionButton7,
+        actionButton8, actionButton9, actionButton10, actionButton11, actionButton12, actionButtonLeft, actionButtonRight};
+    }
+
+    //private void Start()
+    //{
+    //    SetDefaults();
+    //}
+
+    void Update()
+    {
+        foreach (ActionButton actionButton in actionButtons)
+        {
+            actionButton.LockSlotFromCostDeficit();
+        }
     }
 
     public Ability GetAbilityOnActionButton(ActionButton actionButton)

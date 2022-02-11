@@ -16,7 +16,7 @@ public class PassiveSkillInfo
         {
             new PassiveNode(
                 "HEALTH1",
-                new StatTypes[] { StatTypes.HEALTH},
+                new StatTypes[] { StatTypes.MaxHP},
                 new int[] { 20 },
                 new string[0],
                 true
@@ -53,31 +53,31 @@ public class PassiveSkillInfo
             ),
             new PassiveNode(
                 "HPREGEN1",
-                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new StatTypes[] { StatTypes.HealthRegen },
                 new int[] { 2 },
                 new string[] { "HEALTH1" }
             ),
             new PassiveNode(
                 "HPREGEN2",
-                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new StatTypes[] { StatTypes.HealthRegen },
                 new int[] { 3 },
                 new string[] { "HPREGEN1" }
             ),
             new PassiveNode(
                 "HPREGEN3",
-                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new StatTypes[] { StatTypes.HealthRegen },
                 new int[] { 4 },
                 new string[] { "HPREGEN2" }
             ),
             new PassiveNode(
                 "ATKSPD1",
-                new StatTypes[] { StatTypes.ATKSPD },
+                new StatTypes[] { StatTypes.AtkSpeed },
                 new int[] { 5 },
                 new string[] { "HPREGEN1" }
             ),
             new PassiveNode(
                 "ATKSPD2",
-                new StatTypes[] { StatTypes.ATKSPD },
+                new StatTypes[] { StatTypes.AtkSpeed },
                 new int[] { 5 },
                 new string[] { "ATKSPD1" }
             ),

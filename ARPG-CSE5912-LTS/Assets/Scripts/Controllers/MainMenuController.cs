@@ -6,10 +6,12 @@ public class MainMenuController : StateMachine
 {
     // References to things that will need to be controlled and known by the state controller go here
     public GameObject mainMenuCanvasObj;
+    public GameObject deleteCharacterCanvasObj;
     public GameObject createCharMenuCanvasObj;
     public GameObject optionsMenuCanvasObj;
 
     [HideInInspector] public Canvas mainMenuCanvas;
+    [HideInInspector] public Canvas deleteCharacterCanvas;
     [HideInInspector] public Canvas createCharMenuCanvas;
     [HideInInspector] public Canvas optionsMenuCanvas;
 
@@ -24,8 +26,10 @@ public class MainMenuController : StateMachine
     public GameObject startErrorObj, slotsFullErrorObj, deleteCharaErrorObj;
     public GameObject displayCharacterObj;
     public GameObject characterNameObj;
+    public GameObject yesDeleteObj, noDeleteObj;
     public List<GameObject> saveSlotButtonObjs;
     public List<SaveSlot> saveSlotDataObjs;
+    public GameObject slotContainerObj;
 
     // Options menu buttons
     public GameObject backFromOptionsToMainButtonObj;
@@ -48,6 +52,7 @@ public class MainMenuController : StateMachine
     private void Awake()
     {
         mainMenuCanvas = mainMenuCanvasObj.GetComponent<Canvas>();
+        deleteCharacterCanvas = deleteCharacterCanvasObj.GetComponent<Canvas>();
         createCharMenuCanvas = createCharMenuCanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterCreationCamera = characterCreationCameraObj.GetComponent<Camera>();

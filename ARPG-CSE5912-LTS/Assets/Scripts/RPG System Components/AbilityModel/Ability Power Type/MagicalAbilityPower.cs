@@ -12,10 +12,15 @@ public class MagicalAbilityPower : BaseAbilityPower
     {
         //TODO: Determine the element of the ability being cast, and then get the appropriate resistance from the defender
         //TODO: instead of only returning fire resistance
-        return target.GetComponent<Stats>()[StatTypes.FIRERES];
+        return target.GetComponent<Stats>()[StatTypes.FireRes];
     }
-    protected override float GetMultiplier()
+    public override bool IsPhysicalPower()
     {
-        return multiplier;
+        return false;
+    }
+
+    public override bool IsMagicPower()
+    {
+        return true;
     }
 }

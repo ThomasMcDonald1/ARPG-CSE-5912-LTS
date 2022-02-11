@@ -14,6 +14,8 @@ public class BaseMenuState : State
     public Button optionsButton;
     public Button exitGameButton;
     public Button slot1Button, slot2Button, slot3Button, slot4Button, slot5Button, slot6Button;
+    public Button yesDeleteButton, noDeleteButton;
+    public RectTransform charaScroll;
     public SaveSlot selectedSlot;
 
     // options menu buttons
@@ -40,6 +42,10 @@ public class BaseMenuState : State
         deleteCharButton = mainMenuController.deleteCharButtonObj.GetComponent<Button>();
         optionsButton = mainMenuController.optionsButtonObj.GetComponent<Button>();
         exitGameButton = mainMenuController.exitGameButtonObj.GetComponent<Button>();
+        noDeleteButton = mainMenuController.noDeleteObj.GetComponent<Button>();
+        yesDeleteButton = mainMenuController.yesDeleteObj.GetComponent<Button>();
+        charaScroll = mainMenuController.slotContainerObj.GetComponent<RectTransform>();
+
 
         //save slots
         slot1Button = mainMenuController.saveSlotButtonObjs[0].GetComponent<Button>();

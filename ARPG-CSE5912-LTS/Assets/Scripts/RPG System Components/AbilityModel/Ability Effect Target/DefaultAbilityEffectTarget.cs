@@ -9,6 +9,6 @@ public class DefaultAbilityEffectTarget : AbilityEffectTarget
         if (character == null)
             return false;
         Stats stats = character.GetComponent<Stats>();
-        return stats != null && stats[StatTypes.HEALTH] > 0;
+        return stats != null && stats[StatTypes.HP] > 0;
     }
 }

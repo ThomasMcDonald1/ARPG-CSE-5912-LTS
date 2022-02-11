@@ -14,9 +14,10 @@ public abstract class Character : MonoBehaviour
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
     public GameplayStateController gameplayStateController;
+    PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
 
-    [HideInInspector] public Stats stats;
+    public Stats stats;
 
     public float smooth;
     public float yVelocity;
@@ -30,10 +31,11 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
+        stats = GetComponent<Stats>();
+        playerAbilityController = GetComponent<PlayerAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
         AttackTarget = null;
-        stats = GetComponent<Stats>();
     }
 
     protected virtual void Update()
@@ -44,35 +46,44 @@ public abstract class Character : MonoBehaviour
     //Put any code here that should be shared functionality across every type of character
     public void QueueAbilityCast(Ability abilityToCast)
     {
-        charactersInRange.Clear();
+        //charactersInRange.Clear();
+        BaseAbilityCost abilityCost = abilityToCast.GetComponent<BaseAbilityCost>();
+        bool abilityCanBePerformed = abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
 
-        bool requiresCharacter = CheckForCharacterRequiredUnderCursor(abilityToCast);
-        bool selectionRequired = CheckForSelectionRequirement(abilityToCast);
-        BaseAbilityRange range = abilityToCast.GetComponent<BaseAbilityRange>();
-        BaseAbilityArea abilityArea = abilityToCast.GetComponent<BaseAbilityArea>();
-        charactersInRange = range.GetCharactersInRange();
-
-        if (selectionRequired)
+        if (abilityCanBePerformed)
         {
-            if (this is Player)
-            {
-                Player player = (Player)this;
-                player.StopAllCoroutines();
-                gameplayStateController.aoeReticleCylinder.SetActive(false);
-                player.playerInSingleTargetAbilitySelectionMode = false;
-                player.playerInAOEAbilityTargetSelectionMode = false;
-                player.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
-            }
-            else
-            {
-                //Enemy enemy = (Enemy)this;
-                //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
+            bool requiresCharacter = CheckForCharacterRequiredUnderCursor(abilityToCast);
+            bool selectionRequired = CheckForSelectionRequirement(abilityToCast);
+            //BaseAbilityRange range = abilityToCast.GetComponent<BaseAbilityRange>();
+            //BaseAbilityArea abilityArea = abilityToCast.GetComponent<BaseAbilityArea>();
+            //charactersInRange = range.GetCharactersInRange();
 
-                //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
-                //1a) select target player character if it's a character-targeting ability
-                //1b) select a point on the terrain that is centered on the player character otherwise
-                //2) call abilityArea.PerformAOE from from within the Enemy class
+            if (selectionRequired)
+            {
+                if (this is Player)
+                {
+                    Player player = (Player)this;
+                    player.StopAllCoroutines();
+                    gameplayStateController.aoeReticleCylinder.SetActive(false);
+                    playerAbilityController.playerInSingleTargetAbilitySelectionMode = false;
+                    playerAbilityController.playerInAOEAbilityTargetSelectionMode = false;
+                    playerAbilityController.PlayerQueueAbilityCastSelectionRequired(abilityToCast, requiresCharacter);
+                }
+                else
+                {
+                    //Enemy enemy = (Enemy)this;
+                    //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
+
+                    //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
+                    //1a) select target player character if it's a character-targeting ability
+                    //1b) select a point on the terrain that is centered on the player character otherwise
+                    //2) call abilityArea.PerformAOE from from within the Enemy class
+                }
             }
+        }      
+        else
+        {
+            //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
         }
     }
 
