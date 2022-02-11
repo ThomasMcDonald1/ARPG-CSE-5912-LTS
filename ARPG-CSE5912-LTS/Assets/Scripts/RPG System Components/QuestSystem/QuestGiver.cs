@@ -7,7 +7,7 @@ using TMPro;
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
-    public Player player;
+    public Player player;//maybe needs to change?
 
     public GameObject questWindow;
     public TextMesh titleText;
@@ -24,5 +24,13 @@ public class QuestGiver : MonoBehaviour
         expRewardText.text = quest.expReward.ToString(); ;
         goldRewardText.text = this.quest.goldReward.ToString();
     }
+    public void AcceptQuest()
+    {
+        questWindow.SetActive(false);
+        quest.isActive = true;
+        //give to player, player needs to have list of quests
+    }
+
+
 
 }

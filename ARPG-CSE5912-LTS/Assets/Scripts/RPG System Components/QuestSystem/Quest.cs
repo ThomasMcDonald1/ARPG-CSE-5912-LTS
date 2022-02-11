@@ -13,5 +13,12 @@ public class Quest
 
     public bool isActive;
 
+    public QuestGoal questGoal;
+
+    public void MarkAsComplete()
+    {
+        isActive = false;
+
+    }
 
 }
