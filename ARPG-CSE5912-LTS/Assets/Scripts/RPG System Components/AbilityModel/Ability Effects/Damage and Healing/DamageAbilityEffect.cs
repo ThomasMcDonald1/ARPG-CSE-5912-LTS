@@ -10,60 +10,71 @@ public class DamageAbilityEffect : BaseAbilityEffect
     protected override int OnApply(Character target)
     {
         Character caster = GetComponentInParent<Character>();
-        BaseAbilityPower power = GetComponent<BaseAbilityPower>();
-        MagicalAbilityPower magPow = (MagicalAbilityPower)power;
-        PhysicalAbilityPower physPow = (PhysicalAbilityPower)power;
+        BaseAbilityPower power = GetComponentInParent<BaseAbilityPower>();
         
         int baseDamageScaler = 5;
         float casterLevel = GetStat(target, StatTypes.LVL);
         float baseDamage = power.baseDamageOrHealing;
 
-        //To store the damage calculated
         //Calculate the caster's total attack damage pre-mitigation
         float damage = (baseDamage * casterLevel + baseDamage / casterLevel) / (baseDamageScaler + (casterLevel * 0.01f));
-        float enemyDefense;
+        //Get armor pen values from caster
+        //float casterFlatArmorPen = GetStat(caster, StatTypes.FlatArmorPen);
+        float casterPercentArmorPen = GetStat(caster, StatTypes.PercentArmorPen);
+        //Get magic pen values from caster
+        float casterFlatMagicPen = GetStat(caster, StatTypes.FlatMagicPen);
+        float casterPercentMagicPen = GetStat(caster, StatTypes.PercentMagicPen);
+        float finalDamageWithPen = 0;
+        //Calculate the enemy's defense pre-penetration
+        float enemyDefense = 0;
 
         //If this ability effect is physical damage
-        if (physPow != null)
+        if (power.IsPhysicalPower())
         {
-            //Get some stats for attacker and defender
             enemyDefense = GetStat(target, StatTypes.Armor);
-            float casterFlatArmorPen = GetStat(caster, StatTypes.FlatArmorPen);
-            float casterPercentArmorPen = GetStat(caster, StatTypes.PercentArmorPen);
+
+            //Calculate the defender's total defense pre-armor pen
+
+            //TODO: May not need this. It might be added already into Armor.
             float targetPercentArmorBonus = GetStat(target, StatTypes.PercentArmorBonus);
-
-            //Calculate the defender's total defense 
             enemyDefense *= (1 + targetPercentArmorBonus);
-            enemyDefense = (enemyDefense - casterFlatArmorPen) * (100 - casterPercentArmorPen);
         }
-
         //If this ability effect is magical damage
-        if (magPow != null)
+        else if (power.IsMagicPower())
         {
-            //Get stats like above
             BaseAbilityEffectElement effectElement = GetComponent<BaseAbilityEffectElement>();
             StatTypes elementResistance = effectElement.GetAbilityEffectElementResistTarget();
             enemyDefense = GetStat(target, elementResistance);
-            float casterFlatMagicPen = GetStat(caster, StatTypes.FlatMagicPen);
-            float casterPercentMagicPen = GetStat(caster, StatTypes.PercentMagicPen);
             float targetPercentAllResist = GetStat(target, StatTypes.PercentAllResistBonus);
             float targetPercentSpecificResist = GetSpecificPercentResistBonus(elementResistance, target);
             //TODO: multiply (1 + summed %resist bonuses from equipment and other bonuses)
             enemyDefense *= (1 + targetPercentAllResist + targetPercentSpecificResist);
-            enemyDefense = (enemyDefense - casterFlatMagicPen) * (100 - casterPercentMagicPen);
         }
 
-        
+        //Calculate the final damage the caster would do post-penetration
+        if (power.IsPhysicalPower())
+        {
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense - casterPercentArmorPen));
+        }
+        else if (power.IsMagicPower())
+        {
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense - casterPercentMagicPen));
+        }
+
+        //Add some randomization
+        float damageRandomFloor = finalDamageWithPen * 0.95f;
+        float damageRandomCeiling = finalDamageWithPen * 1.05f;
+        finalDamageWithPen = Random.Range(damageRandomFloor, damageRandomCeiling);
 
         //round damage to an integer to return
-        int finalCalculatedDamage = Mathf.RoundToInt(damage);
+        int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
 
         //If we want an upper limit on damage, we can clamp it like this
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
 
         //TODO: You could also modify ALL damage done in the game by multiplying this by the variable 'globalDamageBalanceAdjustment' which can be
         //changed in the BaseAbilityEffect script
-
+        Debug.Log("Damage dealt to " + target.name + ": " + finalCalculatedDamage);
         return finalCalculatedDamage;
     }
 
