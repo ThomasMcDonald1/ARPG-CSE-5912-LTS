@@ -13,8 +13,13 @@ public class PhysicalAbilityPower : BaseAbilityPower
         return target.GetComponent<Stats>()[StatTypes.Armor];
     }
 
-    protected override float GetMultiplier()
+    public override bool IsPhysicalPower()
     {
-        return baseDamageOrHealing;
+        return true;
+    }
+
+    public override bool IsMagicPower()
+    {
+        return false;
     }
 }

@@ -43,8 +43,7 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     protected virtual float GetStat(Character character, StatTypes statType)
     {
         //TODO: Listen for any events that the value should be modified
-
-        float finalValue = character.GetComponent<Stats>().GetValue(statType);
+        float finalValue = character.stats.GetValue(statType);
         
         //TODO: if value needs to be modified due to equipped gear, etc, do modifications here. May require more classes or events being broadcast
         //finalValue += valueOfSummedUpMods;

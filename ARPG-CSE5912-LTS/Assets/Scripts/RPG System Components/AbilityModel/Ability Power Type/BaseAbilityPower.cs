@@ -8,7 +8,8 @@ public abstract class BaseAbilityPower : MonoBehaviour
 
     protected abstract int GetBaseAttack();
     protected abstract int GetBaseDefense(Character target);
-    protected abstract float GetMultiplier();
+    public abstract bool IsPhysicalPower();
+    public abstract bool IsMagicPower();
 
     //TODO: Add anything else that should be base functionality for all types of ability power here
 }

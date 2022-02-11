@@ -14,8 +14,13 @@ public class MagicalAbilityPower : BaseAbilityPower
         //TODO: instead of only returning fire resistance
         return target.GetComponent<Stats>()[StatTypes.FireRes];
     }
-    protected override float GetMultiplier()
+    public override bool IsPhysicalPower()
     {
-        return baseDamageOrHealing;
+        return false;
+    }
+
+    public override bool IsMagicPower()
+    {
+        return true;
     }
 }
