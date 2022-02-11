@@ -38,6 +38,9 @@ public class DamageAbilityEffect : BaseAbilityEffect
             //TODO: May not need this. It might be added already into Armor.
             float targetPercentArmorBonus = GetStat(target, StatTypes.PercentArmorBonus);
             enemyDefense *= (1 + targetPercentArmorBonus);
+
+            //Apply caster physical penetration
+            enemyDefense *= (1 - casterPercentArmorPen);
         }
         //If this ability effect is magical damage
         else if (power.IsMagicPower())
@@ -49,16 +52,18 @@ public class DamageAbilityEffect : BaseAbilityEffect
             float targetPercentSpecificResist = GetSpecificPercentResistBonus(elementResistance, target);
             //TODO: multiply (1 + summed %resist bonuses from equipment and other bonuses)
             enemyDefense *= (1 + targetPercentAllResist + targetPercentSpecificResist);
+            //Apply caster magic penetration
+            enemyDefense *= (1 - casterPercentMagicPen);
         }
 
         //Calculate the final damage the caster would do post-penetration
         if (power.IsPhysicalPower())
         {
-            finalDamageWithPen = damage * (120 / (120 + enemyDefense - casterPercentArmorPen));
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense));
         }
         else if (power.IsMagicPower())
         {
-            finalDamageWithPen = damage * (120 / (120 + enemyDefense - casterPercentMagicPen));
+            finalDamageWithPen = damage * (120 / (120 + enemyDefense));
         }
 
         //Add some randomization
