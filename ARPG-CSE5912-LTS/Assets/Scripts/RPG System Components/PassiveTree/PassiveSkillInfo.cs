@@ -14,10 +14,73 @@ public class PassiveSkillInfo
     {
         passiveTree = new PassiveNode[]
         {
-            new PassiveNode("Health1", new StatTypes[] { StatTypes.HEALTH }, new int[] { 5 }, new string[0], true),
-            new PassiveNode("Dex1", new StatTypes[] { StatTypes.DEX }, new int[] { 5 }, new string[0], true),
-            new PassiveNode("Int1", new StatTypes[] { StatTypes.INT }, new int[] { 5 }, new string[0], true),
-            new PassiveNode("Nimble", new StatTypes[] { StatTypes.CASTSPEED, StatTypes.MAGDMGBONUS }, new int[] { 10, 20 }, new string[] { "Dex1", "Int1"})
+            new PassiveNode(
+                "HEALTH1",
+                new StatTypes[] { StatTypes.HEALTH},
+                new int[] { 20 },
+                new string[0],
+                true
+            ),
+            new PassiveNode(
+                "STR1",
+                new StatTypes[] { StatTypes.STR },
+                new int[] { 5 },
+                new string[] { "HEALTH1" }
+            ),
+            new PassiveNode(
+                "STR2",
+                new StatTypes[] { StatTypes.STR },
+                new int[] { 10 },
+                new string[] { "STR1", "ARMOR1" }
+            ),
+            new PassiveNode(
+                "STR3",
+                new StatTypes[] { StatTypes.STR },
+                new int[] { 10 },
+                new string[] { "STR2" }
+            ),
+            new PassiveNode(
+                "ARMOR1",
+                new StatTypes[] { StatTypes.PHYDEF },
+                new int[] { 10 },
+                new string[] { "STR1" }
+            ),
+            new PassiveNode(
+                "ARMOR2",
+                new StatTypes[] { StatTypes.PHYDEF },
+                new int[] { 10 },
+                new string[] { "ARMOR1" }
+            ),
+            new PassiveNode(
+                "HPREGEN1",
+                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new int[] { 2 },
+                new string[] { "HEALTH1" }
+            ),
+            new PassiveNode(
+                "HPREGEN2",
+                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new int[] { 3 },
+                new string[] { "HPREGEN1" }
+            ),
+            new PassiveNode(
+                "HPREGEN3",
+                new StatTypes[] { StatTypes.HEALTHREGEN },
+                new int[] { 4 },
+                new string[] { "HPREGEN2" }
+            ),
+            new PassiveNode(
+                "ATKSPD1",
+                new StatTypes[] { StatTypes.ATKSPD },
+                new int[] { 5 },
+                new string[] { "HPREGEN1" }
+            ),
+            new PassiveNode(
+                "ATKSPD2",
+                new StatTypes[] { StatTypes.ATKSPD },
+                new int[] { 5 },
+                new string[] { "ATKSPD1" }
+            ),
         };
     }
 }

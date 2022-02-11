@@ -50,8 +50,8 @@ public class InventoryUI:MonoBehaviour
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
 
             itemSlotRectTransform.Find("Image").GetComponent<Image>().sprite = item.GetSprite();
-            
-            
+
+
             x +=2;
             if (x > 4)
             {

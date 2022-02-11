@@ -54,13 +54,13 @@ public class Player : Character
         inventory = new Inventory();
         uiInventory.SetInventory(inventory);
         mainCamera = Camera.main;
-        ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+        // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
     }
 
     protected override void Start()
     {
         base.Start();
-       
+
         //GeneralClass = GameObject.Find("Class");
 
         //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
