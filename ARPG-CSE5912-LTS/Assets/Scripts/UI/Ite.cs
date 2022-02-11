@@ -10,7 +10,6 @@ public class Ite : ScriptableObject
 	public Sprite icon = null;              // Item icon
 	public bool showInInventory = true;
 	public bool stackable;
-	//public int amount = 1;
 	public virtual void Use()
 	{
 		// Use the item
@@ -18,10 +17,12 @@ public class Ite : ScriptableObject
 		Debug.Log("using " + name);
 	}
 
-	// Call this method to remove the item from inventory
-	//public void RemoveFromInventory()
-	//{
-	//	Inventory.instance.Remove(this);
-	//}
-	
+    // Call this method to remove the item from inventory
+    public void RemoveFromInventory()
+    {
+		Debug.Log("remove from inventory was called");
+		Inventory.instance.Remove(this);
+
+    }
+
 }

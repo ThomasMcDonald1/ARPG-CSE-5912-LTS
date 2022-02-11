@@ -29,6 +29,7 @@ public class InventoryUI : MonoBehaviour
         //}
         for (int i = 0; i < slots.Length; i++)
         {
+            //Debug.Log("items.Count is " + inventory.items.Count);
             if (i < inventory.items.Count)
             {
                 GameObject amount = slots[i].transform.GetChild(1).gameObject;

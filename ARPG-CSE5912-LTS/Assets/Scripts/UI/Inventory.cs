@@ -24,7 +24,6 @@ public class Inventory : MonoBehaviour
     // Add a new item if enough room
     public void Add(Ite item)
     {
-        bool iteInInventory = false;
         //Debug.Log("Type: " + item.type);
         if (item.showInInventory)
         {
@@ -77,6 +76,7 @@ public class Inventory : MonoBehaviour
                     onItemChangedCallback.Invoke();
             }
         }
+        Debug.Log("the inventory is this long when add is called " + items.Count);
     }
 
     /*
@@ -142,7 +142,11 @@ public class Inventory : MonoBehaviour
     {
         if (!item.stackable)
         {
+            Debug.Log("the list is this long before " + items.Count);
+            Debug.Log("items.Remove was called");
             items.Remove(item);
+            Debug.Log("List is now this long "  + items.Count);
+
         }
         else if ((int)amount[item] > 1)
         {
