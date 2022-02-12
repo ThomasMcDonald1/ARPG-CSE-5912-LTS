@@ -51,6 +51,9 @@ public class GameplayStateController : StateMachine
     public GameObject yesRespawnButtonObj;
     public GameObject noRespawnButtonObj;
 
+    public HealthBarController healthBarController;
+    public EnergyBarController energyBarController;
+
     //TODO: Maybe a keybinds button, if we have time to add
 
     private void Awake()

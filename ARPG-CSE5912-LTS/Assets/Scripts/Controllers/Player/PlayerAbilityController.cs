@@ -118,13 +118,7 @@ public class PlayerAbilityController : Player
     void DeductCastingCost(Ability ability)
     {
         BaseAbilityCost cost = ability.GetComponent<BaseAbilityCost>();
-        AbilityEnergyCost energyCost = (AbilityEnergyCost)cost;
-        //AbilityHealthCost healthCost = (AbilityHealthCost)cost;
-        //etc
-        if (energyCost != null)
-        {
-            stats[StatTypes.Mana] -= cost.cost;
-        }
+        cost.DeductResourceFromCaster(player);
     }
 
     void ApplyAbilityEffects(List<Character> targets, Ability ability)
