@@ -8,13 +8,12 @@ using UnityEngine.UI;
 public class EnergyBarController : MonoBehaviour
 {
     public Slider enrgBar;
-    public int maxEnrg =100;
-    public int currentEnrg;
 
-    private WaitForSeconds regenTick = new WaitForSeconds(0.1f);
+    private WaitForSeconds regenTick = new WaitForSeconds(1f);
     private Coroutine regen;
 
     public static EnergyBarController instance;
+    [SerializeField] Stats stats;
 
     private void Awake()
     {
@@ -24,49 +23,37 @@ public class EnergyBarController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentEnrg = maxEnrg;
-        enrgBar.maxValue = maxEnrg;
-        enrgBar.value = maxEnrg;
-
-    }
-    
-    void Update()
-    {
-        var keyboard = Keyboard.current;
-        if (keyboard.spaceKey.wasPressedThisFrame)
-        {
-            EnergyBarController.instance.UseEnry(10);
-           
-        }
+        enrgBar.maxValue = stats[StatTypes.MaxMana];
+        enrgBar.value = stats[StatTypes.MaxMana];
     }
 
-    public void UseEnry(int amt)
+    public void AddMana(int amt)
     {
-        if((currentEnrg - amt) >= 0)
-        {
-            currentEnrg -= amt;
-            enrgBar.value = currentEnrg;
-           
-            if( regen != null)
-            {
-                StopCoroutine(regen);
-            }
-            regen = StartCoroutine(RegenEnrg());
-        }
-        else
-        {
-            currentEnrg = 0;
-            enrgBar.value = currentEnrg;
-        }
+        stats[StatTypes.Mana] += amt;
+        UpdateSlider();
     }
 
-    private IEnumerator RegenEnrg()
+    public void SubtractMana(int amt)
     {
-        yield return new WaitForSeconds(2);
-        while(currentEnrg < maxEnrg)
+        stats[StatTypes.Mana] -= amt;
+        UpdateSlider();
+        if (regen == null)
+            regen = StartCoroutine(RegenEnergy());
+    }
+
+    private void UpdateSlider()
+    {
+        stats[StatTypes.Mana] = Mathf.Clamp(stats[StatTypes.Mana], 0, stats[StatTypes.MaxMana]);
+        enrgBar.value = stats[StatTypes.Mana];
+    }
+
+    private IEnumerator RegenEnergy()
+    {
+        //yield return new WaitForSeconds(1);
+        while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
         {
-            currentEnrg += maxEnrg / 100;
-            enrgBar.value = currentEnrg;
+            stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
+            UpdateSlider();
             yield return regenTick;
         }
         regen = null;
