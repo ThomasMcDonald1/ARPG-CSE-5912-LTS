@@ -7,22 +7,43 @@ using TMPro;
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
-    public Player player;
+    public Player player; //disable for test
 
     public GameObject questWindow;
-    public TextMesh titleText;
-    public TextMesh descpritionText;
-    public TextMesh expRewardText;
-    public TextMesh goldRewardText;
-
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI descpritionText;
+    public TextMeshProUGUI expRewardText;
+    public TextMeshProUGUI goldRewardText;
+    private void Start()
+    {
+        quest.title = "spider mission";
+        quest.description = "kill five spiders";
+        quest.expReward = 90;
+        quest.goldReward = 50;
+    }
 
     public void OpenQuestWindow()
     {
         questWindow.SetActive(true);
-        titleText.text = this.quest.title;
-        descpritionText.text = this.quest.description;
-        expRewardText.text = quest.expReward.ToString(); ;
-        goldRewardText.text = this.quest.goldReward.ToString();
+        titleText.SetText(quest.title);
+        descpritionText.SetText(quest.description);
+        expRewardText.SetText(quest.expReward.ToString()) ;
+        goldRewardText.SetText (quest.goldReward.ToString());
     }
+    public void AcceptQuest()
+    {
+        questWindow.SetActive(false);
+        /*To Do: return to the game play state*/
+        quest.isActive = true;
+        player.questList.Add(quest); // add a new quest to the quest list
 
+    }
+    public void DeclineQuest()
+    {
+        questWindow.SetActive(false);
+        /*To Do: return to the game play state*/
+        quest.isActive = false ;
+       
+
+    }
 }
