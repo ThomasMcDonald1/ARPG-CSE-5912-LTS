@@ -22,9 +22,13 @@ public abstract class Character : MonoBehaviour
     public float smooth;
     public float yVelocity;
     public virtual Transform AttackTarget { get; set; }
+    public virtual NPC NPCTarget { get; set; }
+    public float NPCInteractionRange;
 
     private void Awake()
     {
+        NPCTarget = null;
+        NPCInteractionRange = 2.0f;
         abilitiesKnown = new List<Ability>();
         charactersInRange = new List<Character>();
     }
