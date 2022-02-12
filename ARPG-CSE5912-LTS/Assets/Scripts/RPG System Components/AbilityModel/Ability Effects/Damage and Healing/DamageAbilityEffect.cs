@@ -79,7 +79,8 @@ public class DamageAbilityEffect : BaseAbilityEffect
 
         //TODO: You could also modify ALL damage done in the game by multiplying this by the variable 'globalDamageBalanceAdjustment' which can be
         //changed in the BaseAbilityEffect script
-        Debug.Log("Damage dealt to " + target.name + ": " + finalCalculatedDamage);
+        target.stats[StatTypes.HP] -= finalCalculatedDamage;
+        target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
         return finalCalculatedDamage;
     }
 

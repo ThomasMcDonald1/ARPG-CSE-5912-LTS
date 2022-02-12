@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AbilityEnergyCost : BaseAbilityCost
 {
-    
-
-    // If the character successfully used the ability, reduce the character's Energy
-    void OnDidPerform(object sender, object args)
+    public override bool CheckCharacterHasResourceCostForCastingAbility(Character caster)
     {
-        Stats stats = GetComponentInParent<Stats>();
-        stats[StatTypes.Mana] -= cost;
+        return caster.stats[StatTypes.Mana] >= cost;
+    }
+
+    public override void DeductResourceFromCaster(Character caster)
+    {
+        energyBarController.SubtractMana(cost);
     }
 }
