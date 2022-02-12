@@ -25,6 +25,7 @@ public class Player : Character
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
 
+
     void Awake()
     {
         Debug.Log(stats);
@@ -100,15 +101,9 @@ public class Player : Character
                     float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
                     rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
                     transform.eulerAngles = new Vector3(0, rotationY, 0);
+
+
                 }
-                // doesnt get triggered?
-                //else if (InTargetRange() && !signalAttack)/
-                //{
-                //    GeneralClass.GetComponent<MovementHandler>().Cancel();
-                //    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                //    Debug.Log("triggered");
-                //    Cancel();
-                //}
             }
         }
 
@@ -118,12 +113,17 @@ public class Player : Character
             if (!InInteractNPCRange())
             {
                 GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
+                GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
             }
-            Debug.Log("Clicked on " + NPCTarget.tag);
-            Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
-            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-            transform.eulerAngles = new Vector3(0, rotationY, 0);
+            else if (InInteractNPCRange())
+            {
+                this.GetComponent<MovementHandler>().Cancel();
+                Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
+                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                transform.eulerAngles = new Vector3(0, rotationY, 0);
+                NPCTarget.Interact();
+            }
         }
     }
 
@@ -160,13 +160,18 @@ public class Player : Character
 
     public void InteractWithNPC(NPC npc)
     {
-        NPCTarget = npc.transform;
+        
     }
 
     public void AttackCancel()
     {
         AttackTarget = null;
         GetComponent<Animator>().SetBool("StopAttack", true);
+    }
+
+    public void DialogueCancel()
+    {
+        NPCTarget = null;
     }
 
     public bool InCombatTargetRange()
@@ -180,7 +185,7 @@ public class Player : Character
     public bool InInteractNPCRange()
     {
         if (NPCTarget == null) return false;
-        return Vector3.Distance(transform.position, NPCTarget.position) < NPCInteractionRange;
+        return Vector3.Distance(transform.position, NPCTarget.transform.position) < 1.5f;
     }
 
     public void AttackSignal(bool signal)

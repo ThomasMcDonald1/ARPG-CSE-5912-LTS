@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using ARPG.Movement;
 using ARPG.Combat;
 using System.Collections;
+using System.Threading.Tasks;
 
 /* 
  * 
@@ -36,19 +37,23 @@ using System.Collections;
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-                if (GetComponent<Animator>().GetBool("Dead") == false)
+
+                    if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
-                        playerClass.AttackCancel();
+                        player.DialogueCancel();
+                        player.AttackCancel();
                         GetComponent<MovementHandler>().MoveToTarget(e.info.point);
                     }
                     break;
 
                 case "NPC":
+                    player.AttackCancel();
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
-                    Debug.Log("Clicked on NPC!");
+                    player.NPCTarget = npcTarget;
                     break;
 
                 case "Enemy":
+                    player.DialogueCancel();
                     player.AttackSignal(true);
                     EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
                     player.Attack(target);
@@ -62,8 +67,8 @@ using System.Collections;
         public void PlayerCancelClickEventResponse(object sender, InfoEventArgs<RaycastHit> e)
         {
             StartCoroutine(StopAttack());
-            
         }
+
         //Delay in coroutine so that play can attack once with a click
         IEnumerator StopAttack()
         {
@@ -75,8 +80,8 @@ using System.Collections;
 
             //After we have waited 5 seconds print the time again.
             //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-            playerClass.AttackSignal(false);
-            if (playerClass.InCombatTargetRange()) { playerClass.AttackCancel(); }
+            player.AttackSignal(false);
+            if (player.InCombatTargetRange()) { player.AttackCancel(); }
         }
 
         private void Start()
