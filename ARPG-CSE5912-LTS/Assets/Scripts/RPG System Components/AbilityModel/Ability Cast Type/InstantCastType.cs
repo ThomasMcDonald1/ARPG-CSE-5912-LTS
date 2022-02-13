@@ -28,4 +28,9 @@ public class InstantCastType : BaseCastType
     {
        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
     }
+
+    protected override void InstantiateVFX(Ability ability, RaycastHit hit, Character caster)
+    {
+        
+    }
 }
