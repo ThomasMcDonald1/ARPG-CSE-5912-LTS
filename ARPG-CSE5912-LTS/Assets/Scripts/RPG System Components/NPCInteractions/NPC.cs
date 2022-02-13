@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class NPC : NPCManager
 {
     [SerializeField] Player player;
+    [SerializeField] GameObject worldNames;
+    [SerializeField] GameObject npcMenu;
+ 
     GameObject child;
     public float smooth;
     public float yVelocity;
@@ -29,7 +33,9 @@ public class NPC : NPCManager
     {
         if (Interactable())
         {
-           StartCoroutine(BeginInteraction());
+            worldNames.SetActive(false);
+            npcMenu.SetActive(true);
+            StartCoroutine(BeginInteraction());
         }
     }
 
@@ -45,5 +51,7 @@ public class NPC : NPCManager
             yield return null;
         }
         player.NPCTarget = null;
+        npcMenu.SetActive(false);
+        worldNames.SetActive(true);
     }
 }
