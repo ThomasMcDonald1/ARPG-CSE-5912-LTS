@@ -78,6 +78,35 @@ public class LevelController : MonoBehaviour
     {
         //TODO: If exp will be given, but the player has some kind of equipment that will increase the amount of exp rewarded,
         //then apply the modification here
+        (int monsterLevel, int monsterType) = e.info;
+        //Now just set the monsterType for the multiple data.
+
+        int lvl = stats[StatTypes.LVL];
+        int gap = monsterLevel - stats[StatTypes.LVL];
+        if (lvl < 25)
+        {
+            stats[StatTypes.ExpGain] = (int)((float)monsterType * (float)monsterLevel * ((float)(100 + gap * 4) / 100f));
+            //if player level is less than 25, for example,
+            //we have basic exp = 1
+            //player level = 24, monster level = 9, monsterType will cause the exp *=50.
+            //the gain will be 50 * 9 * (100 - 15 * 4)% = 180
+            //Gain about monster level = 9 is 180 - 450 (lvl 24 -> 9), and 450 - 594 (lvl 9 -> 1)
+            //Gain about player level = 24 is 1200 - 19800 (monsterlvl 24 -> 99), and 1200 - 4 (monsterlvl 24 ->1 )
+            //Gain about player level = 1 is 50 - 24354 (monsterlvl 1 -> 99)
+        }
+        else
+        {
+            stats[StatTypes.ExpGain] = (int)((float)monsterType * (float)monsterLevel *((float)monsterLevel/ (float)stats[StatTypes.LVL]));
+            //if level is greater than 25, for example,
+            //we have basic exp = 1
+            //player level = 25, monster level = 9, monsterType will cause the exp *= 50.
+            //the gain will be 50 * 9 * 9/25 = 162
+            //Gain about monster level = 9 is 162 - 41 (lvl 25 -> 99)
+            //Gain about player level = 25 is 1250 - 19602 (monsterlvl 25 -> 99), and 1250 - 2 (monsterlvl 25 ->1 )
+            //Gain about player level = 99 is 1 - 4950 (monsterlvl 1 -> 99)
+        }
+
+        stats[StatTypes.ExpGain] *= (int)((float)(100 + stats[StatTypes.ExpGainMod])/100f); //if mod is 0, just set normal expGain
         stats[StatTypes.EXP] += stats[StatTypes.ExpGain];
         Debug.Log("setexp");
     }
