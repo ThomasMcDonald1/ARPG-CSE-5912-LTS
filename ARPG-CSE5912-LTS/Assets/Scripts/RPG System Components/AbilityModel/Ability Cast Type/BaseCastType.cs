@@ -11,7 +11,10 @@ public abstract class BaseCastType : MonoBehaviour
     public float castTime;
 
     public abstract void WaitCastTime(Ability ability, RaycastHit hit, Character caster);
+    protected abstract void InstantiateVFX(Ability ability, RaycastHit hit, Character caster);
     public abstract void StopCasting();
+    protected abstract void CompleteCast(Ability ability, RaycastHit hit, Character caster);
+
 
     private void Awake()
     {
@@ -35,8 +38,4 @@ public abstract class BaseCastType : MonoBehaviour
     {
         WaitCastTime(e.info.Item1, e.info.Item2, e.info.Item3);
     }
-
-    protected abstract void CompleteCast(Ability ability, RaycastHit hit, Character caster);
-
-
 }

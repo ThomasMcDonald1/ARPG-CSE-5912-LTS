@@ -13,6 +13,7 @@ public abstract class Character : MonoBehaviour
 
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
+
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
@@ -24,6 +25,8 @@ public abstract class Character : MonoBehaviour
     public virtual Transform AttackTarget { get; set; }
     public virtual NPC NPCTarget { get; set; }
     public float NPCInteractionRange;
+
+    public GameObject spellVFXHolderObj;
 
     private void Awake()
     {
