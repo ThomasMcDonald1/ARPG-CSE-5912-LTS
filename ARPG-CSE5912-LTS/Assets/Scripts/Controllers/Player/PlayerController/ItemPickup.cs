@@ -39,7 +39,6 @@ public class ItemPickup : MonoBehaviour
 				break;
 
 		}
-		Inventory.instance.Add(item,Inventory.instance.weaponItems);   // Add to inventory
 
 		Destroy(gameObject);    // Destroy item from scene
 	}

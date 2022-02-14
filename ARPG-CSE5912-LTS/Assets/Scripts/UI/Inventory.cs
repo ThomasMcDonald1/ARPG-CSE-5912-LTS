@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     public int space = 20;
 
     // Add a new item if enough room
-    public void Add(Ite item,List<Ite> list)
+    public void Add(Ite item, List<Ite> list)
     {
         
         if (item.showInInventory)
