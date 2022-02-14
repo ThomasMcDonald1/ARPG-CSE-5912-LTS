@@ -8,9 +8,11 @@ public class PassiveTreeUI : MonoBehaviour
     [SerializeField] Player player;
     private PassiveSkills passiveSkills;
     public GameObject skillNodes;
+    public Connections[] connections;
     private void Awake()
     {
-        passiveSkills = new PassiveSkills(player);
+        passiveSkills = new PassiveSkills(player, connections);
+        // assign each child an event listener that listens for button click
         foreach(Transform child in skillNodes.transform)
         {
             Button btn = child.GetComponent<Button>();

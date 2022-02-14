@@ -10,9 +10,11 @@ public class PassiveSkills
     private Stats playerStats;
     private PassiveNode[] passiveTree;
     private PassiveSkillInfo passiveSkillInfo;
-    public PassiveSkills(Player player)
+    private Connections[] connections;
+    public PassiveSkills(Player player, Connections[] connections)
     {
         this.player = player;
+        this.connections = connections;
         playerStats = player.GetComponent<Stats>();
         passiveSkillInfo = new PassiveSkillInfo();
         this.passiveTree = passiveSkillInfo.passiveTree;
@@ -36,6 +38,7 @@ public class PassiveSkills
     private bool Unlockable(PassiveNode node)
     {
         // if (playerStats[StatTypes.SKILLPINTS] < 1) return false;
+        if(node.Unlockable == true) return true;
         if (node.Prerequisites.Length == 0) return true;
         foreach (var prereq in node.Prerequisites)
         {
@@ -46,6 +49,10 @@ public class PassiveSkills
     }
     private void UpdateVisual(Transform background)
     {
-        background.GetComponent<Image>().color = Color.yellow;
+        background.GetComponent<Image>().color = Color.white;
+        foreach (var c in connections)
+        {
+            c.UpdateConnection(passiveTree);
+        }
     }
 }
