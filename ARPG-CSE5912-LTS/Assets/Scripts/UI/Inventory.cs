@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     public Hashtable amount = new Hashtable();
     public List<Ite> weaponItems = new List<Ite>(); 
     public List<Ite> armorItems = new List<Ite>();
-    public List<Ite> untilityItems = new List<Ite>();
+    public List<Ite> utilItems = new List<Ite>();
 
 
     public int space = 20;
@@ -87,9 +87,24 @@ public class Inventory : MonoBehaviour
     // Remove an item
     public void Remove(Ite item)
     {
+        List<Ite> list = null;
+        switch (item.type)
+        {
+            case Ite.ItemType.armor:
+                list = armorItems;
+                break;
+            case Ite.ItemType.weapon:
+                list = weaponItems;
+                break;
+            case Ite.ItemType.utility:
+                list = utilItems;
+                break;
+
+        }
+
         if (!item.stackable)
         {
-            weaponItems.Remove(item);
+            list.Remove(item);
         }
         else if ((int)amount[item] > 1)
         {
@@ -98,8 +113,8 @@ public class Inventory : MonoBehaviour
         }
         else if ((int)amount[item] == 1)
         {
-            amount[item] = "";
-            weaponItems.Remove(item);
+            amount[item] = "0";
+            list.Remove(item);
             amount.Remove(item);
         }
 

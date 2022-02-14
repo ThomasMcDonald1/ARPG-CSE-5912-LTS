@@ -15,7 +15,7 @@ public class ItemPickup : MonoBehaviour
 	// When the player interacts with the item
 	public void Update()
 	{
-		Debug.Log("Inventory weapon amt: " + Inventory.instance.weaponItems.Count);
+		//Debug.Log("Inventory weapon amt: " + Inventory.instance.weaponItems.Count);
 		if (EnteredTrigger) {
 			PickUp();
 			EnteredTrigger = false;
@@ -35,7 +35,7 @@ public class ItemPickup : MonoBehaviour
 				Inventory.instance.Add(item, Inventory.instance.weaponItems);
 				break;
 			case Ite.ItemType.utility:
-				Inventory.instance.Add(item, Inventory.instance.untilityItems);
+				Inventory.instance.Add(item, Inventory.instance.utilItems);
 				break;
 
 		}

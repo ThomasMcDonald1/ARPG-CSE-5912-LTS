@@ -82,7 +82,7 @@ namespace LootLabels {
                 case GearTypes.Shoes:
                     return iconPath + "InvBoots";
                 default:
-                    Debug.Log("Case not implemented");
+                   // Debug.Log("Case not implemented");
                     return iconPath + "QuestionMark";
             }
         }
