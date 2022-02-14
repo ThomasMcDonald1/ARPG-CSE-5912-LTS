@@ -21,13 +21,17 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     //Apply the ability's effect to the target
     public void Apply(Character target)
     {
-        if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
-            return;
+        //if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
+        //    return;
 
         if (GetComponent<BaseHitRate>().RollForHit(target))
         {
-            //Maybe broadcast an event that the target was hit
+            //Can invoke an event that the target was hit for floating combat text, etc
             OnApply(target);
+        }
+        else
+        {
+            //Missed! Can invoke miss event here for floating combat text, etc
         }
     }
 
@@ -39,8 +43,7 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     protected virtual float GetStat(Character character, StatTypes statType)
     {
         //TODO: Listen for any events that the value should be modified
-
-        float finalValue = character.GetComponent<Stats>().GetValue(statType);
+        float finalValue = character.stats.GetValue(statType);
         
         //TODO: if value needs to be modified due to equipped gear, etc, do modifications here. May require more classes or events being broadcast
         //finalValue += valueOfSummedUpMods;

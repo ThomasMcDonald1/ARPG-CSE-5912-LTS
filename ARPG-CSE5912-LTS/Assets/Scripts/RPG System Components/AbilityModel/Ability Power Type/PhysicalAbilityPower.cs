@@ -10,11 +10,16 @@ public class PhysicalAbilityPower : BaseAbilityPower
     }
     protected override int GetBaseDefense(Character target)
     {
-        return target.GetComponent<Stats>()[StatTypes.ARMOR];
+        return target.GetComponent<Stats>()[StatTypes.Armor];
     }
 
-    protected override float GetMultiplier()
+    public override bool IsPhysicalPower()
     {
-        return multiplier;
+        return true;
+    }
+
+    public override bool IsMagicPower()
+    {
+        return false;
     }
 }

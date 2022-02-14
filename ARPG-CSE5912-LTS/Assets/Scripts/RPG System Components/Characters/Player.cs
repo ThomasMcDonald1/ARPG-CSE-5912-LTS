@@ -10,6 +10,8 @@ public class Player : Character
 {
     [SerializeField] private DialogueUI dialogueUI;
     [SerializeField] private InventoryUI uiInventory;
+    public MouseCursorChanger cursorChanger;
+
     private Inventory inventory;
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }
@@ -23,13 +25,14 @@ public class Player : Character
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
 
+
     void Awake()
     {
         Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
-        inventory = new Inventory();
-        uiInventory.SetInventory(inventory);
-        ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+       // inventory = new Inventory();
+       // uiInventory.SetInventory(inventory);
+       // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
     }
 
     protected override void Start()
@@ -47,7 +50,7 @@ public class Player : Character
     protected override void Update()
     {
         //inventory system
-        playUpItem();
+       // playUpItem();
         //Sound
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)
@@ -70,7 +73,7 @@ public class Player : Character
         }
 
         //Combat
-        if (stats[StatTypes.HEALTH] <= 0)
+        if (stats[StatTypes.HP] <= 0)
         {
             GetComponent<Animator>().SetBool("Dead", true);
         }
@@ -80,14 +83,14 @@ public class Player : Character
             if (AttackTarget != null)
             {
                 GetComponent<Animator>().SetBool("StopAttack", false);
-                if (!InTargetRange())
+                if (!InCombatTargetRange())
                 {
                     //GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
                     //GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
                     this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
                     this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
                 }
-                else if (InTargetRange() && signalAttack)
+                else if (InCombatTargetRange() && signalAttack)
                 {
                     //GeneralClass.GetComponent<MovementHandler>().Cancel();
                     this.GetComponent<MovementHandler>().Cancel();
@@ -98,43 +101,56 @@ public class Player : Character
                     float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
                     rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
                     transform.eulerAngles = new Vector3(0, rotationY, 0);
+
+
                 }
-                // doesnt get triggered?
-                //else if (InTargetRange() && !signalAttack)/
-                //{
-                //    GeneralClass.GetComponent<MovementHandler>().Cancel();
-                //    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                //    Debug.Log("triggered");
-                //    Cancel();
-                //}
             }
         }
-    }
 
-    private void playUpItem()
-    {
-
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        // NPCInteraction
+        if (NPCTarget != null)
         {
-            if (Physics.Raycast(ray, out hit))
+            if (!InInteractNPCRange())
             {
-                if (hit.collider != null)
-                {
-                    //Debug.Log("hit: " + hit.transform.gameObject.tag);
-                    if (hit.transform.gameObject.tag == "InventoryItem")
-                    {
-                        InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
-                        inventory.AddItem(item);
-                        hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
-
-                    }
-
-                }
+                GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+                GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
+            }
+            else if (InInteractNPCRange())
+            {
+                this.GetComponent<MovementHandler>().Cancel();
+                Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
+                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                transform.eulerAngles = new Vector3(0, rotationY, 0);
+                NPCTarget.Interact();
             }
         }
     }
+
+    //private void playUpItem()
+    //{
+
+    //    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+    //    RaycastHit hit;
+    //    if (Mouse.current.leftButton.wasReleasedThisFrame)
+    //    {
+    //        if (Physics.Raycast(ray, out hit))
+    //        {
+    //            if (hit.collider != null)
+    //            {
+    //                //Debug.Log("hit: " + hit.transform.gameObject.tag);
+    //                if (hit.transform.gameObject.tag == "InventoryItem")
+    //                {
+    //                    InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
+    //                    inventory.AddItem(item);
+    //                    hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
+
+    //                }
+
+    //            }
+    //        }
+    //    }
+    //}
 
 
     public void Attack(EnemyTarget target)
@@ -142,18 +158,34 @@ public class Player : Character
         AttackTarget = target.transform;
     }
 
-    public void Cancel()
+    public void InteractWithNPC(NPC npc)
+    {
+        
+    }
+
+    public void AttackCancel()
     {
         AttackTarget = null;
         GetComponent<Animator>().SetBool("StopAttack", true);
     }
 
-    public bool InTargetRange()
+    public void DialogueCancel()
+    {
+        NPCTarget = null;
+    }
+
+    public bool InCombatTargetRange()
     {
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
-        return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.ATTACKRANGE];
+        return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.AttackRange];
 
+    }
+
+    public bool InInteractNPCRange()
+    {
+        if (NPCTarget == null) return false;
+        return Vector3.Distance(transform.position, NPCTarget.transform.position) < 1.5f;
     }
 
     public void AttackSignal(bool signal)
@@ -167,7 +199,7 @@ public class Player : Character
         if (AttackTarget != null)
         {
 
-            AttackTarget.GetComponent<Stats>()[StatTypes.HEALTH] -= stats[StatTypes.PHYATK];
+            AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
         }
     }
 

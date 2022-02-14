@@ -10,10 +10,11 @@ public abstract class BaseCastType : MonoBehaviour
     [HideInInspector] public CastingBar castingBar;
     public float castTime;
 
-    public abstract void WaitCastTime(Ability ability);
+    public abstract void WaitCastTime(Ability ability, RaycastHit hit, Character caster);
+    protected abstract void InstantiateVFX(Ability ability, RaycastHit hit, Character caster);
     public abstract void StopCasting();
+    protected abstract void CompleteCast(Ability ability, RaycastHit hit, Character caster);
 
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityCastTimeWasCompletedEvent;
 
     private void Awake()
     {
@@ -33,14 +34,8 @@ public abstract class BaseCastType : MonoBehaviour
         StopCasting();
     }
 
-    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<Ability> e)
+    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
     {
-        WaitCastTime(e.info);
+        WaitCastTime(e.info.Item1, e.info.Item2, e.info.Item3);
     }
-
-    public void CompleteCast(Ability ability)
-    {
-        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<Ability>(ability));
-    }
-
 }
