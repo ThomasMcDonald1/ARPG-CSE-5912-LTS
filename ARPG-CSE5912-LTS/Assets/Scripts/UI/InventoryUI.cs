@@ -18,7 +18,7 @@ public class InventoryUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         UpdateUI();
+        UpdateUI();
 
     }
     void UpdateUI()
@@ -29,25 +29,25 @@ public class InventoryUI : MonoBehaviour
         //}
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i < inventory.items.Count)
+            //Debug.Log("items.Count is " + inventory.items.Count);
+            if (i < inventory.weaponItems.Count)
             {
                 GameObject amount = slots[i].transform.GetChild(1).gameObject;
                 TextMeshProUGUI text = amount.GetComponent<TextMeshProUGUI>();
                 // Debug.Log(inventory.items[i].name + " index: " + i + " amount: " + inventory.amount[inventory.items[i]]);
-                if (inventory.items[i].stackable)
+                if (inventory.weaponItems[i].stackable)
                 {
-                    Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
+                    // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
 
 
-                    text.SetText(inventory.amount[inventory.items[i]].ToString());
-                   // amount.SetActive(true);
+                    text.SetText(inventory.amount[inventory.weaponItems[i]].ToString());
 
                 }
                 else
                 {
                     text.SetText("");
                 }
-                slots[i].AddItem(inventory.items[i]);
+                slots[i].AddItem(inventory.weaponItems[i]);
             }
             else
             {
