@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class NPC : NPCManager
+public class NPC : MonoBehaviour
 {
+
+
     [SerializeField] Player player;
     [SerializeField] GameObject worldNames;
     [SerializeField] GameObject optionsMenu;
@@ -30,7 +32,7 @@ public class NPC : NPCManager
         yVelocity = 0.0f;
     }
 
-    protected override bool Interactable()
+    private bool Interactable()
     {
         if (player.NPCTarget == this && player.InInteractNPCRange())
         {
@@ -44,7 +46,7 @@ public class NPC : NPCManager
         return false;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         if (Interactable())
         {
