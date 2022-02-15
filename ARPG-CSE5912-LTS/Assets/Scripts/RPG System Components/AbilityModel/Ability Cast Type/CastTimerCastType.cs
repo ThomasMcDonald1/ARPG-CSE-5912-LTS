@@ -46,37 +46,28 @@ public class CastTimerCastType : BaseCastType
     {
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
         GameObject spellcastVFXFromAbility = ability.spellcastVFXObj;
-        GameObject spellcastVFX = null;
-        for (int i = 0; i < caster.spellVFXHolderObj.transform.childCount; i++)
+        GameObject explosionVFXFromAbility = ability.explosionVFXObj;
+        GameObject instance = Instantiate(spellcastVFXFromAbility, ability.transform);
+
+        instance.SetActive(true);
+        CreateProjectile cProj = instance.GetComponent<CreateProjectile>();
+        cProj.Time = baseCastType.castTime;
+        StartCoroutine(WaitCastVFXTime(cProj, caster, hit, instance, ability, explosionVFXFromAbility));
+
+        if (explosionVFXFromAbility != null)
         {
-            Transform child = caster.spellVFXHolderObj.transform.GetChild(i);
-            if (child.name == spellcastVFXFromAbility.name)
+            GameObject explosionInstance = Instantiate(explosionVFXFromAbility, ability.transform);
+            explosionInstance.transform.position = hit.point;
+            SpecifyAbilityArea aa = ability.GetComponent<SpecifyAbilityArea>();
+            if (aa != null)
             {
-                spellcastVFX = child.gameObject;
+                explosionInstance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
             }
+            ParticleSystem pS = explosionInstance.GetComponent<ParticleSystem>();
+            ParticleSystem.MainModule mainPS = pS.main;
+            pS.Stop();
+            StartCoroutine(WaitExplosionVFXTime(explosionInstance, mainPS, pS, baseCastType.castTime));
         }
-        if (spellcastVFX != null)
-        {
-            CreateProjectile cProj = spellcastVFX.GetComponent<CreateProjectile>();
-            cProj.Time = baseCastType.castTime;
-            StartCoroutine(WaitCastVFXTime(cProj, caster, spellcastVFX, hit));
-        }
-    }
-
-    private Vector3 DetermineVelocity(Rigidbody proj, RaycastHit hit)
-    {
-        Character character = GetComponentInParent<Character>();
-        Vector3 casterPos = character.GetComponentInChildren<Animator>().transform.position;
-        float height = 5;
-        float gravity = -18;
-
-        float displacementY = hit.point.y - proj.transform.position.y;
-        Vector3 displacementXZ = new Vector3(hit.point.x - casterPos.x, 0, hit.point.z - casterPos.z);
-
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity));
-
-        return velocityXZ + velocityY;
     }
 
     public override void StopCasting()
@@ -94,18 +85,27 @@ public class CastTimerCastType : BaseCastType
         AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
     }
 
-    private IEnumerator WaitCastVFXTime(CreateProjectile cProj, Character caster, GameObject spellcastVFX, RaycastHit hit)
+    private IEnumerator WaitCastVFXTime(CreateProjectile cProj, Character caster, RaycastHit hit, GameObject instance, Ability ability, GameObject explosion)
     {
         Vector3 casterPos = caster.transform.position;
         Vector3 casterDir = caster.transform.forward;
         Quaternion casterRot = caster.transform.rotation;
         float spawnDistance = 1;
         Vector3 spawnPos = casterPos + casterDir * spawnDistance;
-        spellcastVFX.transform.position = spawnPos;
-        spellcastVFX.SetActive(true);
+        instance.transform.position = spawnPos;
         yield return new WaitForSeconds(cProj.Time);
-        Projectile projectile = cProj.Create(caster, spawnPos, casterRot);
-        projectile.rb.velocity = DetermineVelocity(projectile.rb, hit);
-        spellcastVFX.SetActive(false);
+        if (explosion == null)
+        {
+            cProj.Create(spawnPos, casterRot, hit);
+        }
+        Destroy(instance);
+    }
+
+    private IEnumerator WaitExplosionVFXTime(GameObject instance, ParticleSystem.MainModule mainPS, ParticleSystem pS, float castTime)
+    {
+        yield return new WaitForSeconds(castTime);
+        pS.Play();
+        yield return new WaitForSeconds(mainPS.duration);
+        Destroy(instance);
     }
 }
