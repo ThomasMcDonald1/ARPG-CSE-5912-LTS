@@ -10,7 +10,7 @@ public class InventorySlot : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI amount;
     public Button removeButton;
-    public bool isEmpty = true;
+   
     Ite item;
     public void AddItem(Ite newItem)
     {
@@ -18,7 +18,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
-        isEmpty = false;
+        
     }
 
     public void ClearSlot()
@@ -28,7 +28,7 @@ public class InventorySlot : MonoBehaviour
             icon.enabled = false;
             removeButton.interactable = false;
             amount.SetText("");
-            isEmpty = true;
+            
     }
 
     public void OnRemoveButton()

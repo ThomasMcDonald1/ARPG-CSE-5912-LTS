@@ -11,6 +11,7 @@ public class Ite : ScriptableObject
 	public bool showInInventory = true;
 	public bool stackable;
 	public ItemType type;
+	[SerializeField] public GameObject prefab;
 	//public int amount = 1;
 	public virtual void Use()
 	{
@@ -18,7 +19,7 @@ public class Ite : ScriptableObject
 		// Something may happen
 		Debug.Log("using " + name);
 	}
-
+	
 	public enum ItemType
 	{
 		weapon,

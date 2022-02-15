@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Inventory : MonoBehaviour
 {
     #region Singleton
@@ -21,6 +22,12 @@ public class Inventory : MonoBehaviour
     public List<Ite> weaponItems = new List<Ite>(); 
     public List<Ite> armorItems = new List<Ite>();
     public List<Ite> utilItems = new List<Ite>();
+
+    private GameObject player;
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
 
     public int space = 20;
@@ -117,8 +124,10 @@ public class Inventory : MonoBehaviour
             list.Remove(item);
             amount.Remove(item);
         }
-
+        //Debug.Log("item prefab:" + item.prefab);
+        ItemDrop.DropItem(player.transform.position, item);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
+    
 }
