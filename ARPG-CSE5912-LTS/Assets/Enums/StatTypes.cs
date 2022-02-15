@@ -76,9 +76,10 @@ public enum StatTypes
     PercentLightningResistBonus, //a sum of all +% to specifically lightning resist
     PercentPoisonResistBonus, //a sum of all +% to specifically poison resist
 
-    //60-61
+    //60-62
     ExpGain,
     MonsterType,
+    SavedExp,
 
     //ADD STATUS EFFECT RESIST CHANCES HERE
     //62

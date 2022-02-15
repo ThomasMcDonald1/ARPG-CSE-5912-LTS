@@ -66,12 +66,18 @@ public class LevelController : MonoBehaviour
     {
         ExperienceManager.ExpWillBeGivenEvent += OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent += OnExpHasBeenGiven;
+        ExperienceManager.SavedExpEvent += OnSavedExpEvent;
+        ExperienceManager.GetBackExpEvent += OnGetBackExpEvent;
+        ExperienceManager.EmptyExpEvent += OnEmptyExpEvent;
     }
 
     private void OnDisable()
     {
         ExperienceManager.ExpWillBeGivenEvent -= OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent -= OnExpHasBeenGiven;
+        ExperienceManager.SavedExpEvent -= OnSavedExpEvent;
+        ExperienceManager.GetBackExpEvent -= OnGetBackExpEvent;
+        ExperienceManager.EmptyExpEvent -= OnEmptyExpEvent;
     }
 
     public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int)> e)
@@ -106,15 +112,39 @@ public class LevelController : MonoBehaviour
             //Gain about player level = 99 is 1 - 4950 (monsterlvl 1 -> 99)
         }
 
-        stats[StatTypes.ExpGain] *= (int)((float)(100 + stats[StatTypes.ExpGainMod])/100f); //if mod is 0, just set normal expGain
+        stats[StatTypes.ExpGain] = (int)((float)stats[StatTypes.ExpGain] * (float)(100 + stats[StatTypes.ExpGainMod])/100f); //if mod is 0, just set normal expGain
         stats[StatTypes.EXP] += stats[StatTypes.ExpGain];
+        stats[StatTypes.ExpGain] = 0; //not sure if set 0 here, need more test
         Debug.Log("setexp");
     }
 
     public void OnExpHasBeenGiven(object sender, InfoEventArgs<(int, int)> e)
     {
+
         stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
-        Debug.Log("setlevel");
+       
+    }
+
+    public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    { 
+        Debug.Log("save");
+        stats[StatTypes.SavedExp] += stats[StatTypes.EXP];
+        stats.SetValue(StatTypes.EXP, 0, false);
+        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
+    }
+
+    public void OnGetBackExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    {
+        stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f);
+        stats.SetValue(StatTypes.EXP, stats[StatTypes.SavedExp], false);
+        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
+    }
+
+    public void OnEmptyExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    {
+        stats.SetValue(StatTypes.SavedExp, 0, false);
+        stats.SetValue(StatTypes.EXP, 0, false);
+        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
     }
 
     //From the script
