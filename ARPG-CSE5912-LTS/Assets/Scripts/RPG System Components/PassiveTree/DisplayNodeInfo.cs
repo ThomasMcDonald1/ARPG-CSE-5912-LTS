@@ -17,7 +17,6 @@ public class DisplayNodeInfo : MonoBehaviour
     }
     public void DisplayInfo()
     {
-        Debug.Log("working");
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         text = Instantiate(Resources.Load("SkillInfo") as GameObject, transform);
         text.transform.position += new Vector3(0,50,0);
