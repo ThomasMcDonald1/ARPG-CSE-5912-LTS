@@ -32,8 +32,16 @@ public class EquipManager : MonoBehaviour
         if (currentEquipment[slotIndex] != null)
         {
             oldItem = currentEquipment[slotIndex];
-            Debug.Log("oldItem is " + oldItem.name);
-            inventory.Add(oldItem);
+            switch (oldItem.type)
+            {
+                case Ite.ItemType.armor:
+                    Inventory.instance.Add(oldItem, Inventory.instance.armorItems);
+                    break;
+                case Ite.ItemType.weapon:
+                    Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
+                    break;
+
+            }
         }
         currentEquipment[slotIndex] = newItem;
     }
@@ -43,7 +51,16 @@ public class EquipManager : MonoBehaviour
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
-            inventory.Add(oldItem);
+            switch (oldItem.type)
+            {
+                case Ite.ItemType.armor:
+                    Inventory.instance.Add(oldItem, Inventory.instance.armorItems);
+                    break;
+                case Ite.ItemType.weapon:
+                    Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
+                    break;
+
+            }
 
             currentEquipment[slotIndex] = null;
 
