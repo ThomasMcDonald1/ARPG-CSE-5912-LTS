@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using Ink.Runtime;
 
-public class NPC : NPCManager
+public class NPC : MonoBehaviour
 {
-    [SerializeField] Player player;
-    [SerializeField] GameObject worldNames;
-    [SerializeField] GameObject optionsMenu;
-    [SerializeField] GameObject dialogueBox;
-    [SerializeField] Button proceedToQuestButton;
+    
 
- 
+    [SerializeField] Player player;
+
+
+    [Header("Ink JSON")]
+    [SerializeField] private TextAsset inkJSON;
+
+    
     GameObject child;
     public float smooth;
     public float yVelocity;
 
     private bool isTalking;
     private bool isTrading;
+
+    private bool hasNewInfo;
     //private bool hasAvailableQuest;
 
     private void Start()
     {
+        hasNewInfo = false;
         isTalking = false;
         isTrading = false;
 
@@ -30,7 +36,7 @@ public class NPC : NPCManager
         yVelocity = 0.0f;
     }
 
-    protected override bool Interactable()
+    private bool Interactable()
     {
         if (player.NPCTarget == this && player.InInteractNPCRange())
         {
@@ -44,11 +50,12 @@ public class NPC : NPCManager
         return false;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         if (Interactable())
         {
-            OpenMainMenu();
+            if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
+            else { SetDialogue(); }
             StartCoroutine(BeginInteraction());
         }
     }
@@ -64,26 +71,24 @@ public class NPC : NPCManager
             SetMenu();
             yield return null;
         }
-        player.NPCTarget = null;
-        DisableInteractionView();
+        InteractionManager.GetInstance().StopInteraction();
+        InteractionManager.GetInstance().DisableInteractionView();
     }
 
     private void SetMenu()
     {
         if (isTalking)
         {
-            dialogueBox.SetActive(true);
-            optionsMenu.SetActive(false);
+            InteractionManager.GetInstance().EnterDialogueMode(inkJSON);
         }
         else if (isTrading)
         {
             // enable trade menu here
-            optionsMenu.SetActive(false);
+            InteractionManager.GetInstance().EnterTradeMenu();
         }
         else
         {
-            dialogueBox.SetActive(false);
-            optionsMenu.SetActive(true);
+            InteractionManager.GetInstance().EnterOptionsMenu();
         }
     }
 
@@ -92,27 +97,18 @@ public class NPC : NPCManager
         isTalking = false;
     }
     
-    public void OpenDialogue()
+    public void SetDialogue()
     {
         isTalking = true;
     }
 
-    public void OpenMainMenu()
+    public string GetName()
     {
-        worldNames.SetActive(false);
-        dialogueBox.SetActive(false);
-        optionsMenu.SetActive(true);
+        return this.tag;
     }
 
-    public void StopInteraction()
+    public TextAsset GetCurrentDialogue()
     {
-        player.NPCTarget = null;
-    }
-
-    public void DisableInteractionView()
-    {
-        dialogueBox.SetActive(false);
-        optionsMenu.SetActive(false);
-        worldNames.SetActive(true);
+        return inkJSON;
     }
 }

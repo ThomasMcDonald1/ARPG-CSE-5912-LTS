@@ -48,6 +48,10 @@ using System.Threading.Tasks;
 
                 case "NPC":
                     player.AttackCancel();
+                    if (player.NPCTarget != null)
+                    { 
+                        player.NPCTarget = null; 
+                    }
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
                     player.NPCTarget = npcTarget;
                     break;
