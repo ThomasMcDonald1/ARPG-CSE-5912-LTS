@@ -27,15 +27,31 @@ public class LevelController : MonoBehaviour
         stats.SetValue(StatTypes.EXP, ExperienceForLevel(level), false);
     }
 
-    /*
+   
+    public float TotalExperiencePercent
+    {
+        get
+        {
+                return (float)stats[StatTypes.EXP] / (float) maxExp;
+        }
+    }
+
     public float CurrentExperiencePercent
     {
         get
         {
-            return (float)EXP / (float)currentLevelExp(LVL);
+            if (currentLevelExpToNext(stats[StatTypes.LVL]) > 0)
+            {
+                return (float)currentLevelExp(stats[StatTypes.EXP], stats[StatTypes.LVL]) / (float)currentLevelExpToNext(stats[StatTypes.LVL]);
+
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
-    */
+
 
     public static int currentLevelExpToNext(int level)
     {
@@ -135,7 +151,8 @@ public class LevelController : MonoBehaviour
 
     public void OnGetBackExpEvent(object sender, InfoEventArgs<(int, int)> e)
     {
-        stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f);
+        stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f); 
+        //I am now take away all exp and maybe will change for only this level exp.
         stats.SetValue(StatTypes.EXP, stats[StatTypes.SavedExp], false);
         stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
     }
