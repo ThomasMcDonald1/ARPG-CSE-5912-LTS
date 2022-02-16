@@ -11,23 +11,20 @@ public class Projectile : MonoBehaviour {
     Rigidbody ProjectileRigidbody;
     RaycastHit hit;
 
+    //NOTE: This script is currently set up for "Lobbed projectiles" such as the motion
+    //a cannonball would have. To have different projectile motions and functionality,
+    //we should write multiple projectile scripts.
     public Projectile(Rigidbody ProjectileRigidBody, Vector3 spawnPos, Quaternion casterRot, RaycastHit hit)
     {
-        //Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), hit.point, Quaternion.identity);
         this.ProjectileRigidbody = ProjectileRigidBody;
         this.hit = hit;
         rb = Instantiate(this.ProjectileRigidbody, spawnPos, casterRot);
-        //if (hit.point != null)
-        //{
-        //    rb.constraints = RigidbodyConstraints.None;
-        //}
+        if (hit.point != null)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
         DetermineVelocity(hit, spawnPos);
     }
-
-    //void Start () {
-    //    rb = gameObject.GetComponent<Rigidbody>();
-    //    rb.velocity = Velocity;
-    //}
 
     void OnCollisionEnter(Collision col)
     {
@@ -41,7 +38,7 @@ public class Projectile : MonoBehaviour {
         float gravity = -18;
 
         float displacementY = hit.point.y - rb.transform.position.y;
-        Vector3 displacementXZ = new Vector3(hit.point.x - spawnPos.x, 0, hit.point.z - spawnPos.z);
+        Vector3 displacementXZ = new Vector3(hit.point.x - spawnPos.x, 0, hit.point.z - spawnPos.z) * 0.63f;
 
         Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
         Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity));
