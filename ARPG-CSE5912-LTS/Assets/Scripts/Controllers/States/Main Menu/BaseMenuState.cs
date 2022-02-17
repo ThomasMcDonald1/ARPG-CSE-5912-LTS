@@ -25,7 +25,7 @@ public class BaseMenuState : State
     public Button backFromOptionsToMainButton;
     public Button fullScreenButton, noFullScreenButton;
     public TMP_Dropdown resolutionDropDown;
-    public Slider volumeSlider;
+    public Slider musicVolumeSlider, soundEffectsVolumeSlider;
 
     // character creation buttons
     public Button backFromCharCreateToMainButton, resetCharaButton, confirmButton;
@@ -62,12 +62,12 @@ public class BaseMenuState : State
         slot6Button = mainMenuController.saveSlotButtonObjs[5].GetComponent<Button>();
 
         //options
-        audioMixer = FindObjectOfType<AudioManager>().mixer;
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();
         resolutionDropDown = mainMenuController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
         fullScreenButton = mainMenuController.fullScreenButtonObj.GetComponent<Button>();
         noFullScreenButton = mainMenuController.noFullScreenButtonObj.GetComponent<Button>();
-        volumeSlider = mainMenuController.volumeSliderObj.GetComponent<Slider>();
+        musicVolumeSlider = mainMenuController.musicVolumeSliderObj.GetComponent<Slider>();
+        soundEffectsVolumeSlider = mainMenuController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
 
         //character creation
         backFromCharCreateToMainButton = mainMenuController.backFromCharCreateToMainButtonObj.GetComponent<Button>();
@@ -91,5 +91,10 @@ public class BaseMenuState : State
         skinColorButton = mainMenuController.skinColorButtonObj.GetComponent<Button>();
         nameField = mainMenuController.nameFieldObj.GetComponent<InputField>();
         nameError = mainMenuController.nameErrorObj;
+
+
+        FindObjectOfType<AudioManager>().Play("Theme");
+        PlayerPrefs.SetFloat("BGM", 0.1f);
+        PlayerPrefs.SetFloat("SE", 1f);
     }
 }

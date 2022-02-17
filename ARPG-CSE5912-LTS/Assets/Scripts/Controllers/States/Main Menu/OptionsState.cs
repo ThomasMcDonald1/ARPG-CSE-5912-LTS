@@ -11,10 +11,13 @@ public class OptionsState : BaseMenuState
         Debug.Log("entered options menu state");
         mainMenuController.optionsMenuCanvas.enabled = true;
         backFromOptionsToMainButton.onClick.AddListener(() => OnBackButtonClicked());
+        resolutionDropDown.onValueChanged.AddListener(OnResolutionSelected);
         fullScreenButton.onClick.AddListener(() => OnFullScreenSelected());
         noFullScreenButton.onClick.AddListener(() => OnFullScreenDeselected());
-        volumeSlider.onValueChanged.AddListener(OnVolumeAdjusted);
-        resolutionDropDown.onValueChanged.AddListener(OnResolutionSelected);
+        musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeAdjusted);
+        soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeAdjusted);
+
+        AdjustVolumePosition();
     }
 
     public override void Exit()
@@ -23,9 +26,17 @@ public class OptionsState : BaseMenuState
         mainMenuController.optionsMenuCanvas.enabled = false;
     }
 
+    void AdjustVolumePosition()
+    {
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("BGM");
+        soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
+    }
+
     void OnBackButtonClicked()
     {
         mainMenuController.ChangeState<MainMenuRootState>();
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnResolutionSelected(int selection)
@@ -43,28 +54,37 @@ public class OptionsState : BaseMenuState
                 break;
         }
         Debug.Log("Resolution option " + selection + " set");
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnFullScreenSelected()
     {
         Screen.fullScreen = true;
-        Debug.Log("Full screen on");
+        Debug.Log("Full screen (on): " + Screen.fullScreen);
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnFullScreenDeselected()
     {
         Screen.fullScreen = false;
-        Debug.Log("Full screen off");
+        Debug.Log("Full screen (off): " + Screen.fullScreen);
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
-    void OnVolumeAdjusted(float volume)
+    void OnMusicVolumeAdjusted(float volume)
     {
-        if (audioMixer != null)
-        {
-            audioMixer.SetFloat("Master", volume);
-            Debug.Log("Master Volume set to " + volume);
-        }
+        FindObjectOfType<AudioManager>().AdjustMusicVolume(volume);
+        Debug.Log("Music volume set to " + volume);
+    }
 
-        Debug.Log("Master Volume not set.");
+    void OnSoundEffectsVolumeAdjusted(float volume)
+    {
+        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(volume);        
+        Debug.Log("Sound effects volume set to " + volume);
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 }

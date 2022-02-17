@@ -35,7 +35,7 @@ public class MainMenuController : StateMachine
     public GameObject backFromOptionsToMainButtonObj;
     public GameObject resolutionDropDownObj;
     public GameObject fullScreenButtonObj, noFullScreenButtonObj;
-    public GameObject volumeSliderObj;
+    public GameObject musicVolumeSliderObj, soundEffectsVolumeSliderObj;
 
     // Create character menu obj
     public Camera characterCreationCameraObj;

@@ -87,7 +87,6 @@ public class MainMenuRootState : BaseMenuState
         }
     }
 
-
     public override void Exit()
     {
         base.Exit();
@@ -157,6 +156,8 @@ public class MainMenuRootState : BaseMenuState
             ConfigureCharacterDisplay(manager, selectedSlot.characterData);
             mainMenuController.displayCharacterObj.SetActive(true);
             mainMenuController.characterNameObj.SetActive(true);
+
+            FindObjectOfType<AudioManager>().Play("MenuClick");
         }
     }
 
@@ -220,6 +221,9 @@ public class MainMenuRootState : BaseMenuState
         {
             mainMenuController.deleteCharacterCanvas.enabled = true;
         }
+
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
         SetSlotVisibility();
     }
 
@@ -234,6 +238,8 @@ public class MainMenuRootState : BaseMenuState
 
         mainMenuController.deleteCharacterCanvas.enabled = false;
 
+        FindObjectOfType<AudioManager>().Play("MenuClick");
+
         SetSlotVisibility();
     }
 
@@ -241,6 +247,8 @@ public class MainMenuRootState : BaseMenuState
     {
         Debug.Log("Character deletion was cancelled");
         mainMenuController.deleteCharacterCanvas.enabled = false;
+
+        FindObjectOfType<AudioManager>().Play("MenuClick");
 
         SetSlotVisibility();
     }
