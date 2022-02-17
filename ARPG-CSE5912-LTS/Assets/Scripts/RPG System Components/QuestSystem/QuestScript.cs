@@ -6,6 +6,7 @@ public class QuestScript : MonoBehaviour
 {
     //Quest that it is controlling
     public Quest QuestReference { get; set; }//quest that it is controlling
+    private bool isMarkedComplete = false;
 
     //when mouse clicks on quest
     public void SelectQuest()
@@ -19,5 +20,18 @@ public class QuestScript : MonoBehaviour
     {
         GetComponent<TextMeshProUGUI>().color = Color.white;
 
+    }
+    public void IsComplete()
+    {
+        if (QuestReference.IsComplete && !isMarkedComplete)
+        {
+            isMarkedComplete = true;
+            GetComponent<TextMeshProUGUI>().text += " COMPLETE";
+        }
+        else if (!QuestReference.IsComplete)
+        {
+            isMarkedComplete = false;
+            GetComponent<TextMeshProUGUI>().text = QuestReference.Title;
+        }
     }
 }

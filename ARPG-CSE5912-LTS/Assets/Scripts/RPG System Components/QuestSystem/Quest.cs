@@ -40,15 +40,29 @@ public class Quest
             return killingGoals;
         }
     }
-    /*
-     * TODO: we will imply the complete in other places 
-     * 
-     */
-    public void Complete()
+    public bool IsComplete
     {
-        isActive = false;
-        Debug.Log(title + " is complete!");
+        get
+        {
+            foreach(QuestGoal questGoal in killingGoals)
+            {
+                if (!questGoal.IsComplete)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
+    ///*
+    // * TODO: we will imply the complete in other places 
+    // * 
+    // */
+    //public void Complete()
+    //{
+    //    isActive = false;
+    //    Debug.Log(title + " is complete!");
+    //}
 
     //public string description;
     //public int expReward;

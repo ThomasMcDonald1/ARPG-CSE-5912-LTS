@@ -6,15 +6,52 @@ using TMPro;
 
 public class QuestGiver : MonoBehaviour
 {
+
+
     [SerializeField] private Quest[] quests;
-    [SerializeField] private QuestLog testLog;
+    [SerializeField] private QuestLog testLog;//for testing only
+    public Quest[] Quests
+    {
+        get
+        {
+            return quests;
+        }
+    }
     private void Awake()
     {
         //testing
         testLog.AddQuest(quests[0]);
     }
+    public void TestAddQuest()
+    {
+        //testing
+        Quest testQuest = new Quest();
+        testQuest.Title = "Test Quest";
+        testLog.AddQuest(testQuest);
+    }
+    public void TestKill()
+    {
+        //testing
+       // testLog.selectedQuest.KillingGoals[0].CurrentAmount++;
+    }
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //public Quest quest;
 //public Player player; //disable for test

@@ -7,6 +7,7 @@ public abstract class QuestGoal
     [SerializeField] private int currentAmount;
     //using string to compare is more efficient, very important that it matches the prefab name
     [SerializeField] private string type;
+
     public int RequiredAmount
     {
         get
@@ -40,17 +41,28 @@ public abstract class QuestGoal
             type = value;
         }
     }
-    public bool CheckComplete()
+    public bool IsComplete
     {
-        return currentAmount >= requiredAmount;
+        get
+        {
+            return currentAmount >= requiredAmount;
+        }
     }
 }
 
 [System.Serializable]
 public class KillingGoal : QuestGoal
 {
+    public void UpdateKillCount()//pass in enemy?
+    {
+        //TODO    
+        //if Type = enemy type,  currentAmount ++, CheckCompleted, UpdateSelected, CheckCompletion
+        
+    }
 
 }
+
+
 //public GoalType goalType;
 //public enum GoalType
 //{
