@@ -55,8 +55,18 @@ public class QuestLog : MonoBehaviour
             selectedQuest.QuestScriptReference.UnselectQuest();//when quest description is shown, no quest will be selected
         }
         selectedQuest = quest;
+        
+        //For showing current progress
+        string progress = string.Empty;
+        //Quest can have multiple killing goals
+        foreach(QuestGoal questGoal in quest.KillingGoals)
+        {
+            progress += questGoal.Type + ":" + questGoal.CurrentAmount + "/" + questGoal.RequiredAmount + "\n"; 
+        }
+        //string.Format for title, description, and progress
+        questDescription.text = string.Format("<b>{0}</b>\n<size=15>{1}</size>\n\nProgress:\n<size=15>{2}</size>", quest.Title, quest.Description, progress);
 
-        questDescription.text = string.Format("<b>{0}</b>", quest.Title);//string.Format to make text bold
+
     }
 }
 //public Quest quest;

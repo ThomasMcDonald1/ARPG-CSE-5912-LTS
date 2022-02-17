@@ -12,7 +12,6 @@ public class QuestGiver : MonoBehaviour
     {
         //testing
         testLog.AddQuest(quests[0]);
-        testLog.AddQuest(quests[1]);
     }
 
 }

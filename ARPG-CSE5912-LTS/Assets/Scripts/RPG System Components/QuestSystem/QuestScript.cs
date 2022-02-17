@@ -1,7 +1,7 @@
-
 using UnityEngine;
 using TMPro;
 
+//Quest attached to game object in game world
 public class QuestScript : MonoBehaviour
 {
     //Quest that it is controlling
