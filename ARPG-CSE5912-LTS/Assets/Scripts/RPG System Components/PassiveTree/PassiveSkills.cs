@@ -49,7 +49,7 @@ public class PassiveSkills
     }
     private void UpdateVisual(Transform background)
     {
-        background.GetComponent<Image>().color = Color.white;
+        background.GetComponent<Image>().color = Color.yellow;
         foreach (var c in connections)
         {
             c.UpdateConnection(passiveTree);

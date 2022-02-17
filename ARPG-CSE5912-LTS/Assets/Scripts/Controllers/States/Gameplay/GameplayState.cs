@@ -10,7 +10,7 @@ public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
     //public DialogueUI DialogueUI => dialogueUI;
-    //public IInteractable Interactable { get; set; }   
+    //public IInteractable Interactable { get; set; }
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
@@ -28,7 +28,7 @@ public class GameplayState : BaseGameplayState
 
 
         Debug.Log("entered GameplayState");
-        
+
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
@@ -112,7 +112,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
     {
-        
+
     }
 
     protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)

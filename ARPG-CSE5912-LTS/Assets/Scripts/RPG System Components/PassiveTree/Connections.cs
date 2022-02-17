@@ -13,7 +13,7 @@ public class Connections : MonoBehaviour
     {
         if (CheckBothNodesUnlocked(passiveTree))
         {
-            GetComponent<Image>().color = Color.white;
+            GetComponent<Image>().color = Color.yellow;
         }
     }
     public bool CheckBothNodesUnlocked(PassiveNode[] passiveTree)
