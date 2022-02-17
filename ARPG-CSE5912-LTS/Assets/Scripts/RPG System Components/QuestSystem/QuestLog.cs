@@ -6,11 +6,26 @@ using TMPro;
 
 public class QuestLog : MonoBehaviour
 {
-    public Quest quest;
-
+    public GameObject npcUI;//used to disable npc ui when quest log window is open
     public GameObject questWindow;
-    public GameObject npcUI;
-    public TextMeshProUGUI titleText;
+    [SerializeField]private GameObject questPrefab;
+    [SerializeField] private Transform questArea;//game object in hierarchy that has children that are quests
+    private Quest selectedQuest;
+    [SerializeField] private TextMeshProUGUI questDescription;
+
+    private static QuestLog questLogInstance;//singleton pattern
+
+    public static QuestLog QuestLogInstance
+    {
+        get
+        {
+            if(questLogInstance == null){
+                questLogInstance = GameObject.FindObjectOfType<QuestLog>();//Only have one questlog, should be fine to do this
+            }
+            return questLogInstance;
+        }
+    }
+
     public void OpenQuestWindow()
     {
         questWindow.SetActive(true);
@@ -24,4 +39,25 @@ public class QuestLog : MonoBehaviour
 
 
     }
+    public void AddQuest(Quest quest)
+    {
+        GameObject questGameObject = Instantiate(questPrefab, questArea);// Instantiating quest in the game world
+        QuestScript questScript = questGameObject.GetComponent<QuestScript>();
+        questScript.QuestReference = quest;//quest script now has reference to original quest
+        quest.QuestScriptReference = questScript;//quest has reference to quest script
+        questGameObject.GetComponent<TextMeshProUGUI>().text = quest.Title;
+    }
+
+    public void ShowQuestDescription(Quest quest)
+    {
+        if(selectedQuest != null)
+        {
+            selectedQuest.QuestScriptReference.UnselectQuest();//when quest description is shown, no quest will be selected
+        }
+        selectedQuest = quest;
+
+        questDescription.text = string.Format("<b>{0}</b>", quest.Title);//string.Format to make text bold
+    }
 }
+//public Quest quest;
+//public TextMeshProUGUI titleText;

@@ -6,8 +6,21 @@ using UnityEngine;
 public class Quest 
 {
     public bool isActive;
-    // Start is called before the first frame update
-    public string title;
+    [SerializeField] private string title;
+    public QuestScript QuestScriptReference { get; set; }//scipt that controls this quest
+   
+    public string Title
+    {
+        get
+        {
+            return title;
+        }
+        set
+        {
+            title = value;
+        }
+    }
+
     public string description;
     public int expReward;
     public int goldReward;
