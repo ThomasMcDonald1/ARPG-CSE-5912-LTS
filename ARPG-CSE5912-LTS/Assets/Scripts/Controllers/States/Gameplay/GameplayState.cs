@@ -19,7 +19,7 @@ public class GameplayState : BaseGameplayState
     Animator animator;
     ContextMenuPanel contextMenuPanel;
     ActionBar actionBar;
-
+    GameObject passiveTreeUI;
     // Test inventory system
 
     public override void Enter()
@@ -47,6 +47,7 @@ public class GameplayState : BaseGameplayState
         }
         actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
+        passiveTreeUI = GetComponentInChildren<PassiveTreeUI>().gameObject;
     }
 
     public override void Exit()
@@ -322,7 +323,11 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<GameoverState>();
     }
-
+    protected override void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
+    {
+        if (passiveTreeUI.activeSelf) passiveTreeUI.SetActive(false);
+        else passiveTreeUI.SetActive(true);
+    }
     void Update()
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
