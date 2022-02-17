@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using TMPro;
 
 public class BaseMenuState : State
 {
@@ -19,7 +21,11 @@ public class BaseMenuState : State
     public SaveSlot selectedSlot;
 
     // options menu buttons
+    public AudioMixer audioMixer;
     public Button backFromOptionsToMainButton;
+    public Button fullScreenButton, noFullScreenButton;
+    public TMP_Dropdown resolutionDropDown;
+    public Slider volumeSlider;
 
     // character creation buttons
     public Button backFromCharCreateToMainButton, resetCharaButton, confirmButton;
@@ -56,7 +62,12 @@ public class BaseMenuState : State
         slot6Button = mainMenuController.saveSlotButtonObjs[5].GetComponent<Button>();
 
         //options
+        audioMixer = FindObjectOfType<AudioManager>().mixer;
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();
+        resolutionDropDown = mainMenuController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
+        fullScreenButton = mainMenuController.fullScreenButtonObj.GetComponent<Button>();
+        noFullScreenButton = mainMenuController.noFullScreenButtonObj.GetComponent<Button>();
+        volumeSlider = mainMenuController.volumeSliderObj.GetComponent<Slider>();
 
         //character creation
         backFromCharCreateToMainButton = mainMenuController.backFromCharCreateToMainButtonObj.GetComponent<Button>();
