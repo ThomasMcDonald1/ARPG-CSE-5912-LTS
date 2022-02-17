@@ -9,6 +9,8 @@ public class CastTimerCastType : BaseCastType
     Coroutine castingRoutine;
     Coroutine vfxRoutine;
     GameObject castingVFXInstance;
+    public static event EventHandler<InfoEventArgs<Ability>> AbilityBeganBeingCastEvent;
+    public static event EventHandler<InfoEventArgs<int>> AbilityCastWasCancelledEvent;
     public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityCastTimeWasCompletedEvent;
 
     public override void WaitCastTime(Ability ability, RaycastHit hit, Character caster)
@@ -19,6 +21,7 @@ public class CastTimerCastType : BaseCastType
 
     private IEnumerator CastTimeCoroutine(Ability ability, RaycastHit hit, Character caster)
     {
+        AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(ability));
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
         FaceCasterToHitPoint(caster, hit);
         InstantiateVFX(ability, hit, caster);
@@ -57,6 +60,7 @@ public class CastTimerCastType : BaseCastType
 
     public override void StopCasting()
     {
+        AbilityCastWasCancelledEvent?.Invoke(this, new InfoEventArgs<int>(0));
         if (castingRoutine != null)
         {
             StopCoroutine(castingRoutine);

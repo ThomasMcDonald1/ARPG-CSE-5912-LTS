@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ActionButton : MonoBehaviour
 {
@@ -10,11 +11,17 @@ public class ActionButton : MonoBehaviour
     Image iconObjImage;
     [SerializeField] Player player;
     BaseAbilityCost abilityCost;
+    public Image cooldownFill;
+    public TextMeshProUGUI cooldownText;
+    public float cooldownTimer;
+    public bool abilityInSlotOnCooldown = false;
 
     protected void Awake()
     {
         iconObjImage = iconObj.GetComponent<Image>();
         iconObjImage.enabled = false;
+        cooldownText.gameObject.SetActive(false);
+        cooldownFill.fillAmount = 0.0f;
     }
 
     public void SetIcon()
@@ -42,5 +49,15 @@ public class ActionButton : MonoBehaviour
                 iconObjImage.color = Color.white;
             }
         }
+    }
+
+    public float GetCurrentTime()
+    {
+        return cooldownTimer;
+    }
+
+    public void DecrementCooldownTimer()
+    {
+        cooldownTimer -= Time.deltaTime;
     }
 }
