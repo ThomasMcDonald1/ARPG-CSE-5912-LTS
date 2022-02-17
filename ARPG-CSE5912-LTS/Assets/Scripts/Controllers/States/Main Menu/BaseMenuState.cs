@@ -94,7 +94,7 @@ public class BaseMenuState : State
 
 
         FindObjectOfType<AudioManager>().Play("Theme");
-        PlayerPrefs.SetFloat("BGM", 0.1f);
-        PlayerPrefs.SetFloat("SE", 1f);
+        FindObjectOfType<AudioManager>().AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
 }
