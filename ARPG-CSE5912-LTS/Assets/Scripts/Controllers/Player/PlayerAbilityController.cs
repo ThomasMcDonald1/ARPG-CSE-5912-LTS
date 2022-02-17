@@ -49,8 +49,12 @@ public class PlayerAbilityController : Player
     {
         playerInAOEAbilityTargetSelectionMode = false;
         playerInSingleTargetAbilitySelectionMode = false;
-        StopCoroutine(singleTargetSelectionMode);
-        StopCoroutine(aoeAbilitySelectionMode);
+        if (singleTargetSelectionMode != null)
+            StopCoroutine(singleTargetSelectionMode);
+        if (aoeAbilitySelectionMode != null)
+            StopCoroutine(aoeAbilitySelectionMode);
+        cursorChanger.ChangeCursorToDefaultGraphic();
+        gameplayStateController.aoeReticleCylinder.SetActive(false);
     }
 
     void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<(RaycastHit, Ability)> e)

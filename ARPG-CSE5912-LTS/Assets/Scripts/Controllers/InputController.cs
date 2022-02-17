@@ -96,7 +96,6 @@ public class InputController : MonoBehaviour
         controls.Gameplay.ActionBar10.performed += OnActionBar10Pressed;
         controls.Gameplay.ActionBar11.performed += OnActionBar11Pressed;
         controls.Gameplay.ActionBar12.performed += OnActionBar12Pressed;
-
     }
 
     private void OnClickPressed(InputAction.CallbackContext context)
