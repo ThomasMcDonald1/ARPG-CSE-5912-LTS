@@ -38,7 +38,7 @@ public class PassiveSkills
     private bool Unlockable(PassiveNode node)
     {
         // if (playerStats[StatTypes.SKILLPINTS] < 1) return false;
-        if(node.Unlockable == true) return true;
+        if (node.Unlockable == true) return true;
         if (node.Prerequisites.Length == 0) return true;
         foreach (var prereq in node.Prerequisites)
         {

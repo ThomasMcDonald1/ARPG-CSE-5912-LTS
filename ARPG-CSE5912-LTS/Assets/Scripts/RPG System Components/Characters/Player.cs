@@ -158,11 +158,6 @@ public class Player : Character
         AttackTarget = target.transform;
     }
 
-    public void InteractWithNPC(NPC npc)
-    {
-        
-    }
-
     public void AttackCancel()
     {
         AttackTarget = null;

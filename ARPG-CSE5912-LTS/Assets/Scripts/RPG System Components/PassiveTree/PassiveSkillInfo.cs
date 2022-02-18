@@ -109,7 +109,7 @@ public class PassiveSkillInfo
                 "ATKSPD3",
                 new StatTypes[] { StatTypes.AtkSpeed },
                 new int[] { 5 },
-                new string[] { "ATKSPD2", "HPREGEN4", "BLOCKCHANCE3", "BLOCKCHANCE4" }
+                new string[] { "ATKSPD2", "ATKSPD4", "HPREGEN4", "BLOCKCHANCE3", "BLOCKCHANCE4" }
             ),
             new PassiveNode(
                 "ATKSPD4",

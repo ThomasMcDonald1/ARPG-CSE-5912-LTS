@@ -13,6 +13,7 @@ public abstract class Character : MonoBehaviour
 
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
+
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
