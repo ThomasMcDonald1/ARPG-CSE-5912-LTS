@@ -4,25 +4,21 @@ using UnityEngine.UI;
 using UnityEngine;
 using Ink.Runtime;
 
-public class NPC : MonoBehaviour
+public abstract class NPC : MonoBehaviour
 {
     
 
-    [SerializeField] Player player;
-
-
-    [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] protected Player player;
 
     
-    GameObject child;
     public float smooth;
     public float yVelocity;
 
-    private bool isTalking;
-    private bool isTrading;
 
-    private bool hasNewInfo;
+    protected bool isTalking;
+    protected bool isTrading;
+
+    protected bool hasNewInfo;
     //private bool hasAvailableQuest;
 
     private void Start()
@@ -31,12 +27,11 @@ public class NPC : MonoBehaviour
         isTalking = false;
         isTrading = false;
 
-        child = transform.GetChild(0).gameObject;
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
 
-    private bool Interactable()
+    protected bool Interactable()
     {
         if (player.NPCTarget == this && player.InInteractNPCRange())
         {
@@ -60,26 +55,14 @@ public class NPC : MonoBehaviour
         }
     }
 
-    IEnumerator BeginInteraction()
-    {
-        Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
+    protected abstract IEnumerator BeginInteraction();
 
-        while (Interactable())
-        {
-            child.transform.rotation = Quaternion.RotateTowards(child.transform.rotation, rotate, 50f * Time.deltaTime);
-            child.transform.eulerAngles = new Vector3(0, child.transform.eulerAngles.y, 0);
-            SetMenu();
-            yield return null;
-        }
-        InteractionManager.GetInstance().StopInteraction();
-        InteractionManager.GetInstance().DisableInteractionView();
-    }
 
-    private void SetMenu()
+    protected void SetMenu()
     {
         if (isTalking)
         {
-            InteractionManager.GetInstance().EnterDialogueMode(inkJSON);
+            InteractionManager.GetInstance().EnterDialogueMode(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue());
         }
         else if (isTrading)
         {
@@ -107,8 +90,6 @@ public class NPC : MonoBehaviour
         return this.tag;
     }
 
-    public TextAsset GetCurrentDialogue()
-    {
-        return inkJSON;
-    }
+    public abstract TextAsset GetCurrentDialogue();
+    public abstract void NextStory();
 }
