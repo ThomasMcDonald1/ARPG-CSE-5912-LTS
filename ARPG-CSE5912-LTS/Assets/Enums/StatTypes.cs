@@ -3,12 +3,14 @@ using System.Collections;
 
 public enum StatTypes
 {
-    //Progression stats
+    //Progression stats 
+    //0-2
     LVL, //character's level
     EXP, //character's current exp total
     SkillPoints, //points received upon leveling for the talent tree system
 
-    //Main stats (attributes and resistances)
+    //3-10
+    //Main stats (attributes and resistances) 
     HP, //character's current hit points
     MaxHP, //character's maximum hit points
     Mana, //character's current mana points
@@ -18,11 +20,13 @@ public enum StatTypes
     PHYDEF,
     MAGDEF,
 
+    //11-13
     STR, //character's strength, NOT USED?
     DEX, //character's dexterity, NOT USED?
     INT, //character's intelligence, NOT USED?
 
     //Secondary & Derived stats (from attributes and gear)
+    //14-45
     AttackRange, //The attack range gotten from the equipped weapon
     Armor, //The total armor from gear equipped & flat armor increase bonuses
     PercentArmorBonus, //The total armor from +%Armor bonuses from gear and other sources
@@ -56,6 +60,7 @@ public enum StatTypes
     LightningDmgOnHitOff, //flat lightning damage added to offhand weapon attack
     PoisonDmgOnHitOff, //flat poison damage added to main offhand weapon attack
 
+    //46-59
     BlockChance, //chance to mitigate damage by blocking with an equipped shield
     BlockAmount, //how much damage will be mitigated when a shield block occurs
     DodgeChance, //chance to dodge an attack, taking 0 damage
@@ -71,7 +76,12 @@ public enum StatTypes
     PercentLightningResistBonus, //a sum of all +% to specifically lightning resist
     PercentPoisonResistBonus, //a sum of all +% to specifically poison resist
 
-    //ADD STATUS EFFECT RESIST CHANCES HERE
+    //60-62
+    ExpGain,
+    MonsterType,
+    SavedExp,
 
+    //ADD STATUS EFFECT RESIST CHANCES HERE
+    //62
     Count
 }

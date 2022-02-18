@@ -10,7 +10,7 @@ public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
     //public DialogueUI DialogueUI => dialogueUI;
-    //public IInteractable Interactable { get; set; }   
+    //public IInteractable Interactable { get; set; }
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
@@ -19,6 +19,8 @@ public class GameplayState : BaseGameplayState
     Animator animator;
     ContextMenuPanel contextMenuPanel;
     ActionBar actionBar;
+    GameObject passiveTreeUI;
+    bool lockedActions = false;
 
     // Test inventory system
 
@@ -28,7 +30,7 @@ public class GameplayState : BaseGameplayState
 
 
         Debug.Log("entered GameplayState");
-        
+
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
@@ -47,6 +49,8 @@ public class GameplayState : BaseGameplayState
         }
         actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
+        passiveTreeUI = GetComponentInChildren<PassiveTreeUI>().gameObject;
+        passiveTreeUI.SetActive(false);
     }
 
     public override void Exit()
@@ -54,6 +58,13 @@ public class GameplayState : BaseGameplayState
         base.Exit();
         // Can remove this line to keep gameplay HUD visible while game is paused.
         gameplayStateController.gameplayUICanvas.enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        CastTimerCastType.AbilityBeganBeingCastEvent += OnAbilityBeingCast;
+        CastTimerCastType.AbilityCastWasCancelledEvent += OnAbilityWasCancelled;
+        CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnAbilityWasCompleted;
     }
 
     void OnExitToMenuClicked()
@@ -107,12 +118,13 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
-        PauseGame();
+        if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
+            PauseGame();
     }
 
     protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
     {
-        
+
     }
 
     protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)
@@ -153,7 +165,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar1Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton1.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -163,7 +175,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton2);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton2.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -173,7 +185,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar3Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton3);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton3.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -183,7 +195,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar4Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton4);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton4.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -193,7 +205,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar5Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton5);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton5.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -203,7 +215,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar6Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton6);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton6.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -213,7 +225,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar7Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton7);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton7.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -223,7 +235,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar8Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton8);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton8.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -233,7 +245,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar9Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton9);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton9.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -243,7 +255,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar10Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton10);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton10.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -253,7 +265,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar11Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton11);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton11.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -263,7 +275,7 @@ public class GameplayState : BaseGameplayState
     protected override void OnActionBar12Pressed(object sender, InfoEventArgs<int> e)
     {
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton12);
-        if (abilityInSlot != null)
+        if (abilityInSlot != null && !actionBar.actionButton12.abilityInSlotOnCooldown && !lockedActions)
         {
             playerAbilityController.playerNeedsToReleaseMouseButton = false;
             player.QueueAbilityCast(abilityInSlot);
@@ -307,6 +319,20 @@ public class GameplayState : BaseGameplayState
         }
     }
 
+    private void OnAbilityBeingCast(object sender, InfoEventArgs<Ability> e)
+    {
+        lockedActions = true;
+    }
+
+    private void OnAbilityWasCancelled(object sender, InfoEventArgs<int> e)
+    {
+        lockedActions = false;
+    }
+
+    private void OnAbilityWasCompleted(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
+    {
+        lockedActions = false;
+    }
 
     void PauseGame()
     {
@@ -322,7 +348,11 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<GameoverState>();
     }
-
+    protected override void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
+    {
+        if (passiveTreeUI.activeSelf) passiveTreeUI.SetActive(false);
+        else passiveTreeUI.SetActive(true);
+    }
     void Update()
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
