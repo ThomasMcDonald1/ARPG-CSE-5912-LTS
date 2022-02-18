@@ -68,6 +68,7 @@ public class BaseGameplayState : State
         InputController.ActionBar12PressedEvent += OnActionBar12Pressed;
         InputController.UIElementLeftClickedEvent += OnUIElementLeftClicked;
         InputController.UIElementRightClickedEvent += OnUIElementRightClicked;
+        InputController.OpenPassiveTreeEvent += OnOpenPassiveTreePressed;
     }
 
     protected override void RemoveListeners()
@@ -198,6 +199,10 @@ public class BaseGameplayState : State
     }
 
     protected virtual void OnUIElementRightClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+
+    }
+    protected virtual void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
     {
 
     }

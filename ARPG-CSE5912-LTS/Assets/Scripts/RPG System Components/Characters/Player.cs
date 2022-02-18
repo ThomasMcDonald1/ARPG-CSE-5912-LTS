@@ -38,13 +38,13 @@ public class Player : Character
     protected override void Start()
     {
         base.Start();
-       
+
         //GeneralClass = GameObject.Find("Class");
 
         //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
         GetComponent<Animator>().SetBool("StopAttack", true);
         GetComponent<Animator>().SetBool("Dead", false);
-        
+
     }
 
     protected override void Update()
@@ -208,7 +208,7 @@ public class Player : Character
         Debug.Log("Item or experience off");
     }
 
-   
+
 }
 
 

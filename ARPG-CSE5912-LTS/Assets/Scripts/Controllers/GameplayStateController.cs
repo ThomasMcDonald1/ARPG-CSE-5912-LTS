@@ -53,6 +53,7 @@ public class GameplayStateController : StateMachine
 
     public HealthBarController healthBarController;
     public EnergyBarController energyBarController;
+    public GameObject passiveTreeUI;
 
     //TODO: Maybe a keybinds button, if we have time to add
 
