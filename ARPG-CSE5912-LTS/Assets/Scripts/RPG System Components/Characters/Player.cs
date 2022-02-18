@@ -12,6 +12,8 @@ public class Player : Character
     [SerializeField] private InventoryUI uiInventory;
     public MouseCursorChanger cursorChanger;
 
+    public List<Quest> questList;
+
     private Inventory inventory;
     public DialogueUI DialogueUI => dialogueUI;
     public IInteractable Interactable { get; set; }
