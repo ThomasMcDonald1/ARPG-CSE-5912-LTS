@@ -137,7 +137,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = hairColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.Hair);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Hair);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.Hair);
         hairColorButton.colors = colors;
     }
 
@@ -161,7 +160,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = eyebrowColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.Eyebrows);
         eyebrowColorButton.colors = colors;
     }
 
@@ -185,7 +183,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = faceMarkColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.FaceMark);
         faceMarkColorButton.colors = colors;
     }
 
@@ -209,7 +206,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = facialHairColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.FacialHair);
         facialHairColorButton.colors = colors;
     }
 
@@ -226,7 +222,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = eyeColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.Eyes);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Eyes);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.Eyes);
         eyeColorButton.colors = colors;
     }
 
@@ -243,7 +238,6 @@ public class CharacterCreationState : BaseMenuState
         var colors = skinColorButton.colors;
         colors.normalColor = characterManager.GetPartColor(BodyPartNames.Skin);
         colors.selectedColor = characterManager.GetPartColor(BodyPartNames.Skin);
-        colors.highlightedColor = characterManager.GetPartColor(BodyPartNames.Skin);
         skinColorButton.colors = colors;
     }
 

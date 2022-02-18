@@ -7,21 +7,15 @@ using UnityEngine.UI;
 public class CastTimerCastType : BaseCastType
 {
     Coroutine castingRoutine;
-    Coroutine vfxRoutine;
-    GameObject castingVFXInstance;
-    public static event EventHandler<InfoEventArgs<Ability>> AbilityBeganBeingCastEvent;
-    public static event EventHandler<InfoEventArgs<int>> AbilityCastWasCancelledEvent;
     public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityCastTimeWasCompletedEvent;
 
     public override void WaitCastTime(Ability ability, RaycastHit hit, Character caster)
     {
-        if (castingRoutine == null)
-            castingRoutine = StartCoroutine(CastTimeCoroutine(ability, hit, caster));
+        castingRoutine = StartCoroutine(CastTimeCoroutine(ability, hit, caster));
     }
 
     private IEnumerator CastTimeCoroutine(Ability ability, RaycastHit hit, Character caster)
     {
-        AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(ability));
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
         FaceCasterToHitPoint(caster, hit);
         InstantiateVFX(ability, hit, caster);
@@ -39,8 +33,8 @@ public class CastTimerCastType : BaseCastType
 
             yield return null;
         }
-        castingBar.castBarCanvas.SetActive(false);
         CompleteCast(ability, hit, caster);
+        castingBar.castBarCanvas.SetActive(false);
     }
 
     private void FaceCasterToHitPoint(Character caster, RaycastHit hit)
@@ -52,26 +46,46 @@ public class CastTimerCastType : BaseCastType
     {
         BaseCastType baseCastType = ability.GetComponent<BaseCastType>();
         GameObject spellcastVFXFromAbility = ability.spellcastVFXObj;
-        GameObject effectVFXFromAbility = ability.effectVFXObj;
-        castingVFXInstance = Instantiate(spellcastVFXFromAbility, ability.transform);
-        castingVFXInstance.SetActive(true);
-        vfxRoutine = StartCoroutine(WaitCastVFXTime(caster, hit, castingVFXInstance, effectVFXFromAbility, baseCastType.castTime, ability));
+        GameObject spellcastVFX = null;
+        for (int i = 0; i < caster.spellVFXHolderObj.transform.childCount; i++)
+        {
+            Transform child = caster.spellVFXHolderObj.transform.GetChild(i);
+            if (child.name == spellcastVFXFromAbility.name)
+            {
+                spellcastVFX = child.gameObject;
+            }
+        }
+        if (spellcastVFX != null)
+        {
+            CreateProjectile cProj = spellcastVFX.GetComponent<CreateProjectile>();
+            cProj.Time = baseCastType.castTime;
+            StartCoroutine(WaitCastVFXTime(cProj, caster, spellcastVFX, hit));
+        }
+    }
+
+    private Vector3 DetermineVelocity(Rigidbody proj, RaycastHit hit)
+    {
+        Character character = GetComponentInParent<Character>();
+        Vector3 casterPos = character.GetComponentInChildren<Animator>().transform.position;
+        float height = 5;
+        float gravity = -18;
+
+        float displacementY = hit.point.y - proj.transform.position.y;
+        Vector3 displacementXZ = new Vector3(hit.point.x - casterPos.x, 0, hit.point.z - casterPos.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity));
+
+        return velocityXZ + velocityY;
     }
 
     public override void StopCasting()
     {
-        AbilityCastWasCancelledEvent?.Invoke(this, new InfoEventArgs<int>(0));
         if (castingRoutine != null)
         {
             StopCoroutine(castingRoutine);
             castingBar.castBarCanvas.SetActive(false);
             castingRoutine = null;
-        }
-        if (vfxRoutine != null)
-        {
-            StopCoroutine(vfxRoutine);
-            vfxRoutine = null;
-            Destroy(castingVFXInstance);
         }
     }
 
@@ -80,36 +94,18 @@ public class CastTimerCastType : BaseCastType
         AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
     }
 
-    private IEnumerator WaitCastVFXTime(Character caster, RaycastHit hit, GameObject instance, GameObject effectVFX, float castTime, Ability ability)
+    private IEnumerator WaitCastVFXTime(CreateProjectile cProj, Character caster, GameObject spellcastVFX, RaycastHit hit)
     {
-        CreateProjectile cProj = instance.GetComponent<CreateProjectile>();
         Vector3 casterPos = caster.transform.position;
         Vector3 casterDir = caster.transform.forward;
         Quaternion casterRot = caster.transform.rotation;
         float spawnDistance = 1;
         Vector3 spawnPos = casterPos + casterDir * spawnDistance;
-        instance.transform.position = spawnPos;
-        yield return new WaitForSeconds(castTime);
-        castingRoutine = null;
-        if (cProj != null && effectVFX == null)
-        {
-            cProj.Time = castTime;
-            cProj.Create(spawnPos, casterRot, hit);
-            Destroy(instance);
-        }
-        else
-        {
-            Destroy(instance);
-            GameObject explosionInstance = Instantiate(effectVFX);
-            ParticleSystem pS = explosionInstance.GetComponent<ParticleSystem>();
-            explosionInstance.transform.position = hit.point;
-            SpecifyAbilityArea aa = ability.GetComponent<SpecifyAbilityArea>();
-            if (aa != null)
-            {
-                explosionInstance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
-            }
-            yield return new WaitForSeconds(pS.main.duration);
-            Destroy(explosionInstance);
-        }
+        spellcastVFX.transform.position = spawnPos;
+        spellcastVFX.SetActive(true);
+        yield return new WaitForSeconds(cProj.Time);
+        Projectile projectile = cProj.Create(caster, spawnPos, casterRot);
+        projectile.rb.velocity = DetermineVelocity(projectile.rb, hit);
+        spellcastVFX.SetActive(false);
     }
 }

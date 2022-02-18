@@ -26,6 +26,8 @@ public abstract class Character : MonoBehaviour
     public virtual NPC NPCTarget { get; set; }
     public float NPCInteractionRange;
 
+    public GameObject spellVFXHolderObj;
+
     private void Awake()
     {
         NPCTarget = null;

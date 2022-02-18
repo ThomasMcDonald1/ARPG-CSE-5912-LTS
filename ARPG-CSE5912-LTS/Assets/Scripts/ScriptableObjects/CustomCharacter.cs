@@ -20,7 +20,7 @@ public class CustomCharacter : ScriptableObject
     public Gender gender;
 
     private Dictionary<BodyPartNames, string> colorProperties = new Dictionary<BodyPartNames, string>()
-        { { BodyPartNames.Hair, "_Color_Hair" },  {BodyPartNames.Eyebrows, "_Color_Hair" },  {BodyPartNames.FaceMark, "_Color_BodyArt" },
+        { { BodyPartNames.Hair, "_Color_Hair" },  {BodyPartNames.Eyebrows, "_Color_Hair" },  {BodyPartNames.FaceMark, "_Color_BodyArt" },  
         {BodyPartNames.FacialHair, "_Color_Hair" },  {BodyPartNames.Eyes, "_Color_Eye" },  {BodyPartNames.Skin, "_Color_Skin" } };
 
     public void UpdateIds(int h, int eye, int mark, int faci)

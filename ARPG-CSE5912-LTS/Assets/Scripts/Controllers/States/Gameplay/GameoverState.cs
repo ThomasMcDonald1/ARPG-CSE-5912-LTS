@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using ARPG.Core;
@@ -14,17 +13,11 @@ public class GameoverState : BaseGameplayState
     Stats statScript;
     Animator animator;
     Transform transform;
-    public static event EventHandler<InfoEventArgs<(int, int)>> SaveExpEvent; //Saved exp
-    public static event EventHandler<InfoEventArgs<(int, int)>> GetBackExpEvent; //Get exp back
-    public static event EventHandler<InfoEventArgs<(int, int)>> EmptyExpEvent; //Empty the saved exp
 
     public override void Enter()
     {
-        SaveExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((0, 0)));
         base.Enter();
-        
         Debug.Log("Game over");
-        
         Time.timeScale = 0;
         gameplayStateController.gameoverCanvas.enabled = true;
         player = GetComponentInChildren<Player>();
@@ -51,14 +44,12 @@ public class GameoverState : BaseGameplayState
         statScript[StatTypes.HP] = statScript[StatTypes.MaxHP];
         animator.SetBool("Dead", false);
         gameplayStateController.ChangeState<GameplayState>();
-        GetBackExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((0, 0)));
         Debug.Log(playerController.player.AttackTarget);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnNoButtonClicked()
     {
-        EmptyExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((0, 0)));
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }

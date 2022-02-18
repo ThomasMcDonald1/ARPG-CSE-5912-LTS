@@ -21,7 +21,7 @@ public class ActionBar : MonoBehaviour
     public ActionButton actionButtonLeft;
     public ActionButton actionButtonRight;
     [SerializeField] Ability defaultLeft;
-    public List<ActionButton> actionButtons;
+    List<ActionButton> actionButtons;
 
     void Awake()
     {

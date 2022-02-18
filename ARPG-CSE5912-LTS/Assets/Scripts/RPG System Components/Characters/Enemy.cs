@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +15,6 @@ namespace ARPG.Combat
         public virtual float BodyRange { get; set; }
         public virtual float SightRange { get; set; }
         public virtual float Speed { get; set; }
-
-        public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
         protected override void Start()
         {
@@ -142,8 +139,6 @@ namespace ARPG.Combat
             //nead a dead animation before destroy.
             if (stats[StatTypes.HP] <= 0)
             {
-                Debug.Log("enemy kkkkill");
-                EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
                 Destroy(gameObject);
             }
         }
