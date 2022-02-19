@@ -21,6 +21,7 @@ public class BaseGameplayState : State
     public Button noRespawnButton;
     public Button exitInventoryButton;
     public Button changeToInventoryMenu;
+    public Button confirmPassiveTreeButton;
 
     protected virtual void Awake()
     {
@@ -39,6 +40,7 @@ public class BaseGameplayState : State
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
         yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
+        confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
     }
 
     protected override void AddListeners()

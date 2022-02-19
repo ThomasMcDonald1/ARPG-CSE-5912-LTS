@@ -18,7 +18,6 @@ public class GameplayStateController : StateMachine
     [HideInInspector] public Canvas characterPanelCanvas;
     [HideInInspector] public Canvas gameoverCanvas;
     [HideInInspector] public Canvas inventoryCanvas;
-
     // Button to pause game and bring up pause menu
     public GameObject pauseMenuButtonObj;
 
@@ -54,6 +53,7 @@ public class GameplayStateController : StateMachine
     public HealthBarController healthBarController;
     public EnergyBarController energyBarController;
     public GameObject passiveTreeUI;
+    public GameObject confirmPassiveTreeButton;
 
     //TODO: Maybe a keybinds button, if we have time to add
 

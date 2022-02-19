@@ -49,7 +49,7 @@ public class GameplayState : BaseGameplayState
         }
         actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
-        passiveTreeUI = GetComponentInChildren<PassiveTreeUI>().gameObject;
+        passiveTreeUI = gameplayStateController.passiveTreeUI;
         passiveTreeUI.SetActive(false);
     }
 
@@ -350,8 +350,7 @@ public class GameplayState : BaseGameplayState
     }
     protected override void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
     {
-        if (passiveTreeUI.activeSelf) passiveTreeUI.SetActive(false);
-        else passiveTreeUI.SetActive(true);
+        gameplayStateController.ChangeState<PassiveTreeState>();
     }
     void Update()
     {
