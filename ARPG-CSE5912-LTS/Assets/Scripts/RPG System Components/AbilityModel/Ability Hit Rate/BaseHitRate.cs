@@ -27,7 +27,6 @@ public abstract class BaseHitRate : MonoBehaviour
         return roll <= chance;
     }
 
-    //TODO: Check for crit
     //TODO: Write methods for what happens on an automatic hit, automatic miss, etc. here
 
     protected virtual int Final(int evade)

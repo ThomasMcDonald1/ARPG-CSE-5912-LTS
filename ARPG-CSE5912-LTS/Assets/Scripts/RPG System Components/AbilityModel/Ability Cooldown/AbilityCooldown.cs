@@ -47,6 +47,5 @@ public class AbilityCooldown : MonoBehaviour
         }
         actionButton.cooldownText.gameObject.SetActive(false);
         actionButton.abilityInSlotOnCooldown = false;
-        Debug.Log("Ability off cooldown!");
     }
 }
