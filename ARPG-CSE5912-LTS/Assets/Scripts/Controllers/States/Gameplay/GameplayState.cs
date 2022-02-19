@@ -10,7 +10,7 @@ public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
     //public DialogueUI DialogueUI => dialogueUI;
-    //public IInteractable Interactable { get; set; }   
+    //public IInteractable Interactable { get; set; }
 
     int groundLayer, npcLayer, enemyLayer;
     Player player;
@@ -19,6 +19,7 @@ public class GameplayState : BaseGameplayState
     Animator animator;
     ContextMenuPanel contextMenuPanel;
     ActionBar actionBar;
+    GameObject passiveTreeUI;
     bool lockedActions = false;
 
     // Test inventory system
@@ -29,7 +30,7 @@ public class GameplayState : BaseGameplayState
 
 
         Debug.Log("entered GameplayState");
-        
+
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
@@ -48,6 +49,8 @@ public class GameplayState : BaseGameplayState
         }
         actionBar = gameplayStateController.GetComponentInChildren<ActionBar>();
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
+        passiveTreeUI = gameplayStateController.passiveTreeUI;
+        passiveTreeUI.SetActive(false);
     }
 
     public override void Exit()
@@ -121,7 +124,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
     {
-        
+
     }
 
     protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)
@@ -345,7 +348,10 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<GameoverState>();
     }
-
+    protected override void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
+    {
+        gameplayStateController.ChangeState<PassiveTreeState>();
+    }
     void Update()
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);

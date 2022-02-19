@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using TMPro;
 
 public class BaseMenuState : State
 {
@@ -19,7 +21,11 @@ public class BaseMenuState : State
     public SaveSlot selectedSlot;
 
     // options menu buttons
+    public AudioMixer audioMixer;
     public Button backFromOptionsToMainButton;
+    public Button fullScreenButton, noFullScreenButton;
+    public TMP_Dropdown resolutionDropDown;
+    public Slider musicVolumeSlider, soundEffectsVolumeSlider;
 
     // character creation buttons
     public Button backFromCharCreateToMainButton, resetCharaButton, confirmButton;
@@ -57,6 +63,11 @@ public class BaseMenuState : State
 
         //options
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();
+        resolutionDropDown = mainMenuController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
+        fullScreenButton = mainMenuController.fullScreenButtonObj.GetComponent<Button>();
+        noFullScreenButton = mainMenuController.noFullScreenButtonObj.GetComponent<Button>();
+        musicVolumeSlider = mainMenuController.musicVolumeSliderObj.GetComponent<Slider>();
+        soundEffectsVolumeSlider = mainMenuController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
 
         //character creation
         backFromCharCreateToMainButton = mainMenuController.backFromCharCreateToMainButtonObj.GetComponent<Button>();
@@ -80,5 +91,10 @@ public class BaseMenuState : State
         skinColorButton = mainMenuController.skinColorButtonObj.GetComponent<Button>();
         nameField = mainMenuController.nameFieldObj.GetComponent<InputField>();
         nameError = mainMenuController.nameErrorObj;
+
+
+        FindObjectOfType<AudioManager>().Play("Theme");
+        FindObjectOfType<AudioManager>().AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
 }

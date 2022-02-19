@@ -1,1 +1,1 @@
-﻿
+Testing Lorekeeper dialogue

@@ -21,6 +21,7 @@ public class BaseGameplayState : State
     public Button noRespawnButton;
     public Button exitInventoryButton;
     public Button changeToInventoryMenu;
+    public Button confirmPassiveTreeButton;
 
     protected virtual void Awake()
     {
@@ -39,6 +40,7 @@ public class BaseGameplayState : State
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
         yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
+        confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
     }
 
     protected override void AddListeners()
@@ -68,6 +70,7 @@ public class BaseGameplayState : State
         InputController.ActionBar12PressedEvent += OnActionBar12Pressed;
         InputController.UIElementLeftClickedEvent += OnUIElementLeftClicked;
         InputController.UIElementRightClickedEvent += OnUIElementRightClicked;
+        InputController.OpenPassiveTreeEvent += OnOpenPassiveTreePressed;
     }
 
     protected override void RemoveListeners()
@@ -198,6 +201,10 @@ public class BaseGameplayState : State
     }
 
     protected virtual void OnUIElementRightClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+
+    }
+    protected virtual void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
     {
 
     }
