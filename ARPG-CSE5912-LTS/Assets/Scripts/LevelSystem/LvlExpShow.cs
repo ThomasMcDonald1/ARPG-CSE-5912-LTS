@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LvlExpShow : MonoBehaviour
 {
-    public Text lvlUIText;
+    public TextMeshProUGUI lvlUIText;
     public Text lvlText;
     public Text expText;
     public Text nextExpText;
-    public Text nextExpUIText;
+    public TextMeshProUGUI nextExpUIText;
     //public Text playerLevelText;
     public Slider expSlider;
     public Slider nextExpSlider;
