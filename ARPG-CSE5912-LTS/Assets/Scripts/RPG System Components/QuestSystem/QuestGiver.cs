@@ -20,7 +20,7 @@ public class QuestGiver : MonoBehaviour
     private void Awake()
     {
         //testing
-        testLog.AddQuest(quests[0]);
+        //testLog.AddQuest(quests[0]);
     }
     public void TestAddQuest()
     {
@@ -28,6 +28,7 @@ public class QuestGiver : MonoBehaviour
         Quest testQuest = new Quest();
         testQuest.Title = "Test Quest";
         testLog.AddQuest(testQuest);
+        Debug.Log("quest added!");
     }
     public void TestKill()
     {
