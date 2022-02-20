@@ -58,4 +58,9 @@ public class HealthBarController : MonoBehaviour
         }
         regen = null;
     }
+    /////Testing only
+    private void Update()
+    {
+        UpdateSlider();
+    }
 }
