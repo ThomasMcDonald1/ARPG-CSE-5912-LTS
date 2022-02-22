@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Inventory : MonoBehaviour
 {
     #region Singleton
@@ -18,17 +19,26 @@ public class Inventory : MonoBehaviour
     public OnItemChanged onItemChangedCallback;
     // Our current list of items in the inventory
     public Hashtable amount = new Hashtable();
-    public List<Ite> items = new List<Ite>();
-    public int space = 24;
+    public List<Ite> weaponItems = new List<Ite>(); 
+    public List<Ite> armorItems = new List<Ite>();
+    public List<Ite> utilItems = new List<Ite>();
+
+    private GameObject player;
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+
+    public int space = 20;
 
     // Add a new item if enough room
-    public void Add(Ite item)
+    public void Add(Ite item, List<Ite> list)
     {
-        bool iteInInventory = false;
-        //Debug.Log("Type: " + item.type);
+        
         if (item.showInInventory)
         {
-            if (items.Count >= space)
+            if (list.Count >= space)
             {
                 Debug.Log("Not enough room.");
                 return;
@@ -36,7 +46,7 @@ public class Inventory : MonoBehaviour
             if (item.stackable)
             {
                 // Debug.Log("get in stackable if statement");
-                foreach (Ite inventoryItem in items)
+                foreach (Ite inventoryItem in list)
                 {
                    
                     //Debug.Log(item.type + "has: " + items.Count);
@@ -59,8 +69,8 @@ public class Inventory : MonoBehaviour
             }
             if (!item.stackable)
             {
-                items.Add(item);
-                Debug.Log("the unstackable Item is " + item.name);
+                list.Add(item);
+               // Debug.Log("the unstackable Item is " + item.name);
 
                 if (onItemChangedCallback != null)
                     onItemChangedCallback.Invoke();
@@ -71,7 +81,7 @@ public class Inventory : MonoBehaviour
                 // item.amount += 1;
                 //int num = (int)amount[item] + 1;
                 amount.Add(item, 1);
-                items.Add(item);
+                list.Add(item);
 
                 if (onItemChangedCallback != null)
                     onItemChangedCallback.Invoke();
@@ -79,70 +89,29 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    /*
-      public void Add(Ite item)
-      {
-          //Debug.Log("add was called");
-          //Debug.Log("Room:  " + items.Count);
-          if (item.showInInventory)
-          {
-              if (items.Count >= space)
-              {
-                  Debug.Log("Not enough room:  " + items.Count);
-                  return;
-
-              }
-              else
-              {
-                  if (item.stackable)
-                  {
-                      Debug.Log("get in stackable if statement");
-                      foreach (Ite inventoryItem in items)
-                      {
-                          bool iteInInventory = false;
-                          Debug.Log(item.type + "has: " + ((int)inventoryItem.type == (int)item.type));
-                          *//* if ((int)inventoryItem.type==(int)item.type)
-                           {
-                               Debug.Log("Room:  " + items.Count);
-
-                               inventoryItem.amount += item.amount;
-                               iteInInventory = true;
-
-                           }*//*
-                          if (!iteInInventory)
-                          {
-                              items.Add(item);
-                          }
-                      }
-                  }
-                  //items.Add(item);
-
-              }
-              if (onItemChangedCallback != null)
-              {
-                  onItemChangedCallback.Invoke();
-              }
-
-              //items.Add(item);
-
-
-
-          }
-
-      }*/
-    private void Update()
-    {
-        foreach (Ite item in items)
-        {
-           // Debug.Log(item.name + " amount: " + item.amount);
-        }
-    }
+    
+    
     // Remove an item
     public void Remove(Ite item)
     {
+        List<Ite> list = null;
+        switch (item.type)
+        {
+            case Ite.ItemType.armor:
+                list = armorItems;
+                break;
+            case Ite.ItemType.weapon:
+                list = weaponItems;
+                break;
+            case Ite.ItemType.utility:
+                list = utilItems;
+                break;
+
+        }
+
         if (!item.stackable)
         {
-            items.Remove(item);
+            list.Remove(item);
         }
         else if ((int)amount[item] > 1)
         {
@@ -151,11 +120,50 @@ public class Inventory : MonoBehaviour
         }
         else if ((int)amount[item] == 1)
         {
-            amount[item] = "";
-            items.Remove(item);
+            amount[item] = "0";
+            list.Remove(item);
             amount.Remove(item);
         }
+        //Debug.Log("item prefab:" + item.prefab);
+        ItemDrop.DropItem(player.transform.position, item);
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
+    }
 
+    // Remove an item
+    public void RemoveEquip(Ite item)
+    {
+        List<Ite> list = null;
+        switch (item.type)
+        {
+            case Ite.ItemType.armor:
+                list = armorItems;
+                break;
+            case Ite.ItemType.weapon:
+                list = weaponItems;
+                break;
+            case Ite.ItemType.utility:
+                list = utilItems;
+                break;
+
+        }
+
+        if (!item.stackable)
+        {
+            list.Remove(item);
+        }
+        else if ((int)amount[item] > 1)
+        {
+            int num = (int)amount[item] - 1;
+            amount[item] = num;
+        }
+        else if ((int)amount[item] == 1)
+        {
+            amount[item] = "0";
+            list.Remove(item);
+            amount.Remove(item);
+        }
+        //Debug.Log("item prefab:" + item.prefab);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
