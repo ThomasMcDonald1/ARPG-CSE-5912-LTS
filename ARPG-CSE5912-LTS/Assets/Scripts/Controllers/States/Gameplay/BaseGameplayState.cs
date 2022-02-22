@@ -58,6 +58,7 @@ public class BaseGameplayState : State
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
         confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
         closePassiveTreeButton = gameplayStateController.closePassiveTreeButton.GetComponent<Button>();
+    }
 
     protected override void AddListeners()
     {
