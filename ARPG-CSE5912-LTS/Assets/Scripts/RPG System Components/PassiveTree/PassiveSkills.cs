@@ -87,9 +87,14 @@ public class PassiveSkills
     }
     public void FullyResetPassiveTree()
     {
+        ResetPassiveTreeStats();
+        ResetPassiveTreeVisuals();
+        unlockedNodes.Clear();
+    }
+    void ResetPassiveTreeVisuals()
+    {
         foreach (var node in unlockedNodes)
         {
-            node.Unlocked = false;
             Debug.Log(passiveSkillsGameObject.name);
             Transform nodeObject = passiveSkillsGameObject.transform.Find(node.Name);
             Transform background = nodeObject.Find("Background");
@@ -98,6 +103,21 @@ public class PassiveSkills
             {
                 c.ResetConnectionVisual(passiveTree);
             }
+        }
+    }
+    void ResetPassiveTreeStats()
+    {
+        foreach (var node in unlockedNodes)
+        {
+            var stats = node.Stats;
+            var values = node.StatValues;
+            for (int i = 0; i < stats.Length; i++)
+            {
+                // playerStats[StatTypes.SKILLPOINTS] -= 1;
+                playerStats[stats[i]] -= values[i];
+                node.Unlocked = false;
+            }
+
         }
     }
 }
