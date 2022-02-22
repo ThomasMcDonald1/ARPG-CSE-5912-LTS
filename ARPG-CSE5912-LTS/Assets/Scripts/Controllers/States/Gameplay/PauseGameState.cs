@@ -9,7 +9,9 @@ public class PauseGameState : BaseGameplayState
         base.Enter();
         Debug.Log("Game paused");
         Time.timeScale = 0;
+        gameplayStateController.npcNamesCanvas.enabled = false;
         gameplayStateController.pauseMenuCanvas.enabled = true;
+        gameplayStateController.gameplayUICanvas.enabled = false;
         foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
         {
             if (s.name != "Theme") s.source.Stop();
@@ -21,7 +23,9 @@ public class PauseGameState : BaseGameplayState
     public override void Exit()
     {
         base.Exit();
+        gameplayStateController.npcNamesCanvas.enabled = true;
         gameplayStateController.pauseMenuCanvas.enabled = false;
+        gameplayStateController.gameplayUICanvas.enabled = true;
         Time.timeScale = 1;
     }
 
