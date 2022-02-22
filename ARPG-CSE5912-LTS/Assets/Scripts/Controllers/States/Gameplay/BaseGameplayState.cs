@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
+using TMPro;
+using UnityEngine.Audio;
 
 public class BaseGameplayState : State
 {
@@ -24,6 +26,12 @@ public class BaseGameplayState : State
     public Button confirmPassiveTreeButton;
     public Button closePassiveTreeButton;
 
+    public AudioMixer audioMixer;
+    public Button backFromOptionsToMainButton;
+    public Button fullScreenButton, noFullScreenButton;
+    public TMP_Dropdown resolutionDropDown;
+    public Slider musicVolumeSlider, soundEffectsVolumeSlider;
+
     protected virtual void Awake()
     {
         gameplayStateController = GetComponent<GameplayStateController>();
@@ -43,6 +51,13 @@ public class BaseGameplayState : State
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
         confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
         closePassiveTreeButton = gameplayStateController.closePassiveTreeButton.GetComponent<Button>();
+
+        backFromOptionsToMainButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
+        resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
+        fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
+        noFullScreenButton = gameplayStateController.noFullScreenButtonObj.GetComponent<Button>();
+        musicVolumeSlider = gameplayStateController.musicVolumeSliderObj.GetComponent<Slider>();
+        soundEffectsVolumeSlider = gameplayStateController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
     }
 
     protected override void AddListeners()

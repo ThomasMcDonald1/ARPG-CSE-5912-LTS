@@ -35,8 +35,9 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+        AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
         Play("Theme");
-        Debug.Log("Playing Theme song");
     }
 
     public void Play(string name)

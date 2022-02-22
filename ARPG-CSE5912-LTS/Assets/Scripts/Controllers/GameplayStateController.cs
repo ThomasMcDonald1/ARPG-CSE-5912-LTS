@@ -11,6 +11,7 @@ public class GameplayStateController : StateMachine
     public GameObject characterPanelCanvasObj;
     public GameObject inventoryCanvasObj;
     public GameObject gameoverCanvasObj;
+    public GameObject npcInterfaceObj;
 
     [HideInInspector] public Canvas pauseMenuCanvas;
     [HideInInspector] public Canvas gameplayUICanvas;
@@ -26,7 +27,12 @@ public class GameplayStateController : StateMachine
     public GameObject inGameOptionsButtonObj;
     public GameObject exitToMainMenuButtonObj;
     public GameObject exitGameButtonObj;
+
+    // Options menu buttons
     public GameObject exitOptionsToPauseButtonObj;
+    public GameObject resolutionDropDownObj;
+    public GameObject fullScreenButtonObj, noFullScreenButtonObj;
+    public GameObject musicVolumeSliderObj, soundEffectsVolumeSliderObj;
 
     // Character panel buttons
     public GameObject charaPanelButtonObj;

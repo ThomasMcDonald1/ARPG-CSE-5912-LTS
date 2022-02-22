@@ -17,7 +17,7 @@ public class OptionsState : BaseMenuState
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeAdjusted);
         soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeAdjusted);
 
-        AdjustVolumePosition();
+        AdjustMenuAppearance();
     }
 
     public override void Exit()
@@ -26,8 +26,9 @@ public class OptionsState : BaseMenuState
         mainMenuController.optionsMenuCanvas.enabled = false;
     }
 
-    void AdjustVolumePosition()
+    void AdjustMenuAppearance()
     {
+        resolutionDropDown.value = PlayerPrefs.GetInt("Resolution");
         musicVolumeSlider.value = PlayerPrefs.GetFloat("BGM");
         soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
     }
@@ -41,12 +42,18 @@ public class OptionsState : BaseMenuState
 
     void OnResolutionSelected(int selection)
     {
-        switch(selection)
+        switch (selection)
         {
             case 0:
                 Screen.SetResolution(800, 600, Screen.fullScreen);
                 break;
             case 1:
+                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                break;
+            case 2:
+                Screen.SetResolution(1600, 1900, Screen.fullScreen);
+                break;
+            case 3:
                 Screen.SetResolution(1900, 1200, Screen.fullScreen);
                 break;
             default:
@@ -55,12 +62,16 @@ public class OptionsState : BaseMenuState
         }
         Debug.Log("Resolution option " + selection + " set");
 
+        PlayerPrefs.SetInt("Resolution", selection);
+
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnFullScreenSelected()
     {
         Screen.fullScreen = true;
+        PlayerPrefs.SetInt("FullScreen", 1);
+
         Debug.Log("Full screen (on): " + Screen.fullScreen);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
@@ -69,6 +80,8 @@ public class OptionsState : BaseMenuState
     void OnFullScreenDeselected()
     {
         Screen.fullScreen = false;
+        PlayerPrefs.SetInt("FullScreen", 0);
+
         Debug.Log("Full screen (off): " + Screen.fullScreen);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
@@ -82,7 +95,7 @@ public class OptionsState : BaseMenuState
 
     void OnSoundEffectsVolumeAdjusted(float volume)
     {
-        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(volume);        
+        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(volume);
         Debug.Log("Sound effects volume set to " + volume);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");

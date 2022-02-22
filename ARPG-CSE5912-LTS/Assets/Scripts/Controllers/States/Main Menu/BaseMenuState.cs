@@ -92,9 +92,5 @@ public class BaseMenuState : State
         nameField = mainMenuController.nameFieldObj.GetComponent<InputField>();
         nameError = mainMenuController.nameErrorObj;
 
-
-        FindObjectOfType<AudioManager>().Play("Theme");
-        FindObjectOfType<AudioManager>().AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
-        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
 }
