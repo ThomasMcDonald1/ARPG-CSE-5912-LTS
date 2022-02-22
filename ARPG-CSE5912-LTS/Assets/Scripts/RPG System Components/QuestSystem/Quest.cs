@@ -5,10 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Quest 
 {
-    //public bool isActive;
     [SerializeField] private string title;
     [SerializeField] private string description;
+
+    //Quest can have many type of goals, there can be mulltiple goals of the same type
     [SerializeField] private KillingGoal[] killingGoals;
+    //Add gathering goals array?
+
+
     public QuestScript QuestScriptReference { get; set; }//scipt that controls this quest
     public QuestGiver QuestGiverReference { get; set; }//needs to know what questgiver it came from
    
@@ -41,6 +45,9 @@ public class Quest
             return killingGoals;
         }
     }
+    //Add GatheringGoals?
+
+    //Property that tells if quest is complete
     public bool IsComplete
     {
         get
@@ -52,6 +59,8 @@ public class Quest
                     return false;
                 }
             }
+            //Check if all goals of GatheringGoal are complete?
+
             return true;
         }
     }
@@ -59,6 +68,7 @@ public class Quest
 
 
 
+    //public bool isActive;
 
     ///*
     // * TODO: we will imply the complete in other places 

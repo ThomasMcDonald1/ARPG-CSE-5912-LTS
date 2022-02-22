@@ -21,6 +21,8 @@ public class QuestScript : MonoBehaviour
         GetComponent<TextMeshProUGUI>().color = Color.white;
 
     }
+
+    //mark quest as complete if complete, called when quest log checks quest completeness
     public void IsComplete()
     {
         if (QuestReference.IsComplete && !isMarkedComplete)

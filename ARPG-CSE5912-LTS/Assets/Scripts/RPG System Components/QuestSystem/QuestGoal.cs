@@ -53,6 +53,7 @@ public abstract class QuestGoal
 [System.Serializable]
 public class KillingGoal : QuestGoal
 {
+    //will be called when event happens
     public void UpdateKillCount()//pass in enemy?
     {
         //TODO    
