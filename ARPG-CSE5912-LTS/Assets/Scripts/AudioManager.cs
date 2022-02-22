@@ -7,11 +7,11 @@ public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
 
-
     public static AudioManager instance;
     void Awake()
     {
-        if(instance == null)
+        DontDestroyOnLoad(this);
+        if (instance == null)
         {
             instance = this;
         }
@@ -20,17 +20,18 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
 
+        AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
 
     void Start()
@@ -48,7 +49,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound: " + name + " not found");
             return;
         }
-        s.source.Play();
+        s.StartSound();
     }
 
     public void Stop(string name)
@@ -59,7 +60,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound: " + name + " not found");
             return;
         }
-        s.source.Stop();
+        s.StopSound();
     }
 
     public void AdjustMusicVolume(float volume)
@@ -69,8 +70,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == "Theme");
         if (s != null)
         {
-            s.volume = volume;
-            s.source.volume = volume;
+            s.UpdateVolume(volume);
         }
     }
 
@@ -82,13 +82,11 @@ public class AudioManager : MonoBehaviour
         Sound s2 = Array.Find(sounds, sound => sound.name == "MenuClick");
         if (s1 != null)
         {
-            s1.volume = volume;
-            s1.source.volume = volume;
+            s1.UpdateVolume(volume);
         }
         if (s2 != null)
         {
-            s2.volume = volume;
-            s2.source.volume = volume;
+            s2.UpdateVolume(volume);
         }
 
     }

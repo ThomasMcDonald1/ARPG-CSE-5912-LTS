@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
 using TMPro;
@@ -45,6 +47,13 @@ public class BaseGameplayState : State
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
         exitInventoryButton = gameplayStateController.exitInventoryMenuObj.GetComponent<Button>();
         changeToInventoryMenu = gameplayStateController.openInventoryMenuObj.GetComponent<Button>();
+
+        resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
+        fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
+        noFullScreenButton = gameplayStateController.noFullScreenButtonObj.GetComponent<Button>();
+        musicVolumeSlider = gameplayStateController.musicVolumeSliderObj.GetComponent<Slider>();
+        soundEffectsVolumeSlider = gameplayStateController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
+
 
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
         yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
