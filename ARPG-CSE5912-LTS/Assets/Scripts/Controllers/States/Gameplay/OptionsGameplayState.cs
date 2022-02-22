@@ -11,6 +11,8 @@ public class OptionsGameplayState : BaseGameplayState
         Time.timeScale = 0;
         gameplayStateController.pauseMenuCanvas.enabled = false;
         gameplayStateController.optionsMenuCanvas.enabled = true;
+        gameplayStateController.npcNamesCanvasObj.SetActive(false);
+        gameplayStateController.gameplayUICanvasObj.SetActive(false);
         exitOptionsToPauseButton.onClick.AddListener(() => OnBackToPauseClicked());
         resolutionDropDown.onValueChanged.AddListener(OnResolutionSelected);
         fullScreenButton.onClick.AddListener(() => OnFullScreenSelected());
@@ -18,7 +20,7 @@ public class OptionsGameplayState : BaseGameplayState
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeAdjusted);
         soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeAdjusted);
 
-        AdjustVolumePosition();
+        AdjustMenuAppearance();
     }
 
     public override void Exit()
@@ -26,6 +28,8 @@ public class OptionsGameplayState : BaseGameplayState
         base.Exit();
         gameplayStateController.pauseMenuCanvas.enabled = true;
         gameplayStateController.optionsMenuCanvas.enabled = false;
+        gameplayStateController.gameplayUICanvasObj.SetActive(true);
+        gameplayStateController.npcNamesCanvasObj.SetActive(true);
         Time.timeScale = 1;
     }
 
@@ -35,8 +39,9 @@ public class OptionsGameplayState : BaseGameplayState
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
-    void AdjustVolumePosition()
+    void AdjustMenuAppearance()
     {
+        resolutionDropDown.value = PlayerPrefs.GetInt("Resolution");
         musicVolumeSlider.value = PlayerPrefs.GetFloat("BGM");
         soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
     }
@@ -49,6 +54,12 @@ public class OptionsGameplayState : BaseGameplayState
                 Screen.SetResolution(800, 600, Screen.fullScreen);
                 break;
             case 1:
+                Screen.SetResolution(1280, 720, Screen.fullScreen);
+                break;
+            case 2:
+                Screen.SetResolution(1600, 1900, Screen.fullScreen);
+                break;
+            case 3:
                 Screen.SetResolution(1900, 1200, Screen.fullScreen);
                 break;
             default:
@@ -57,12 +68,17 @@ public class OptionsGameplayState : BaseGameplayState
         }
         Debug.Log("Resolution option " + selection + " set");
 
+        PlayerPrefs.SetInt("Resolution", selection);
+
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnFullScreenSelected()
     {
         Screen.fullScreen = true;
+
+        PlayerPrefs.SetInt("FullScreen", 1);
+
         Debug.Log("Full screen (on): " + Screen.fullScreen);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
@@ -71,6 +87,9 @@ public class OptionsGameplayState : BaseGameplayState
     void OnFullScreenDeselected()
     {
         Screen.fullScreen = false;
+
+        PlayerPrefs.SetInt("FullScreen", 0);
+
         Debug.Log("Full screen (off): " + Screen.fullScreen);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
