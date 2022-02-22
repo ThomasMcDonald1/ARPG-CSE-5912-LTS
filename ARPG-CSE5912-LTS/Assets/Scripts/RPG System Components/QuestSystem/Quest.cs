@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Quest 
 {
-    public bool isActive;
+    //public bool isActive;
     [SerializeField] private string title;
     [SerializeField] private string description;
     [SerializeField] private KillingGoal[] killingGoals;
