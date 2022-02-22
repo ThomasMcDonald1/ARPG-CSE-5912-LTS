@@ -65,6 +65,7 @@ public class GameplayStateController : StateMachine
     public EnergyBarController energyBarController;
     public GameObject passiveTreeUI;
     public GameObject confirmPassiveTreeButton;
+    public GameObject closePassiveTreeButton;
 
     //TODO: Maybe a keybinds button, if we have time to add
 
