@@ -6,6 +6,8 @@ using UnityEngine.Audio;
 using TMPro;
 using UnityEngine.EventSystems;
 using System.Linq;
+using TMPro;
+using UnityEngine.Audio;
 
 public class BaseGameplayState : State
 {
@@ -58,6 +60,13 @@ public class BaseGameplayState : State
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
         confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
         closePassiveTreeButton = gameplayStateController.closePassiveTreeButton.GetComponent<Button>();
+
+        backFromOptionsToMainButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
+        resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
+        fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
+        noFullScreenButton = gameplayStateController.noFullScreenButtonObj.GetComponent<Button>();
+        musicVolumeSlider = gameplayStateController.musicVolumeSliderObj.GetComponent<Slider>();
+        soundEffectsVolumeSlider = gameplayStateController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
     }
 
     protected override void AddListeners()

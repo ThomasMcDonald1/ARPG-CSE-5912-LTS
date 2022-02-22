@@ -79,7 +79,7 @@ public class InputController : MonoBehaviour
                     uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
                 }
             }
-        }        
+        }
     }
 
     private void Update()
@@ -121,7 +121,7 @@ public class InputController : MonoBehaviour
         controls.Gameplay.OpenPassiveTree.performed += OnOpenPassiveTree;
 
     }
-    
+
     private void OnClickPressed(InputAction.CallbackContext context)
     {
         if (EventSystem.current.IsPointerOverGameObject())
@@ -260,7 +260,6 @@ public class InputController : MonoBehaviour
             position = Mouse.current.position.ReadValue()
         };
         List<RaycastResult> results = new List<RaycastResult>();
-
         uiRaycaster.Raycast(eventData, results);
 
         return results;

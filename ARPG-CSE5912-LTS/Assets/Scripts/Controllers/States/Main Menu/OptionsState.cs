@@ -42,7 +42,7 @@ public class OptionsState : BaseMenuState
 
     void OnResolutionSelected(int selection)
     {
-        switch(selection)
+        switch (selection)
         {
             case 0:
                 Screen.SetResolution(800, 600, Screen.fullScreen);
@@ -95,7 +95,7 @@ public class OptionsState : BaseMenuState
 
     void OnSoundEffectsVolumeAdjusted(float volume)
     {
-        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(volume);        
+        FindObjectOfType<AudioManager>().AdjustSoundEffectVolume(volume);
         Debug.Log("Sound effects volume set to " + volume);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");

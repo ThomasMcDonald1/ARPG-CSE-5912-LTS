@@ -11,7 +11,7 @@ public class OptionsGameplayState : BaseGameplayState
         Time.timeScale = 0;
         gameplayStateController.pauseMenuCanvas.enabled = false;
         gameplayStateController.optionsMenuCanvas.enabled = true;
-        gameplayStateController.npcNamesCanvasObj.SetActive(false);
+        gameplayStateController.npcInterfaceObj.SetActive(false);
         gameplayStateController.gameplayUICanvasObj.SetActive(false);
         exitOptionsToPauseButton.onClick.AddListener(() => OnBackToPauseClicked());
         resolutionDropDown.onValueChanged.AddListener(OnResolutionSelected);
@@ -29,7 +29,7 @@ public class OptionsGameplayState : BaseGameplayState
         gameplayStateController.pauseMenuCanvas.enabled = true;
         gameplayStateController.optionsMenuCanvas.enabled = false;
         gameplayStateController.gameplayUICanvasObj.SetActive(true);
-        gameplayStateController.npcNamesCanvasObj.SetActive(true);
+        gameplayStateController.npcInterfaceObj.SetActive(true);
         Time.timeScale = 1;
     }
 
