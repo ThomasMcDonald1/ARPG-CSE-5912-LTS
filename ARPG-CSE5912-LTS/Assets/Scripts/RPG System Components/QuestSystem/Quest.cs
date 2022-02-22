@@ -10,6 +10,7 @@ public class Quest
     [SerializeField] private string description;
     [SerializeField] private KillingGoal[] killingGoals;
     public QuestScript QuestScriptReference { get; set; }//scipt that controls this quest
+    public QuestGiver QuestGiverReference { get; set; }//needs to know what questgiver it came from
    
     public string Title
     {
@@ -54,6 +55,11 @@ public class Quest
             return true;
         }
     }
+
+
+
+
+
     ///*
     // * TODO: we will imply the complete in other places 
     // * 

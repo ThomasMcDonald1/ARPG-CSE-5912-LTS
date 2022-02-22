@@ -9,7 +9,22 @@ public class QuestGiver : MonoBehaviour
 
 
     [SerializeField] private Quest[] quests;
+    [SerializeField] private Texture2D questionIcon, questionIconGray, exclamationIcon;
+    [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
+    [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
+    void Start()
+    {
+        //create sprites from textures
+        questionIconSprite = Sprite.Create(questionIcon, new Rect(0.0f, 0.0f, questionIcon.width, questionIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
+        questionIconGraySprite = Sprite.Create(questionIconGray, new Rect(0.0f, 0.0f, questionIconGray.width, questionIconGray.height), new Vector2(0.5f, 0.5f), 100.0f);
+        exclamationIconSprite = Sprite.Create(exclamationIcon, new Rect(0.0f, 0.0f, exclamationIcon.width, exclamationIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
+
+        foreach (Quest quest in quests)
+        {
+            quest.QuestGiverReference = this;
+        }
+    }
     public Quest[] Quests
     {
         get
@@ -17,11 +32,29 @@ public class QuestGiver : MonoBehaviour
             return quests;
         }
     }
-    private void Awake()
+
+    public void UpdateQuestIcon()
     {
-        //testing
-        //testLog.AddQuest(quests[0]);
+        foreach(Quest quest in quests)
+        {
+            if(quest != null)
+            {
+                if(quest.IsComplete && QuestLog.QuestLogInstance.HasQuest(quest))
+                {
+                    iconRenderer.sprite = questionIconSprite;
+                    break;//turn into question when one quest is complete, might need to change later since we might have just one quest active at a time
+                }
+                else if(!QuestLog.QuestLogInstance.HasQuest(quest)){
+                    iconRenderer.sprite = exclamationIconSprite;
+                }
+                else if(!quest.IsComplete && QuestLog.QuestLogInstance.HasQuest(quest))
+                {
+                    iconRenderer.sprite = questionIconGraySprite;
+                }
+            }
+        }
     }
+
     public void TestAddQuest()
     {
         //testing
