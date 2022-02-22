@@ -9,12 +9,16 @@ public class Connections : MonoBehaviour
     [SerializeField] string nodeID1;
     [SerializeField] string nodeID2;
 
-    public void UpdateConnection(PassiveNode[] passiveTree)
+    public void UpdateConnectionVisual(PassiveNode[] passiveTree)
     {
         if (CheckBothNodesUnlocked(passiveTree))
         {
             GetComponent<Image>().color = Color.yellow;
         }
+    }
+    public void ResetConnectionVisual(PassiveNode[] passiveTree)
+    {
+        GetComponent<Image>().color = Color.white;
     }
     public bool CheckBothNodesUnlocked(PassiveNode[] passiveTree)
     {

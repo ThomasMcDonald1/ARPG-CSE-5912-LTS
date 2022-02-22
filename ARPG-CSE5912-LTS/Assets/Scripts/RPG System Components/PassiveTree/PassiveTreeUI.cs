@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class PassiveTreeUI : MonoBehaviour
 {
     [SerializeField] Player player;
-    private PassiveSkills passiveSkills;
+    public PassiveSkills passiveSkills;
     public GameObject skillNodes;
     public Connections[] connections;
     private void Awake()
     {
-        passiveSkills = new PassiveSkills(player, connections);
+        passiveSkills = new PassiveSkills(player, connections, skillNodes);
         // assign each child an event listener that listens for button click
         foreach(Transform child in skillNodes.transform)
         {
@@ -22,6 +22,6 @@ public class PassiveTreeUI : MonoBehaviour
     }
 	void TaskOnClick(string name, Transform background){
         Debug.Log(name);
-        passiveSkills.UnlockPassive(name, background);
+        passiveSkills.PassivesReadyForUnlock(name, background);
 	}
 }

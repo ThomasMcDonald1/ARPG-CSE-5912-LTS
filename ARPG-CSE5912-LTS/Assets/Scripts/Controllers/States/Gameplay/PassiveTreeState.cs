@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PassiveTreeState : BaseGameplayState
 {
-    // Start is called before the first frame update
+    private PassiveSkills passiveSkills;
     public override void Enter()
     {
         base.Enter();
         Debug.Log("entered passive tree state");
         Time.timeScale = 0;
+        passiveSkills = gameplayStateController.passiveTreeUI.GetComponentInChildren<PassiveTreeUI>().passiveSkills;
         gameplayStateController.passiveTreeUI.SetActive(true);
         confirmPassiveTreeButton.onClick.AddListener(() => OnConfirmButtonClicked());
+        closePassiveTreeButton.onClick.AddListener(() => OnCloseButtonClicked());
     }
 
     // Update is called once per frame
@@ -21,8 +23,13 @@ public class PassiveTreeState : BaseGameplayState
         Time.timeScale = 1;
         gameplayStateController.passiveTreeUI.SetActive(false);
     }
+    void OnCloseButtonClicked()
+    {
+        passiveSkills.ResetVisualCloseButton();
+        gameplayStateController.ChangeState<GameplayState>();
+    }
     void OnConfirmButtonClicked()
     {
-        gameplayStateController.ChangeState<GameplayState>();
+        passiveSkills.UnlockPassives();
     }
 }

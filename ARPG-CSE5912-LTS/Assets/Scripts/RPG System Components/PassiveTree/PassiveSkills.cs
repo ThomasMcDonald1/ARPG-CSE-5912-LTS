@@ -11,29 +11,44 @@ public class PassiveSkills
     private PassiveNode[] passiveTree;
     private PassiveSkillInfo passiveSkillInfo;
     private Connections[] connections;
-    public PassiveSkills(Player player, Connections[] connections)
+    private List<PassiveNode> passiveNodesReadyForUnlock;
+    private List<PassiveNode> unlockedNodes;
+    private GameObject passiveSkillsGameObject;
+    public PassiveSkills(Player player, Connections[] connections, GameObject passiveSkills)
     {
         this.player = player;
         this.connections = connections;
         playerStats = player.GetComponent<Stats>();
         passiveSkillInfo = new PassiveSkillInfo();
         this.passiveTree = passiveSkillInfo.passiveTree;
-
+        passiveNodesReadyForUnlock = new List<PassiveNode>();
+        unlockedNodes = new List<PassiveNode>();
+        passiveSkillsGameObject = passiveSkills;
     }
-    public void UnlockPassive(string name, Transform background)
+    public void UnlockPassives()
+    {
+        foreach (var node in passiveNodesReadyForUnlock)
+        {
+            var stats = node.Stats;
+            var values = node.StatValues;
+            for (int i = 0; i < stats.Length; i++)
+            {
+                // playerStats[StatTypes.SKILLPOINTS] -= 1;
+                playerStats[stats[i]] += values[i];
+                node.Unlocked = true;
+                Debug.Log($"Added {values[i]} to {stats[i]}");
+            }
+        }
+        unlockedNodes.AddRange(passiveNodesReadyForUnlock);
+        passiveNodesReadyForUnlock.Clear();
+    }
+    public void PassivesReadyForUnlock(string name, Transform background)
     {
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         if (!Unlockable(passiveNode) || passiveNode.Unlocked) return;
-        var stats = passiveNode.Stats;
-        var values = passiveNode.StatValues;
-        for (int i = 0; i < stats.Length; i++)
-        {
-            // playerStats[StatTypes.SKILLPOINTS] -= 1;
-            playerStats[stats[i]] += values[i];
-            passiveNode.Unlocked = true;
-            UpdateVisual(background);
-            Debug.Log($"Added {values[i]} to {stats[i]}");
-        }
+        passiveNode.Unlocked = true;
+        passiveNodesReadyForUnlock.Add(passiveNode);
+        UpdateVisual(background);
     }
     private bool Unlockable(PassiveNode node)
     {
@@ -52,7 +67,57 @@ public class PassiveSkills
         background.GetComponent<Image>().color = Color.yellow;
         foreach (var c in connections)
         {
-            c.UpdateConnection(passiveTree);
+            c.UpdateConnectionVisual(passiveTree);
+        }
+    }
+    public void ResetVisualCloseButton()
+    {
+        foreach (var node in passiveNodesReadyForUnlock)
+        {
+            node.Unlocked = false;
+            Debug.Log(passiveSkillsGameObject.name);
+            Transform nodeObject = passiveSkillsGameObject.transform.Find(node.Name);
+            Transform background = nodeObject.Find("Background");
+            background.GetComponent<Image>().color = new Color(0.6415094f, 0.6076183f, 0.6076183f, 1);
+            foreach (var c in connections)
+            {
+                c.ResetConnectionVisual(passiveTree);
+            }
+        }
+    }
+    public void FullyResetPassiveTree()
+    {
+        ResetPassiveTreeStats();
+        ResetPassiveTreeVisuals();
+        unlockedNodes.Clear();
+    }
+    void ResetPassiveTreeVisuals()
+    {
+        foreach (var node in unlockedNodes)
+        {
+            Debug.Log(passiveSkillsGameObject.name);
+            Transform nodeObject = passiveSkillsGameObject.transform.Find(node.Name);
+            Transform background = nodeObject.Find("Background");
+            background.GetComponent<Image>().color = new Color(0.6415094f, 0.6076183f, 0.6076183f, 1);
+            foreach (var c in connections)
+            {
+                c.ResetConnectionVisual(passiveTree);
+            }
+        }
+    }
+    void ResetPassiveTreeStats()
+    {
+        foreach (var node in unlockedNodes)
+        {
+            var stats = node.Stats;
+            var values = node.StatValues;
+            for (int i = 0; i < stats.Length; i++)
+            {
+                // playerStats[StatTypes.SKILLPOINTS] -= 1;
+                playerStats[stats[i]] -= values[i];
+                node.Unlocked = false;
+            }
+
         }
     }
 }
