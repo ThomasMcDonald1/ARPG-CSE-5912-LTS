@@ -329,7 +329,7 @@ public class GameplayState : BaseGameplayState
         lockedActions = false;
     }
 
-    private void OnAbilityWasCompleted(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
+    private void OnAbilityWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
         lockedActions = false;
     }

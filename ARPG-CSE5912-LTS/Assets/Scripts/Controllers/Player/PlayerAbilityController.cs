@@ -8,10 +8,8 @@ using System;
 
 public class PlayerAbilityController : Player
 {
-    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
-    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedGroundTargetLocationEvent;
-    public static event EventHandler<InfoEventArgs<(RaycastHit, Ability)>> PlayerSelectedSingleTargetEvent;
-    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityIsReadyToBeCastEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> PlayerSelectedGroundTargetLocationEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> PlayerSelectedSingleTargetEvent;
 
     Coroutine aoeAbilitySelectionMode;
     Coroutine singleTargetSelectionMode;
@@ -23,14 +21,11 @@ public class PlayerAbilityController : Player
     [SerializeField] Ability fireballTest;
     [SerializeField] Ability bowAbilityTest;
 
-    Player player;
-
     int groundLayerMask = 1 << 6;
 
 
     private void Awake()
     {
-        player = GetComponent<Player>();
         abilitiesKnown.Add(basicAttack);
         abilitiesKnown.Add(fireballTest);
         abilitiesKnown.Add(bowAbilityTest);
@@ -39,10 +34,7 @@ public class PlayerAbilityController : Player
     private void OnEnable()
     {
         InputController.CancelPressedEvent += OnCancelPressed;
-        AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
-        PlayerSelectedGroundTargetLocationEvent += OnPlayerSelectedGroundTargetLocation;
-        PlayerSelectedSingleTargetEvent += OnPlayerSelectedSingleTarget;
-        CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCastTimerCast;
+        CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCast;
     }
 
     private void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -57,114 +49,30 @@ public class PlayerAbilityController : Player
         gameplayStateController.aoeReticleCylinder.SetActive(false);
     }
 
-    void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
+    void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        abilityQueued = false;
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((e.info.Item2, e.info.Item1, player)));
+        Debug.Log("Cast was completed");
+        DeductCastingCost(e.info);
+        GetColliders(e.info);
     }
 
-    void OnPlayerSelectedGroundTargetLocation(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        BaseAbilityArea abilityArea = e.info.Item2.GetComponent<BaseAbilityArea>();
-        BaseAbilityRange abilityRange = e.info.Item2.GetComponent<BaseAbilityRange>();
-        //TODO: make player run to max range of the ability
-        float distFromCharacter = Vector3.Distance(e.info.Item1.point, transform.position);
-        float distToTravel = distFromCharacter - abilityRange.range;
-        if (GetComponent<Player>() != null && distFromCharacter > abilityRange.range)
-        {
-            Debug.Log("Too far away");
-            abilityQueued = true;
-            StartCoroutine(RunWithinRange(e.info.Item1, abilityRange.range, distToTravel, e.info.Item2));
-        }
-        else if (GetComponent<Player>() != null)
-        {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((e.info.Item2, e.info.Item1, player)));
-        }
-    }
-
-    void OnPlayerSelectedSingleTarget(object sender, InfoEventArgs<(RaycastHit, Ability)> e)
-    {
-        //abilityQueued = true;
-        //do a coroutine for running within range of enemy
-    }
-
-    void OnCompletedCastTimerCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
-    {
-        Debug.Log("Cast timer cast completed");
-        DeductCastingCost(e.info.Item1);
-        GetColliders(e.info.Item2, e.info.Item1, player);
-    }
-
-    public void PlayerQueueAbilityCastSelectionRequired(Ability ability, bool requiresCharacter)
+    public void PlayerQueueAbilityCastSelectionRequired(AbilityCast abilityCast)
     {
         cursorChanger.ChangeCursorToSelectionGraphic();
 
-        if (requiresCharacter)
+        if (abilityCast.requiresCharacterUnderCursor)
         {
             playerInAOEAbilityTargetSelectionMode = true;
-            singleTargetSelectionMode = StartCoroutine(WaitForPlayerClick(ability));
+            singleTargetSelectionMode = StartCoroutine(WaitForPlayerClick(abilityCast));
         }
         else
         {
             playerInAOEAbilityTargetSelectionMode = true;
-            aoeAbilitySelectionMode = StartCoroutine(WaitForPlayerClickAOE(ability));
+            aoeAbilitySelectionMode = StartCoroutine(WaitForPlayerClickAOE(abilityCast));
         }
     }
 
-    void GetColliders(RaycastHit hit, Ability ability, Character caster)
-    {
-        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
-        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(hit, caster);
-        ApplyAbilityEffects(charactersCollided, ability);
-    }
-
-    void DeductCastingCost(Ability ability)
-    {
-        BaseAbilityCost cost = ability.GetComponent<BaseAbilityCost>();
-        cost.DeductResourceFromCaster(player);
-    }
-
-    void ApplyAbilityEffects(List<Character> targets, Ability ability)
-    {
-        BaseAbilityEffect[] effects = ability.GetComponentsInChildren<BaseAbilityEffect>();
-        for (int i = 0; i < targets.Count; i++)
-        {
-            for (int j = 0; j < effects.Length; j++)
-            {
-                BaseAbilityEffect effect = effects[j];
-                AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
-                if (specialTargeter.IsTarget(targets[i]))
-                {
-                    Debug.Log("Applying ability effects to " + targets[i].name);
-                    effect.Apply(targets[i]);
-                }
-            }
-        }
-    }
-
-    private IEnumerator RunWithinRange(RaycastHit hit, float range, float distToTravel, Ability ability)
-    {
-        Debug.Log("Running to within range of point.");
-        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
-        Vector3 dir = hit.point - transform.position;
-        Vector3 normalizedDir = dir.normalized;
-        Vector3 endPoint = transform.position + (normalizedDir * (distToTravel + 0.1f));
-
-        while (abilityQueued)
-        {
-            agent.destination = endPoint;
-            float distFromPlayer = Vector3.Distance(hit.point, transform.position);
-            if (distFromPlayer <= range)
-            {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
-            }
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator WaitForPlayerClick(Ability ability)
+    private IEnumerator WaitForPlayerClick(AbilityCast abilityCast)
     {
         playerInSingleTargetAbilitySelectionMode = true;
         while (playerInSingleTargetAbilitySelectionMode)
@@ -184,7 +92,7 @@ public class PlayerAbilityController : Player
                     bool targetInRange = CheckCharacterInRange(target);
                     if (!targetInRange)
                     {
-                        PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
+                        PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
                     }
                 }
             }
@@ -193,32 +101,31 @@ public class PlayerAbilityController : Player
         }
     }
 
-    private IEnumerator WaitForPlayerClickAOE(Ability ability)
+    private IEnumerator WaitForPlayerClickAOE(AbilityCast abilityCast)
     {
-        BaseAbilityArea abilityArea = ability.GetComponent<BaseAbilityArea>();
-        BaseAbilityRange abilityRange = ability.GetComponent<BaseAbilityRange>();
         bool playerHasNotClicked = true;
 
         while (playerHasNotClicked)
         {
-            if (abilityArea != null)
+            if (abilityCast.abilityArea != null)
             {
-                abilityArea.DisplayAOEArea();
+                abilityCast.abilityArea.DisplayAOEArea();
             }
             if (!playerNeedsToReleaseMouseButton && Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 playerHasNotClicked = false;
                 cursorChanger.ChangeCursorToDefaultGraphic();
-                if (abilityArea != null)
+                if (abilityCast.abilityArea != null)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, groundLayerMask))
                     {
-                        PlayerSelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<(RaycastHit, Ability)>((hit, ability)));
+                        abilityCast.hit = hit;
+                        PlayerSelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
                     }
-                    abilityArea.abilityAreaNeedsShown = false;
+                    abilityCast.abilityArea.abilityAreaNeedsShown = false;
                     gameplayStateController.aoeReticleCylinder.SetActive(false);
                 }
             }

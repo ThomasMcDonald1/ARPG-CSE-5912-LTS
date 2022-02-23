@@ -10,10 +10,10 @@ public abstract class BaseCastType : MonoBehaviour
     [HideInInspector] public CastingBar castingBar;
     public float castTime;
 
-    public abstract void WaitCastTime(Ability ability, RaycastHit hit, Character caster);
-    protected abstract void InstantiateVFX(Ability ability, RaycastHit hit, Character caster);
+    public abstract void WaitCastTime(AbilityCast abilityCast);
+    protected abstract void InstantiateVFX(AbilityCast abilityCast);
     public abstract void StopCasting();
-    protected abstract void CompleteCast(Ability ability, RaycastHit hit, Character caster);
+    protected abstract void CompleteCast(AbilityCast abilityCast);
 
 
     private void Awake()
@@ -25,7 +25,8 @@ public abstract class BaseCastType : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerAbilityController.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
+        Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
+        Character.CharacterAbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
         MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving;
     }
 
@@ -34,8 +35,8 @@ public abstract class BaseCastType : MonoBehaviour
         StopCasting();
     }
 
-    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
+    void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        WaitCastTime(e.info.Item1, e.info.Item2, e.info.Item3);
+        WaitCastTime(e.info);
     }
 }

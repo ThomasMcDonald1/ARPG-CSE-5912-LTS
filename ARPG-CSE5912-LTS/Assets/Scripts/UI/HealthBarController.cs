@@ -12,11 +12,12 @@ public class HealthBarController : MonoBehaviour
     private Coroutine regen;
 
     public static HealthBarController instance;
-    [SerializeField] Stats stats;
+    Stats stats;
 
     private void Awake()
     {
         instance = this;
+        stats = GetComponent<Stats>();
     }
 
     // Start is called before the first frame update

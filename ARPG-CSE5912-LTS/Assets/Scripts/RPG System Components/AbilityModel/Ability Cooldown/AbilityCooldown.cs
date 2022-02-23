@@ -17,16 +17,16 @@ public class AbilityCooldown : MonoBehaviour
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCastWasCompleted;
     }
 
-    void OnCastWasCompleted(object sender, InfoEventArgs<(Ability, RaycastHit, Character)> e)
+    void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        CooldownAbilityOnActionButtons(e.info.Item1);
+        CooldownAbilityOnActionButtons(e.info);
     }
 
-    public void CooldownAbilityOnActionButtons(Ability ability)
+    public void CooldownAbilityOnActionButtons(AbilityCast abilityCast)
     {
         foreach (ActionButton actionButton in actionBar.actionButtons)
         {
-            if (actionButton.abilityAssigned == ability)
+            if (actionButton.abilityAssigned == abilityCast.ability)
             {
                 actionButton.cooldownTimer = abilityCooldown;
                 actionButton.cooldownText.gameObject.SetActive(true);
