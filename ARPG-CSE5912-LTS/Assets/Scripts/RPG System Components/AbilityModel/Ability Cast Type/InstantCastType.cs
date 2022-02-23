@@ -12,11 +12,11 @@ public class InstantCastType : BaseCastType
     //    character = GetComponentInParent<Character>();
     //}
 
-    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityInstantCastWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
 
-    public override void WaitCastTime(Ability ability, RaycastHit hit, Character character)
+    public override void WaitCastTime(AbilityCast abilityCast)
     {
-        CompleteCast(ability, hit, character);
+        CompleteCast(abilityCast);
     }
 
     public override void StopCasting()
@@ -24,12 +24,12 @@ public class InstantCastType : BaseCastType
        
     }
 
-    protected override void CompleteCast(Ability ability, RaycastHit hit, Character caster)
+    protected override void CompleteCast(AbilityCast abilityCast)
     {
-       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
+       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
-    protected override void InstantiateVFX(Ability ability, RaycastHit hit, Character caster)
+    protected override void InstantiateVFX(AbilityCast abilityCast)
     {
         
     }

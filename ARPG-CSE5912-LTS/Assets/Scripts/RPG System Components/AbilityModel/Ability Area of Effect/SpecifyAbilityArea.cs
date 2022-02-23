@@ -41,7 +41,7 @@ public class SpecifyAbilityArea : BaseAbilityArea
             Character character = hitCollider.gameObject.GetComponent<Character>();
             if (character != null && character != caster)
             {
-                Debug.Log("Collider hit: " + hitCollider.name);
+                //Debug.Log("Collider hit: " + hitCollider.name);
                 characters.Add(character);
             }
         }

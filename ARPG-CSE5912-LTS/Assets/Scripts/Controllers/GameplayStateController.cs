@@ -56,8 +56,8 @@ public class GameplayStateController : StateMachine
     public GameObject yesRespawnButtonObj;
     public GameObject noRespawnButtonObj;
 
-    public HealthBarController healthBarController;
-    public EnergyBarController energyBarController;
+    //public HealthBarController healthBarController;
+    //public EnergyBarController energyBarController;
     public GameObject passiveTreeUI;
     public GameObject confirmPassiveTreeButton;
     public GameObject closePassiveTreeButton;

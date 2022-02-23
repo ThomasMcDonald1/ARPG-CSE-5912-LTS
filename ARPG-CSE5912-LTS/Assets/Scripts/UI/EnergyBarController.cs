@@ -13,11 +13,12 @@ public class EnergyBarController : MonoBehaviour
     private Coroutine regen;
 
     public static EnergyBarController instance;
-    [SerializeField] Stats stats;
+    Stats stats;
 
     private void Awake()
     {
         instance = this;
+        stats = GetComponent<Stats>();
     }
 
     // Start is called before the first frame update
