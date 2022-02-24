@@ -5,20 +5,36 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour
 {
 
-    private int questIndex;// used to know what quest to give
+    [SerializeField] private int questIndex;// used to know what quest to give
     [SerializeField] private Quest[] quests;
     [SerializeField] private Texture2D questionIcon, questionIconGray, exclamationIcon;
     [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
     [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
-    void Start()
+    public int QuestIndex
+    {
+        get
+        {
+            return questIndex;
+        }
+    }
+    public Quest[] Quests
+    {
+        get
+        {
+            return quests;
+        }
+    }
+    void Awake()
     {
         questIndex = 0;
+
         //create sprites from textures
         questionIconSprite = Sprite.Create(questionIcon, new Rect(0.0f, 0.0f, questionIcon.width, questionIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
         questionIconGraySprite = Sprite.Create(questionIconGray, new Rect(0.0f, 0.0f, questionIconGray.width, questionIconGray.height), new Vector2(0.5f, 0.5f), 100.0f);
         exclamationIconSprite = Sprite.Create(exclamationIcon, new Rect(0.0f, 0.0f, exclamationIcon.width, exclamationIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
-        iconRenderer.sprite = exclamationIconSprite;
+
+        iconRenderer.sprite = exclamationIconSprite;//default icon is exclamation
         foreach (Quest quest in quests)
         {
             quest.QuestGiverReference = this;
@@ -33,25 +49,20 @@ public class QuestGiver : MonoBehaviour
             {
                 QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
             }
-            UpdateQuestIcon();
         }
-    }
+        UpdateQuestIcon();
 
-    public Quest[] Quests
-    {
-        get
-        {
-            return quests;
-        }
     }
-
     public void UpdateQuestIcon()
     {
         if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
         {
             iconRenderer.sprite = questionIconSprite;
-            questIndex++;
-            if(Quests[questIndex] == null)//if have no more quests
+            if (questIndex < quests.Length-1)
+            {
+                questIndex++;
+            }
+            else//if have no more quests
             {
                 iconRenderer.sprite = null;
             }

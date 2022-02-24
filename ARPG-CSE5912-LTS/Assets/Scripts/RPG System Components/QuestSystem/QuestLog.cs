@@ -19,27 +19,25 @@ public class QuestLog : MonoBehaviour
     {
         Enemy.EnemyKillExpEvent -= OnEnemyKilled;
     }
-    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)
-    {
-        //Loops through everykilling goal of every quest in the quest log, and updates info such as kill count
-        Debug.Log("enemy killedeee!!!!!");
-        for (int i = 0; i < questArea.childCount; i++)
-        {
-            Debug.Log("Another quest");
-            GameObject questGameObject = questArea.GetChild(i).gameObject;
-            QuestScript questScript = questGameObject.GetComponent<QuestScript>();
-            foreach (KillingGoal killingGoal in questScript.QuestReference.KillingGoals)
-            {
-                Debug.Log("Updating kill goals");
-                killingGoal.UpdateKillCount(e.info.Item2);
-            }
-        }
-    }
+
 
     //List of Quests & QuestScripts, questscripts have references of their quest, vise versa
     private List<QuestScript> questScripts = new List<QuestScript>();
     private List<Quest> quests = new List<Quest>();
 
+    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)
+    {
+        //Loops through everykilling goal of every quest in the quest log, and updates info such as kill count
+        foreach (Quest quest in quests)
+        {
+
+            foreach (KillingGoal killingGoal in quest.KillingGoals)
+            {
+
+                killingGoal.UpdateKillCount(e.info.Item2);
+            }
+        }
+    }
 
     private static QuestLog questLogInstance;//singleton pattern
 
@@ -122,6 +120,7 @@ public class QuestLog : MonoBehaviour
     }
     public bool HasQuest(Quest quest) 
     {
+        //maybe need to edit later? since when quest is complete, COMPLETED will be added to the end
         return quests.Exists(x=>x.Title == quest.Title);//if quest exists in quest log
     }
     public void RemoveQuest(QuestScript questScript)
