@@ -30,6 +30,7 @@ namespace ARPG.Combat
             if (stats[StatTypes.HP] <= 0)
             {
                 GetComponent<Animator>().SetBool("Dead", true);
+                Dead();
                 GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
             }
             else

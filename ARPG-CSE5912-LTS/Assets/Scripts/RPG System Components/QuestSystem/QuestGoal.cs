@@ -6,7 +6,7 @@ public abstract class QuestGoal
     [SerializeField] private int requiredAmount;
     [SerializeField] private int currentAmount;
     //using string to compare is more efficient, very important that it matches the prefab name
-    [SerializeField] private string type;
+    [SerializeField] private int type;
 
     public int RequiredAmount
     {
@@ -30,7 +30,7 @@ public abstract class QuestGoal
             currentAmount = value;
         }
     }
-    public string Type
+    public int Type
     {
         get
         {
@@ -54,10 +54,17 @@ public abstract class QuestGoal
 public class KillingGoal : QuestGoal
 {
     //will be called when event happens
-    public void UpdateKillCount()//pass in enemy?
+    public void UpdateKillCount(int enemyType)//pass in enemy?
     {
         //TODO    
-        //if Type = enemy type,  currentAmount ++, CheckCompleted, UpdateSelected, CheckCompletion
+        //if Type = enemy type,  currentAmount ++, CheckCompleted, UpdateSelected,
+        if(Type == enemyType)
+        {
+            CurrentAmount++;
+            QuestLog.QuestLogInstance.CheckIfComplete();
+            QuestLog.QuestLogInstance.UpdateSelectedQuest();
+
+        }
         
     }
 

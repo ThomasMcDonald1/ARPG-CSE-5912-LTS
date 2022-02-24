@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using System;
 namespace ARPG.Combat
 {
     public class EnemyKnight : Enemy
@@ -11,7 +11,7 @@ namespace ARPG.Combat
 
         //protected override void Start()
         //{
-        //    base.Start();
+        //  base.Start();
         //    AttackRange = 13.0f;
         //    Range = 20.0f;
         //    //optimized body range
@@ -19,12 +19,9 @@ namespace ARPG.Combat
         //    SightRange = 90f;
         //    Speed = 2f;
 
-        //    //Stats
-        //    stats[StatTypes.MAXHEALTH] = 2600;
-        //    stats[StatTypes.HEALTH] = stats[StatTypes.MAXHEALTH];
-        //    stats[StatTypes.PHYATK] = 120;
-        //    stats[StatTypes.PHYDEF] = 30;
-        //    stats[StatTypes.ATKSPD] = 120;
+
+
+
         //}
 
         //protected override void Update()
