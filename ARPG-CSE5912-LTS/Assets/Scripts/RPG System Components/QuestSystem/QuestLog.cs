@@ -1,18 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using ARPG.Combat;
 
 public class QuestLog : MonoBehaviour
 {
-    public GameObject npcUI;//used to disable npc ui when quest log window is open
-    public GameObject questWindow;
+    public GameObject npcUI;//used to disable npc ui when quest log window is open, temp solution?
+    public GameObject questWindow;//QuestLog object
     [SerializeField]private GameObject questPrefab;
     [SerializeField] private Transform questArea;//game object in hierarchy that has children that are quests
-    private Quest selectedQuest;//public for testing 
+    private Quest selectedQuest;//quest player had clicked on
     [SerializeField] private TextMeshProUGUI questDescription;
+
+    private void OnEnable()
+    {
+        Enemy.EnemyKillExpEvent += OnEnemyKilled;
+    }
+    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)//e.info.Item
+    {
+
+    }
+
+    //List of Quests & QuestScripts, questscripts have references of their quest, vise versa
     private List<QuestScript> questScripts = new List<QuestScript>();
+    private List<Quest> quests = new List<Quest>();
 
 
     private static QuestLog questLogInstance;//singleton pattern
@@ -21,29 +32,36 @@ public class QuestLog : MonoBehaviour
     {
         get
         {
-            if(questLogInstance == null){
-                questLogInstance = GameObject.FindObjectOfType<QuestLog>();//Only have one questlog, should be fine to do this
-            }
-            return questLogInstance;
+            //if(questLogInstance == null){
+            //    questLogInstance = GameObject.FindObjectOfType<QuestLog>();//Only have one questlog, should be fine to do this
+            //}
+            return questLogInstance;//wont be null because it will be assigned during awake
         }
     }
-
+    private void Awake()
+    {
+        //get QuestLog object and then close window
+        questLogInstance = GameObject.FindObjectOfType<QuestLog>();//Only have one questlog, should be fine to do this
+        CloseQuestWindow();
+    }
     public void OpenQuestWindow()
     {
-        questWindow.SetActive(true);
-        npcUI.SetActive(false);
+        questWindow.SetActive(true);//temp solution?
+        npcUI.SetActive(false);//temp solution?
+        //change to questlog state or character panel state?
     }
     public void CloseQuestWindow()
     {
-        questWindow.SetActive(false);
-        npcUI.SetActive(true);
+        questWindow.SetActive(false);//temp solution?
+        npcUI.SetActive(true);//temp solution?
+        //change to gameplay state?
         /*To Do: return to the game play state*/
 
 
     }
     public void AddQuest(Quest quest)
     {
-        //implement later
+        //implement later, basically subscrube to kill event, and when event occurs, update kill count
         //foreach(KillingGoal killingGoal in quest.KillingGoals)
         //{
         //    //kill confirmed event?
@@ -51,16 +69,22 @@ public class QuestLog : MonoBehaviour
 
         //}
 
-
+        //quests.Add(quest); orignal placement of code, maybe delete later
+       
         GameObject questGameObject = Instantiate(questPrefab, questArea);// Instantiating quest in the game world
-        
-        QuestScript questScript = questGameObject.GetComponent<QuestScript>();
+        QuestScript questScript = questGameObject.GetComponent<QuestScript>();//quest prefab will originally have QuestScript attached
         questScript.QuestReference = quest;//quest script now has reference to original quest
         quest.QuestScriptReference = questScript;//quest has reference to quest script
+        questGameObject.GetComponent<TextMeshProUGUI>().text = quest.Title;//assigned title to quest object
+        
+        //add quest and questscript to lists
         questScripts.Add(questScript);
+        quests.Add(quest);
 
-        questGameObject.GetComponent<TextMeshProUGUI>().text = quest.Title;
+
     }
+
+    //will be called when kill event happens
     public void UpdateSelectedQuest()
     {
         ShowQuestDescription(selectedQuest);
@@ -87,13 +111,32 @@ public class QuestLog : MonoBehaviour
         }
        
     }
+    //will execute when killing something or picking something up, needs to check entire list of quest
     public void CheckIfComplete()
     {
         foreach(QuestScript questScript in questScripts)
         {
+            //questScript.QuestReference.QuestGiverReference.UpdateQuestIcon();
             questScript.IsComplete();
         }
     }
+    public bool HasQuest(Quest quest) 
+    {
+        return quests.Exists(x=>x.Title == quest.Title);//if quest exists in quest log
+    }
+    public void RemoveQuest(QuestScript questScript)
+    {
+        questScripts.Remove(questScript);
+        Destroy(questScript.gameObject);
+        quests.Remove(questScript.QuestReference);
+        questDescription.text = string.Empty;
+        selectedQuest = null;//unselect quest
+        //questScript.QuestReference.QuestGiverReference.UpdateQuestIcon();
+        questScript = null;
+    }
+
 }
+
+
 //public Quest quest;
 //public TextMeshProUGUI titleText;

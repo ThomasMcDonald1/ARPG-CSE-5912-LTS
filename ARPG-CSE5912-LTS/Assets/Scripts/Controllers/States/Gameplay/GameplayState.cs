@@ -51,6 +51,7 @@ public class GameplayState : BaseGameplayState
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
         passiveTreeUI = gameplayStateController.passiveTreeUI;
         passiveTreeUI.SetActive(false);
+
     }
 
     public override void Exit()
