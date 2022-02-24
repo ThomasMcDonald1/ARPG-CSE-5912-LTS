@@ -14,8 +14,7 @@ public abstract class BaseCastType : MonoBehaviour
     protected abstract void InstantiateVFX(AbilityCast abilityCast);
     public abstract void StopCasting();
     protected abstract void CompleteCast(AbilityCast abilityCast);
-
-
+    public abstract Type GetCastType();
     private void Awake()
     {
         gameplayStateController = GetComponentInParent<GameplayStateController>();
@@ -26,7 +25,6 @@ public abstract class BaseCastType : MonoBehaviour
     private void OnEnable()
     {
         Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
-        Character.CharacterAbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
         MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving;
     }
 
@@ -37,6 +35,7 @@ public abstract class BaseCastType : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        WaitCastTime(e.info);
+        if (GetComponentInParent<Ability>() == e.info.ability && GetComponentInParent<Character>() == e.info.caster)
+            e.info.castType.WaitCastTime(e.info);
     }
 }

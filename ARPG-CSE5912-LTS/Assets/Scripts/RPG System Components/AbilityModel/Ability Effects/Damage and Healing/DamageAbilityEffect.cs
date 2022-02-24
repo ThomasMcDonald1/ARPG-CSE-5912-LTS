@@ -16,7 +16,7 @@ public class DamageAbilityEffect : BaseAbilityEffect
         BaseAbilityPower power = GetComponentInParent<BaseAbilityPower>();
         bool wasCrit = false;
 
-        int baseDamageScaler = 5;
+        int baseDamageScaler = 3; //smaller numbers result in bigger final damage
         float casterLevel = GetStat(target, StatTypes.LVL);
         float baseDamage = power.baseDamageOrHealing;
 
@@ -128,12 +128,5 @@ public class DamageAbilityEffect : BaseAbilityEffect
                 break;
         }
         return result;
-    }
-
-    private bool RollForCrit(Character caster)
-    {
-        int roll = UnityEngine.Random.Range(0, 101);
-        int chance = caster.stats[StatTypes.CritChance];
-        return chance >= roll;
     }
 }

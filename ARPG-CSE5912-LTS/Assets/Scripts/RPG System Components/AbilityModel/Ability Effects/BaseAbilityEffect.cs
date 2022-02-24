@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,8 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     protected const int minDamage = -99999;
     protected const int maxDamage = 99999;
 
-    //add whatever events need to be broadcast for ability effects here
+
+    public static event EventHandler<InfoEventArgs<Character>> AbilityMissedTargetEvent;
 
     //TODO: Not sure where the best place to add damage predictions for an ability is...perhaps here? such as:
     // public abstract int Predict();
@@ -26,12 +28,11 @@ public abstract class BaseAbilityEffect : MonoBehaviour
 
         if (GetComponent<BaseHitRate>().RollForHit(target))
         {
-            //Can invoke an event that the target was hit for floating combat text, etc
             OnApply(target);
         }
         else
         {
-            //Missed! Can invoke miss event here for floating combat text, etc
+            AbilityMissedTargetEvent?.Invoke(this, new InfoEventArgs<Character>(target));
         }
     }
 
@@ -49,5 +50,12 @@ public abstract class BaseAbilityEffect : MonoBehaviour
         //finalValue += valueOfSummedUpMods;
 
         return finalValue;
+    }
+
+    public bool RollForCrit(Character caster)
+    {
+        int roll = UnityEngine.Random.Range(0, 101);
+        int chance = caster.stats[StatTypes.CritChance];
+        return chance >= roll;
     }
 }
