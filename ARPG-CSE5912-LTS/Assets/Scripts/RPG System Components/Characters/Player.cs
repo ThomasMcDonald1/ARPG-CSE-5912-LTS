@@ -195,8 +195,8 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
+            AttackTarget.GetComponent<HealthBarController>().SubtractHealth(stats[StatTypes.PHYATK]);
 
-            AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
         }
     }
 

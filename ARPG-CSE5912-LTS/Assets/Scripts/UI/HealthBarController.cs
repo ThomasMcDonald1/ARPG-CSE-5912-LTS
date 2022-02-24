@@ -59,4 +59,5 @@ public class HealthBarController : MonoBehaviour
         }
         regen = null;
     }
+
 }
