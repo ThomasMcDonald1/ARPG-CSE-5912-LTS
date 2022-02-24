@@ -15,7 +15,9 @@ public class ItemPickup : MonoBehaviour
 	// When the player interacts with the item
 	public void Update()
 	{
-		if (EnteredTrigger) {
+		//Debug.Log("Inventory weapon amt: " + Inventory.instance.weaponItems.Count);
+		if (EnteredTrigger)
+		{
 			PickUp();
 			EnteredTrigger = false;
 		}
@@ -25,7 +27,19 @@ public class ItemPickup : MonoBehaviour
 	void PickUp()
 	{
 		//Debug.Log("Picking up " + item.name);
-		Inventory.instance.Add(item);   // Add to inventory
+		switch (item.type)
+		{
+			case Ite.ItemType.armor:
+				Inventory.instance.Add(item, Inventory.instance.armorItems);
+				break;
+			case Ite.ItemType.weapon:
+				Inventory.instance.Add(item, Inventory.instance.weaponItems);
+				break;
+			case Ite.ItemType.utility:
+				Inventory.instance.Add(item, Inventory.instance.utilItems);
+				break;
+
+		}
 
 		Destroy(gameObject);    // Destroy item from scene
 	}

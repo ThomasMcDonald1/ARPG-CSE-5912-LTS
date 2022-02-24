@@ -12,11 +12,12 @@ public class HealthBarController : MonoBehaviour
     private Coroutine regen;
 
     public static HealthBarController instance;
-    [SerializeField] Stats stats;
+    Stats stats;
 
     private void Awake()
     {
         instance = this;
+        stats = GetComponent<Stats>();
     }
 
     // Start is called before the first frame update
@@ -26,16 +27,20 @@ public class HealthBarController : MonoBehaviour
         healthBar.value = stats[StatTypes.HP];
     }
 
+    private void Update()
+    {
+        if (stats != null && healthBar != null)
+            UpdateSlider();
+    }
+
     public void AddHealth(int amt)
     {
         stats[StatTypes.HP] += amt;
-        UpdateSlider();
     }
 
     public void SubtractHealth(int amt)
     {
         stats[StatTypes.HP] -= amt;
-        UpdateSlider();
 
         if (regen == null)
             regen = StartCoroutine(RegenHealth());
@@ -53,9 +58,9 @@ public class HealthBarController : MonoBehaviour
         while (stats[StatTypes.HP] < stats[StatTypes.MaxHP])
         {
             stats[StatTypes.HP] += stats[StatTypes.HealthRegen];
-            UpdateSlider();
             yield return regenTick;
         }
         regen = null;
     }
+
 }

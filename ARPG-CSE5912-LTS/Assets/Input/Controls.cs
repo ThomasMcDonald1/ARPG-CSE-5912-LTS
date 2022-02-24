@@ -215,6 +215,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenPassiveTree"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcdcfa3a-e388-4389-a351-ada8d73b7f88"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -448,6 +457,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Stationary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3573f20e-575c-427b-b2a8-d91544153811"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenPassiveTree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -477,6 +497,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay_CharacterMenu = m_Gameplay.FindAction("CharacterMenu", throwIfNotFound: true);
         m_Gameplay_SecondaryClick = m_Gameplay.FindAction("SecondaryClick", throwIfNotFound: true);
         m_Gameplay_Stationary = m_Gameplay.FindAction("Stationary", throwIfNotFound: true);
+        m_Gameplay_OpenPassiveTree = m_Gameplay.FindAction("OpenPassiveTree", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -557,6 +578,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_CharacterMenu;
     private readonly InputAction m_Gameplay_SecondaryClick;
     private readonly InputAction m_Gameplay_Stationary;
+    private readonly InputAction m_Gameplay_OpenPassiveTree;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -582,6 +604,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @CharacterMenu => m_Wrapper.m_Gameplay_CharacterMenu;
         public InputAction @SecondaryClick => m_Wrapper.m_Gameplay_SecondaryClick;
         public InputAction @Stationary => m_Wrapper.m_Gameplay_Stationary;
+        public InputAction @OpenPassiveTree => m_Wrapper.m_Gameplay_OpenPassiveTree;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -654,6 +677,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Stationary.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnStationary;
                 @Stationary.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnStationary;
                 @Stationary.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnStationary;
+                @OpenPassiveTree.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
+                @OpenPassiveTree.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
+                @OpenPassiveTree.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -721,6 +747,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Stationary.started += instance.OnStationary;
                 @Stationary.performed += instance.OnStationary;
                 @Stationary.canceled += instance.OnStationary;
+                @OpenPassiveTree.started += instance.OnOpenPassiveTree;
+                @OpenPassiveTree.performed += instance.OnOpenPassiveTree;
+                @OpenPassiveTree.canceled += instance.OnOpenPassiveTree;
             }
         }
     }
@@ -748,5 +777,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnCharacterMenu(InputAction.CallbackContext context);
         void OnSecondaryClick(InputAction.CallbackContext context);
         void OnStationary(InputAction.CallbackContext context);
+        void OnOpenPassiveTree(InputAction.CallbackContext context);
     }
 }

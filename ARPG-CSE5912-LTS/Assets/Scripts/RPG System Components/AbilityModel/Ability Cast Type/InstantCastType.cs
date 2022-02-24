@@ -12,11 +12,16 @@ public class InstantCastType : BaseCastType
     //    character = GetComponentInParent<Character>();
     //}
 
-    public static event EventHandler<InfoEventArgs<(Ability, RaycastHit, Character)>> AbilityInstantCastWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
 
-    public override void WaitCastTime(Ability ability, RaycastHit hit, Character character)
+    public override Type GetCastType()
     {
-        CompleteCast(ability, hit, character);
+        return typeof(InstantCastType);
+    }
+
+    public override void WaitCastTime(AbilityCast abilityCast)
+    {
+        CompleteCast(abilityCast);
     }
 
     public override void StopCasting()
@@ -24,13 +29,27 @@ public class InstantCastType : BaseCastType
        
     }
 
-    protected override void CompleteCast(Ability ability, RaycastHit hit, Character caster)
+    protected override void CompleteCast(AbilityCast abilityCast)
     {
-       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<(Ability, RaycastHit, Character)>((ability, hit, caster)));
+       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
-    protected override void InstantiateVFX(Ability ability, RaycastHit hit, Character caster)
+    protected override void InstantiateVFX(AbilityCast abilityCast)
     {
-        
+        GameObject effectVFX = abilityCast.ability.effectVFXObj;
+        GameObject instance = Instantiate(effectVFX, abilityCast.ability.transform);
+        StartCoroutine(ShowVFX(abilityCast, instance));
+    }
+
+    private IEnumerator ShowVFX(AbilityCast abilityCast, GameObject vfx)
+    {
+        Vector3 casterPos = abilityCast.caster.transform.position;
+        Vector3 casterDir = abilityCast.caster.transform.forward;
+        Quaternion casterRot = abilityCast.caster.transform.rotation;
+        float spawnDistance = 1;
+        Vector3 spawnPos = casterPos + casterDir * spawnDistance;
+        vfx.transform.position = spawnPos;
+        yield return new WaitForSeconds(1);
+        Destroy(vfx);
     }
 }

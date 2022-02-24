@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,13 @@ public abstract class BaseAbilityRange : MonoBehaviour
     //range without the character changing its facing. If the cursor is moved outside the ability range, it 
     //should not be able to be used upon a click, and the cursor should change color to red to indicate
     //that the cursor has been moved outside the ability's maximum range.
-    public virtual bool directionOriented { get { return false; } }
+    public virtual bool directionOriented { get { return false; } } //not yet implemented functionality 
 
     //The Character that is casting the ability
     protected Character caster { get { return GetComponentInParent<Character>(); } }
 
     //All concrete classes will have to implement this to grab the characters that are specifically within the 
-    //ability's range
+    //ability's range (could be useful for AI to decide what to attack or heal/buff/etc)
     public abstract List<Character> GetCharactersInRange();
+    public abstract Type GetAbilityRange();
 }

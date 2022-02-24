@@ -19,9 +19,13 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] Player player;
 
+    [SerializeField] private float typingSpeed = 0.04f;
+
     private Story currentStory;
 
     private static InteractionManager instance;
+
+    private Coroutine displayLineCoroutine;
 
     private void Update()
     {
@@ -82,7 +86,21 @@ public class InteractionManager : MonoBehaviour
 
     public void ContinueStory()
     {
-        dialogueText.text = currentStory.Continue();
+        if (displayLineCoroutine != null)
+        {
+            StopCoroutine(displayLineCoroutine);
+        }
+        displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+    }
+
+    private IEnumerator DisplayLine(string line)
+    {
+        dialogueText.text = "";
+        foreach (char letter in line.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
     }
 
     // We will use these for now... later we will incoroporate ink & update text this way
@@ -123,7 +141,6 @@ public class InteractionManager : MonoBehaviour
 
     public void StopDialogue()
     {
-        dialogueText.text = "";
         player.NPCTarget.GetComponent<NPC>().StopDialogue();
     }
 

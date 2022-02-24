@@ -40,6 +40,7 @@ public class InputController : MonoBehaviour
     public static event EventHandler<InfoEventArgs<int>> ActionBar12PressedEvent;
     public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementLeftClickedEvent;
     public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementRightClickedEvent;
+    public static event EventHandler<InfoEventArgs<int>> OpenPassiveTreeEvent;
 
     Controls controls;
     private bool clickHeld;
@@ -61,8 +62,29 @@ public class InputController : MonoBehaviour
         uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
     }
 
+    private void FindCanvas()
+    {
+        if (gameplayUICanvas == null)
+        {
+            gameplayUICanvas = GameObject.Find("GameplayUICanvas");
+            if (gameplayUICanvas != null)
+            {
+                uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+            }
+            if (gameplayUICanvas == null)
+            {
+                gameplayUICanvas = GameObject.Find("MainMenuCanvas");
+                if (gameplayUICanvas != null)
+                {
+                    uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+                }
+            }
+        }
+    }
+
     private void Update()
     {
+        FindCanvas();
         if (EventSystem.current.IsPointerOverGameObject() && Mouse.current.rightButton.wasReleasedThisFrame)
         {
             List<RaycastResult> results = GetUIElementsClicked();
@@ -96,6 +118,7 @@ public class InputController : MonoBehaviour
         controls.Gameplay.ActionBar10.performed += OnActionBar10Pressed;
         controls.Gameplay.ActionBar11.performed += OnActionBar11Pressed;
         controls.Gameplay.ActionBar12.performed += OnActionBar12Pressed;
+        controls.Gameplay.OpenPassiveTree.performed += OnOpenPassiveTree;
 
     }
 
@@ -263,5 +286,9 @@ public class InputController : MonoBehaviour
     IEnumerator StationaryHeldCoroutine()
     {
         yield return null;
+    }
+    private void OnOpenPassiveTree(InputAction.CallbackContext context)
+    {
+        OpenPassiveTreeEvent?.Invoke(this, new InfoEventArgs<int>(27));
     }
 }

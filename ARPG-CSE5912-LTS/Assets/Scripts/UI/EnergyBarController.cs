@@ -13,11 +13,12 @@ public class EnergyBarController : MonoBehaviour
     private Coroutine regen;
 
     public static EnergyBarController instance;
-    [SerializeField] Stats stats;
+    Stats stats;
 
     private void Awake()
     {
         instance = this;
+        stats = GetComponent<Stats>();
     }
 
     // Start is called before the first frame update
@@ -27,16 +28,20 @@ public class EnergyBarController : MonoBehaviour
         enrgBar.value = stats[StatTypes.MaxMana];
     }
 
+    private void Update()
+    {
+        if (stats != null && enrgBar != null)
+            UpdateSlider();
+    }
+
     public void AddMana(int amt)
     {
         stats[StatTypes.Mana] += amt;
-        UpdateSlider();
     }
 
     public void SubtractMana(int amt)
     {
         stats[StatTypes.Mana] -= amt;
-        UpdateSlider();
         if (regen == null)
             regen = StartCoroutine(RegenEnergy());
     }
@@ -53,7 +58,6 @@ public class EnergyBarController : MonoBehaviour
         while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
         {
             stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
-            UpdateSlider();
             yield return regenTick;
         }
         regen = null;

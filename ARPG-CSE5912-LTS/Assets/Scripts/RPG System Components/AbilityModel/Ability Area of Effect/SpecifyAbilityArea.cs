@@ -29,19 +29,19 @@ public class SpecifyAbilityArea : BaseAbilityArea
         }
     }
 
-    public override List<Character> PerformAOECheckToGetColliders(RaycastHit hit, Character caster)
+    public override List<Character> PerformAOECheckToGetColliders(AbilityCast abilityCast)
     {
         //Debug.Log("AOE ability centered on: " + hit.point);
         //TODO: Make overlap sphere the same size as the targeting reticle
-        Collider[] hitColliders = Physics.OverlapSphere(hit.point, aoeRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(abilityCast.hit.point, aoeRadius);
         List<Character> characters = new List<Character>();
 
         foreach (Collider hitCollider in hitColliders)
         {
             Character character = hitCollider.gameObject.GetComponent<Character>();
-            if (character != null && character != caster)
+            if (character != null)
             {
-                Debug.Log("Collider hit: " + hitCollider.name);
+                //Debug.Log("Collider hit: " + hitCollider.name);
                 characters.Add(character);
             }
         }

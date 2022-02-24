@@ -23,11 +23,10 @@ public abstract class BaseHitRate : MonoBehaviour
     {
         int roll = Random.Range(0, 101);
         int chance = Calculate(target);
-        Debug.Log("Hit roll: " + roll.ToString() + ", hit chance: " + chance.ToString() + ". Hit target? " + (roll <= chance).ToString());
+        //Debug.Log("Hit roll: " + roll.ToString() + ", hit chance: " + chance.ToString() + ". Hit target? " + (roll <= chance).ToString());
         return roll <= chance;
     }
 
-    //TODO: Check for crit
     //TODO: Write methods for what happens on an automatic hit, automatic miss, etc. here
 
     protected virtual int Final(int evade)

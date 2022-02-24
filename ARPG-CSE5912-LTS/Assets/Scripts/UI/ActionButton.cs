@@ -9,7 +9,7 @@ public class ActionButton : MonoBehaviour
     public Ability abilityAssigned;
     [SerializeField] GameObject iconObj;
     Image iconObjImage;
-    [SerializeField] Player player;
+    Player player;
     BaseAbilityCost abilityCost;
     public Image cooldownFill;
     public TextMeshProUGUI cooldownText;
@@ -22,6 +22,7 @@ public class ActionButton : MonoBehaviour
         iconObjImage.enabled = false;
         cooldownText.gameObject.SetActive(false);
         cooldownFill.fillAmount = 0.0f;
+        player = GetComponentInParent<GameplayStateController>().GetComponentInChildren<Player>();
     }
 
     public void SetIcon()
