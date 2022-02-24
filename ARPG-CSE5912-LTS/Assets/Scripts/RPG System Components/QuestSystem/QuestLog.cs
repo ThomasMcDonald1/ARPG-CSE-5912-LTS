@@ -5,11 +5,14 @@ using ARPG.Combat;
 
 public class QuestLog : MonoBehaviour
 {
+    [SerializeField] private GameObject npcUI;//to disable npc ui
     [SerializeField]private GameObject questPrefab;
     [SerializeField] private Transform questArea;//game object in hierarchy that has children that are quests
     private Quest selectedQuest;//quest player had clicked on
     [SerializeField] private TextMeshProUGUI questDescription;
     [SerializeField] private CanvasGroup canvasGroup;//for making window invisible
+    [SerializeField] private GameplayStateController gameplayStateController;//entering exiting states? temp solution?
+
 
     private void OnEnable()
     {
@@ -56,12 +59,16 @@ public class QuestLog : MonoBehaviour
     }
     public void OpenQuestWindow()
     {
+        Time.timeScale = 0;
+        npcUI.SetActive(false);
         canvasGroup.alpha = 1f; 
         canvasGroup.blocksRaycasts = true; 
         ////change to questlog state or character panel state?
     }
     public void CloseQuestWindow()
     {
+        Time.timeScale = 1;
+        npcUI.SetActive(true);
         canvasGroup.alpha = 0f; //this makes everything transparent
         canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
         ////change to gameplay state?
@@ -131,7 +138,7 @@ public class QuestLog : MonoBehaviour
         questDescription.text = string.Empty;
         selectedQuest = null;//unselect quest
         //questScript.QuestReference.QuestGiverReference.UpdateQuestIcon();
-        questScript = null;
+        //questScript = null;
     }
 
 }
