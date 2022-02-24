@@ -5,32 +5,35 @@ using UnityEngine;
 public class PopTesting : MonoBehaviour
 {
     
-    [SerializeField] private Transform DamagePop;
+    [SerializeField] private Transform Pop;
 
-    public void CreateDamagePop(Character target, int damageAmount, bool isCrit)
+    public void CreatePop(Character target, int Amount, bool isCrit, bool isDamage)
     {
-        DamagePopUp damagePopUp;
-        Transform damagePopUpTransform = Instantiate(DamagePop, Vector3.zero, Quaternion.identity);
-        damagePopUpTransform.SetParent(target.transform.Find("EnemyCanvas"), false);
-        damagePopUpTransform.position -= new Vector3(0f, 3f, 0f);
-        damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
-        damagePopUp.Setup(damageAmount);
+        PopUp PopUp;
+        Transform PopUpTransform = Instantiate(Pop, Vector3.zero, Quaternion.identity);
+        PopUpTransform.SetParent(target.transform.Find("EnemyCanvas"), false);
+        PopUpTransform.position -= new Vector3(0f, 3f, 0f);
+        PopUp = PopUpTransform.GetComponent<PopUp>();
+        PopUp.Setup(Amount, isCrit, isDamage);
 
     }
     private void OnEnable()
     {
         DamageAbilityEffect.AbilityDamageReceivedEvent += OnDamagePop;
+        //A heal comes here
     }
 
     private void OnDisable()
     {
         DamageAbilityEffect.AbilityDamageReceivedEvent -= OnDamagePop;
+        //A heal comes here
     }
 
     public void OnDamagePop(object sender, InfoEventArgs<(Character, int, bool)> e)
     {
         (Character damageTarget, int damageAmount, bool isCrit) = e.info;
-        CreateDamagePop(damageTarget, damageAmount, isCrit);
+        CreatePop(damageTarget, damageAmount, isCrit, true);
     }
+    //A heal comes here
 
 }
