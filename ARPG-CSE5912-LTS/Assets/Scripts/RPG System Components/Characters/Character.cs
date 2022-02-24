@@ -27,7 +27,6 @@ public abstract class Character : MonoBehaviour
     [HideInInspector] public float NPCInteractionRange;
 
     public static event EventHandler<InfoEventArgs<AbilityCast>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
-    public static event EventHandler<InfoEventArgs<AbilityCast>> CharacterAbilityIsReadyToBeCastEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
 
     #region Built-in
@@ -67,7 +66,7 @@ public abstract class Character : MonoBehaviour
     void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<AbilityCast> e)
     {
         abilityQueued = false;
-        CharacterAbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
+        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
     }
 
     void OnGroundTargetSelected(object sender, InfoEventArgs<AbilityCast> e)
@@ -128,11 +127,20 @@ public abstract class Character : MonoBehaviour
                     //2) call abilityArea.PerformAOE from from within the Enemy class
                 }
             }
+            else
+            {
+                CastAbilityWithoutSelection(abilityCast);
+            }
         }      
         else
         {
             //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
         }
+    }
+
+    private void CastAbilityWithoutSelection(AbilityCast abilityCast)
+    {
+        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     //Could be useful for AI to find characters in range
@@ -157,12 +165,13 @@ public abstract class Character : MonoBehaviour
     public void GetColliders(AbilityCast abilityCast)
     {
         BaseAbilityArea abilityArea = abilityCast.ability.GetComponent<BaseAbilityArea>();
-        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(abilityCast.hit, abilityCast.caster);
+        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(abilityCast);
         ApplyAbilityEffects(charactersCollided, abilityCast.ability);
     }
 
     void ApplyAbilityEffects(List<Character> targets, Ability ability)
     {
+        //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
         BaseAbilityEffect[] effects = ability.GetComponentsInChildren<BaseAbilityEffect>();
         for (int i = 0; i < targets.Count; i++)
         {

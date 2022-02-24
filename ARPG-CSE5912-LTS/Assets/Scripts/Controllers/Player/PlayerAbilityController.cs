@@ -17,24 +17,13 @@ public class PlayerAbilityController : Player
     [HideInInspector] public bool playerInSingleTargetAbilitySelectionMode;
     [HideInInspector] public bool playerNeedsToReleaseMouseButton;
 
-    [SerializeField] Ability basicAttack;
-    [SerializeField] Ability fireballTest;
-    [SerializeField] Ability bowAbilityTest;
-
     int groundLayerMask = 1 << 6;
-
-
-    private void Awake()
-    {
-        abilitiesKnown.Add(basicAttack);
-        abilitiesKnown.Add(fireballTest);
-        abilitiesKnown.Add(bowAbilityTest);
-    }
 
     private void OnEnable()
     {
         InputController.CancelPressedEvent += OnCancelPressed;
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCast;
+        InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }
 
     private void OnCancelPressed(object sender, InfoEventArgs<int> e)
@@ -51,10 +40,17 @@ public class PlayerAbilityController : Player
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        Debug.Log("Cast was completed");
+        //Debug.Log("Cast was completed");
         DeductCastingCost(e.info);
         GetColliders(e.info);
     }
+
+    //void OnCompletedInstantCast(object sender, InfoEventArgs<AbilityCast> e)
+    //{
+    //    //Debug.Log("Instant cast was completed");
+    //    DeductCastingCost(e.info);
+    //    GetColliders(e.info);
+    //}
 
     public void PlayerQueueAbilityCastSelectionRequired(AbilityCast abilityCast)
     {

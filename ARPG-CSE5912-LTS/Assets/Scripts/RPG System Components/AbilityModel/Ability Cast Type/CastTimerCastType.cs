@@ -13,6 +13,11 @@ public class CastTimerCastType : BaseCastType
     public static event EventHandler<InfoEventArgs<int>> AbilityCastWasCancelledEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityCastTimeWasCompletedEvent;
 
+    public override Type GetCastType()
+    {
+        return typeof(CastTimerCastType);
+    }
+
     public override void WaitCastTime(AbilityCast abilityCast)
     {
         if (castingRoutine == null)

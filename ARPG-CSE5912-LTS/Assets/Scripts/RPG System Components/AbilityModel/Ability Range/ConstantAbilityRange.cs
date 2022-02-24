@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class ConstantAbilityRange : BaseAbilityRange
     public void Awake()
     {
         characters = new List<Character>();    
+    }
+
+    public override Type GetAbilityRange()
+    {
+        return typeof(ConstantAbilityRange);
     }
 
     public override List<Character> GetCharactersInRange()

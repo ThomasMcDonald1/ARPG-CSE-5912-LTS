@@ -25,8 +25,11 @@ public class CastingBar : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        castBarCanvas.SetActive(true);
-        abilityIcon.sprite = e.info.ability.icon;
-        abilityNameText.text = e.info.ability.name;
+        if (e.info.castType.GetCastType() == typeof(CastTimerCastType))
+        {
+            castBarCanvas.SetActive(true);
+            abilityIcon.sprite = e.info.ability.icon;
+            abilityNameText.text = e.info.ability.name;
+        }
     }
 }

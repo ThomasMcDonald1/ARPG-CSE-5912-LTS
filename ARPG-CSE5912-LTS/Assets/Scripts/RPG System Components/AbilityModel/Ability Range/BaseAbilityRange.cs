@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,4 +23,5 @@ public abstract class BaseAbilityRange : MonoBehaviour
     //All concrete classes will have to implement this to grab the characters that are specifically within the 
     //ability's range (could be useful for AI to decide what to attack or heal/buff/etc)
     public abstract List<Character> GetCharactersInRange();
+    public abstract Type GetAbilityRange();
 }
