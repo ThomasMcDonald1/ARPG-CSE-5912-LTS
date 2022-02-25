@@ -1,15 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+
 
 public class QuestGiver : MonoBehaviour
 {
 
-
+    [SerializeField] private int questIndex;// used to know what quest to give
     [SerializeField] private Quest[] quests;
+    [SerializeField] private Texture2D questionIcon, questionIconGray, exclamationIcon;
+    [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
+    [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
+    public int QuestIndex
+    {
+        get
+        {
+            return questIndex;
+        }
+    }
     public Quest[] Quests
     {
         get
@@ -17,22 +25,89 @@ public class QuestGiver : MonoBehaviour
             return quests;
         }
     }
-    private void Awake()
+    void Awake()
     {
-        //testing
-        testLog.AddQuest(quests[0]);
+        questIndex = 0;
+
+        //create sprites from textures
+        questionIconSprite = Sprite.Create(questionIcon, new Rect(0.0f, 0.0f, questionIcon.width, questionIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
+        questionIconGraySprite = Sprite.Create(questionIconGray, new Rect(0.0f, 0.0f, questionIconGray.width, questionIconGray.height), new Vector2(0.5f, 0.5f), 100.0f);
+        exclamationIconSprite = Sprite.Create(exclamationIcon, new Rect(0.0f, 0.0f, exclamationIcon.width, exclamationIcon.height), new Vector2(0.5f, 0.5f), 100.0f);
+
+        iconRenderer.sprite = exclamationIconSprite;//default icon is exclamation
+        foreach (Quest quest in quests)
+        {
+            quest.QuestGiverReference = this;
+        }
     }
+    //test
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+            {
+                QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
+            }
+        }
+        UpdateQuestIcon();
+
+    }
+    public void UpdateQuestIcon()
+    {
+        if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        {
+            iconRenderer.sprite = questionIconSprite;
+            if (questIndex < quests.Length-1)
+            {
+                questIndex++;
+            }
+            else//if have no more quests
+            {
+                iconRenderer.sprite = null;
+            }
+        }
+        else if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        {
+            iconRenderer.sprite = exclamationIconSprite;
+
+        }
+        else if (!quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        {
+            iconRenderer.sprite = questionIconGraySprite;
+        }
+        //foreach(Quest quest in quests)
+        //{
+        //    if(quest != null)
+        //    {
+        //        if(quest.IsComplete && QuestLog.QuestLogInstance.HasQuest(quest))
+        //        {
+        //            iconRenderer.sprite = questionIconSprite;
+        //            break;//turn into question when one quest is complete, might need to change later since we might have just one quest active at a time
+        //        }
+        //        else if(!QuestLog.QuestLogInstance.HasQuest(quest)){
+        //            iconRenderer.sprite = exclamationIconSprite;
+        //        }
+        //        else if(!quest.IsComplete && QuestLog.QuestLogInstance.HasQuest(quest))
+        //        {
+        //            iconRenderer.sprite = questionIconGraySprite;
+        //        }
+        //    }
+        //}
+    }
+
     public void TestAddQuest()
     {
         //testing
         Quest testQuest = new Quest();
         testQuest.Title = "Test Quest";
         testLog.AddQuest(testQuest);
+        Debug.Log("quest added!");
     }
     public void TestKill()
     {
         //testing
-       // testLog.selectedQuest.KillingGoals[0].CurrentAmount++;
+        // testLog.selectedQuest.KillingGoals[0].CurrentAmount++;
     }
 
 

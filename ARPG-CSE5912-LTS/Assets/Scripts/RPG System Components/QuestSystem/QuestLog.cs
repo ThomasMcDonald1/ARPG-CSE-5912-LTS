@@ -5,26 +5,42 @@ using ARPG.Combat;
 
 public class QuestLog : MonoBehaviour
 {
-    public GameObject npcUI;//used to disable npc ui when quest log window is open, temp solution?
-    public GameObject questWindow;//QuestLog object
+    [SerializeField] private GameObject npcUI;//to disable npc ui
     [SerializeField]private GameObject questPrefab;
     [SerializeField] private Transform questArea;//game object in hierarchy that has children that are quests
     private Quest selectedQuest;//quest player had clicked on
     [SerializeField] private TextMeshProUGUI questDescription;
+    [SerializeField] private CanvasGroup canvasGroup;//for making window invisible
+    [SerializeField] private GameplayStateController gameplayStateController;//entering exiting states? temp solution?
+
 
     private void OnEnable()
     {
         Enemy.EnemyKillExpEvent += OnEnemyKilled;
     }
-    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)//e.info.Item
+    private void OnDisable()
     {
-
+        Enemy.EnemyKillExpEvent -= OnEnemyKilled;
     }
+
 
     //List of Quests & QuestScripts, questscripts have references of their quest, vise versa
     private List<QuestScript> questScripts = new List<QuestScript>();
     private List<Quest> quests = new List<Quest>();
 
+    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)
+    {
+        //Loops through everykilling goal of every quest in the quest log, and updates info such as kill count
+        foreach (Quest quest in quests)
+        {
+
+            foreach (KillingGoal killingGoal in quest.KillingGoals)
+            {
+
+                killingGoal.UpdateKillCount(e.info.Item2);
+            }
+        }
+    }
 
     private static QuestLog questLogInstance;//singleton pattern
 
@@ -32,9 +48,6 @@ public class QuestLog : MonoBehaviour
     {
         get
         {
-            //if(questLogInstance == null){
-            //    questLogInstance = GameObject.FindObjectOfType<QuestLog>();//Only have one questlog, should be fine to do this
-            //}
             return questLogInstance;//wont be null because it will be assigned during awake
         }
     }
@@ -46,31 +59,25 @@ public class QuestLog : MonoBehaviour
     }
     public void OpenQuestWindow()
     {
-        questWindow.SetActive(true);//temp solution?
-        npcUI.SetActive(false);//temp solution?
-        //change to questlog state or character panel state?
+        Time.timeScale = 0;
+        npcUI.SetActive(false);
+        canvasGroup.alpha = 1f; 
+        canvasGroup.blocksRaycasts = true; 
+        ////change to questlog state or character panel state?
     }
     public void CloseQuestWindow()
     {
-        questWindow.SetActive(false);//temp solution?
-        npcUI.SetActive(true);//temp solution?
-        //change to gameplay state?
-        /*To Do: return to the game play state*/
+        Time.timeScale = 1;
+        npcUI.SetActive(true);
+        canvasGroup.alpha = 0f; //this makes everything transparent
+        canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
+        ////change to gameplay state?
+        ///*To Do: return to the game play state*/
 
 
     }
     public void AddQuest(Quest quest)
     {
-        //implement later, basically subscrube to kill event, and when event occurs, update kill count
-        //foreach(KillingGoal killingGoal in quest.KillingGoals)
-        //{
-        //    //kill confirmed event?
-        //    //update kill count 
-
-        //}
-
-        //quests.Add(quest); orignal placement of code, maybe delete later
-       
         GameObject questGameObject = Instantiate(questPrefab, questArea);// Instantiating quest in the game world
         QuestScript questScript = questGameObject.GetComponent<QuestScript>();//quest prefab will originally have QuestScript attached
         questScript.QuestReference = quest;//quest script now has reference to original quest
@@ -80,8 +87,6 @@ public class QuestLog : MonoBehaviour
         //add quest and questscript to lists
         questScripts.Add(questScript);
         quests.Add(quest);
-
-
     }
 
     //will be called when kill event happens
@@ -122,6 +127,7 @@ public class QuestLog : MonoBehaviour
     }
     public bool HasQuest(Quest quest) 
     {
+        //maybe need to edit later? since when quest is complete, COMPLETED will be added to the end
         return quests.Exists(x=>x.Title == quest.Title);//if quest exists in quest log
     }
     public void RemoveQuest(QuestScript questScript)
@@ -132,11 +138,37 @@ public class QuestLog : MonoBehaviour
         questDescription.text = string.Empty;
         selectedQuest = null;//unselect quest
         //questScript.QuestReference.QuestGiverReference.UpdateQuestIcon();
-        questScript = null;
+        //questScript = null;
     }
 
 }
 
+
+//public void AddQuest(Quest quest)
+//{
+//    //implement later, basically subscrube to kill event, and when event occurs, update kill count
+//    //foreach(KillingGoal killingGoal in quest.KillingGoals)
+//    //{
+//    //kill confirmed event?
+
+//    //  killingGoal.UpdateKillCount();
+
+//    //}
+
+//    //quests.Add(quest); orignal placement of code, maybe delete later
+
+//    GameObject questGameObject = Instantiate(questPrefab, questArea);// Instantiating quest in the game world
+//    QuestScript questScript = questGameObject.GetComponent<QuestScript>();//quest prefab will originally have QuestScript attached
+//    questScript.QuestReference = quest;//quest script now has reference to original quest
+//    quest.QuestScriptReference = questScript;//quest has reference to quest script
+//    questGameObject.GetComponent<TextMeshProUGUI>().text = quest.Title;//assigned title to quest object
+
+//    //add quest and questscript to lists
+//    questScripts.Add(questScript);
+//    quests.Add(quest);
+
+
+//}
 
 //public Quest quest;
 //public TextMeshProUGUI titleText;
