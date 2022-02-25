@@ -13,27 +13,41 @@ public class PopUp : MonoBehaviour
     private void Awake()
     {
         popUpText = transform.GetComponent<TextMeshProUGUI>();
-        
     }
 
-    public void Setup(int Amount, bool isCrit, bool isDamage)
+    public void Setup(int Amount, bool isCrit, string popType)
     {
-        popUpText.text = Amount.ToString();
-        if (isDamage) //damage
+        
+        switch (popType)
         {
-            popUpText.color = new Color(0.9f, 0.2f, 0f, 1f); //red
-            popUpText.fontSize = 200;
-            if (isCrit)
-            {
-                popUpText.color = new Color(1f, 0.6f, 0f, 1f); //orange
+            case "damage":
+                popUpText.text = Amount.ToString();
+                popUpText.color = new Color(0.9f, 0.2f, 0f, 1f); //red
+                popUpText.fontSize = 200;
+                if (isCrit)
+                {
+                    popUpText.color = new Color(1f, 0.6f, 0f, 1f); //orange
+                    popUpText.fontSize = 300;
+                }
+                break;
+            case "healing":
+                popUpText.text = Amount.ToString();
+                popUpText.color = new Color(0.1f, 0.8f, 0.4f, 1f); //green
+                popUpText.fontSize = 200;
+                if (isCrit)
+                {
+                    popUpText.fontSize = 300;
+                }
+                break;
+            case "missing":
+                popUpText.text = "MISS";
+                popUpText.color = new Color(1f, 0.9f, 0f, 1f); //yellow
                 popUpText.fontSize = 300;
-            }
+                break;
+            default:
+                break;
         }
-        else //heal
-        {
-            popUpText.color = new Color(0.1f, 0.8f, 0.4f, 1f); //green
-            popUpText.fontSize = 200;
-        }
+    
         textColor = popUpText.color;
         disappearTimer = 1f;
         disappearSpeed = 2f;
