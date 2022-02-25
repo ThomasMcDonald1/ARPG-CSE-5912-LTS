@@ -12,21 +12,30 @@ public class QuestScript : MonoBehaviour
     public void SelectQuest()
     {
         Debug.Log("Quest clicked on!");
-        GetComponent<TextMeshProUGUI>().color = Color.yellow;
+        if (!isMarkedComplete)
+        {
+            GetComponent<TextMeshProUGUI>().color = Color.yellow;
+        }
         QuestLog.QuestLogInstance.ShowQuestDescription(QuestReference);
     }
 
     public void UnselectQuest()
     {
-        GetComponent<TextMeshProUGUI>().color = Color.white;
+        if (!isMarkedComplete)
+        {
+            GetComponent<TextMeshProUGUI>().color = Color.white;
+        }
 
     }
+
+    //mark quest as complete if complete, called when quest log checks quest completeness
     public void IsComplete()
     {
         if (QuestReference.IsComplete && !isMarkedComplete)
         {
             isMarkedComplete = true;
             GetComponent<TextMeshProUGUI>().text += " COMPLETE";
+            GetComponent<TextMeshProUGUI>().color = Color.grey;
         }
         else if (!QuestReference.IsComplete)
         {
