@@ -6,6 +6,7 @@ public class AbilityCooldown : MonoBehaviour
 {
     public float abilityCooldown;
     ActionBar actionBar;
+    Coroutine cooldownRoutine;
 
     private void Awake()
     {
@@ -15,11 +16,13 @@ public class AbilityCooldown : MonoBehaviour
     private void OnEnable()
     {
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCastWasCompleted;
+        InstantCastType.AbilityInstantCastWasCompletedEvent += OnCastWasCompleted;
     }
 
     void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        CooldownAbilityOnActionButtons(e.info);
+        if (e.info.ability.gameObject == GetComponentInParent<Ability>().gameObject)
+            CooldownAbilityOnActionButtons(e.info);
     }
 
     public void CooldownAbilityOnActionButtons(AbilityCast abilityCast)
@@ -30,7 +33,8 @@ public class AbilityCooldown : MonoBehaviour
             {
                 actionButton.cooldownTimer = abilityCooldown;
                 actionButton.cooldownText.gameObject.SetActive(true);
-                StartCoroutine(CooldownAbility(actionButton));
+                if (cooldownRoutine == null)
+                    cooldownRoutine = StartCoroutine(CooldownAbility(actionButton));
             }
         }
     }
@@ -47,5 +51,6 @@ public class AbilityCooldown : MonoBehaviour
         }
         actionButton.cooldownText.gameObject.SetActive(false);
         actionButton.abilityInSlotOnCooldown = false;
+        cooldownRoutine = null;
     }
 }

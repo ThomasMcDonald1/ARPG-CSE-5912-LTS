@@ -5,13 +5,6 @@ using UnityEngine;
 
 public class InstantCastType : BaseCastType
 {
-    //Character character;
-
-    //private void Awake()
-    //{
-    //    character = GetComponentInParent<Character>();
-    //}
-
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
 
     public override Type GetCastType()
@@ -21,6 +14,7 @@ public class InstantCastType : BaseCastType
 
     public override void WaitCastTime(AbilityCast abilityCast)
     {
+        InstantiateVFX(abilityCast);
         CompleteCast(abilityCast);
     }
 

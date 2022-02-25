@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityRequiresCharacterUnderCursor : BaseAbilityConditional
+public class AbilityRequiresCharacterUnderCursor : MonoBehaviour
 {
 
 }
