@@ -18,6 +18,7 @@ public class AbilityCast
 
     public bool abilityRequiresCursorSelection = false;
     public bool requiresCharacterUnderCursor = false;
+    public bool abilityDoesNotTargetCaster = false;
 
     public RaycastHit hit;
 
@@ -35,5 +36,7 @@ public class AbilityCast
             abilityRequiresCursorSelection = true;
         if (this.ability.GetComponent<AbilityRequiresCharacterUnderCursor>() != null)
             requiresCharacterUnderCursor = true;
+        if (this.ability.GetComponent<AbilityDoesNotTargetCaster>() != null)
+            abilityDoesNotTargetCaster = true;
     }
 }

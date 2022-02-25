@@ -21,6 +21,7 @@ public class InstantCastType : BaseCastType
 
     public override void WaitCastTime(AbilityCast abilityCast)
     {
+        InstantiateVFX(abilityCast);
         CompleteCast(abilityCast);
     }
 
@@ -31,7 +32,7 @@ public class InstantCastType : BaseCastType
 
     protected override void CompleteCast(AbilityCast abilityCast)
     {
-       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     protected override void InstantiateVFX(AbilityCast abilityCast)
@@ -49,7 +50,7 @@ public class InstantCastType : BaseCastType
         float spawnDistance = 1;
         Vector3 spawnPos = casterPos + casterDir * spawnDistance;
         vfx.transform.position = spawnPos;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         Destroy(vfx);
     }
 }

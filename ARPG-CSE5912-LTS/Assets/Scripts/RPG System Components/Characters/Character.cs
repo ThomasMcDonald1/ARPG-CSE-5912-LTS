@@ -166,6 +166,8 @@ public abstract class Character : MonoBehaviour
     {
         BaseAbilityArea abilityArea = abilityCast.ability.GetComponent<BaseAbilityArea>();
         List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(abilityCast);
+        if (abilityCast.abilityDoesNotTargetCaster)
+            charactersCollided.Remove(abilityCast.caster);
         ApplyAbilityEffects(charactersCollided, abilityCast.ability);
     }
 
