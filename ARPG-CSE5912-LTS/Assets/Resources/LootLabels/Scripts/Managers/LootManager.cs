@@ -57,7 +57,7 @@ namespace LootLabels {
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
-        public void DropLoot(LootSource lootSource, Transform objectTransform) {
+        public void DropLoot(LootSource lootSource, Transform objectTransform, Type type) {
             int itemAmount = LootGenerator.CalculateLootAmount(lootSource);
 
             //if you want to use animations on loot, you need to put it in a empty parent object, which is located at the spawn location otherwise the position of the animation is completely wrong
@@ -85,23 +85,23 @@ namespace LootLabels {
                 lootOrigin.transform.SetParent(LootParent, true);
             }
 
-            StartCoroutine(DropLootCoroutine(lootOrigin.transform, itemAmount));
+            StartCoroutine(DropLootCoroutine(lootOrigin.transform, itemAmount, type));
         }
 
         //if you want a delay on each item that spawns, use this
-        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount) {
+        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, Type type) {
             int i = amount;
 
             while (i != 0) {
                 i--;
                 yield return new WaitForSeconds(.2f);
-                GenerateLoot(lootOrigin);
+                GenerateLoot(lootOrigin, type);
             }
         }
 
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
-        void GenerateLoot(Transform lootOrigin) {
+        void GenerateLoot(Transform lootOrigin, Type type) {
             LootTypes lootType = LootGenerator.SelectRandomLootType();
 
             switch (lootType) {
@@ -109,7 +109,7 @@ namespace LootLabels {
                     ChooseCurrency(lootOrigin);
                     break;
                 case LootTypes.Items:
-                    ChooseItemType(lootOrigin);
+                    ChooseItemType(lootOrigin, type);
                     break;
                 default:
                     Debug.Log("loottype doesn't exist");
@@ -132,12 +132,13 @@ namespace LootLabels {
         /// Choses a item type to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseItemType(Transform lootOrigin) {
-            ItemTypes itemType = LootGenerator.SelectRandomItemType();
+        void ChooseItemType(Transform lootOrigin, Type type) {
 
+            ItemTypes itemType = LootGenerator.SelectRandomItemType();
+            Debug.Log("itemType is " + itemType);
             switch (itemType) {
                 case ItemTypes.Gear:
-                    BaseGear gear = LootGenerator.CreateGear();
+                    BaseGear gear = LootGenerator.CreateGear(type);
                     Debug.Log("gear.ModelName is " + gear.ModelName);
 
                     GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;

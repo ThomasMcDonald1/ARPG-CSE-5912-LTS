@@ -10,7 +10,7 @@ namespace LootLabels {
     public class Container : InteractableObject {
         public string objectName;    //the name of the object, this name is shown in the labels
         public LootSource lootSource;   //the rarity of the source to determine loot drops
-        
+        public Type type;               //the rarity of the dropped loot
         bool chestOpened = false;   //Toggle to check if the chest has been opened yet
         
         // Use this for initialization
@@ -61,7 +61,7 @@ namespace LootLabels {
         //Wait half a second for the chest open animation to finish and then start dropping legendaries
         IEnumerator DropLootCoroutine() {
             yield return new WaitForSeconds(.5f);
-            LootManager.singleton.DropLoot(lootSource, transform);
+            LootManager.singleton.DropLoot(lootSource, transform, type);
         }
 
         #region mouse functions
