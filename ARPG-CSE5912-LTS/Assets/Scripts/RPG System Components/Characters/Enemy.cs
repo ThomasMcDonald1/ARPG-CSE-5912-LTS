@@ -26,11 +26,16 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
+
             base.Update();
             if (stats[StatTypes.HP] <= 0)
             {
+                if (GetComponent<Animator>().GetBool("Dead")== false){
+                    Dead();
+                }
                 GetComponent<Animator>().SetBool("Dead", true);
                 GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+
             }
             else
             {
@@ -55,6 +60,7 @@ namespace ARPG.Combat
 
         public  void SeePlayer()
         {
+
             if (InTargetRange()) //need set health.
             {
                 //Debug.Log("yeah");
@@ -144,10 +150,22 @@ namespace ARPG.Combat
             {
                 Debug.Log("enemy kkkkill");
                 EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
-                Destroy(gameObject);
+                StartCoroutine(Die(10));
             }
         }
+        IEnumerator Die(int seconds)
+        {
+            //Print the time of when the function is first called.
+            //Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
+            //yield on a new YieldInstruction that waits for 5 seconds.
+            yield return new WaitForSeconds(seconds);
+
+            /////After we have waited  seconds print the time again.
+            //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+            //Destroy(gameObject);
+
+        }
         public void ProduceItem()
         {
             Debug.Log("Item dropped");

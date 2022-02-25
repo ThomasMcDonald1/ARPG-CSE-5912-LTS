@@ -6,6 +6,6 @@ using UnityEngine;
 public abstract class BaseAbilityArea : MonoBehaviour
 {
     public bool abilityAreaNeedsShown = false;
-    public abstract List<Character> PerformAOECheckToGetColliders(RaycastHit hit, Character caster);
+    public abstract List<Character> PerformAOECheckToGetColliders(AbilityCast abilityCast);
     public abstract void DisplayAOEArea();
 }
