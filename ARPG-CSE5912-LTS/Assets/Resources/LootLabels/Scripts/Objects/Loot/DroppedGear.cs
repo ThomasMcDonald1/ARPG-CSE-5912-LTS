@@ -28,6 +28,7 @@ namespace LootLabels {
             //  GetComponent<EventHandler>().ClearDelegates();
             // GetComponent<EventHandler>().SubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
             Debug.Log("gear name is " + gear.ItemName);
+            Debug.Log("gear rarity is " + gear.ItemRarity);
             if (gear != null) {
                 GetComponent<CreateLabel>().SpawnLabelByRarity(gear.ItemName, gear.IconName, gear.ItemRarity);
             }
