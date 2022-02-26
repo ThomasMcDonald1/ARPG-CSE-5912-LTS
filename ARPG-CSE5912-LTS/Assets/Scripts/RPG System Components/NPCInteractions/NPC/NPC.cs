@@ -85,6 +85,16 @@ public abstract class NPC : MonoBehaviour
         isTalking = true;
     }
 
+    public void StopTrading()
+    {
+        isTrading = false;
+    }
+
+    public void StartTrading()
+    {
+        isTrading = true;
+    }
+
     public string GetName()
     {
         return this.tag;

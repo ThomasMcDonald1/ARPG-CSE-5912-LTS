@@ -16,6 +16,7 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject worldNames;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private GameObject tradeMenu;
 
     [SerializeField] Player player;
 
@@ -109,6 +110,7 @@ public class InteractionManager : MonoBehaviour
     {
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+        tradeMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
@@ -121,7 +123,11 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
+        player.NPCTarget.GetComponent<NPC>().StartTrading();
+        tradeMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
     }
 
     public void BeginDialogue()
@@ -144,9 +150,9 @@ public class InteractionManager : MonoBehaviour
         player.NPCTarget.GetComponent<NPC>().StopDialogue();
     }
 
-    public void ExitDialogueMenu()
+    public void ExitTradeMenu()
     {
-        player.NPCTarget.GetComponent<NPC>().StopDialogue();
+        player.NPCTarget.GetComponent<NPC>().StopTrading();
     }
 
     public void StopInteraction()
