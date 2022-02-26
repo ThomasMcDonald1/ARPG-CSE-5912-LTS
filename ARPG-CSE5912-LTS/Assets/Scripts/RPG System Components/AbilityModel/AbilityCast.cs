@@ -18,8 +18,11 @@ public class AbilityCast
 
     public bool abilityRequiresCursorSelection = false;
     public bool requiresCharacterUnderCursor = false;
+    public bool createsProjectileVFX;
+    public bool abilityVFXFired = false;
 
     public RaycastHit hit;
+    public List<Character> charactersAffected;
 
     public AbilityCast(Ability ability)
     {
@@ -35,5 +38,6 @@ public class AbilityCast
             abilityRequiresCursorSelection = true;
         if (this.ability.GetComponent<AbilityRequiresCharacterUnderCursor>() != null)
             requiresCharacterUnderCursor = true;
+        createsProjectileVFX = this.ability.createsProjectileVFX;
     }
 }
