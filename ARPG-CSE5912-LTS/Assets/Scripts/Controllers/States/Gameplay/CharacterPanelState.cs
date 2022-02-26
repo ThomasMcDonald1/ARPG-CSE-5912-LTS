@@ -47,7 +47,6 @@ public class CharacterPanelState : BaseGameplayState
         gameplayStateController.ChangeState<GameplayState>();
 
 
-        //characterPanel.enabled = false;
 
 
     }
