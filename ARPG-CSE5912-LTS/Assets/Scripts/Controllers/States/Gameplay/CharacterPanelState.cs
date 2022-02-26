@@ -8,7 +8,7 @@ public class CharacterPanelState : BaseGameplayState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("entered character panel state");
+        //Debug.Log("entered character panel state");
         Time.timeScale = 0;
         gameplayStateController.characterPanelCanvas.enabled = true;
         foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
