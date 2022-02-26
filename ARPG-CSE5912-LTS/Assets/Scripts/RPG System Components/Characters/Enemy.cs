@@ -99,6 +99,7 @@ namespace ARPG.Combat
                 enemy.isStopped = false;
 
                 enemy.speed = Speed;
+                Debug.Log("running to player");
                 enemy.SetDestination(AttackTarget.position);
             }
         }
@@ -122,7 +123,11 @@ namespace ARPG.Combat
         public  bool InTargetRange()
         {
             if (AttackTarget == null) return false;
-            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
+            //Debug.Log("Enemy: " +GeneralClass.transform.position);
+            //Debug.Log("Player: " + AttackTarget.position);
+            Debug.Log(Vector3.Distance(GeneralClass.transform.position, AttackTarget.position));
+
+            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < Range;
         }
         public  bool InStopRange()
         {

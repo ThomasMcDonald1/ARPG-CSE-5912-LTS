@@ -9,20 +9,20 @@ namespace ARPG.Combat
     {
 
 
-        //protected override void Start()
-        //{
-        //  base.Start();
-        //    AttackRange = 13.0f;
-        //    Range = 20.0f;
+        protected override void Start()
+        {
+          base.Start();
+            AttackRange = 13.0f;
+            Range = 20000f;
         //    //optimized body range
-        //    BodyRange = 2f;
-        //    SightRange = 90f;
-        //    Speed = 2f;
+            BodyRange = 2f;
+            SightRange = 90f;
+            Speed = 2f;
 
 
 
 
-        //}
+        }
 
         //protected override void Update()
         //{
