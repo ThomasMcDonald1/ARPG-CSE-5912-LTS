@@ -83,24 +83,28 @@ public abstract class BaseAbilityEffect : MonoBehaviour
 
     public void InstantiateEffectVFX(AbilityCast abilityCast, Character target)
     {
-        Debug.Log("Creating Effect VFX");
-        GameObject instance = Instantiate(effectVFXObj);
-        Vector3 vfxPos = GetEffectOrigin(abilityCast, target);
-        instance.transform.position = vfxPos;
-
-        ParticleSystem pS = instance.GetComponent<ParticleSystem>();
-        SpecifyAbilityArea aa = abilityCast.ability.GetComponent<SpecifyAbilityArea>();
-        PointBlankAbilityArea pbaoe = abilityCast.ability.GetComponent<PointBlankAbilityArea>();
-
-        if (aa != null)
+        if (effectOrigin.ToLower() != "target" && !abilityCast.abilityVFXFired || effectOrigin.ToLower() == "target")
         {
-            instance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
-        }
-        else if (pbaoe != null)
-        {
-            instance.transform.localScale = new Vector3(pbaoe.aoeRadius * 2, 2f, pbaoe.aoeRadius * 2);
-        }
-        StartCoroutine(ShowVFX(pS, instance));
+            abilityCast.abilityVFXFired = true;
+            Debug.Log("Creating Effect VFX");
+            GameObject instance = Instantiate(effectVFXObj);
+            Vector3 vfxPos = GetEffectOrigin(abilityCast, target);
+            instance.transform.position = vfxPos;
+
+            ParticleSystem pS = instance.GetComponent<ParticleSystem>();
+            SpecifyAbilityArea aa = abilityCast.ability.GetComponent<SpecifyAbilityArea>();
+            PointBlankAbilityArea pbaoe = abilityCast.ability.GetComponent<PointBlankAbilityArea>();
+
+            if (aa != null)
+            {
+                instance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
+            }
+            else if (pbaoe != null)
+            {
+                instance.transform.localScale = new Vector3(pbaoe.aoeRadius * 2, 2f, pbaoe.aoeRadius * 2);
+            }
+            StartCoroutine(ShowVFX(pS, instance));
+        }  
     }
 
     private IEnumerator ShowVFX(ParticleSystem pS, GameObject instance)

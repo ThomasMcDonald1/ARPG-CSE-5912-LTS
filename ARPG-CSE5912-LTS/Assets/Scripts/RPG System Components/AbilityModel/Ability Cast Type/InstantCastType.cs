@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InstantCastType : BaseCastType
 {
+    Coroutine instantCastRoutine;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
 
     public override Type GetCastType()
@@ -14,7 +15,10 @@ public class InstantCastType : BaseCastType
 
     public override void WaitCastTime(AbilityCast abilityCast)
     {
-        CompleteCast(abilityCast);
+        if (instantCastRoutine == null)
+        {
+            instantCastRoutine = StartCoroutine(InstantCastCoroutine(abilityCast));
+        }
     }
 
     public override void StopCasting()
@@ -30,5 +34,12 @@ public class InstantCastType : BaseCastType
     protected override void InstantiateSpellcastVFX(AbilityCast abilityCast)
     {
 
+    }
+
+    private IEnumerator InstantCastCoroutine(AbilityCast abilityCast)
+    {
+        yield return new WaitForEndOfFrame();
+        CompleteCast(abilityCast);
+        instantCastRoutine = null;
     }
 }

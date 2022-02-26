@@ -40,7 +40,7 @@ public class PlayerAbilityController : Player
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        //Debug.Log("Cast was completed");
+        Debug.Log("Cast was completed");
         DeductCastingCost(e.info);
         GetColliders(e.info);
     }
@@ -84,10 +84,11 @@ public class PlayerAbilityController : Player
                 {
                     playerInSingleTargetAbilitySelectionMode = false;
                     cursorChanger.ChangeCursorToDefaultGraphic();
-                    Debug.Log("Clicked on: " + target.name + " as ability selection target.");
+                    abilityCast.hit = hit;
                     bool targetInRange = CheckCharacterInRange(target);
                     if (!targetInRange)
                     {
+                        Debug.Log("Not in range");
                         PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
                     }
                 }

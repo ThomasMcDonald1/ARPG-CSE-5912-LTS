@@ -210,7 +210,10 @@ public class Player : Character
         Debug.Log("Item or experience off");
     }
 
-
+    public override Type GetCharacterType()
+    {
+        return typeof(Player);
+    }
 }
 
 

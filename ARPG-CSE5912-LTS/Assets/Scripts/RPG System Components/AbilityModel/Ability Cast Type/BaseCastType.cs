@@ -35,7 +35,6 @@ public abstract class BaseCastType : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (GetComponentInParent<Ability>() == e.info.ability && GetComponentInParent<Character>() == e.info.caster)
-            e.info.castType.WaitCastTime(e.info);
+        e.info.castType.WaitCastTime(e.info);
     }
 }

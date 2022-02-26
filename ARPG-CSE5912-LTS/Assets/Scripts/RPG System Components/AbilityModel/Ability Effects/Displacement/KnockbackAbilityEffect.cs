@@ -25,10 +25,7 @@ public class KnockbackAbilityEffect : BaseAbilityEffect
         if (rb != null && agent != null)
         {
             rb.isKinematic = false;
-            //agent.updatePosition = false;
-            //agent.updateRotation = false;
             agent.enabled = false;
-            Debug.Log("Enemy is kinematic? " + rb.isKinematic);
             rb.velocity = destination * (5 / knockbackXZDisplacement) + velocityY;
             StartCoroutine(WaitForLanding(rb, agent));
         }
@@ -49,8 +46,6 @@ public class KnockbackAbilityEffect : BaseAbilityEffect
             }
             yield return null;
         }
-        //agent.updatePosition = true;
-        //agent.updateRotation = true;
         agent.enabled = true;
         rb.isKinematic = true;
         Debug.Log("Enemy is kinematic? " + rb.isKinematic);

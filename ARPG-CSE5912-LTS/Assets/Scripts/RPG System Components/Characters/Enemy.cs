@@ -170,5 +170,10 @@ namespace ARPG.Combat
         {
             Debug.Log("Item dropped");
         }
+
+        public override Type GetCharacterType()
+        {
+            return typeof(Enemy);
+        }
     }
 }
