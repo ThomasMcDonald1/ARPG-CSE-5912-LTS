@@ -17,7 +17,6 @@ public abstract class Character : MonoBehaviour
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
-
     [HideInInspector] public Stats stats;
 
     [HideInInspector] public float smooth;
@@ -164,15 +163,15 @@ public abstract class Character : MonoBehaviour
 
     public void GetColliders(AbilityCast abilityCast)
     {
-        BaseAbilityArea abilityArea = abilityCast.ability.GetComponent<BaseAbilityArea>();
-        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(abilityCast);
-        ApplyAbilityEffects(charactersCollided, abilityCast.ability);
+        List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
+        ApplyAbilityEffects(charactersCollided, abilityCast);
     }
 
-    void ApplyAbilityEffects(List<Character> targets, Ability ability)
+    void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
     {
+        Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
-        BaseAbilityEffect[] effects = ability.GetComponentsInChildren<BaseAbilityEffect>();
+        BaseAbilityEffect[] effects = abilityCast.ability.GetComponentsInChildren<BaseAbilityEffect>();
         for (int i = 0; i < targets.Count; i++)
         {
             for (int j = 0; j < effects.Length; j++)
@@ -182,7 +181,7 @@ public abstract class Character : MonoBehaviour
                 if (specialTargeter.IsTarget(targets[i]))
                 {
                     //Debug.Log("Applying ability effects to " + targets[i].name);
-                    effect.Apply(targets[i]);
+                    effect.Apply(targets[i], abilityCast);
                 }
             }
         }

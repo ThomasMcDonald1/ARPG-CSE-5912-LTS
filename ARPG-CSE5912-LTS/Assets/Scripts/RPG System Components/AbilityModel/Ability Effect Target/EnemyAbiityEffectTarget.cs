@@ -9,6 +9,8 @@ public class EnemyAbiityEffectTarget : AbilityEffectTarget
     {
         if (character == null)
             return false;
-        return character.GetComponent<Enemy>() != null; 
+        Stats stats = character.GetComponent<Stats>();
+
+        return character.GetComponent<Enemy>() != null && stats != null && stats[StatTypes.HP] > 0;
     }
 }

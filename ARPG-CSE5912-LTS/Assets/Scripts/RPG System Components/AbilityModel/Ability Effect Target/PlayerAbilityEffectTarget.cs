@@ -8,6 +8,8 @@ public class PlayerAbilityEffectTarget : AbilityEffectTarget
     {
         if (character == null)
             return false;
-        return character.GetComponent<Player>() != null;
+        Stats stats = character.GetComponent<Stats>();
+
+        return character.GetComponent<Player>() != null && stats != null && stats[StatTypes.HP] > 0; 
     }
 }

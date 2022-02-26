@@ -30,7 +30,7 @@ public class Player : Character
 
     void Awake()
     {
-        Debug.Log(stats);
+        //Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
        // inventory = new Inventory();
        // uiInventory.SetInventory(inventory);

@@ -10,31 +10,32 @@ public class DamageAbilityEffect : BaseAbilityEffect
 
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> AbilityDamageReceivedEvent;
 
-    protected override int OnApply(Character target)
+    protected override int OnApply(Character target, AbilityCast abilityCast)
     {
-        Character caster = GetComponentInParent<Character>();
-        BaseAbilityPower power = GetComponentInParent<BaseAbilityPower>();
+        if (effectVFXObj != null)
+            InstantiateEffectVFX(abilityCast, target);
+
         bool wasCrit = false;
 
         int baseDamageScaler = 3; //smaller numbers result in bigger final damage
         float casterLevel = GetStat(target, StatTypes.LVL);
-        float baseDamage = power.baseDamageOrHealing;
+        float baseDamage = abilityCast.abilityPower.baseDamageOrHealing;
 
         //Calculate the caster's total attack damage pre-mitigation
         float damage = (baseDamage * casterLevel + baseDamage / casterLevel) / (baseDamageScaler + (casterLevel * 0.01f));
         //Debug.Log("initial damage: " + damage);
         //Get armor pen values from caster
         //float casterFlatArmorPen = GetStat(caster, StatTypes.FlatArmorPen);
-        float casterPercentArmorPen = GetStat(caster, StatTypes.PercentArmorPen);
+        float casterPercentArmorPen = GetStat(abilityCast.caster, StatTypes.PercentArmorPen);
         //Get magic pen values from caster
-        float casterFlatMagicPen = GetStat(caster, StatTypes.FlatMagicPen);
-        float casterPercentMagicPen = GetStat(caster, StatTypes.PercentMagicPen);
+        float casterFlatMagicPen = GetStat(abilityCast.caster, StatTypes.FlatMagicPen);
+        float casterPercentMagicPen = GetStat(abilityCast.caster, StatTypes.PercentMagicPen);
         float finalDamageWithPen = 0;
         //Calculate the enemy's defense pre-penetration
         float enemyDefense = 0;
 
         //If this ability effect is physical damage
-        if (power.IsPhysicalPower())
+        if (abilityCast.abilityPower.IsPhysicalPower())
         {
             //Debug.Log("Physical power");
             enemyDefense = GetStat(target, StatTypes.Armor);
@@ -49,7 +50,7 @@ public class DamageAbilityEffect : BaseAbilityEffect
             enemyDefense *= (1 - casterPercentArmorPen);
         }
         //If this ability effect is magical damage
-        else if (power.IsMagicPower())
+        else if (abilityCast.abilityPower.IsMagicPower())
         {
             //Debug.Log("Magical power");
             BaseAbilityEffectElement effectElement = GetComponent<BaseAbilityEffectElement>();
@@ -68,11 +69,11 @@ public class DamageAbilityEffect : BaseAbilityEffect
         }
 
         //Calculate the final damage the caster would do post-penetration
-        if (power.IsPhysicalPower())
+        if (abilityCast.abilityPower.IsPhysicalPower())
         {
             finalDamageWithPen = damage * (120 / (120 + enemyDefense));
         }
-        else if (power.IsMagicPower())
+        else if (abilityCast.abilityPower.IsMagicPower())
         {
             finalDamageWithPen = damage * (120 / (120 + enemyDefense));
         }
@@ -84,10 +85,10 @@ public class DamageAbilityEffect : BaseAbilityEffect
         finalDamageWithPen = UnityEngine.Random.Range(damageRandomFloor, damageRandomCeiling);
         //Debug.Log("damage with randomization: " + finalDamageWithPen);
 
-        wasCrit = RollForCrit(caster);
+        wasCrit = RollForCrit(abilityCast.caster);
         if (wasCrit)
         {
-            float critDamagePercent = (200 + caster.stats[StatTypes.CritDamage]) * 0.01f;
+            float critDamagePercent = (200 + abilityCast.caster.stats[StatTypes.CritDamage]) * 0.01f;
             finalDamageWithPen *= critDamagePercent;
         }
 
