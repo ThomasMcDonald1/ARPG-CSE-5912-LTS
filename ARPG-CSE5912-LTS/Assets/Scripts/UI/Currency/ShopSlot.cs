@@ -14,10 +14,16 @@ public class ShopSlot : MonoBehaviour
     [SerializeField] PlayerMoney playerMoney;
     Ite item;
     //Inventory inventory;
+    private void Start()
+    {
+        Debug.Log("Run Shop Slot Start()!");
+    }
     private void Update()
     {
+        Debug.Log("Run Shop Slot update!");
         if (icon.IsActive())
         {
+            
             if (playerMoney.money - item.cost < 0)
             {
                 purchaseButton.interactable = false;

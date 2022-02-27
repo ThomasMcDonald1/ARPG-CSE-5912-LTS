@@ -26,7 +26,11 @@ public class UI_shop : MonoBehaviour
 
         }
     }
-   
-  
+    private void Update()
+    {
+        Debug.Log("Run Shop UI update!");
+    }
+
+
 }
   
