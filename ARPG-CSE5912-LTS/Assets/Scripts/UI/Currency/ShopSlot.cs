@@ -17,8 +17,7 @@ public class ShopSlot : MonoBehaviour
     
     public void InitializeSlot(Ite newItem)
     {
-        //inventory = Inventory.instance;
-        //StopAllCoroutines();
+       
         item = newItem;
         icon.gameObject.SetActive(true);
         cost.gameObject.SetActive(true);

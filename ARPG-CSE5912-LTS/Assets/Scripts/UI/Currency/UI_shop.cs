@@ -4,17 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_shop : MonoBehaviour
+public class UI_shop:MonoBehaviour
 {
     public Transform ShopSlots;
-    public Shop shop;
-    ShopSlot[] shopSlots;
+
     public static UI_shop instance;
+    ShopSlot[] shopSlots;
+    // public static UI_shop instance;
     private void Awake()
+    {
+        shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
+
+    }
+    public void initializeShop(Shop shop)
     {
         
         Ite[] itemList = shop.itemList;
-        shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
        
    
        

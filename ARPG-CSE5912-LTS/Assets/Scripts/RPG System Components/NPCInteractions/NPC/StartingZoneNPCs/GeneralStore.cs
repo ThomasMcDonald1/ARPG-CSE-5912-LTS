@@ -26,7 +26,9 @@ public class GeneralStore : NPC
     {
 
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
-        UI_shop.instance.shop = shop;
+        Debug.Log("Print this before initilize shop");
+        UI_shop.instance.initializeShop(shop);
+        Debug.Log("Print this after initilize shop");
         while (Interactable())
         {
             child.transform.rotation = Quaternion.RotateTowards(child.transform.rotation, rotate, 50f * Time.deltaTime);
