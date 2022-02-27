@@ -13,7 +13,6 @@ public class ShopSlot : MonoBehaviour
     public Image goldIcon;
     [SerializeField] PlayerMoney playerMoney;
     public Ite item;
-    //Inventory inventory;
     
     public void InitializeSlot(Ite newItem)
     {

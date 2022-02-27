@@ -5,7 +5,8 @@ using UnityEngine;
 public class Blacksmith : NPC
 {
     [Header("Ink JSON")]
-    [SerializeField]
+    [SerializeField] public Shop shop;
+    [SerializeField] public UI_shop shopUI;
     private List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -24,6 +25,7 @@ public class Blacksmith : NPC
     protected override IEnumerator BeginInteraction()
     {
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
+        shopUI.initializeShop(shop);
 
         while (Interactable())
         {
