@@ -34,6 +34,8 @@ public class Blacksmith : NPC
             SetMenu();
             yield return null;
         }
+        shopUI.resetShop();
+
         InteractionManager.GetInstance().StopInteraction();
         InteractionManager.GetInstance().DisableInteractionView();
     }

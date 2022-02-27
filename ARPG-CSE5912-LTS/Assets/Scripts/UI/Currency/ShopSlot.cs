@@ -6,19 +6,21 @@ using UnityEngine.UI;
 using TMPro;
 public class ShopSlot : MonoBehaviour
 {
-    public Image icon;
+    public Image icon, frame;
     public TextMeshProUGUI cost;
     public TextMeshProUGUI itemName;
     public Button purchaseButton;
     public Image goldIcon;
     [SerializeField] PlayerMoney playerMoney;
     public Ite item;
+
     
     public void InitializeSlot(Ite newItem)
     {
        
         item = newItem;
         icon.gameObject.SetActive(true);
+        frame.gameObject.SetActive(true);
         cost.gameObject.SetActive(true);
         itemName.gameObject.SetActive(true);
         purchaseButton.gameObject.SetActive(true);
@@ -50,6 +52,15 @@ public class ShopSlot : MonoBehaviour
         }
        
 
+    }
+    public void resetSlot()
+    {
+        icon.gameObject.SetActive(false);
+        frame.gameObject.SetActive(false);
+        cost.gameObject.SetActive(false);
+        itemName.gameObject.SetActive(false);
+        purchaseButton.gameObject.SetActive(false);
+        goldIcon.gameObject.SetActive(false);
     }
 
 }

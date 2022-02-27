@@ -10,6 +10,7 @@ public class UI_shop:MonoBehaviour
 
     public static UI_shop instance;
     ShopSlot[] shopSlots;
+    private int shopSlotLength =0;
     // public static UI_shop instance;
     private void Awake()
     {
@@ -20,15 +21,21 @@ public class UI_shop:MonoBehaviour
     {
         
         Ite[] itemList = shop.itemList;
-       
-   
-       
-        
-        //shopItemTemplate.gameObject.SetActive(false);
+
+        shopSlotLength = itemList.Length;
+
+
         for (int i = 0; i < itemList.Length; i++)
         {
-            Debug.Log("shopSlots length: "+shopSlots.Length);
             shopSlots[i].InitializeSlot(itemList[i]);
+
+        }
+    }
+    public void resetShop()
+    {
+        for (int i = 0; i < shopSlotLength; i++)
+        {
+            shopSlots[i].resetSlot();
 
         }
     }

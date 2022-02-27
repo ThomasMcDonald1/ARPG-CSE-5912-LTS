@@ -38,6 +38,7 @@ public class GeneralStore : NPC
             yield return null;
         }
         InteractionManager.GetInstance().StopInteraction();
+        shopUI.resetShop();
         InteractionManager.GetInstance().DisableInteractionView();
     }
 
