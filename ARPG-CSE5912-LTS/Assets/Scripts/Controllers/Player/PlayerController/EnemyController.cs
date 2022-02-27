@@ -25,7 +25,16 @@ namespace ARPG.Core
 
         private void Start()
         {
-            classTypeName = "EnemyKnight";
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyKnight")
+            {
+                classTypeName = "EnemyKnight";
+
+            }
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EliteWarrior")
+            {
+                classTypeName = "EliteWarrior";
+
+            }
             weaponTypeName = "Unarmed";
             target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
             enemyClass = AttachClassScript();
@@ -41,6 +50,10 @@ namespace ARPG.Core
                 case "EnemyKnight":
                     this.gameObject.AddComponent<EnemyKnight>();
                     enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+                    break;
+                case "EliteWarrior":
+                    this.gameObject.AddComponent<EliteWarrior>();
+                    enemyClass = this.gameObject.GetComponent<EliteWarrior>();
                     break;
                 default:
                     enemyClass = null;

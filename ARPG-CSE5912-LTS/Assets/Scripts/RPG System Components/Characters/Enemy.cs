@@ -9,19 +9,20 @@ namespace ARPG.Combat
     public abstract class Enemy : Character
     {
         private GameObject GeneralClass;
-        public NavMeshAgent enemy;
+        //public NavMeshAgent enemy;
 
         public virtual float AttackRange { get; set; }
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
         public virtual float SightRange { get; set; }
-        public virtual float Speed { get; set; }
+        protected virtual float Speed { get; set; }
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
         protected override void Start()
         {
             base.Start();
+            agent.speed = Speed;
             GeneralClass = GameObject.Find("EnemyClass");
         }
         protected override void Update()
@@ -43,8 +44,8 @@ namespace ARPG.Combat
             }
             if (AttackTarget != null)
             {
-                Vector3 realDirection = GeneralClass.transform.forward;
-                Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
+                Vector3 realDirection = transform.forward;
+                Vector3 direction = AttackTarget.position - transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
                 if (angle < SightRange && InStopRange())
                 {
@@ -64,8 +65,8 @@ namespace ARPG.Combat
             if (InTargetRange()) //need set health.
             {
                 //Debug.Log("yeah");
-                Vector3 realDirection = GeneralClass.transform.forward;
-                Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
+                Vector3 realDirection = transform.forward;
+                Vector3 direction = AttackTarget.position -transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
                 if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
                 {
@@ -96,17 +97,18 @@ namespace ARPG.Combat
         {
             if (InTargetRange())
             {
-                enemy.isStopped = false;
+                //Debug.Log(enemy);
+                agent.isStopped = false;
 
-                enemy.speed = Speed;
+                agent.speed = Speed;
                 Debug.Log("running to player");
-                enemy.SetDestination(AttackTarget.position);
+                agent.SetDestination(AttackTarget.position);
             }
         }
 
         public void StopRun()
         {
-            enemy.isStopped = true;
+            agent.isStopped = true;
         }
 
         public virtual float CurrentEnemyHealth { get; set; }
@@ -125,14 +127,14 @@ namespace ARPG.Combat
             if (AttackTarget == null) return false;
             //Debug.Log("Enemy: " +GeneralClass.transform.position);
             //Debug.Log("Player: " + AttackTarget.position);
-            Debug.Log(Vector3.Distance(GeneralClass.transform.position, AttackTarget.position));
+            Debug.Log(Vector3.Distance(this.transform.position, AttackTarget.position));
 
-            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < Range;
+            return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
         public  bool InStopRange()
         {
             if (AttackTarget == null) return false;
-            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < BodyRange;
+            return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
         }
         public void Hit()
         {

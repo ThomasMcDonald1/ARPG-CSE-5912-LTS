@@ -13,7 +13,7 @@ namespace ARPG.Combat
         {
           base.Start();
             AttackRange = 13.0f;
-            Range = 20000f;
+            Range = 20f;
         //    //optimized body range
             BodyRange = 2f;
             SightRange = 90f;
