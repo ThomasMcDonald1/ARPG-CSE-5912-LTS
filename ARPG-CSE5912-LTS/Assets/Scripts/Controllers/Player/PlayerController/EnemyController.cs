@@ -27,7 +27,7 @@ namespace ARPG.Core
         {
             classTypeName = "EnemyKnight";
             weaponTypeName = "Unarmed";
-
+            target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
             enemyClass = AttachClassScript();
 
            
