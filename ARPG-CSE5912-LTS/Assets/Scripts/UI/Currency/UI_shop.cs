@@ -7,8 +7,9 @@ using TMPro;
 public class UI_shop : MonoBehaviour
 {
     public Transform ShopSlots;
-    [SerializeField] public Shop shop;
+    public Shop shop;
     ShopSlot[] shopSlots;
+    public static UI_shop instance;
     private void Awake()
     {
         
@@ -26,11 +27,7 @@ public class UI_shop : MonoBehaviour
 
         }
     }
-    private void Update()
-    {
-        Debug.Log("Run Shop UI update!");
-    }
-
+  
 
 }
   

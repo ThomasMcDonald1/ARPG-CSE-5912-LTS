@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GeneralStore : NPC
 {
+
     [Header("Ink JSON")]
-    [SerializeField]
+    [SerializeField] public Shop shop;
     private List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -23,8 +24,9 @@ public class GeneralStore : NPC
 
     protected override IEnumerator BeginInteraction()
     {
-        Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
 
+        Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
+        UI_shop.instance.shop = shop;
         while (Interactable())
         {
             child.transform.rotation = Quaternion.RotateTowards(child.transform.rotation, rotate, 50f * Time.deltaTime);

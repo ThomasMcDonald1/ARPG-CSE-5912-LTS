@@ -17,6 +17,10 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private GameObject tradeMenu;
+    public Transform ShopSlots;
+    ShopSlot[] shopSlots;
+    [SerializeField] PlayerMoney playerMoney;
+
 
     [SerializeField] Player player;
 
@@ -27,6 +31,7 @@ public class InteractionManager : MonoBehaviour
     private static InteractionManager instance;
 
     private Coroutine displayLineCoroutine;
+  
 
     private void Update()
     {
@@ -59,6 +64,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
+        shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
         if (instance != null)
         {
             Debug.LogWarning("More than 1 instance of the dialogue manager found...");
@@ -128,6 +134,20 @@ public class InteractionManager : MonoBehaviour
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+        foreach(ShopSlot slot in shopSlots)
+        {
+            if (slot.icon.IsActive())
+            {
+                if (playerMoney.money - slot.item.cost < 0)
+                {
+                    slot.purchaseButton.interactable = false;
+                }
+                else
+                {
+                    slot.purchaseButton.interactable = true;
+                }
+            }
+        }
     }
 
     public void BeginDialogue()

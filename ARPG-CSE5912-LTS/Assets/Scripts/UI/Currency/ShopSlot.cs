@@ -12,32 +12,13 @@ public class ShopSlot : MonoBehaviour
     public Button purchaseButton;
     public Image goldIcon;
     [SerializeField] PlayerMoney playerMoney;
-    Ite item;
+    public Ite item;
     //Inventory inventory;
-    private void Start()
-    {
-        Debug.Log("Run Shop Slot Start()!");
-    }
-    private void Update()
-    {
-        Debug.Log("Run Shop Slot update!");
-        if (icon.IsActive())
-        {
-            
-            if (playerMoney.money - item.cost < 0)
-            {
-                purchaseButton.interactable = false;
-            }
-            else
-            {
-                purchaseButton.interactable = true;
-            }
-        }
-       
-    }
+    
     public void InitializeSlot(Ite newItem)
     {
         //inventory = Inventory.instance;
+        //StopAllCoroutines();
         item = newItem;
         icon.gameObject.SetActive(true);
         cost.gameObject.SetActive(true);
