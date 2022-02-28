@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class LoadingStateController : StateMachine
 {
-    public GameObject loadingSceneCanvasObj;
-    public Slider progressBar;
+    public static LoadingStateController Instance;
+    // public GameObject loadingSceneCanvasObj;
+    // public Slider progressBar;
     public bool loadScene = true;
     public string sceneToLoad;
     public Text percentLoaded;
     public Texture[] images;
-    public RawImage backgroundImage;
+    // public RawImage backgroundImage;
     public float height = 250.0f;
     public float width = 0.0f;
 
@@ -20,22 +21,24 @@ public class LoadingStateController : StateMachine
 
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
-
     void Update()
     {
-        
-
-        if (loadScene == true)
-        {
-            loadScene = false;
-            StartCoroutine(loadImage());
-            StartCoroutine(LoadYourAsyncScene());
-        }
+        // if (loadScene == true)
+        // {
+        //     loadScene = false;
+        //     StartCoroutine(loadImage());
+        //     StartCoroutine(LoadYourAsyncScene());
+        // }
     }
 
-    IEnumerator LoadYourAsyncScene()
+    public void LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0);
+        var scene = SceneManager.LoadSceneAsync(sceneName);
+        Debug.Log("Loadignasdfiajiwejioajweiosrjsio");
+    }
+    public IEnumerator LoadYourAsyncScene(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         asyncLoad.allowSceneActivation = false;
         bool checkTime = true;
@@ -43,7 +46,7 @@ public class LoadingStateController : StateMachine
         while (!asyncLoad.isDone)
         {
             progressValue = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            progressBar.value = progressValue;
+            // progressBar.value = progressValue;
             //Debug.Log(asyncLoad.progress);
             percentLoaded.text = Mathf.Round(progressValue * 100) + "%";
 
@@ -59,7 +62,7 @@ public class LoadingStateController : StateMachine
                     clickSpace = false;
                     asyncLoad.allowSceneActivation = true;
                 }
-                
+
             }
             yield return null;
         }
@@ -71,11 +74,11 @@ public class LoadingStateController : StateMachine
         int i = 0;
         while (clickSpace)
         {
-            backgroundImage.texture = images[i];
+            // backgroundImage.texture = images[i];
             width = (height / (float)images[i].height) * (float)images[i].width;
-            var rectTrans = backgroundImage.GetComponent<RectTransform>();
+            // var rectTrans = backgroundImage.GetComponent<RectTransform>();
 
-            rectTrans.sizeDelta = new Vector2(width, height);
+            // rectTrans.sizeDelta = new Vector2(width, height);
             i = (i + 1) % images.Length;
             yield return new WaitForSeconds(1);
         }
@@ -84,12 +87,23 @@ public class LoadingStateController : StateMachine
 
     private void Awake()
     {
-        loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
-        loadingSceneCanvas.enabled = true;
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
+        // loadingSceneCanvas.enabled = true;
         ChangeState<LoadingState>();
 
-        backgroundImage.texture = images[1];
-        
-        
+        // backgroundImage.texture = images[1];
+
+
     }
 }

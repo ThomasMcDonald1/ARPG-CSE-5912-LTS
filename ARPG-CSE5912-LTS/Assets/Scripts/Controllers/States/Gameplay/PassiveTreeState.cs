@@ -11,6 +11,7 @@ public class PassiveTreeState : BaseGameplayState
         Debug.Log("entered passive tree state");
         Time.timeScale = 0;
         passiveSkills = gameplayStateController.passiveTreeUI.GetComponentInChildren<PassiveTreeUI>().passiveSkills;
+        Debug.Log(passiveSkills);
         gameplayStateController.passiveTreeUI.SetActive(true);
         confirmPassiveTreeButton.onClick.AddListener(() => OnConfirmButtonClicked());
         closePassiveTreeButton.onClick.AddListener(() => OnCloseButtonClicked());
