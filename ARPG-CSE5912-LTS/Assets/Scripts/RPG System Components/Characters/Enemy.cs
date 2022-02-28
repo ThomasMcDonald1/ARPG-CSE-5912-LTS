@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace ARPG.Combat
 {
@@ -22,7 +23,7 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-            agent.speed = Speed;
+            //agent.speed = Speed;
             GeneralClass = GameObject.Find("EnemyClass");
         }
         protected override void Update()
@@ -91,18 +92,37 @@ namespace ARPG.Combat
                 }
                 else
                 {
-                    StopRun();
+                    Patrol ();
                 }
             }
             else
             {
                 Patrol();
+                Debug.Log("patrolling");
             }
             //Debug.Log("okk");
         }
         private void Patrol()
         {
+            agent.isStopped = false;
 
+            agent.speed = Speed;
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            {
+                agent.SetDestination(RandomNavmeshLocation(5f));
+            }
+        }
+        public Vector3 RandomNavmeshLocation(float radius)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * radius;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+            Vector3 finalPosition = Vector3.zero;
+            if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+            {
+                finalPosition = hit.position;
+            }
+            return finalPosition;
         }
 
         public  void RunToPlayer()
@@ -136,7 +156,7 @@ namespace ARPG.Combat
         public  bool InTargetRange()
         {
             if (AttackTarget == null) return false;
-            Debug.Log(Vector3.Distance(this.transform.position, AttackTarget.position));
+            //Debug.Log(Vector3.Distance(this.transform.position, AttackTarget.position));
 
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
