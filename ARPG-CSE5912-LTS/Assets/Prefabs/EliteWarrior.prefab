@@ -67830,7 +67830,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enemy Knight
+  m_text: Elite Warrior
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 22269b5d59539f94890230e481697c60, type: 2}
   m_sharedMaterial: {fileID: -7795172502998875767, guid: 22269b5d59539f94890230e481697c60, type: 2}
@@ -68362,7 +68362,6 @@ GameObject:
   - component: {fileID: 8534128318987869683}
   - component: {fileID: 5427852407981032916}
   - component: {fileID: 1041666601985188143}
-  - component: {fileID: 8032445643845147340}
   m_Layer: 8
   m_Name: EliteWarrior
   m_TagString: Untagged
@@ -68510,27 +68509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5394380360309627795}
   lerpBar: {fileID: 362177193715197798}
---- !u!114 &8032445643845147340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8534128318987869680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d08ff6ae5c0c7ec4a82b2c6b579d6dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  abilitiesKnown: []
-  charactersInRange: []
-  gameplayStateController: {fileID: 0}
-  abilityQueued: 0
-  stats: {fileID: 0}
-  smooth: 0
-  yVelocity: 0
-  NPCInteractionRange: 0
 --- !u!1 &8534128319883724304
 GameObject:
   m_ObjectHideFlags: 0
@@ -68657,7 +68635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8534128320333911073}
   m_Layer: 8
-  m_Name: EnemyClass
+  m_Name: EliteWarrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -586,7 +586,6 @@ GameObject:
   - component: {fileID: 8032445643060167865}
   - component: {fileID: 8032445643060167866}
   - component: {fileID: 8032445643060167867}
-  - component: {fileID: 8032445643060167868}
   - component: {fileID: 8032445643060167869}
   - component: {fileID: 8032445643060167871}
   - component: {fileID: 8032445643060167857}
@@ -606,7 +605,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8032445643060167858}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.965403, y: 1.792983, z: 9.655197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -664,27 +663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9e9062f88b72146a87be789c151905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8032445643060167868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8032445643060167858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1600f51fb1e1d1e4a9176f2349d2d912, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  abilitiesKnown: []
-  charactersInRange: []
-  gameplayStateController: {fileID: 0}
-  abilityQueued: 0
-  stats: {fileID: 0}
-  smooth: 0
-  yVelocity: 0
-  NPCInteractionRange: 0
 --- !u!95 &8032445643060167869
 Animator:
   serializedVersion: 3
@@ -851,7 +829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8032445643894639971}
   m_Layer: 8
-  m_Name: EnemyClass
+  m_Name: EnemyKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -27,33 +27,37 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
-
-            base.Update();
-            if (stats[StatTypes.HP] <= 0)
+            if (GetComponent<Animator>().GetBool("Dead") == false)
             {
-                if (GetComponent<Animator>().GetBool("Dead")== false){
-                    Dead();
-                }
-                GetComponent<Animator>().SetBool("Dead", true);
-                GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
-
-            }
-            else
-            {
-                SeePlayer();
-            }
-            if (AttackTarget != null)
-            {
-                Vector3 realDirection = transform.forward;
-                Vector3 direction = AttackTarget.position - transform.position;
-                float angle = Vector3.Angle(direction, realDirection);
-                if (angle < SightRange && InStopRange())
+                base.Update();
+                if (stats[StatTypes.HP] <= 0)
                 {
-                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                    rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-                    transform.eulerAngles = new Vector3(0, rotationY, 0);
+                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    {
+                        Dead();
+                        GetComponent<Animator>().SetBool("Dead", true);
+                        //get rid of enemy canvas
+                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
 
+                    }
+                }
+                else
+                {
+                    SeePlayer();
+                }
+                if (AttackTarget != null)
+                {
+                    Vector3 realDirection = transform.forward;
+                    Vector3 direction = AttackTarget.position - transform.position;
+                    float angle = Vector3.Angle(direction, realDirection);
+                    if (angle < SightRange && InStopRange())
+                    {
+                        Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                        float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                        rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                        transform.eulerAngles = new Vector3(0, rotationY, 0);
+
+                    }
                 }
             }
 
@@ -97,7 +101,6 @@ namespace ARPG.Combat
         {
             if (InTargetRange())
             {
-                //Debug.Log(enemy);
                 agent.isStopped = false;
 
                 agent.speed = Speed;
@@ -111,8 +114,8 @@ namespace ARPG.Combat
             agent.isStopped = true;
         }
 
-        public virtual float CurrentEnemyHealth { get; set; }
-        public virtual float MaxEnemyHealth { get; set; }
+        //public virtual float CurrentEnemyHealth { get; set; }
+        //public virtual float MaxEnemyHealth { get; set; }
         public void Attack(EnemyTarget target)
         {
             AttackTarget = target.transform;
@@ -125,8 +128,6 @@ namespace ARPG.Combat
         public  bool InTargetRange()
         {
             if (AttackTarget == null) return false;
-            //Debug.Log("Enemy: " +GeneralClass.transform.position);
-            //Debug.Log("Player: " + AttackTarget.position);
             Debug.Log(Vector3.Distance(this.transform.position, AttackTarget.position));
 
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
@@ -152,25 +153,14 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-            //nead a dead animation before destroy.
-            if (stats[StatTypes.HP] <= 0)
-            {
                 Debug.Log("enemy kkkkill");
                 EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
                 StartCoroutine(Die(10));
-            }
         }
         IEnumerator Die(int seconds)
         {
-            //Print the time of when the function is first called.
-            //Debug.Log("Started Coroutine at timestamp : " + Time.time);
-
-            //yield on a new YieldInstruction that waits for 5 seconds.
             yield return new WaitForSeconds(seconds);
-
-            /////After we have waited  seconds print the time again.
-            //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-            //Destroy(gameObject);
+            Destroy(gameObject);
 
         }
         public void ProduceItem()
