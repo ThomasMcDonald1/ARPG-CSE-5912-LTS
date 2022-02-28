@@ -327,7 +327,7 @@ public class GameplayState : BaseGameplayState
 
     private void OnAbilityWasCancelled(object sender, InfoEventArgs<int> e)
     {
-        Debug.Log("Actions unlocked");
+        // Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 

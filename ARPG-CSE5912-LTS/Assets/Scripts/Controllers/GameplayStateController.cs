@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameplayStateController : StateMachine
 {
+    public static GameplayStateController Instance;
     // References to things that will need to be controlled and known by the state controller go here
     public GameObject pauseMenuCanvasObj;
     public GameObject gameplayUICanvasObj;
@@ -66,6 +67,16 @@ public class GameplayStateController : StateMachine
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();
