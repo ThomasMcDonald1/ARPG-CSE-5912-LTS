@@ -15,6 +15,7 @@ namespace DunGen
         public DungeonGenerator Generator = new DungeonGenerator();
         public bool GenerateOnStart = true;
 		public GameObject Root;
+		public SaveDungeon savedDunData;
 
         protected virtual void Awake()
         {
@@ -30,6 +31,9 @@ namespace DunGen
 		{
 			if(Root != null)
 				Generator.Root = Root;
+
+			if (savedDunData != null)
+				Generator.savedDungeon = savedDunData;
 
 			if (!Generator.IsGenerating)
 				Generator.Generate();
