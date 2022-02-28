@@ -12,8 +12,8 @@ namespace ARPG.Combat
         protected override void Start()
         {
           base.Start();
-            AttackRange = 13.0f;
-            Range = 20f;
+            AttackRange = 5;
+            Range = 50f;
         //    //optimized body range
             BodyRange = 1.5f;
             SightRange = 90f;

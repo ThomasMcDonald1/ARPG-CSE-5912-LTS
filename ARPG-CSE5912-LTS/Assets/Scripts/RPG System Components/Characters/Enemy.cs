@@ -45,20 +45,20 @@ namespace ARPG.Combat
                 {
                     SeePlayer();
                 }
-                if (AttackTarget != null)
-                {
-                    Vector3 realDirection = transform.forward;
-                    Vector3 direction = AttackTarget.position - transform.position;
-                    float angle = Vector3.Angle(direction, realDirection);
-                    if (angle < SightRange && InStopRange())
-                    {
-                        Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                        float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                        rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-                        transform.eulerAngles = new Vector3(0, rotationY, 0);
+                //if (AttackTarget != null)//will not be null
+                //{
+                //    Vector3 realDirection = transform.forward;
+                //    Vector3 direction = AttackTarget.position - transform.position;
+                //    float angle = Vector3.Angle(direction, realDirection);
+                //    if (angle < SightRange && InStopRange())
+                //    {
+                //        Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                //        float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                //        rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                //        transform.eulerAngles = new Vector3(0, rotationY, 0);
 
-                    }
-                }
+                //    }
+                //}
             }
 
         }
@@ -94,7 +94,15 @@ namespace ARPG.Combat
                     StopRun();
                 }
             }
+            else
+            {
+                Patrol();
+            }
             //Debug.Log("okk");
+        }
+        private void Patrol()
+        {
+
         }
 
         public  void RunToPlayer()
