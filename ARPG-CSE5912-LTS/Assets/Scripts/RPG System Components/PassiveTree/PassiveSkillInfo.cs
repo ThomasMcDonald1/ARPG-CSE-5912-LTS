@@ -211,7 +211,7 @@ public class PassiveSkillInfo
                 "DEX5",
                 new StatTypes[] { StatTypes.DEX },
                 new int[] { 5 },
-                new string[] { "DEX4", "LIFESTEAL4", "CRIT3" }
+                new string[] { "DEX4", "LIFESTEAL4", "CRIT3", "MP4", "CASTSPD4" }
             ),
             new PassiveNode(
                 "CRIT1",
