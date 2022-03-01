@@ -98,13 +98,6 @@ public abstract class Character : MonoBehaviour
             AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
         }
     }
-
-    public void OnCompletedCast(AbilityCast abilityCast)
-    {
-        Debug.Log("Cast was completed");
-        DeductCastingCost(abilityCast);
-        GetColliders(abilityCast);
-    }
     #endregion
     #region Public Functions
     //Put any code here that should be shared functionality across every type of character
@@ -175,9 +168,8 @@ public abstract class Character : MonoBehaviour
         List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
         ApplyAbilityEffects(charactersCollided, abilityCast);
     }
-    #endregion
-    #region Private Functions
-    void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
+
+    public void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
     {
         //Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
@@ -196,6 +188,8 @@ public abstract class Character : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region Private Functions
 
     private void CastAbilityWithoutSelection(AbilityCast abilityCast)
     {

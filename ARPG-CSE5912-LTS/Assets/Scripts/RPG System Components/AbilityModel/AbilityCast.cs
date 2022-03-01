@@ -20,7 +20,6 @@ public class AbilityCast
     public bool requiresCharacterUnderCursor = false;
     public bool createsProjectileVFX;
     public bool abilityVFXFired = false;
-
     public RaycastHit hit;
     public List<Character> charactersAffected;
 

@@ -6,7 +6,8 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
 {
     private void OnEnable()
     {
-        ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnChargeCharacterDelayedDamageReady;
+        ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnChargeDelayedDamageReady;
+        ChargeGroundAbilityEffect.ChargeGroundDelayedDamageReadyEvent += OnChargeDelayedDamageReady;
     }
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
@@ -14,10 +15,13 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
         return 0;
     }
 
-    private void OnChargeCharacterDelayedDamageReady(object sender, InfoEventArgs<(AbilityCast, Character)> e)
+    private void OnChargeDelayedDamageReady(object sender, InfoEventArgs<(AbilityCast, Character)> e)
     {
-        if (effectVFXObj != null)
-            InstantiateEffectVFX(e.info.Item1, e.info.Item2);
-        DealDamage(e.info.Item2, e.info.Item1);
+        if (GetComponentInParent<Ability>() == e.info.Item1.ability)
+        {
+            if (effectVFXObj != null)
+                InstantiateEffectVFX(e.info.Item1, e.info.Item2);
+            DealDamage(e.info.Item2, e.info.Item1);
+        }
     }
 }
