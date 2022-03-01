@@ -76,6 +76,7 @@ namespace ARPG.Combat
                 Patrol();
             }
         }
+
         private void Patrol()
         {
             agent.isStopped = false;
@@ -102,7 +103,6 @@ namespace ARPG.Combat
             if (InTargetRange())
             {
                 agent.isStopped = false;
-                Debug.Log("running to player");
                 agent.SetDestination(AttackTarget.position);
             }
         }
@@ -114,11 +114,7 @@ namespace ARPG.Combat
 
         public bool InTargetRange()
         {
-            if (AttackTarget != null)
-            {
-                return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
-            }
-            return false;
+            return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
         public  bool InStopRange()
         {
