@@ -6,6 +6,7 @@ using UnityEngine;
 using DunGen.Graph;
 using System.Collections;
 using UnityEngine.Serialization;
+using UnityEngine.AI;
 
 using Debug = UnityEngine.Debug;
 
@@ -411,6 +412,20 @@ namespace DunGen
 						tile.TileSet = tileSet;
 					}
 				}
+
+			foreach(var tile in useableTiles)
+            {
+				foreach (Transform child in tile.transform)
+				{
+					if (child.gameObject.CompareTag("Enemy"))
+                    {
+						foreach (Transform mob in child)
+						{
+							mob.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+						}
+                    }
+				}
+			}
 		}
 
 		protected virtual void GatherTilesToInject()

@@ -23,6 +23,7 @@ namespace DunGen
 			{
 				Generate();
 				BakeNavMesh();
+				AddEnemies();
 				Debug.Log("Dungeon Generated!");
 			}
 		}
@@ -46,6 +47,23 @@ namespace DunGen
 				if (child.CompareTag("DungeonPart"))
 				{
 					child.GetComponent<NavMeshSurface>().BuildNavMesh();
+				}
+			}
+		}
+
+		void AddEnemies()
+        {
+			foreach (Transform tile in Root.transform)
+			{
+				foreach (Transform child in tile.transform)
+                {
+					if (child.CompareTag("Enemy"))
+					{
+						foreach (Transform enemy in child.transform)
+                        {
+							enemy.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+						}
+					}
 				}
 			}
 		}
