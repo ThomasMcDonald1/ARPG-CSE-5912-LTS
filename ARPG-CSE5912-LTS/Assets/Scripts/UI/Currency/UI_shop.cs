@@ -7,7 +7,10 @@ using TMPro;
 public class UI_shop:MonoBehaviour
 {
     public Transform ShopSlots;
-
+    [SerializeField] public Button purchaseButton;
+    [SerializeField] public Button SaleButton;
+    [SerializeField] public GameObject PurchaseContainer;
+    [SerializeField] public GameObject SaleContainer;
     public static UI_shop instance;
     ShopSlot[] shopSlots;
     private int shopSlotLength =0;
@@ -19,17 +22,17 @@ public class UI_shop:MonoBehaviour
     }
     public void initializeShop(Shop shop)
     {
-        
         Ite[] itemList = shop.itemList;
 
         shopSlotLength = itemList.Length;
-
+        
 
         for (int i = 0; i < itemList.Length; i++)
         {
             shopSlots[i].InitializeSlot(itemList[i]);
 
         }
+        
     }
     public void resetShop()
     {
@@ -39,7 +42,21 @@ public class UI_shop:MonoBehaviour
 
         }
     }
-  
+    public void clickOnSaleButton()
+    {
+        Debug.Log("Click On Sale!");
+        SaleButton.Select();
+        PurchaseContainer.SetActive(false);
+        SaleContainer.SetActive(true);
+    }
+    public void clickOnPurchaseButton()
+    {
+        Debug.Log("Click On Purchase!");
+
+        purchaseButton.Select();
+        PurchaseContainer.SetActive(true);
+        SaleContainer.SetActive(false);
+    }
 
 }
   

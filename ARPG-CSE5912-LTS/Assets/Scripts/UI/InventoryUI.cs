@@ -8,10 +8,11 @@ public class InventoryUI : MonoBehaviour
     public Transform armorsParent;
     public Transform utilsParent;
     Inventory inventory;
+    public static InventoryUI instance;
     // Start is called before the first frame update
-    InventorySlot[] weaponSlots;
-    InventorySlot[] armorSlots;
-    InventorySlot[] utilSlots;
+    public InventorySlot[] weaponSlots;
+    public InventorySlot[] armorSlots;
+    public InventorySlot[] utilSlots;
     void Start()
     {
         inventory = Inventory.instance;
@@ -27,7 +28,7 @@ public class InventoryUI : MonoBehaviour
         UpdateUI();
 
     }
-    void UpdateUI()
+    public void UpdateUI()
     {
         for (int i = 0; i < weaponSlots.Length; i++)
         {

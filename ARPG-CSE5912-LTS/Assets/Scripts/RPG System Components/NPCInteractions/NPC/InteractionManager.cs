@@ -17,9 +17,12 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private GameObject tradeMenu;
+    [SerializeField] public TextMeshProUGUI playerMoneyText;
+
     public Transform ShopSlots;
     ShopSlot[] shopSlots;
     [SerializeField] PlayerMoney playerMoney;
+    [SerializeField] public UI_Sale SaleUI;
 
 
     [SerializeField] Player player;
@@ -134,8 +137,10 @@ public class InteractionManager : MonoBehaviour
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
-        foreach(ShopSlot slot in shopSlots)
+        playerMoneyText.SetText("Player: "+playerMoney.money.ToString()+"$");
+        foreach (ShopSlot slot in shopSlots)
         {
+            //slot.purchaseButton.enabled = true;
             if (slot.icon.IsActive())
             {
                 if (playerMoney.money - slot.item.cost < 0)
@@ -148,6 +153,7 @@ public class InteractionManager : MonoBehaviour
                 }
             }
         }
+        SaleUI.updateUI();
     }
 
     public void BeginDialogue()

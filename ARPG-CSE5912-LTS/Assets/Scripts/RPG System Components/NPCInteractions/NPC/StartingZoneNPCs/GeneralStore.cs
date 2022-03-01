@@ -8,6 +8,7 @@ public class GeneralStore : NPC
     [Header("Ink JSON")]
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
 
     private List<TextAsset> DialogueJSON;
     private int currentStory;
@@ -29,6 +30,7 @@ public class GeneralStore : NPC
 
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
         shopUI.initializeShop(shop);
+        //saleUI.updateUI();
 
         while (Interactable())
         {

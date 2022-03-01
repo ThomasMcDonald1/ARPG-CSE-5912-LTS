@@ -6,5 +6,12 @@ using UnityEngine;
 public class Shop : ScriptableObject
 {
     public Ite[] itemList;
+    public saleType shopSaleType;
+    public enum saleType{
+        Armor,
+        Weapon,
+        Utility,
+
+    }
 
 }
