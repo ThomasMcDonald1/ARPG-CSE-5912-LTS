@@ -8,20 +8,14 @@ namespace ARPG.Combat
     public class EliteWarrior : Enemy
     {
 
-
         protected override void Start()
         {
             base.Start();
-            AttackRange = 13.0f;
             Range = 5f;
-            //    //optimized body range
             BodyRange = 2.5f;
             SightRange = 90f;
             Speed = 1f;
-
-
-
-
+            agent.speed = Speed;
         }
 
         //protected override void Update()

@@ -7,21 +7,14 @@ namespace ARPG.Combat
 {
     public class EnemyKnight : Enemy
     {
-
-
         protected override void Start()
         {
-          base.Start();
-            AttackRange = 5;
+            base.Start();
             Range = 5f;
-        //    //optimized body range
             BodyRange = 1.5f;
             SightRange = 90f;
             Speed = 2f;
-
-
-
-
+            agent.speed = Speed;
         }
 
         //protected override void Update()

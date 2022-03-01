@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHealthBarController : HealthBarController
 {
     public Slider lerpBar;
-
-
-
     protected override void Start()
     {
         base.Start();
