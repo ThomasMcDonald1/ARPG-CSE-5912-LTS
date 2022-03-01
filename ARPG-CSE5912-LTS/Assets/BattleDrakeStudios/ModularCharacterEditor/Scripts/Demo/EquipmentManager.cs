@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using BattleDrakeStudios.ModularCharacters;
+
 using System.Linq;
 
 public class EquipmentManager : MonoBehaviour {
@@ -27,10 +28,11 @@ public class EquipmentManager : MonoBehaviour {
         foreach (var part in itemToEquip.modularArmor.armorParts) {
             if (part.partID > -1) {
                 characterManager.ActivatePart(part.bodyType, part.partID);
-                //if (part.bodyType.Equals(ModularBodyPart.Helmet))
-                //{
-                //    characterManager.DeactivatePart(ModularBodyPart.Hair);
-                //}
+                if (part.bodyType.Equals(ModularBodyPart.Helmet))
+                {
+                   characterManager.DeactivatePart(ModularBodyPart.Hair);
+                    characterManager.DeactivatePart(ModularBodyPart.FacialHair);
+                }
                 ColorPropertyLinker[] armorColors = itemToEquip.modularArmor.armorColors;
                 for (int i = 0; i < armorColors.Length; i++) {
                     characterManager.SetPartColor(part.bodyType, part.partID, armorColors[i].property, armorColors[i].color);
@@ -41,22 +43,24 @@ public class EquipmentManager : MonoBehaviour {
         }
     }
 
-    public void UnequipItem(Item itemToEquip)
+    public void UnequipItem(Item itemToEquip, CustomCharacter character)
     {
         foreach (var part in itemToEquip.modularArmor.armorParts)
         {
             if (part.partID > -1)
             {
                 characterManager.DeactivatePart(part.bodyType);
-                //if (part.bodyType.Equals(ModularBodyPart.Helmet))
-                //{
-                //    characterManager.DeactivatePart(ModularBodyPart.Hair);
-                //}
-                //ColorPropertyLinker[] armorColors = itemToEquip.modularArmor.armorColors;
-                //for (int i = 0; i < armorColors.Length; i++)
-                //{
-                //    characterManager.SetPartColor(part.bodyType, part.partID, armorColors[i].property, armorColors[i].color);
-                //}
+                if (part.bodyType.Equals(ModularBodyPart.Helmet))
+                {
+                    characterManager.ActivatePart(ModularBodyPart.FacialHair, character.facialHairID);
+                   // characterManager.SetPartColor(part.bodyType, character.facialHairID, "_Color_Hair", character.facialHairColor);
+
+                    characterManager.ActivatePart(ModularBodyPart.Hair, character.hairId);
+                    //characterManager.SetPartColor(part.bodyType, character.hairId, "_Color_Hair", character.hairColor);
+
+                }
+
+
             }
             else
             {
