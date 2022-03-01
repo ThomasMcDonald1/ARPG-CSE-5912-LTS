@@ -12,6 +12,7 @@ public class SceneWaypointManager : MonoBehaviour
     public Button[] buttons;
     public Dictionary<Button, string> WaypointToSceneName;
     public SceneWaypointLocations sceneWaypointLocations;
+    public GameObject worldMap;
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -44,10 +45,12 @@ public class SceneWaypointManager : MonoBehaviour
     {
         string sceneToLoad = WaypointToSceneName[btn];
         Debug.Log("Loading scene " + sceneToLoad);
+        worldMap.SetActive(false);
         LoadingStateController.Instance.LoadScene(sceneToLoad);
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        worldMap.SetActive(true);
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(sceneWaypointLocations.waypointLocations[scene.name]);
         player.GetComponent<NavMeshAgent>().Warp(sceneWaypointLocations.waypointLocations[scene.name]);
