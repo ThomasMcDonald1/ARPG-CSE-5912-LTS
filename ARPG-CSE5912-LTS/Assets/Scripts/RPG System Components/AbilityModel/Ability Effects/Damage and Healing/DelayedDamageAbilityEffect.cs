@@ -6,8 +6,9 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
 {
     private void OnEnable()
     {
-        ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnChargeDelayedDamageReady;
-        ChargeGroundAbilityEffect.ChargeGroundDelayedDamageReadyEvent += OnChargeDelayedDamageReady;
+        ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnDelayedDamageReady;
+        ChargeGroundAbilityEffect.ChargeGroundDelayedDamageReadyEvent += OnDelayedDamageReady;
+        LeapAbilityEffect.LeapDelayedDamageReadyEvent += OnDelayedDamageReady;
     }
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
@@ -15,7 +16,7 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
         return 0;
     }
 
-    private void OnChargeDelayedDamageReady(object sender, InfoEventArgs<(AbilityCast, Character)> e)
+    private void OnDelayedDamageReady(object sender, InfoEventArgs<(AbilityCast, Character)> e)
     {
         if (GetComponentInParent<Ability>() == e.info.Item1.ability)
         {
