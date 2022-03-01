@@ -34,14 +34,18 @@ public class LoadingStateController : StateMachine
     public async void LoadScene(string sceneName)
     {
         loadingSceneCanvasObj.SetActive(true);
+
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         AsyncOperation scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         scene.allowSceneActivation = false;
         InputController.Instance.enabled = false;
 
-        await Task.Delay(10000);
+        await Task.Delay(1000);
 
         scene.allowSceneActivation = true;
+
+        await Task.Delay(5000);
+
         loadingSceneCanvasObj.SetActive(false);
     }
     public IEnumerator LoadYourAsyncScene(string sceneName)

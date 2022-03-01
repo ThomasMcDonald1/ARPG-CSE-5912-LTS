@@ -50,7 +50,6 @@ public class SceneWaypointManager : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        worldMap.SetActive(true);
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(sceneWaypointLocations.waypointLocations[scene.name]);
         player.GetComponent<NavMeshAgent>().Warp(sceneWaypointLocations.waypointLocations[scene.name]);
