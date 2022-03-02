@@ -135,12 +135,15 @@ public class InteractionManager : MonoBehaviour
     public void EnterTradeMenu()
     {
         player.NPCTarget.GetComponent<NPC>().StartTrading();
-        tradeMenu.SetActive(true);
+      
+            Debug.Log("Is tradeMenu active?"+ tradeMenu.activeSelf);
+            tradeMenu.SetActive(true);
+        
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
         playerMoneyText.SetText("Player: "+playerMoney.money.ToString()+"$");
-        StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
+        //StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
         foreach (ShopSlot slot in shopSlots)
         {
             //slot.purchaseButton.enabled = true;
