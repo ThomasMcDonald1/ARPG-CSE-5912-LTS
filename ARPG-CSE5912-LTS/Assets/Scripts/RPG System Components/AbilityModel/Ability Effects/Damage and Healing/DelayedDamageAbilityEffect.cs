@@ -9,6 +9,7 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
         ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnDelayedDamageReady;
         ChargeGroundAbilityEffect.ChargeGroundDelayedDamageReadyEvent += OnDelayedDamageReady;
         LeapAbilityEffect.LeapDelayedDamageReadyEvent += OnDelayedDamageReady;
+        PullAbilityEffect.PullDelayedDamageReadyEvent += OnDelayedDamageReady;
     }
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
