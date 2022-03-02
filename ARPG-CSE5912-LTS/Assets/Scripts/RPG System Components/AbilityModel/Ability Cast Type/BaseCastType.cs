@@ -11,7 +11,7 @@ public abstract class BaseCastType : MonoBehaviour
     public float castTime;
 
     public abstract void WaitCastTime(AbilityCast abilityCast);
-    protected abstract void InstantiateVFX(AbilityCast abilityCast);
+    protected abstract void InstantiateSpellcastVFX(AbilityCast abilityCast);
     public abstract void StopCasting();
     protected abstract void CompleteCast(AbilityCast abilityCast);
     public abstract Type GetCastType();
@@ -35,7 +35,6 @@ public abstract class BaseCastType : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (GetComponentInParent<Ability>() == e.info.ability && GetComponentInParent<Character>() == e.info.caster)
-            e.info.castType.WaitCastTime(e.info);
+        e.info.castType.WaitCastTime(e.info);
     }
 }

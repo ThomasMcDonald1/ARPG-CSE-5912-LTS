@@ -21,16 +21,18 @@ public class CastTimerCastType : BaseCastType
     public override void WaitCastTime(AbilityCast abilityCast)
     {
         if (castingRoutine == null)
+        {
+            AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
             castingRoutine = StartCoroutine(CastTimeCoroutine(abilityCast));
+        }
     }
 
-    protected override void InstantiateVFX(AbilityCast abilityCast)
+    protected override void InstantiateSpellcastVFX(AbilityCast abilityCast)
     {
         GameObject spellcastVFXFromAbility = abilityCast.ability.spellcastVFXObj;
-        GameObject effectVFXFromAbility = abilityCast.ability.effectVFXObj;
         castingVFXInstance = Instantiate(spellcastVFXFromAbility, abilityCast.ability.transform);
         castingVFXInstance.SetActive(true);
-        vfxRoutine = StartCoroutine(WaitCastVFXTime(abilityCast, castingVFXInstance, effectVFXFromAbility));
+        vfxRoutine = StartCoroutine(WaitCastVFXTime(abilityCast, castingVFXInstance));
     }
     protected override void CompleteCast(AbilityCast abilityCast)
     {
@@ -62,9 +64,8 @@ public class CastTimerCastType : BaseCastType
 
     private IEnumerator CastTimeCoroutine(AbilityCast abilityCast)
     {
-        AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
         FaceCasterToHitPoint(abilityCast.caster, abilityCast.hit);
-        InstantiateVFX(abilityCast);
+        InstantiateSpellcastVFX(abilityCast);
         float displayTime = abilityCast.castType.castTime;
         float rate = 1.0f / abilityCast.castType.castTime;
         float progress = 0.0f;
@@ -83,7 +84,7 @@ public class CastTimerCastType : BaseCastType
         CompleteCast(abilityCast);
     }
 
-    private IEnumerator WaitCastVFXTime(AbilityCast abilityCast, GameObject instance, GameObject effectVFX)
+    private IEnumerator WaitCastVFXTime(AbilityCast abilityCast, GameObject instance)
     {
         CreateProjectile cProj = instance.GetComponent<CreateProjectile>();
         Vector3 casterPos = abilityCast.caster.transform.position;
@@ -94,7 +95,7 @@ public class CastTimerCastType : BaseCastType
         instance.transform.position = spawnPos;
         yield return new WaitForSeconds(castTime);
         castingRoutine = null;
-        if (cProj != null && effectVFX == null)
+        if (cProj != null && abilityCast.createsProjectileVFX)
         {
             cProj.Time = castTime;
             cProj.Create(spawnPos, casterRot, abilityCast.hit);
@@ -103,16 +104,6 @@ public class CastTimerCastType : BaseCastType
         else
         {
             Destroy(instance);
-            GameObject explosionInstance = Instantiate(effectVFX);
-            ParticleSystem pS = explosionInstance.GetComponent<ParticleSystem>();
-            explosionInstance.transform.position = abilityCast.hit.point;
-            SpecifyAbilityArea aa = abilityCast.ability.GetComponent<SpecifyAbilityArea>();
-            if (aa != null)
-            {
-                explosionInstance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
-            }
-            yield return new WaitForSeconds(pS.main.duration);
-            Destroy(explosionInstance);
         }
     }
 }

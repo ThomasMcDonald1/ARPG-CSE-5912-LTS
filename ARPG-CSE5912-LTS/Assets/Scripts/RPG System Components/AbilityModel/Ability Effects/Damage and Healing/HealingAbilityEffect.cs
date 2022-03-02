@@ -7,15 +7,16 @@ public class HealingAbilityEffect : BaseAbilityEffect
 {
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> AbilityHealingReceivedEvent;
 
-    protected override int OnApply(Character target)
+    protected override int OnApply(Character target, AbilityCast abilityCast)
     {
-        Character caster = GetComponentInParent<Character>();
-        BaseAbilityPower power = GetComponentInParent<BaseAbilityPower>();
+        if (effectVFXObj != null)
+            InstantiateEffectVFX(abilityCast, target);
+
         bool wasCrit = false;
 
         int baseHealingScaler = 5;
         float casterLevel = GetStat(target, StatTypes.LVL);
-        float baseHealing = power.baseDamageOrHealing;
+        float baseHealing = abilityCast.abilityPower.baseDamageOrHealing;
 
         //Calculate the caster's total healing 
         float healing = (baseHealing * casterLevel + baseHealing / casterLevel) / (baseHealingScaler + (casterLevel * 0.01f));
@@ -24,10 +25,10 @@ public class HealingAbilityEffect : BaseAbilityEffect
         float healingRandomCeiling = healing * 1.05f;
         healing = UnityEngine.Random.Range(healingRandomFloor, healingRandomCeiling);
 
-        wasCrit = RollForCrit(caster);
+        wasCrit = RollForCrit(abilityCast.caster);
         if (wasCrit)
         {
-            float critHealingPercent = (200 + caster.stats[StatTypes.CritDamage]) * 0.01f;
+            float critHealingPercent = (200 + abilityCast.caster.stats[StatTypes.CritDamage]) * 0.01f;
             healing *= critHealingPercent;
         }
 
