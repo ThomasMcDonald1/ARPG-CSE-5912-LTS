@@ -18,7 +18,7 @@ public class LvlExpShow : MonoBehaviour
 
     void Awake()
     {
-        //Debug.Log("okk");
+        Debug.Log("okk");
         //lvlText.text = "Level:" + levelController.LVL + "Total Exp:" + levelController.EXP + "Now Level Exp:" + LevelController.currentLevelExp(levelController.EXP,levelController.LVL) + "ToNext:"+ LevelController.currentLevelExpToNext(levelController.LVL);
         lvlUIText.text = "LV." + levelController.LVL;
         lvlText.text = "LV: " + levelController.LVL + "/ 99";

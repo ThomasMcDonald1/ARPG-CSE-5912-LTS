@@ -4,51 +4,24 @@ using UnityEngine;
 
 public class MagicalAbilityPower : BaseAbilityPower
 {
-    public override int GetBaseAttack()
+    protected override int GetBaseAttack()
     {
         return GetComponentInParent<Stats>()[StatTypes.INT];
     }
-    public override float GetBaseDefense(Character target, BaseAbilityEffectElement effectElement)
+    protected override int GetBaseDefense(Character target)
     {
-        StatTypes elementResistance = effectElement.GetAbilityEffectElementResistTarget();
-        return GetStat(target, elementResistance);
+        //TODO: Determine the element of the ability being cast, and then get the appropriate resistance from the defender
+        //TODO: instead of only returning fire resistance
+
+        return target.GetComponent<Stats>()[StatTypes.FireRes];
+    }
+    public override bool IsPhysicalPower()
+    {
+        return false;
     }
 
-    public override float GetPercentDefense(Character target, BaseAbilityEffectElement effectElement)
-    {  
-        float allResist = GetStat(target, StatTypes.PercentAllResistBonus);
-        StatTypes elementResistance = effectElement.GetAbilityEffectElementResistTarget();
-        float targetPercentSpecificResist = GetSpecificPercentResistBonus(elementResistance, target);
-        float defense = allResist + targetPercentSpecificResist;
-        return defense;
-    }
-
-    public override float AdjustDefenseForPenetration(Character caster)
+    public override bool IsMagicPower()
     {
-        return 1 - GetStat(caster, StatTypes.PercentMagicPen) * 0.01f;
-    }
-
-    private float GetSpecificPercentResistBonus(StatTypes resist, Character target)
-    {
-        float result = 0;
-
-        switch (resist)
-        {
-            case StatTypes.FireRes:
-                result = GetStat(target, StatTypes.PercentFireResistBonus);
-                break;
-            case StatTypes.ColdRes:
-                result = GetStat(target, StatTypes.PercentColdResistBonus);
-                break;
-            case StatTypes.LightningRes:
-                result = GetStat(target, StatTypes.PercentLightningResistBonus);
-                break;
-            case StatTypes.PoisonRes:
-                result = GetStat(target, StatTypes.PercentPoisonResistBonus);
-                break;
-            default:
-                break;
-        }
-        return result;
+        return true;
     }
 }

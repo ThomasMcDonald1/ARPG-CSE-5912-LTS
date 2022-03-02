@@ -12,7 +12,7 @@ public class HealthBarController : MonoBehaviour
     private Coroutine regen;
 
     public static HealthBarController instance;
-    protected Stats stats;
+    Stats stats;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class HealthBarController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    void Start()
     {
         healthBar.maxValue = stats[StatTypes.MaxHP];
         healthBar.value = stats[StatTypes.HP];
@@ -46,7 +46,7 @@ public class HealthBarController : MonoBehaviour
             regen = StartCoroutine(RegenHealth());
     }
 
-    protected virtual void UpdateSlider()
+    private void UpdateSlider()
     {
         stats[StatTypes.HP] = Mathf.Clamp(stats[StatTypes.HP], 0, stats[StatTypes.MaxHP]);
         healthBar.value = stats[StatTypes.HP];

@@ -17,6 +17,7 @@ public abstract class Character : MonoBehaviour
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
     [HideInInspector] public bool abilityQueued = false;
+
     [HideInInspector] public Stats stats;
 
     [HideInInspector] public float smooth;
@@ -27,7 +28,6 @@ public abstract class Character : MonoBehaviour
 
     public static event EventHandler<InfoEventArgs<AbilityCast>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
-    public abstract Type GetCharacterType();
 
     #region Built-in
     private void Awake()
@@ -45,7 +45,7 @@ public abstract class Character : MonoBehaviour
         playerAbilityController = GetComponent<PlayerAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
-        //AttackTarget = null;
+        AttackTarget = null;
     }
 
     protected virtual void Update()
@@ -75,6 +75,7 @@ public abstract class Character : MonoBehaviour
         float distToTravel = distFromCaster - e.info.abilityRange.range;
         if (distFromCaster > e.info.abilityRange.range)
         {
+            Debug.Log("Too far away");
             abilityQueued = true;
             StartCoroutine(RunWithinRange(e.info, distToTravel));
         }
@@ -86,18 +87,10 @@ public abstract class Character : MonoBehaviour
 
     void OnSingleTargetSelected(object sender, InfoEventArgs<AbilityCast> e)
     {
-        float distFromCaster = Vector3.Distance(e.info.hit.collider.transform.position, e.info.caster.transform.position);
-        float distToTravel = distFromCaster - e.info.abilityRange.range;
-        if (distFromCaster > e.info.abilityRange.range)
-        {
-            abilityQueued = true;
-            StartCoroutine(RunWithinRangeCharacter(e.info, distToTravel, e.info.hit.collider.GetComponent<Character>()));
-        }
-        else
-        {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
-        }
+        //abilityQueued = true;
+        //do a coroutine for running within range of enemy
     }
+
     #endregion
     #region Public Functions
     //Put any code here that should be shared functionality across every type of character
@@ -145,6 +138,11 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    private void CastAbilityWithoutSelection(AbilityCast abilityCast)
+    {
+        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+    }
+
     //Could be useful for AI to find characters in range
     public virtual bool CheckCharacterInRange(Character character)
     {
@@ -157,7 +155,8 @@ public abstract class Character : MonoBehaviour
         }
         return false;
     }
-
+    #endregion
+    #region Private Functions
     public void DeductCastingCost(AbilityCast abilityCast)
     {
         abilityCast.abilityCost.DeductResourceFromCaster(abilityCast.caster);
@@ -165,70 +164,47 @@ public abstract class Character : MonoBehaviour
 
     public void GetColliders(AbilityCast abilityCast)
     {
-        List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
-        ApplyAbilityEffects(charactersCollided, abilityCast);
+        BaseAbilityArea abilityArea = abilityCast.ability.GetComponent<BaseAbilityArea>();
+        List<Character> charactersCollided = abilityArea.PerformAOECheckToGetColliders(abilityCast);
+        ApplyAbilityEffects(charactersCollided, abilityCast.ability);
     }
 
-    public void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
+    void ApplyAbilityEffects(List<Character> targets, Ability ability)
     {
-        //Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
-        BaseAbilityEffect[] effects = abilityCast.ability.GetComponentsInChildren<BaseAbilityEffect>();
+        BaseAbilityEffect[] effects = ability.GetComponentsInChildren<BaseAbilityEffect>();
         for (int i = 0; i < targets.Count; i++)
         {
             for (int j = 0; j < effects.Length; j++)
             {
                 BaseAbilityEffect effect = effects[j];
                 AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
-                if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
+                if (specialTargeter.IsTarget(targets[i]))
                 {
                     //Debug.Log("Applying ability effects to " + targets[i].name);
-                    effect.Apply(targets[i], abilityCast);
+                    effect.Apply(targets[i]);
                 }
             }
         }
-    }
-    #endregion
-    #region Private Functions
-
-    private void CastAbilityWithoutSelection(AbilityCast abilityCast)
-    {
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
     #endregion
     #region Enumerators
     public IEnumerator RunWithinRange(AbilityCast abilityCast, float distToTravel)
     {
         //Debug.Log("Running to within range of point.");
-        Vector3 dir = (abilityCast.hit.point - abilityCast.caster.transform.position).normalized;
-        Vector3 endPoint = abilityCast.caster.transform.position + (dir * (distToTravel + 0.1f));
+        Vector3 dir = abilityCast.hit.point - abilityCast.caster.transform.position;
+        Vector3 normalizedDir = dir.normalized;
+        Vector3 endPoint = abilityCast.caster.transform.position + (normalizedDir * (distToTravel + 0.1f));
 
         while (abilityQueued)
         {
-            abilityCast.caster.agent.destination = endPoint;
+            agent.destination = endPoint;
             float distFromPlayer = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
                 AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
             }
 
-            yield return null;
-        }
-    }
-
-    public IEnumerator RunWithinRangeCharacter(AbilityCast abilityCast, float distToTravel, Character target)
-    {
-        //Debug.Log("Running within range of character");
-        Vector3 dir = (target.transform.position - abilityCast.caster.transform.position).normalized;
-        Vector3 endPoint = abilityCast.caster.transform.position + (dir * (distToTravel + 0.1f));
-        while (abilityQueued)
-        {
-            abilityCast.caster.agent.destination = endPoint;
-            float distFromPlayer = Vector3.Distance(target.transform.position, abilityCast.caster.transform.position);
-            if (distFromPlayer <= abilityCast.abilityRange.range)
-            {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
-            }
             yield return null;
         }
     }

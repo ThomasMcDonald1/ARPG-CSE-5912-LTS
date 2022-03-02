@@ -15,7 +15,7 @@ public class ExperienceManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //Debug.Log("able");
+        Debug.Log("able");
         Enemy.EnemyKillExpEvent += OnEnemyExpKill;
         GameoverState.SaveExpEvent += OnSavedExp;
         GameoverState.GetBackExpEvent += OnGetBackExp;

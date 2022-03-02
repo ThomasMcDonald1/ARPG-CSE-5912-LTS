@@ -3,43 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
+        private GameObject GeneralClass;
+        public NavMeshAgent enemy;
 
+        public virtual float AttackRange { get; set; }
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
         public virtual float SightRange { get; set; }
-        protected virtual float Speed { get; set; }
+        public virtual float Speed { get; set; }
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
         protected override void Start()
         {
             base.Start();
+            GeneralClass = GameObject.Find("EnemyClass");
         }
         protected override void Update()
         {
-            if (GetComponent<Animator>().GetBool("Dead") == false)
-            {
-                base.Update();
-                if (stats[StatTypes.HP] <= 0)
-                {
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
-                    {
-                        Dead();
-                        GetComponent<Animator>().SetBool("Dead", true);
-                        //get rid of enemy canvas
-                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
 
-                    }
+            base.Update();
+            if (stats[StatTypes.HP] <= 0)
+            {
+                if (GetComponent<Animator>().GetBool("Dead")== false){
+                    Dead();
                 }
-                else
+                GetComponent<Animator>().SetBool("Dead", true);
+                GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+
+            }
+            else
+            {
+                SeePlayer();
+            }
+            if (AttackTarget != null)
+            {
+                Vector3 realDirection = GeneralClass.transform.forward;
+                Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
+                float angle = Vector3.Angle(direction, realDirection);
+                if (angle < SightRange && InStopRange())
                 {
-                    SeePlayer();
+                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+                    rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+                    transform.eulerAngles = new Vector3(0, rotationY, 0);
+
                 }
             }
 
@@ -48,10 +61,11 @@ namespace ARPG.Combat
         public  void SeePlayer()
         {
 
-            if (InTargetRange()) 
+            if (InTargetRange()) //need set health.
             {
-                Vector3 realDirection = transform.forward;
-                Vector3 direction = AttackTarget.position -transform.position;
+                //Debug.Log("yeah");
+                Vector3 realDirection = GeneralClass.transform.forward;
+                Vector3 direction = AttackTarget.position - GeneralClass.transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
                 if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
                 {
@@ -59,151 +73,102 @@ namespace ARPG.Combat
                 }
                 else if (angle < SightRange && !InStopRange())
                 {
+                    //Debug.Log("run");
                     RunToPlayer();
                 }
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
+                    //Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    //float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+
                 }
                 else
                 {
-                    Patrol ();
+                    StopRun();
                 }
             }
-            else
-            {
-                Patrol();
-            }
-        }
-
-        private void Patrol()
-        {
-            agent.isStopped = false;
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            {
-                agent.SetDestination(RandomNavmeshDestination(5f));
-            }
-        }
-        public Vector3 RandomNavmeshDestination(float radius)
-        {
-            Vector3 randomDirection = Random.insideUnitSphere * radius;
-            randomDirection += transform.position;
-            NavMeshHit hit;
-            Vector3 finalPosition = Vector3.zero;
-            if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
-            {
-                finalPosition = hit.position;
-            }
-            return finalPosition;
+            //Debug.Log("okk");
         }
 
         public  void RunToPlayer()
         {
             if (InTargetRange())
             {
-                agent.isStopped = false;
-                agent.SetDestination(AttackTarget.position);
+                enemy.isStopped = false;
+
+                enemy.speed = Speed;
+                enemy.SetDestination(AttackTarget.position);
             }
         }
 
         public void StopRun()
         {
-            agent.isStopped = true;
+            enemy.isStopped = true;
         }
 
-        public bool InTargetRange()
+        public virtual float CurrentEnemyHealth { get; set; }
+        public virtual float MaxEnemyHealth { get; set; }
+        public void Attack(EnemyTarget target)
         {
-            return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
+            AttackTarget = target.transform;
+        }
+
+        public void Cancel()
+        {
+            AttackTarget = null;
+        }
+        public  bool InTargetRange()
+        {
+            if (AttackTarget == null) return false;
+            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         }
         public  bool InStopRange()
         {
-            return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
+            if (AttackTarget == null) return false;
+            return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < BodyRange;
         }
         public void Hit()
         {
+
+
+            if (AttackTarget != null)
+            {
                 float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
-                if (distance < BodyRange)
+                if (distance < 2)
                 {
                     AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
                 }
+            }
         }
 
         public void Dead()
         {
+            //nead a dead animation before destroy.
+            if (stats[StatTypes.HP] <= 0)
+            {
+                Debug.Log("enemy kkkkill");
                 EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
                 StartCoroutine(Die(10));
+            }
         }
         IEnumerator Die(int seconds)
         {
+            //Print the time of when the function is first called.
+            //Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+            //yield on a new YieldInstruction that waits for 5 seconds.
             yield return new WaitForSeconds(seconds);
-            Destroy(gameObject);
+
+            /////After we have waited  seconds print the time again.
+            //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+            //Destroy(gameObject);
 
         }
         public void ProduceItem()
         {
             Debug.Log("Item dropped");
         }
-
-        public override Type GetCharacterType()
-        {
-            return typeof(Enemy);
-        }
     }
-    //public void Cancel()
-    //{
-    //    AttackTarget = null;
-    //}
-
-
-    //public virtual float AttackRange { get; set; }
-    //private GameObject GeneralClass;
-    ////public NavMeshAgent enemy;
-    //protected override void Start()
-    //{
-    //    base.Start();
-    //    //agent.speed = Speed;
-    //    GeneralClass = GameObject.Find("EnemyClass");
-    //}
-    //protected override void Update()
-    //{
-    //    if (GetComponent<Animator>().GetBool("Dead") == false)
-    //    {
-    //        base.Update();
-    //        if (stats[StatTypes.HP] <= 0)
-    //        {
-    //            if (GetComponent<Animator>().GetBool("Dead") == false)
-    //            {
-    //                Dead();
-    //                GetComponent<Animator>().SetBool("Dead", true);
-    //                //get rid of enemy canvas
-    //                GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
-
-    //            }
-    //        }
-    //        else
-    //        {
-    //            SeePlayer();
-    //        }
-    //        //if (AttackTarget != null)//will not be null
-    //        //{
-    //        //    Vector3 realDirection = transform.forward;
-    //        //    Vector3 direction = AttackTarget.position - transform.position;
-    //        //    float angle = Vector3.Angle(direction, realDirection);
-    //        //    if (angle < SightRange && InStopRange())
-    //        //    {
-    //        //        Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-    //        //        float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-    //        //        rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-    //        //        transform.eulerAngles = new Vector3(0, rotationY, 0);
-
-    //        //    }
-    //        //}
-    //    }
-    //public void Attack(EnemyTarget target)
-    //{
-    //    AttackTarget = target.transform;
-    //}
-
-    //}
 }

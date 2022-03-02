@@ -30,7 +30,7 @@ public class Player : Character
 
     void Awake()
     {
-        //Debug.Log(stats);
+        Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
        // inventory = new Inventory();
        // uiInventory.SetInventory(inventory);
@@ -210,10 +210,7 @@ public class Player : Character
         Debug.Log("Item or experience off");
     }
 
-    public override Type GetCharacterType()
-    {
-        return typeof(Player);
-    }
+
 }
 
 

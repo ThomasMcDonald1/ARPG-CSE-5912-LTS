@@ -51,6 +51,7 @@ public class GameplayState : BaseGameplayState
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
         passiveTreeUI = gameplayStateController.passiveTreeUI;
         passiveTreeUI.SetActive(false);
+
     }
 
     public override void Exit()
@@ -321,19 +322,16 @@ public class GameplayState : BaseGameplayState
 
     private void OnAbilityBeingCast(object sender, InfoEventArgs<Ability> e)
     {
-        Debug.Log("Actions locked");
         lockedActions = true;
     }
 
     private void OnAbilityWasCancelled(object sender, InfoEventArgs<int> e)
     {
-        Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 
     private void OnAbilityWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 
