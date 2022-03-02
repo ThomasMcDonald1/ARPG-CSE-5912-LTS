@@ -86,14 +86,6 @@ public class InteractionManager : MonoBehaviour
     {
         dialogueBox.SetActive(true);
         optionsMenu.SetActive(false);
-        if (currentStory.canContinue)
-        {
-            continueDialogueButton.SetActive(true);
-        }
-        else
-        {
-            continueDialogueButton.SetActive(false);
-        }
     }
 
     public void ContinueStory()
@@ -103,6 +95,14 @@ public class InteractionManager : MonoBehaviour
             StopCoroutine(displayLineCoroutine);
         }
         displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+        if (currentStory.canContinue)
+        {
+            continueDialogueButton.SetActive(true);
+        }
+        else
+        {
+            continueDialogueButton.SetActive(false);
+        }
     }
 
     private IEnumerator DisplayLine(string line)
@@ -114,8 +114,6 @@ public class InteractionManager : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
     }
-
-    // We will use these for now... later we will incoroporate ink & update text this way
 
     public void EnterOptionsMenu()
     {
@@ -134,11 +132,16 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
+<<<<<<< HEAD
         player.NPCTarget.GetComponent<NPC>().StartTrading();
       
             Debug.Log("Is tradeMenu active?"+ tradeMenu.activeSelf);
             tradeMenu.SetActive(true);
         
+=======
+        //player.NPCTarget.GetComponent<NPC>().StartTrading();
+        tradeMenu.SetActive(true);
+>>>>>>> d439d5bd (Refactored NPC interactions -- No more constant coroutine throughout entire interaction)
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
@@ -167,7 +170,7 @@ public class InteractionManager : MonoBehaviour
     public void BeginDialogue()
     {
         currentStory = new Story(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue().text);
-        player.NPCTarget.GetComponent<NPC>().SetDialogue();
+        EnterDialogueMode(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue());
         if (currentStory.canContinue)
         {
             ContinueStory();
@@ -176,24 +179,17 @@ public class InteractionManager : MonoBehaviour
                 continueDialogueButton.SetActive(true);
             }
         }
-
-    }
-
-    public void StopDialogue()
-    {
-        player.NPCTarget.GetComponent<NPC>().StopDialogue();
-    }
-
-    public void ExitTradeMenu()
-    {
-        player.NPCTarget.GetComponent<NPC>().StopTrading();
     }
 
     public void StopInteraction()
     {
         player.NPCTarget = null;
+        worldNames.SetActive(true);
+        continueDialogueButton.SetActive(false);
+        optionsMenu.SetActive(false);
+        dialogueBox.SetActive(false);
+        tradeMenu.SetActive(false);
     }
-
 
 }
 

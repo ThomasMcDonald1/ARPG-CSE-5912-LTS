@@ -40,6 +40,7 @@ using System.Threading.Tasks;
 
                     if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
+                        if (player.NPCTarget != null) { InteractionManager.GetInstance().StopInteraction(); }
                         player.DialogueCancel();
                         player.AttackCancel();
                         GetComponent<MovementHandler>().MoveToTarget(e.info.point);
@@ -54,6 +55,7 @@ using System.Threading.Tasks;
                     }
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
                     player.NPCTarget = npcTarget;
+                    StartCoroutine(player.GoToNPC());
                     break;
 
                 case "Enemy":

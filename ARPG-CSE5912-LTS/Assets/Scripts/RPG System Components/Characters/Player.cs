@@ -12,6 +12,8 @@ public class Player : Character
     [SerializeField] private InventoryUI uiInventory;
     public MouseCursorChanger cursorChanger;
 
+    public static event EventHandler InteractNPC;
+
     public List<Quest> questList;
 
     private Inventory inventory;
@@ -110,7 +112,7 @@ public class Player : Character
         }
 
         // NPCInteraction
-        if (NPCTarget != null)
+        /*if (NPCTarget != null)
         {
             if (!InInteractNPCRange())
             {
@@ -126,6 +128,35 @@ public class Player : Character
                 transform.eulerAngles = new Vector3(0, rotationY, 0);
                 NPCTarget.Interact();
             }
+        }*/
+    }
+
+    public IEnumerator GoToNPC()
+    {
+        while (NPCTarget != null && !InInteractNPCRange())
+        {
+            GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+            GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
+            yield return null;
+        }
+        InteractNPC?.Invoke(this, EventArgs.Empty);
+        StartCoroutine(LookAtTarget());
+    }
+
+    public IEnumerator LookAtTarget()
+    {
+        float time = 0.0f;
+        float speed = 1.0f;
+        GetComponent<MovementHandler>().Cancel();
+
+        while (NPCTarget != null && time < 1.0f)
+        {
+            Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+            time += Time.deltaTime * speed;
+            yield return null;
         }
     }
 
