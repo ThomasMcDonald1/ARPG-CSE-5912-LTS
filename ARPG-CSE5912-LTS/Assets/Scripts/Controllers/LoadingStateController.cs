@@ -9,7 +9,8 @@ public class LoadingStateController : StateMachine
 {
     public static LoadingStateController Instance;
     public GameObject loadingSceneCanvasObj;
-    public Slider progressBar;
+    // public Slider progressBar;
+    public Image progressBar;
     public bool loadScene = true;
     public string sceneToLoad;
     public Text percentLoaded;
@@ -17,7 +18,7 @@ public class LoadingStateController : StateMachine
     public RawImage backgroundImage;
     public float height = 250.0f;
     public float width = 0.0f;
-
+    [HideInInspector] public AsyncOperation scene;
     private float progressValue;
 
     [HideInInspector] public Canvas loadingSceneCanvas;
@@ -36,16 +37,23 @@ public class LoadingStateController : StateMachine
         loadingSceneCanvasObj.SetActive(true);
 
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-        AsyncOperation scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         scene.allowSceneActivation = false;
         InputController.Instance.enabled = false;
 
-        await Task.Delay(1000);
+        StartCoroutine(GetSceneLoadProgress());
+
+        await Task.Delay(2000);
 
         scene.allowSceneActivation = true;
-
-        await Task.Delay(5000);
-
+    }
+    public IEnumerator GetSceneLoadProgress()
+    {
+        while(!scene.isDone)
+        {
+            progressBar.fillAmount = scene.progress;
+            yield return null;
+        }
         loadingSceneCanvasObj.SetActive(false);
     }
     public IEnumerator LoadYourAsyncScene(string sceneName)
@@ -58,7 +66,7 @@ public class LoadingStateController : StateMachine
         while (!asyncLoad.isDone)
         {
             progressValue = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            progressBar.value = progressValue;
+            // progressBar.value = progressValue;
             Debug.Log(asyncLoad.progress);
             percentLoaded.text = Mathf.Round(progressValue * 100) + "%";
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "SceneWaypointLocations", menuName = "ScriptableObjects/SceneWaypoint")]
 public class SceneWaypointLocations : ScriptableObject, ISerializationCallbackReceiver
 {
+    public static SceneWaypointLocations Instance;
     public Dictionary<string, Vector3> waypointLocations;
     public void OnAfterDeserialize()
     {
