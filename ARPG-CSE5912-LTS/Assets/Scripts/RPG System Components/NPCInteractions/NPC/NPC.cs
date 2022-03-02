@@ -55,7 +55,7 @@ public abstract class NPC : MonoBehaviour
         }
     }
 
-    protected abstract IEnumerator BeginInteraction();
+    public abstract IEnumerator BeginInteraction();
 
 
     protected void SetMenu()
@@ -66,7 +66,6 @@ public abstract class NPC : MonoBehaviour
         }
         else if (isTrading)
         {
-            // enable trade menu here
             InteractionManager.GetInstance().EnterTradeMenu();
         }
         else

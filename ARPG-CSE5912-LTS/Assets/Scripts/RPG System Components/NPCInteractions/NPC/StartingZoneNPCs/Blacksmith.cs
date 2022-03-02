@@ -22,7 +22,7 @@ public class Blacksmith : NPC
         return DialogueJSON[currentStory];
     }
 
-    protected override IEnumerator BeginInteraction()
+    public override IEnumerator BeginInteraction()
     {
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
         shopUI.initializeShop(shop);

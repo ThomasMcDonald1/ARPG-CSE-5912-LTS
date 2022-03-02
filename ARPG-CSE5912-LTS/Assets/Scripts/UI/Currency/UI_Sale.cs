@@ -34,7 +34,7 @@ public class UI_Sale : MonoBehaviour
                 saleItems = inventory.weaponItems;
                 break;
         }
-        Debug.Log("Sale slots length: " + saleSlots.Length);
+        //Debug.Log("Sale slots length: " + saleSlots.Length);
         for (int i = 0; i < saleSlots.Length; i++)
         {
             //Debug.Log("items.Count is " + inventory.items.Count);

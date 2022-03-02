@@ -19,8 +19,10 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject tradeMenu;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
+    [SerializeField] public GameObject shopSlotUI;
     public Transform ShopSlots;
     ShopSlot[] shopSlots;
+
     [SerializeField] PlayerMoney playerMoney;
     [SerializeField] public UI_Sale SaleUI;
 
@@ -138,6 +140,7 @@ public class InteractionManager : MonoBehaviour
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
         playerMoneyText.SetText("Player: "+playerMoney.money.ToString()+"$");
+        StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
         foreach (ShopSlot slot in shopSlots)
         {
             //slot.purchaseButton.enabled = true;
