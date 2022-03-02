@@ -33,7 +33,7 @@ public class SaleSlot : MonoBehaviour
   
     public void saleItem()
     {
-        Inventory.instance.Remove(item);
+        Inventory.instance.Sell(item);
         playerMoney.addMoney(item.cost);
     }
 }

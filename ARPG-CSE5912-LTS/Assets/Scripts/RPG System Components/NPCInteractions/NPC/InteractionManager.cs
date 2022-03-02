@@ -156,7 +156,9 @@ public class InteractionManager : MonoBehaviour
                 }
             }
         }
-        SaleUI.updateUI();
+       
+            SaleUI.updateUI();
+        
     }
 
     public void BeginDialogue()

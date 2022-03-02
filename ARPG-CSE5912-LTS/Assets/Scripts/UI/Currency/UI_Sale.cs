@@ -10,18 +10,13 @@ public class UI_Sale : MonoBehaviour
     public SaleSlot[] saleSlots;
     public List<Ite> saleItems = new List<Ite>();
     public Shop shop;
+    public int saleItemChanged;
     
     void Start()
     {
         inventory = Inventory.instance;
         saleSlots = saleParent.GetComponentsInChildren<SaleSlot>();
-
-    }
-
-   
-  
-    public void updateUI()
-    {
+        saleItemChanged = saleItems.Count;
         switch ((int)shop.shopSaleType)
         {
             case (int)Shop.saleType.Utility:
@@ -34,33 +29,45 @@ public class UI_Sale : MonoBehaviour
                 saleItems = inventory.weaponItems;
                 break;
         }
+    }
+
+   
+  
+    public void updateUI()
+    {
+       
         //Debug.Log("Sale slots length: " + saleSlots.Length);
-        for (int i = 0; i < saleSlots.Length; i++)
+        if (saleItemChanged != saleItems.Count)
         {
-            //Debug.Log("items.Count is " + inventory.items.Count);
-            if (i < saleItems.Count)
+            for (int i = 0; i < saleSlots.Length; i++)
             {
-                GameObject amount = saleSlots[i].transform.GetChild(1).gameObject;
-                TextMeshProUGUI text = amount.GetComponent<TextMeshProUGUI>();
-                // Debug.Log(inventory.items[i].name + " index: " + i + " amount: " + inventory.amount[inventory.items[i]]);
-                if (saleItems[i].stackable)
+                //Debug.Log("items.Count is " + inventory.items.Count);
+                if (i < saleItems.Count)
                 {
-                    // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
+                    GameObject amount = saleSlots[i].transform.GetChild(1).gameObject;
+                    TextMeshProUGUI text = amount.GetComponent<TextMeshProUGUI>();
+                    // Debug.Log(inventory.items[i].name + " index: " + i + " amount: " + inventory.amount[inventory.items[i]]);
+                    if (saleItems[i].stackable)
+                    {
+                        // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
 
 
-                    text.SetText(inventory.amount[saleItems[i]].ToString());
+                        text.SetText(inventory.amount[saleItems[i]].ToString());
 
+                    }
+                    else
+                    {
+                        text.SetText("");
+                    }
+                    saleSlots[i].AddItem(saleItems[i]);
                 }
                 else
                 {
-                    text.SetText("");
+                    saleSlots[i].ClearSlot();
                 }
-                saleSlots[i].AddItem(saleItems[i]);
             }
-            else
-            {
-                saleSlots[i].ClearSlot();
-            }
+            saleItemChanged = saleItems.Count;
+
         }
 
 
