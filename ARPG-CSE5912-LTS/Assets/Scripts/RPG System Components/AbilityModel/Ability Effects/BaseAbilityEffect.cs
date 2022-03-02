@@ -7,10 +7,11 @@ public abstract class BaseAbilityEffect : MonoBehaviour
 {
     //Use this value to change the damage done by everything in the game globally
     public const float globalDamageBalanceAdjustment = 1f;
+    public string effectOrigin;
+    public GameObject effectVFXObj;
 
     protected const int minDamage = -99999;
     protected const int maxDamage = 99999;
-
 
     public static event EventHandler<InfoEventArgs<Character>> AbilityMissedTargetEvent;
 
@@ -21,14 +22,14 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     
 
     //Apply the ability's effect to the target
-    public void Apply(Character target)
+    public void Apply(Character target, AbilityCast abilityCast)
     {
         //if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
         //    return;
 
         if (GetComponent<BaseHitRate>().RollForHit(target))
         {
-            OnApply(target);
+            OnApply(target, abilityCast);
         }
         else
         {
@@ -36,7 +37,7 @@ public abstract class BaseAbilityEffect : MonoBehaviour
         }
     }
 
-    protected abstract int OnApply(Character target);
+    protected abstract int OnApply(Character target, AbilityCast abilityCast);
 
     /// <summary>
     /// Grab a stat from the character
@@ -57,5 +58,58 @@ public abstract class BaseAbilityEffect : MonoBehaviour
         int roll = UnityEngine.Random.Range(0, 101);
         int chance = caster.stats[StatTypes.CritChance];
         return chance >= roll;
+    }
+
+    public Vector3 GetEffectOrigin(AbilityCast abilityCast, Character target)
+    {
+        Vector3 origin = new Vector3();
+        effectOrigin = effectOrigin.ToLower();
+        switch (effectOrigin)
+        {
+            case "caster":
+                origin = abilityCast.caster.transform.position;
+                break;
+            case "click":
+                origin = abilityCast.hit.point;
+                break;
+            case "target":
+                origin = target.transform.position;
+                break;
+            default:
+                break;
+        }
+        return origin;
+    }
+
+    public void InstantiateEffectVFX(AbilityCast abilityCast, Character target)
+    {
+        if (effectOrigin.ToLower() != "target" && !abilityCast.abilityVFXFired || effectOrigin.ToLower() == "target")
+        {
+            abilityCast.abilityVFXFired = true;
+            Debug.Log("Creating Effect VFX");
+            GameObject instance = Instantiate(effectVFXObj);
+            Vector3 vfxPos = GetEffectOrigin(abilityCast, target);
+            instance.transform.position = vfxPos;
+
+            ParticleSystem pS = instance.GetComponent<ParticleSystem>();
+            SpecifyAbilityArea aa = abilityCast.ability.GetComponent<SpecifyAbilityArea>();
+            PointBlankAbilityArea pbaoe = abilityCast.ability.GetComponent<PointBlankAbilityArea>();
+
+            if (aa != null)
+            {
+                instance.transform.localScale = new Vector3(aa.aoeRadius * 2, 2f, aa.aoeRadius * 2);
+            }
+            else if (pbaoe != null)
+            {
+                instance.transform.localScale = new Vector3(pbaoe.aoeRadius * 2, 2f, pbaoe.aoeRadius * 2);
+            }
+            StartCoroutine(ShowVFX(pS, instance));
+        }  
+    }
+
+    private IEnumerator ShowVFX(ParticleSystem pS, GameObject instance)
+    {
+        yield return new WaitForSeconds(pS.main.duration);
+        Destroy(instance);
     }
 }

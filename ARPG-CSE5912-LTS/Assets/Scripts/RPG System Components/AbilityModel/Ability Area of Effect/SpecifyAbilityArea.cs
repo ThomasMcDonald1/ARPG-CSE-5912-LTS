@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class SpecifyAbilityArea : BaseAbilityArea
 {
-    public int aoeRadius;
     Player player;
     int groundLayerMask = 1 << 6;
 
@@ -45,6 +44,7 @@ public class SpecifyAbilityArea : BaseAbilityArea
                 characters.Add(character);
             }
         }
+        abilityCast.charactersAffected = characters;
         return characters;
     }
 
@@ -53,5 +53,10 @@ public class SpecifyAbilityArea : BaseAbilityArea
         player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
         player.gameplayStateController.aoeReticleCylinder.SetActive(true);
         abilityAreaNeedsShown = true;
+    }
+
+    public override Type GetAbilityArea()
+    {
+        return typeof(SpecifyAbilityArea);
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InstantCastType : BaseCastType
 {
+    Coroutine instantCastRoutine;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
 
     public override Type GetCastType()
@@ -14,8 +15,10 @@ public class InstantCastType : BaseCastType
 
     public override void WaitCastTime(AbilityCast abilityCast)
     {
-        InstantiateVFX(abilityCast);
-        CompleteCast(abilityCast);
+        if (instantCastRoutine == null)
+        {
+            instantCastRoutine = StartCoroutine(InstantCastCoroutine(abilityCast));
+        }
     }
 
     public override void StopCasting()
@@ -28,22 +31,15 @@ public class InstantCastType : BaseCastType
        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
-    protected override void InstantiateVFX(AbilityCast abilityCast)
+    protected override void InstantiateSpellcastVFX(AbilityCast abilityCast)
     {
-        GameObject effectVFX = abilityCast.ability.effectVFXObj;
-        GameObject instance = Instantiate(effectVFX, abilityCast.ability.transform);
-        StartCoroutine(ShowVFX(abilityCast, instance));
+
     }
 
-    private IEnumerator ShowVFX(AbilityCast abilityCast, GameObject vfx)
+    private IEnumerator InstantCastCoroutine(AbilityCast abilityCast)
     {
-        Vector3 casterPos = abilityCast.caster.transform.position;
-        Vector3 casterDir = abilityCast.caster.transform.forward;
-        Quaternion casterRot = abilityCast.caster.transform.rotation;
-        float spawnDistance = 1;
-        Vector3 spawnPos = casterPos + casterDir * spawnDistance;
-        vfx.transform.position = spawnPos;
-        yield return new WaitForSeconds(1);
-        Destroy(vfx);
+        yield return new WaitForEndOfFrame();
+        CompleteCast(abilityCast);
+        instantCastRoutine = null;
     }
 }

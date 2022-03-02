@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PhysicalAbilityPower : BaseAbilityPower
 {
-    protected override int GetBaseAttack()
+    public override int GetBaseAttack()
     {
         return GetComponentInParent<Stats>()[StatTypes.STR];
     }
-    protected override int GetBaseDefense(Character target)
+    public override float GetBaseDefense(Character target, BaseAbilityEffectElement effectElement)
     {
         return target.GetComponent<Stats>()[StatTypes.Armor];
     }
 
-    public override bool IsPhysicalPower()
+    public override float GetPercentDefense(Character target, BaseAbilityEffectElement effectElement)
     {
-        return true;
+        return target.GetComponent<Stats>()[StatTypes.PercentArmorBonus] * 0.01f;
     }
 
-    public override bool IsMagicPower()
+    public override float AdjustDefenseForPenetration(Character caster)
     {
-        return false;
+        return 1 - GetStat(caster, StatTypes.PercentArmorPen) * 0.01f;
     }
 }
