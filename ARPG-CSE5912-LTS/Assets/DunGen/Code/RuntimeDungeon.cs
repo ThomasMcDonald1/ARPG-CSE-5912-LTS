@@ -15,6 +15,7 @@ namespace DunGen
         public DungeonGenerator Generator = new DungeonGenerator();
         public bool GenerateOnStart = true;
 		public GameObject Root;
+		public SaveDungeon savedDunData;
 
         protected virtual void Awake()
         {
@@ -22,6 +23,7 @@ namespace DunGen
 			{
 				Generate();
 				BakeNavMesh();
+				AddEnemies();
 				Debug.Log("Dungeon Generated!");
 			}
 		}
@@ -30,6 +32,9 @@ namespace DunGen
 		{
 			if(Root != null)
 				Generator.Root = Root;
+
+			if (savedDunData != null)
+				Generator.savedDungeon = savedDunData;
 
 			if (!Generator.IsGenerating)
 				Generator.Generate();
@@ -42,6 +47,23 @@ namespace DunGen
 				if (child.CompareTag("DungeonPart"))
 				{
 					child.GetComponent<NavMeshSurface>().BuildNavMesh();
+				}
+			}
+		}
+
+		void AddEnemies()
+        {
+			foreach (Transform tile in Root.transform)
+			{
+				foreach (Transform child in tile.transform)
+                {
+					if (child.CompareTag("Enemy"))
+					{
+						foreach (Transform enemy in child.transform)
+                        {
+							enemy.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+						}
+					}
 				}
 			}
 		}
