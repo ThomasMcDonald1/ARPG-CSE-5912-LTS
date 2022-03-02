@@ -132,16 +132,8 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
-<<<<<<< HEAD
-        player.NPCTarget.GetComponent<NPC>().StartTrading();
-      
-            Debug.Log("Is tradeMenu active?"+ tradeMenu.activeSelf);
-            tradeMenu.SetActive(true);
-        
-=======
         //player.NPCTarget.GetComponent<NPC>().StartTrading();
         tradeMenu.SetActive(true);
->>>>>>> d439d5bd (Refactored NPC interactions -- No more constant coroutine throughout entire interaction)
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
@@ -162,9 +154,7 @@ public class InteractionManager : MonoBehaviour
                 }
             }
         }
-       
-            SaleUI.updateUI();
-        
+        SaleUI.updateUI();
     }
 
     public void BeginDialogue()
