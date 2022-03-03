@@ -10,6 +10,8 @@ public class SaleSlot : MonoBehaviour
     public Image icon;
     public TextMeshProUGUI amount;
     [SerializeField] PlayerMoney playerMoney;
+    public Button removeButton;
+
     Ite item;
     public void AddItem(Ite newItem)
     {
@@ -25,6 +27,8 @@ public class SaleSlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
+        removeButton.interactable = false;
+
         amount.SetText("");
 
     }
