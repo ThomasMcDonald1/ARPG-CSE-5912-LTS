@@ -45,7 +45,7 @@ public abstract class Character : MonoBehaviour
         playerAbilityController = GetComponent<PlayerAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
-        AttackTarget = null;
+        //AttackTarget = null;
     }
 
     protected virtual void Update()
