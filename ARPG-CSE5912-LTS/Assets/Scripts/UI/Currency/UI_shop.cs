@@ -25,10 +25,11 @@ public class UI_shop:MonoBehaviour
         Ite[] itemList = shop.itemList;
 
         shopSlotLength = itemList.Length;
-        
+        Debug.Log("Item List length: " + itemList.Length);
 
         for (int i = 0; i < itemList.Length; i++)
         {
+            //Debug.Log("Shop item: " + itemList[i].name);
             shopSlots[i].InitializeSlot(itemList[i]);
 
         }
@@ -38,6 +39,7 @@ public class UI_shop:MonoBehaviour
     {
         for (int i = 0; i < shopSlotLength; i++)
         {
+
             shopSlots[i].resetSlot();
 
         }

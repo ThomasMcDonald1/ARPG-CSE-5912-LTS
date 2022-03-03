@@ -57,13 +57,14 @@ public class GeneralStore : NPC
             if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
-            //shopUI.initializeShop(shop);
+            shopUI.initializeShop(shop);
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());
-            //shopUI.resetShop();
+            
             //InteractionManager.GetInstance().StopInteraction();
             //InteractionManager.GetInstance().DisableInteractionView();
         }
+        //shopUI.resetShop();
     }
 }

@@ -12,6 +12,7 @@ public class ShopSlot : MonoBehaviour
     public Button purchaseButton;
     public Image goldIcon;
     [SerializeField] PlayerMoney playerMoney;
+
     public Ite item;
 
     

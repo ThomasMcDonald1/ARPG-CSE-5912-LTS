@@ -56,7 +56,7 @@ public class Blacksmith : NPC
             if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
-            //shopUI.initializeShop(shop);
+            shopUI.initializeShop(shop);
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());

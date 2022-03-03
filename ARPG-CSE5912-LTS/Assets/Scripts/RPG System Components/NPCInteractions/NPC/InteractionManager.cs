@@ -17,13 +17,13 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private GameObject tradeMenu;
+    [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
-    [SerializeField] public GameObject shopSlotUI;
     public Transform ShopSlots;
     ShopSlot[] shopSlots;
 
-    [SerializeField] PlayerMoney playerMoney;
+    [SerializeField] private PlayerMoney playerMoney;
     [SerializeField] public UI_Sale SaleUI;
 
 
@@ -40,6 +40,9 @@ public class InteractionManager : MonoBehaviour
 
     private void Update()
     {
+        playerMoneyText.SetText("Player: " + playerMoney.money.ToString() + "$");
+        SaleUI.updateUI();
+
         if (player.NPCTarget == null) return;
         else
         {      
@@ -57,6 +60,22 @@ public class InteractionManager : MonoBehaviour
                 default:
                     SetNames("");
                     break;
+            }
+        }
+        foreach (ShopSlot slot in shopSlots)
+        {
+
+            //slot.purchaseButton.enabled = true;
+            if (slot.icon.IsActive())
+            {
+                if (playerMoney.money - slot.item.cost < 0)
+                {
+                    slot.purchaseButton.interactable = false;
+                }
+                else
+                {
+                    slot.purchaseButton.interactable = true;
+                }
             }
         }
     }
@@ -132,29 +151,15 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
+
         //player.NPCTarget.GetComponent<NPC>().StartTrading();
         tradeMenu.SetActive(true);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
-        playerMoneyText.SetText("Player: "+playerMoney.money.ToString()+"$");
+
         //StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
-        foreach (ShopSlot slot in shopSlots)
-        {
-            //slot.purchaseButton.enabled = true;
-            if (slot.icon.IsActive())
-            {
-                if (playerMoney.money - slot.item.cost < 0)
-                {
-                    slot.purchaseButton.interactable = false;
-                }
-                else
-                {
-                    slot.purchaseButton.interactable = true;
-                }
-            }
-        }
-        SaleUI.updateUI();
+        
     }
 
     public void BeginDialogue()
@@ -179,6 +184,7 @@ public class InteractionManager : MonoBehaviour
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);
         tradeMenu.SetActive(false);
+        shopUI.resetShop();
     }
 
 }

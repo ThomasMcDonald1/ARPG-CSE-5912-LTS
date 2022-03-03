@@ -11,7 +11,8 @@ public class UI_Sale : MonoBehaviour
     public List<Ite> saleItems = new List<Ite>();
     public Shop shop;
     public int saleItemChanged;
-    
+    [SerializeField] public PlayerMoney playerMoney;
+
     void Start()
     {
         inventory = Inventory.instance;
@@ -39,6 +40,7 @@ public class UI_Sale : MonoBehaviour
         //Debug.Log("Sale slots length: " + saleSlots.Length);
         if (saleItemChanged != saleItems.Count)
         {
+
             for (int i = 0; i < saleSlots.Length; i++)
             {
                 //Debug.Log("items.Count is " + inventory.items.Count);
