@@ -39,7 +39,11 @@ namespace ARPG.Combat
                 }
                 else
                 {
-                    SeePlayer();
+                    if (agent.enabled)
+                    {
+                        SeePlayer();
+                    }
+                    
                 }
             }
 
