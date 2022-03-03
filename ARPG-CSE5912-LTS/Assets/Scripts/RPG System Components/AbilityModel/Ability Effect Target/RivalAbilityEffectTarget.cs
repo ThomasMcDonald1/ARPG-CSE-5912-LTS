@@ -11,6 +11,6 @@ public class RivalAbilityEffectTarget : AbilityEffectTarget
             return false;
         Stats stats = target.GetComponent<Stats>();
 
-        return (caster.GetCharacterType() != target.GetCharacterType()) && target.GetComponent<Enemy>() != null && stats != null && stats[StatTypes.HP] > 0;
+        return (caster.GetCharacterType() != target.GetCharacterType()) && stats != null && stats[StatTypes.HP] > 0;
     }
 }
