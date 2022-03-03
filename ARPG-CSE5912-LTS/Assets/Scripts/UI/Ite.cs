@@ -12,6 +12,10 @@ public class Ite : ScriptableObject
 	public bool stackable;
 	public ItemType type;
 	[SerializeField] public GameObject prefab;
+	public int attackDamage;
+	public int defendRate;
+	public string utilityUsage;
+
 	//public int amount = 1;
 	public virtual void Use()
 	{
