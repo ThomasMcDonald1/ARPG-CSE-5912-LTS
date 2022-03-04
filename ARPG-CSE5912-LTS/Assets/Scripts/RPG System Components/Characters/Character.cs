@@ -110,8 +110,6 @@ public abstract class Character : MonoBehaviour
 
         if (abilityCanBePerformed)
         {
-            //charactersInRange = range.GetCharactersInRange();
-
             if (abilityCast.abilityRequiresCursorSelection)
             {
                 if (this is Player)
@@ -129,9 +127,9 @@ public abstract class Character : MonoBehaviour
                     //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
                     //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
-                    //1a) select target player character if it's a character-targeting ability
-                    //1b) select a point on the terrain that is centered on the player character otherwise
-                    //2) call abilityArea.PerformAOE from from within the Enemy class
+                    //1a) select target character if it's a character-targeting ability
+                    //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
+                    
                 }
             }
             else

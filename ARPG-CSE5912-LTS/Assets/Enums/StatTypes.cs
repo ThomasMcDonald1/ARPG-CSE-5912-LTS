@@ -21,9 +21,9 @@ public enum StatTypes
     MAGDEF,
 
     //11-13
-    STR, //character's strength, NOT USED?
-    DEX, //character's dexterity, NOT USED?
-    INT, //character's intelligence, NOT USED?
+    STR, //character's strength, NOT USED
+    DEX, //character's dexterity, NOT USED
+    INT, //character's intelligence, NOT USED
 
     //Secondary & Derived stats (from attributes and gear)
     //14-45
@@ -38,8 +38,8 @@ public enum StatTypes
     PercentArmorPen, //same as above but for percent armor pen
     PercentMagicPen, //same as above but for percent magic pen
     RunSpeed, //How fast the character can run
-    HealthRegen, //How much health the character gets back per regeneration tick 
-    ManaRegen, //How much energy the character gets back per regeneration tick
+    HealthRegen, //How much health the character gets back per regeneration tick NOT USED
+    ManaRegen, //How much energy the character gets back per regeneration tick NOT USED
     ExpGainMod, //Percentage modifier to the normal amount of exp earned from killing an enemy
     PhysDmgBonus, //percentage modifier to the normal amount of physical damage done by an attack or ability
     MagDmgBonus, //percent modifier to the normal amount of magical damage done by any spell with an elemental type other than physical
@@ -61,10 +61,10 @@ public enum StatTypes
     PoisonDmgOnHitOff, //flat poison damage added to main offhand weapon attack
 
     //46-59
-    BlockChance, //chance to mitigate damage by blocking with an equipped shield
-    BlockAmount, //how much damage will be mitigated when a shield block occurs
+    BlockChance, //chance to mitigate damage by blocking with an equipped shield NOT USED?
+    BlockAmount, //how much damage will be mitigated when a shield block occurs NOT USED?
     DodgeChance, //chance to dodge an attack, taking 0 damage
-    DeflectChance, //chance to parry with weapon, reducing damage by a set amount
+    DeflectChance, //chance to parry with weapon, reducing damage by a set amount NOT USED
     DamageReflect, //percentage of the damage the character takes that gets returned to the attacker
     FireRes, //character's resistance to fire damage
     ColdRes, //character's resistance to cold damage

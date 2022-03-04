@@ -50,8 +50,7 @@ public class BezierCurve
         Vector3 dir = (end - start).normalized;
         Vector3 midPoint = (end + start) / 2;
         Vector3 normalVectorDir = Vector3.Cross(dir, objRightVector).normalized;
-        float normalVectorDist = height;
-        Vector3 normalVector = normalVectorDist * normalVectorDir;
+        Vector3 normalVector = height * normalVectorDir;
         if (normalVector.y < 0)
             normalVector = -normalVector;
         Vector3 normalEndPoint = midPoint + normalVector;
