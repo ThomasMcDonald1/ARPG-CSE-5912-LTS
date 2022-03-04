@@ -9,7 +9,7 @@ public class GameplayStateController : StateMachine
     public GameObject gameplayUICanvasObj;
     public GameObject optionsMenuCanvasObj;
     public GameObject characterPanelCanvasObj;
-    //public GameObject inventoryCanvasObj;
+    public GameObject inventoryCanvasObj;
     public GameObject gameoverCanvasObj;
     public GameObject npcInterfaceObj;
 
@@ -18,7 +18,7 @@ public class GameplayStateController : StateMachine
     [HideInInspector] public Canvas optionsMenuCanvas;
     [HideInInspector] public Canvas characterPanelCanvas;
     [HideInInspector] public Canvas gameoverCanvas;
-    //[HideInInspector] public Canvas inventoryCanvas;
+    [HideInInspector] public Canvas inventoryCanvas;
     // Button to pause game and bring up pause menu
     public GameObject pauseMenuButtonObj;
 
@@ -72,13 +72,13 @@ public class GameplayStateController : StateMachine
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterPanelCanvas = characterPanelCanvasObj.GetComponent<Canvas>();
         gameoverCanvas = gameoverCanvasObj.GetComponent<Canvas>();
-        //inventoryCanvas = inventoryCanvasObj.GetComponent<Canvas>();
+        inventoryCanvas = inventoryCanvasObj.GetComponent<Canvas>();
 
         pauseMenuCanvas.enabled = false;
         gameplayUICanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
         characterPanelCanvas.enabled = false;
-        //inventoryCanvas.enabled = false;
+        inventoryCanvas.enabled = false;
         aoeReticleSphere.SetActive(false);
         aoeReticleCylinder.SetActive(false);
         gameoverCanvas.enabled = false;

@@ -6,6 +6,7 @@ public class EquipManager : MonoBehaviour
 {
     #region Singleton
     public static EquipManager instance;
+    public CustomCharacter character;
 
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
     public event OnEquipmentChanged onEquipmentChanged;
@@ -44,6 +45,7 @@ public class EquipManager : MonoBehaviour
             }
         }
         currentEquipment[slotIndex] = newItem;
+
         // Equipment has been removed so we trigger the callback
         if (onEquipmentChanged != null)
             onEquipmentChanged.Invoke(null, oldItem);
@@ -66,7 +68,7 @@ public class EquipManager : MonoBehaviour
             }
 
             currentEquipment[slotIndex] = null;
-
+            EquipmentManager.instance.UnequipItem(oldItem.equipment, character);
 
             // Equipment has been removed so we trigger the callback
             if (onEquipmentChanged != null)
