@@ -18,7 +18,7 @@ public class SaleSlot : MonoBehaviour
         item = newItem;
         icon.sprite = item.icon;
         icon.enabled = true;
-       
+        removeButton.interactable = true;
 
     }
 
