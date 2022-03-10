@@ -37,12 +37,12 @@ public class CharacterPanelState : BaseGameplayState
 
     void InventoryStartUp()
     {
-        //gameplayStateController.inventoryCanvas.enabled = true;
+        gameplayStateController.inventoryCanvas.enabled = true;
         gameplayStateController.characterPanelCanvas.enabled = false;
     }
     void CloseInventory()
     {
-        //gameplayStateController.inventoryCanvas.enabled = false;
+        gameplayStateController.inventoryCanvas.enabled = false;
 
         gameplayStateController.ChangeState<GameplayState>();
 
