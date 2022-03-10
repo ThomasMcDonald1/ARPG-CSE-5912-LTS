@@ -13,9 +13,9 @@ namespace LootLabels {
         public BaseGear gear;      //created manually or through the lootgenerator
 
         private void Start() {
-            if (Premade) {
-                gear = new BaseGear(gearRarity, gearType, ResourceManager.singleton.GetModelName(gearType), ResourceManager.singleton.GetIconName(gearType));
-            }
+            //if (Premade) {
+            //    gear = new BaseGear(gearRarity, gearType, ResourceManager.singleton.GetModelName(gearType), ResourceManager.singleton.GetIconName(gearType));
+            //}
             
             CreateLabel();
         }
@@ -25,9 +25,10 @@ namespace LootLabels {
         /// Called in animator or in start when there is no animator
         /// </summary>
         public override void SpawnLabel() {
-            GetComponent<EventHandler>().ClearDelegates();
-            GetComponent<EventHandler>().SubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
-
+            //  GetComponent<EventHandler>().ClearDelegates();
+            // GetComponent<EventHandler>().SubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
+            Debug.Log("gear name is " + gear.ItemName);
+            Debug.Log("gear rarity is " + gear.ItemRarity);
             if (gear != null) {
                 GetComponent<CreateLabel>().SpawnLabelByRarity(gear.ItemName, gear.IconName, gear.ItemRarity);
             }

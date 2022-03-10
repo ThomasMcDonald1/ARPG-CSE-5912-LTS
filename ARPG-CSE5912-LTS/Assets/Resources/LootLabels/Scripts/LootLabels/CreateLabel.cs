@@ -52,6 +52,7 @@ namespace LootLabels {
 
             Color itemRarityColor = LootManager.singleton.RarityColors.ReturnRarityColor(rarity);
             labelSettings = new LabelSettings(stack, labelHeight, objectToFollow, text, itemRarityColor, autoHide, clampToScreen, disableOnClick, iconName);
+            Debug.Log("label text is " + text);
 
             LabelManager.singleton.InstantiateLabel(labelSettings, GetComponent<EventHandler>());
         }
