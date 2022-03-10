@@ -29,22 +29,22 @@ namespace LootLabels {
         /// <returns></returns>
         public string GetModelName(GearTypes gearType) {
             string modelPath = "LootLabels/3D models/";
-
+            Debug.Log(" in GetModelName gearType is " + gearType);
             switch (gearType) {
                 case GearTypes.Gloves:
-                    return modelPath + "Gloves1";
+                    return modelPath + "Gloves";
                 //case GearTypes.Shoulders:
                 //    return modelPath + "Shoulders";
                 //case GearTypes.Belt:
                 //    return modelPath + "Belt";
-                case GearTypes.Shoes:
-                    return modelPath + "Shoes";
-                case GearTypes.Lance:
-                    return modelPath + "Lance";
+                //case GearTypes.Shoes:
+                //    return modelPath + "Shoes";
+                //case GearTypes.Lance:
+                //    return modelPath + "Lance";
                 case GearTypes.Potion:
                     return modelPath + "Potion";
-                case GearTypes.Shield:
-                    return modelPath + "Shield";
+                //case GearTypes.Shield:
+                //    return modelPath + "Shield";
                 default:
                     Debug.Log("Case not implemented");
                     return modelPath + "Potion";
@@ -83,8 +83,8 @@ namespace LootLabels {
                 //    return iconPath + "InvShoulders";
                 //case GearTypes.Belt:
                 //    return iconPath + "InvBelt";
-                case GearTypes.Shoes:
-                    return iconPath + "InvBoots";
+                //case GearTypes.Shoes:
+                //    return iconPath + "InvBoots";
                 default:
                    // Debug.Log("Case not implemented");
                     return iconPath + "QuestionMark";
