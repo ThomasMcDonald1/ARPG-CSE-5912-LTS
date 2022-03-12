@@ -167,4 +167,41 @@ public class Inventory : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
+    public void Sell(Ite item)
+    {
+        List<Ite> list = null;
+        switch (item.type)
+        {
+            case Ite.ItemType.armor:
+                list = armorItems;
+                break;
+            case Ite.ItemType.weapon:
+                list = weaponItems;
+                break;
+            case Ite.ItemType.utility:
+                list = utilItems;
+                break;
+
+        }
+
+        if (!item.stackable)
+        {
+            list.Remove(item);
+        }
+        else if ((int)amount[item] > 1)
+        {
+            int num = (int)amount[item] - 1;
+            amount[item] = num;
+        }
+        else if ((int)amount[item] == 1)
+        {
+            amount[item] = "0";
+            list.Remove(item);
+            amount.Remove(item);
+        }
+
+      
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
+    }
 }
