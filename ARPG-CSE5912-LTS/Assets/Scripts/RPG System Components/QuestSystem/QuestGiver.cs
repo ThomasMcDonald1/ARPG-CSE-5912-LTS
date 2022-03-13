@@ -1,6 +1,6 @@
-
 using UnityEngine;
-
+using System;
+using System.Collections;
 
 public class QuestGiver : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class QuestGiver : MonoBehaviour
     [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
     [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
+    public static event EventHandler<InfoEventArgs<(int,int)>> QuestCompleteEvent;
+
     public int QuestIndex
     {
         get
@@ -43,6 +45,7 @@ public class QuestGiver : MonoBehaviour
     //test
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
@@ -53,10 +56,18 @@ public class QuestGiver : MonoBehaviour
         UpdateQuestIcon();
 
     }
+    public void AddQuestToLogIfNew()
+    {
+        if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        {
+            QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
+        }
+    }
     public void UpdateQuestIcon()
     {
         if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
         {
+            QuestCompleteEvent?.Invoke(this, new InfoEventArgs<(int, int)>((0,0)));
             iconRenderer.sprite = questionIconSprite;
             if (questIndex < quests.Length-1)
             {

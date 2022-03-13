@@ -9,11 +9,24 @@ public class Lorekeeper : NPC
     private List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
-
+    QuestGiver questGiver;
+    private void OnEnable()
+    {
+        QuestGiver.QuestCompleteEvent += OnQuestComplete;
+    }
+    private void OnDisable()
+    {
+        QuestGiver.QuestCompleteEvent -= OnQuestComplete;
+    }
+    private void OnQuestComplete(object sender, InfoEventArgs<(int, int)> e)
+    {
+        NextStory();
+    }
     private void Start()
     {
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
+        questGiver = this.GetComponent<QuestGiver>(); 
     }
 
     public override TextAsset GetCurrentDialogue()
@@ -23,6 +36,7 @@ public class Lorekeeper : NPC
 
     protected override IEnumerator BeginInteraction()
     {
+        questGiver.AddQuestToLogIfNew();//add quest to quest log if havent already added
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
 
         while (Interactable())
