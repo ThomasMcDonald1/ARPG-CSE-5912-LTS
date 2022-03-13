@@ -13,6 +13,7 @@ public class SingleCharacterAbilityArea : BaseAbilityArea
         {
             character = abilityCast.hit.collider.gameObject.GetComponent<Character>();
         }
+        //TODO: Else if basic attack ability, add remembered character from AbilityCast as character
         else if (abilityCast.abilityRange.GetAbilityRange() == typeof(SelfAbilityRange))
         {
             character = abilityCast.caster;

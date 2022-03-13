@@ -1,0 +1,31 @@
+{
+  "name":"Fireball",
+  "description":"Unleash an explosion of fire in a targeted area.",
+  "icon":"Update_icons/skill_b_Standart/01_fire_arrow",
+  "castingVfx":"Casting_Fire_LWRP",
+  "createsProjectileVFX":false,
+  "powerType":"Magical",
+  "baseDamageOrHealing":580,
+  "rangeType":"Constant",
+  "range":13,
+  "aoeType":"Specify",
+  "aoeRadius":5,
+  "costType":"Mana",
+  "cost":100,
+  "castType":"Timer",
+  "castTime":1.5,
+  "cooldown":3,
+  "abilityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Click",
+      "vfx":"Projectiles/Explosion/Explosion _Fire_4_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "element":"Fire"
+    }
+  ]
+}
