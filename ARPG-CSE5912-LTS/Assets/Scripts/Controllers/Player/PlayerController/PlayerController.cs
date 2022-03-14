@@ -54,14 +54,14 @@ using System.Threading.Tasks;
                     }
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
                     player.NPCTarget = npcTarget;
+                    StartCoroutine(player.GoToNPC());
                     break;
 
                 case "Enemy":
                     player.DialogueCancel();
-                    player.AttackSignal(true);
-                    EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
-                    player.Attack(target);
-                    break;
+                    player.SetAttackTarget(e.info.transform.GetComponent<EnemyTarget>());
+                    player.TargetEnemy();
+                break;
 
                 default:
                     break;
