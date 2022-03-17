@@ -82,6 +82,15 @@ public class Player : Character
             GetComponent<Animator>().SetBool("Dead", true);
         }
 
+        if (AttackTarget != null)
+        {
+            //rotation toward enemy
+            Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+        }
+
     }
 
     public void TargetEnemy()
@@ -109,13 +118,6 @@ public class Player : Character
                     GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
-
-
-                //rotation toward enemy
-                Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-                transform.eulerAngles = new Vector3(0, rotationY, 0);
             }
         }
     }
@@ -129,10 +131,10 @@ public class Player : Character
             yield return null;
         }
         InteractNPC?.Invoke(this, EventArgs.Empty);
-        StartCoroutine(LookAtTarget());
+        StartCoroutine(LookAtNPCTarget());
     }
 
-    public IEnumerator LookAtTarget()
+    public IEnumerator LookAtNPCTarget()
     {
         float time = 0.0f;
         float speed = 1.0f;
@@ -190,21 +192,19 @@ public class Player : Character
         if (AttackTarget != null)
         {
             AttackTarget.GetComponent<HealthBarController>().SubtractHealth(stats[StatTypes.PHYATK]);
-
         }
+        GetComponent<Animator>().SetBool("StopAttack", true);
     }
 
     // From animation event
     public void EndMainHandAttack()
     {
-        Debug.Log("Being called EndMainHandAttack?");
         if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
     }
 
     // From animation event
     public void EndOffHandAttack()
     {
-        Debug.Log("Being called EndOffHandAttack?");
         GetComponent<Animator>().SetBool("AttackingMainHand", true);
     }
     
