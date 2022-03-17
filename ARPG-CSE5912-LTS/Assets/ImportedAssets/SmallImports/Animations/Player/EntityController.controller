@@ -418,6 +418,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: CanDualWield
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: StopAttack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1869812032691937307}
   m_Solo: 0
@@ -448,6 +451,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: AttackingMainHand
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: StopAttack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5263176336785300307}
