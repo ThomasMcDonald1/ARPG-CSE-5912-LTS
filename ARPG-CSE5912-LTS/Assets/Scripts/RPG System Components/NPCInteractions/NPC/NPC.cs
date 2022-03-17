@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using Ink.Runtime;
+using System;
 
 public abstract class NPC : MonoBehaviour
 {
-    
+
 
     [SerializeField] protected Player player;
 
-    
     public float smooth;
     public float yVelocity;
 
-
-    protected bool isTalking;
-    protected bool isTrading;
-
     protected bool hasNewInfo;
-    //private bool hasAvailableQuest;
 
     private void Start()
     {
+        // Player.InteractNPC += Interact;
         hasNewInfo = false;
-        isTalking = false;
-        isTrading = false;
 
         smooth = 0.3f;
         yVelocity = 0.0f;
@@ -37,53 +31,12 @@ public abstract class NPC : MonoBehaviour
         {
             return true;
         }
-        else
-        {
-            isTalking = false;
-            isTrading = false;
-        }
         return false;
     }
 
-    public void Interact()
-    {
-        if (Interactable())
-        {
-            if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
-            else { SetDialogue(); }
-            StartCoroutine(BeginInteraction());
-        }
-    }
+    protected abstract void Interact(object sender, EventArgs e);
 
-    protected abstract IEnumerator BeginInteraction();
-
-
-    protected void SetMenu()
-    {
-        if (isTalking)
-        {
-            InteractionManager.GetInstance().EnterDialogueMode(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue());
-        }
-        else if (isTrading)
-        {
-            // enable trade menu here
-            InteractionManager.GetInstance().EnterTradeMenu();
-        }
-        else
-        {
-            InteractionManager.GetInstance().EnterOptionsMenu();
-        }
-    }
-
-    public void StopDialogue()
-    {
-        isTalking = false;
-    }
-    
-    public void SetDialogue()
-    {
-        isTalking = true;
-    }
+    public abstract IEnumerator LookAtPlayer();
 
     public string GetName()
     {

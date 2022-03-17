@@ -12,6 +12,8 @@ public class Player : Character
     [SerializeField] private InventoryUI uiInventory;
     public MouseCursorChanger cursorChanger;
 
+    public static event EventHandler InteractNPC;
+
     public List<Quest> questList;
 
     private Inventory inventory;
@@ -79,83 +81,77 @@ public class Player : Character
         {
             GetComponent<Animator>().SetBool("Dead", true);
         }
-        else
+
+        if (AttackTarget != null)
         {
-
-            if (AttackTarget != null)
-            {
-                GetComponent<Animator>().SetBool("StopAttack", false);
-                if (!InCombatTargetRange())
-                {
-                    //GeneralClass.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                    //GeneralClass.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
-                    this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                    this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.position);
-                }
-                else if (InCombatTargetRange() && signalAttack)
-                {
-                    //GeneralClass.GetComponent<MovementHandler>().Cancel();
-                    this.GetComponent<MovementHandler>().Cancel();
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-
-                    //rotation toward enemy
-                    Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                    rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-                    transform.eulerAngles = new Vector3(0, rotationY, 0);
-
-
-                }
-            }
+            //rotation toward enemy
+            Quaternion rotationToLookAt = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
         }
 
-        // NPCInteraction
-        if (NPCTarget != null)
+    }
+
+    public void TargetEnemy()
+    {
+        if (AttackTarget != null)
         {
-            if (!InInteractNPCRange())
+            GetComponent<Animator>().SetBool("StopAttack", false);
+            if (!InCombatTargetRange())
             {
-                GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
+                this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+                this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
             }
-            else if (InInteractNPCRange())
+            else if (InCombatTargetRange())
             {
-                this.GetComponent<MovementHandler>().Cancel();
-                Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
-                float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-                rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
-                transform.eulerAngles = new Vector3(0, rotationY, 0);
-                NPCTarget.Interact();
+                //GetComponent<Animator>().SetBool("StopAttack", false);
+                GetComponent<MovementHandler>().Cancel();
+
+                if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+                {
+                    GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                    //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                }
+                else
+                {
+                    GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                    //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                }
             }
         }
     }
 
-    //private void playUpItem()
-    //{
+    public IEnumerator GoToNPC()
+    {
+        while (NPCTarget != null && !InInteractNPCRange())
+        {
+            GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+            GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
+            yield return null;
+        }
+        InteractNPC?.Invoke(this, EventArgs.Empty);
+        StartCoroutine(LookAtNPCTarget());
+    }
 
-    //    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-    //    RaycastHit hit;
-    //    if (Mouse.current.leftButton.wasReleasedThisFrame)
-    //    {
-    //        if (Physics.Raycast(ray, out hit))
-    //        {
-    //            if (hit.collider != null)
-    //            {
-    //                //Debug.Log("hit: " + hit.transform.gameObject.tag);
-    //                if (hit.transform.gameObject.tag == "InventoryItem")
-    //                {
-    //                    InventoryItems item = hit.transform.gameObject.GetComponent<ItemWorld>().getItem();
-    //                    inventory.AddItem(item);
-    //                    hit.transform.gameObject.GetComponent<ItemWorld>().DestroySelf();
+    public IEnumerator LookAtNPCTarget()
+    {
+        float time = 0.0f;
+        float speed = 1.0f;
+        GetComponent<MovementHandler>().Cancel();
 
-    //                }
+        while (NPCTarget != null && time < 1.0f)
+        {
+            Quaternion rotationToLookAt = Quaternion.LookRotation(NPCTarget.transform.position - transform.position);
+            float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
+            transform.eulerAngles = new Vector3(0, rotationY, 0);
+            time += Time.deltaTime * speed;
+            yield return null;
+        }
+    }
 
-    //            }
-    //        }
-    //    }
-    //}
-
-
-    public void Attack(EnemyTarget target)
+    public void SetAttackTarget(EnemyTarget target)
     {
         AttackTarget = target.transform;
     }
@@ -190,20 +186,28 @@ public class Player : Character
         signalAttack = signal;
     }
 
-    // Needed for the animation event
+    // From animation event
     public void Hit()
     {
         if (AttackTarget != null)
         {
             AttackTarget.GetComponent<HealthBarController>().SubtractHealth(stats[StatTypes.PHYATK]);
-
         }
+        GetComponent<Animator>().SetBool("StopAttack", true);
     }
 
-    public void Dead()
+    // From animation event
+    public void EndMainHandAttack()
     {
-
+        if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
     }
+
+    // From animation event
+    public void EndOffHandAttack()
+    {
+        GetComponent<Animator>().SetBool("AttackingMainHand", true);
+    }
+    
 
     public void ProduceItem()
     {
