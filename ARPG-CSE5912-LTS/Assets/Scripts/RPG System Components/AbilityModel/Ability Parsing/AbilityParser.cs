@@ -47,8 +47,8 @@ public class AbilityParser
             string path = "Assets/ImportedAssets/SmallImports/2000_Icons/";
             path += abilityData.icon + ".png";
             Sprite icon = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-            if (icon != null)
-                Debug.Log("Icon name: " + icon.name);
+            //if (icon != null)
+            //    Debug.Log("Icon name: " + icon.name);
             ability.icon = icon;
         }
     }
@@ -175,6 +175,7 @@ public class AbilityParser
 
     static void ParseAbilityConditionals(GameObject ability, AbilityData abilityData)
     {
+        Debug.Log(abilityData.abilityRequiresCursorSelection);
         if (abilityData.abilityRequiresCursorSelection)
             ability.AddComponent<AbilityRequiresCursorSelection>();
         if (abilityData.abilityRequiresCharacterUnderCursor)
@@ -246,10 +247,10 @@ public class AbilityParser
         {
             string path = "Assets/Spells Pack/LWRP(URP)/Particles_LWRP/Prefabs/";
             path += effectData.vfx + ".prefab";
-            Debug.Log("Loading VFX at path: " + path);
+            //Debug.Log("Loading VFX at path: " + path);
             GameObject vfxPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            if (vfxPrefab != null)
-                Debug.Log("Effect vfxPrefab: " + vfxPrefab.name);
+            //if (vfxPrefab != null)
+            //    Debug.Log("Effect vfxPrefab: " + vfxPrefab.name);
             effect.effectVFXObj = vfxPrefab;
         }
     }
@@ -325,6 +326,7 @@ public class AbilityParser
     {
         GameObject prefab = PrefabUtility.SaveAsPrefabAsset(ability, path);
         GameObject.DestroyImmediate(ability);
+        Debug.Log("Json successfully parsed to " + path);
         return prefab;
     }
 }
