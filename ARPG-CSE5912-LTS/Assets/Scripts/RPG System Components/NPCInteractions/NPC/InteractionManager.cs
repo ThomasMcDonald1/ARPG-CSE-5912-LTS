@@ -16,6 +16,20 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject worldNames;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
+    //[SerializeField] private GameObject tradeMenu;
+
+    // Hank TODO
+    /*
+    [SerializeField] public UI_shop shopUI;
+    [SerializeField] public TextMeshProUGUI playerMoneyText;
+
+    public Transform ShopSlots;
+    ShopSlot[] shopSlots;
+
+    [SerializeField] private PlayerMoney playerMoney;
+    [SerializeField] public UI_Sale SaleUI;
+    */
+
 
     [SerializeField] Player player;
 
@@ -27,11 +41,18 @@ public class InteractionManager : MonoBehaviour
 
     private Coroutine displayLineCoroutine;
 
+
     private void Update()
     {
+        // Hank TODO
+        /*
+        playerMoneyText.SetText("Player: " + playerMoney.money.ToString() + "$");
+        SaleUI.updateUI();
+        */
+
         if (player.NPCTarget == null) return;
         else
-        {      
+        {
             switch (player.NPCTarget.transform.tag)
             {
                 case "StartBlacksmith":
@@ -48,6 +69,24 @@ public class InteractionManager : MonoBehaviour
                     break;
             }
         }
+        // Hank TODO
+        /*
+        foreach (ShopSlot slot in shopSlots)
+        {
+
+            //slot.purchaseButton.enabled = true;
+            if (slot.icon.IsActive())
+            {
+                if (playerMoney.money - slot.item.cost < 0)
+                {
+                    slot.purchaseButton.interactable = false;
+                }
+                else
+                {
+                    slot.purchaseButton.interactable = true;
+                }
+            }
+        }*/
     }
 
     private void SetNames(string name)
@@ -58,6 +97,8 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
+        // Hank TODO
+        //shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
         if (instance != null)
         {
             Debug.LogWarning("More than 1 instance of the dialogue manager found...");
@@ -74,14 +115,6 @@ public class InteractionManager : MonoBehaviour
     {
         dialogueBox.SetActive(true);
         optionsMenu.SetActive(false);
-        if (currentStory.canContinue)
-        {
-            continueDialogueButton.SetActive(true);
-        }
-        else
-        {
-            continueDialogueButton.SetActive(false);
-        }
     }
 
     public void ContinueStory()
@@ -91,6 +124,14 @@ public class InteractionManager : MonoBehaviour
             StopCoroutine(displayLineCoroutine);
         }
         displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+        if (currentStory.canContinue)
+        {
+            continueDialogueButton.SetActive(true);
+        }
+        else
+        {
+            continueDialogueButton.SetActive(false);
+        }
     }
 
     private IEnumerator DisplayLine(string line)
@@ -103,12 +144,11 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    // We will use these for now... later we will incoroporate ink & update text this way
-
     public void EnterOptionsMenu()
     {
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+        //tradeMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
@@ -121,13 +161,21 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
+
+        //player.NPCTarget.GetComponent<NPC>().StartTrading();
+        //tradeMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
+
+        //StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
+
     }
 
     public void BeginDialogue()
     {
         currentStory = new Story(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue().text);
-        player.NPCTarget.GetComponent<NPC>().SetDialogue();
+        EnterDialogueMode(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue());
         if (currentStory.canContinue)
         {
             ContinueStory();
@@ -136,24 +184,19 @@ public class InteractionManager : MonoBehaviour
                 continueDialogueButton.SetActive(true);
             }
         }
-
-    }
-
-    public void StopDialogue()
-    {
-        player.NPCTarget.GetComponent<NPC>().StopDialogue();
-    }
-
-    public void ExitDialogueMenu()
-    {
-        player.NPCTarget.GetComponent<NPC>().StopDialogue();
     }
 
     public void StopInteraction()
     {
         player.NPCTarget = null;
+        worldNames.SetActive(true);
+        continueDialogueButton.SetActive(false);
+        optionsMenu.SetActive(false);
+        dialogueBox.SetActive(false);
+        //tradeMenu.SetActive(false);
+        // Hank TODO
+        //shopUI.resetShop();
     }
-
 
 }
 
