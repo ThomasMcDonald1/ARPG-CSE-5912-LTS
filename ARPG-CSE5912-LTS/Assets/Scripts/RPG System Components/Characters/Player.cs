@@ -82,6 +82,7 @@ public class Player : Character
             GetComponent<Animator>().SetBool("Dead", true);
         }
 
+        // Enemy target, always try to look at
         if (AttackTarget != null)
         {
             //rotation toward enemy

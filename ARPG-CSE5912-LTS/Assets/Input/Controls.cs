@@ -224,6 +224,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraZoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a257d7be-a65b-4be3-863e-c1fb5fbccd63"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -468,6 +477,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""OpenPassiveTree"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1f5632e-b5d5-4faa-a662-cb23655e468a"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -498,6 +518,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay_SecondaryClick = m_Gameplay.FindAction("SecondaryClick", throwIfNotFound: true);
         m_Gameplay_Stationary = m_Gameplay.FindAction("Stationary", throwIfNotFound: true);
         m_Gameplay_OpenPassiveTree = m_Gameplay.FindAction("OpenPassiveTree", throwIfNotFound: true);
+        m_Gameplay_CameraZoom = m_Gameplay.FindAction("CameraZoom", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -579,6 +600,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_SecondaryClick;
     private readonly InputAction m_Gameplay_Stationary;
     private readonly InputAction m_Gameplay_OpenPassiveTree;
+    private readonly InputAction m_Gameplay_CameraZoom;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -605,6 +627,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @SecondaryClick => m_Wrapper.m_Gameplay_SecondaryClick;
         public InputAction @Stationary => m_Wrapper.m_Gameplay_Stationary;
         public InputAction @OpenPassiveTree => m_Wrapper.m_Gameplay_OpenPassiveTree;
+        public InputAction @CameraZoom => m_Wrapper.m_Gameplay_CameraZoom;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -680,6 +703,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @OpenPassiveTree.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
                 @OpenPassiveTree.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
                 @OpenPassiveTree.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOpenPassiveTree;
+                @CameraZoom.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraZoom;
+                @CameraZoom.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraZoom;
+                @CameraZoom.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCameraZoom;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -750,6 +776,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @OpenPassiveTree.started += instance.OnOpenPassiveTree;
                 @OpenPassiveTree.performed += instance.OnOpenPassiveTree;
                 @OpenPassiveTree.canceled += instance.OnOpenPassiveTree;
+                @CameraZoom.started += instance.OnCameraZoom;
+                @CameraZoom.performed += instance.OnCameraZoom;
+                @CameraZoom.canceled += instance.OnCameraZoom;
             }
         }
     }
@@ -778,5 +807,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnSecondaryClick(InputAction.CallbackContext context);
         void OnStationary(InputAction.CallbackContext context);
         void OnOpenPassiveTree(InputAction.CallbackContext context);
+        void OnCameraZoom(InputAction.CallbackContext context);
     }
 }
