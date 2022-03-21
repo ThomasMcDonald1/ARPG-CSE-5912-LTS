@@ -1,0 +1,36 @@
+{
+  "name":"Thunder Wave",
+  "description":"Knock back all enemies from the caster.",
+  "icon": "Update_icons/skill_b_Standart/25_Lightning",
+  "powerType":"Magical",
+  "baseDamageOrHealing":200,
+  "rangeType":"Self",
+  "aoeType":"Pb",
+  "aoeRadius":5,
+  "costType":"Mana",
+  "cost":100,
+  "castType":"Instant",
+  "cooldown":10,
+  "abliityRequiresCursorSelection":false,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Displacement",
+      "effect":"Knockback",
+      "origin":"Caster",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "xzDisplacement":3,
+      "height":1
+    },
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Caster",
+      "vfx":"Projectiles/Explosion/Explosion_Storm_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "element":"Lightning"
+    }
+  ]
+}
