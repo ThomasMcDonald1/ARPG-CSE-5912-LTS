@@ -1,0 +1,33 @@
+{
+  "name":"Funnel",
+  "description":"Pull multiple nearby enemies to the caster's location.",
+  "icon":"500_skillicons/Skill_standart/Warlock_02",
+  "powerType":"Physical",
+  "baseDamageOrHealing":100,
+  "rangeType":"Self",
+  "aoeType":"Pb",
+  "aoeRadius":8,
+  "costType":"Mana",
+  "cost":100,
+  "castType":"Instant",
+  "cooldown":10,
+  "abliityRequiresCursorSelection":false,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Displacement",
+      "effect":"Pull",
+      "origin":"Caster",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival"
+    },
+    {
+      "name":"DelayedDamage",
+      "effect":"Delayed Damage",
+      "origin":"Caster",
+      "vfx":"Projectiles/Explosion/Explosion_Nature_LWRP",
+      "hitRateType":"Evasion",
+      "targetType":"Rival"
+    }
+  ]
+}

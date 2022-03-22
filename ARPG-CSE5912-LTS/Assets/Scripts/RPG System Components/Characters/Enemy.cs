@@ -64,7 +64,16 @@ namespace ARPG.Combat
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+                    {
+                        GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                    }
+                    else
+                    {
+                        GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                    }
                 }
                 else
                 {
@@ -120,6 +129,8 @@ namespace ARPG.Combat
         {
             return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
         }
+
+        // From animation Event
         public void Hit()
         {
                 float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
@@ -127,6 +138,20 @@ namespace ARPG.Combat
                 {
                     AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
                 }
+        }
+
+        // From animation Event
+        public void EndMainHandAttack()
+        {
+            Debug.Log("Being called EndMainHandAttack?");
+            if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
+        }
+
+        // From animation event
+        public void EndOffHandAttack()
+        {
+            Debug.Log("Being called EndOffHandAttack?");
+            GetComponent<Animator>().SetBool("AttackingMainHand", true);
         }
 
         public void Dead()

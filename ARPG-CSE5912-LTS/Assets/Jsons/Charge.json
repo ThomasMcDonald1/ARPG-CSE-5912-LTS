@@ -1,0 +1,31 @@
+{
+  "name":"Charge",
+  "description":"Charge to target character and damage them.",
+  "icon":"500_skillicons/Skill_standart/Warriorskill_29",
+  "powerType":"Physical",
+  "baseDamageOrHealing":200,
+  "rangeType":"Constant",
+  "aoeType":"Single",
+  "costType":"Mana",
+  "cost":100,
+  "castType":"Instant",
+  "cooldown":5,
+  "abilityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":true,
+  "effects":[
+    {
+      "name":"Displacement",
+      "effect":"Charge Character",
+      "origin":"Caster",
+      "hitRateType":"Guaranteed",
+      "targetType":"Living"
+    },
+    {
+      "name":"Delayed Damage",
+      "effect":"Delayed Damage",
+      "origin":"Target",
+      "hitRateType":"Evasion",
+      "targetType":"Rival"
+    }
+  ]
+}

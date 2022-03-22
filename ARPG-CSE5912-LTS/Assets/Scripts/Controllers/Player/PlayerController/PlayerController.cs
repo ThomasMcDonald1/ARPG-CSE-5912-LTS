@@ -37,7 +37,7 @@ using System.Threading.Tasks;
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-
+                    InteractionManager.GetInstance().StopInteraction();
                     if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
                         player.DialogueCancel();
@@ -54,14 +54,14 @@ using System.Threading.Tasks;
                     }
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
                     player.NPCTarget = npcTarget;
+                    StartCoroutine(player.GoToNPC());
                     break;
 
                 case "Enemy":
                     player.DialogueCancel();
-                    player.AttackSignal(true);
-                    EnemyTarget target = e.info.transform.GetComponent<EnemyTarget>();
-                    player.Attack(target);
-                    break;
+                    player.SetAttackTarget(e.info.transform.GetComponent<EnemyTarget>());
+                    player.TargetEnemy();
+                break;
 
                 default:
                     break;
@@ -108,23 +108,6 @@ using System.Threading.Tasks;
 
             //playerClass = AttachClassScript();
         }
-
-        //private IPlayerClass AttachClassScript()
-        //{
-        //    IPlayerClass playerClass;
-        //    switch(classTypeName)
-        //    {
-        //        case "Knight":
-        //            this.gameObject.AddComponent<Knight>();
-        //            playerClass = this.gameObject.GetComponent<Knight>();
-        //            break;
-        //        default:
-        //            playerClass = null;
-        //            break;
-        //    }
-        //    return playerClass;
-        //}
-
 
         private void Update()
         {
