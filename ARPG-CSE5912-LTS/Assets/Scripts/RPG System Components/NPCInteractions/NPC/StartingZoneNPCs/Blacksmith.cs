@@ -8,10 +8,10 @@ public class Blacksmith : NPC
     [Header("Ink JSON")]
 
     // Hank TODO
-    /*
+    
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
-    */
+    
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -61,10 +61,9 @@ public class Blacksmith : NPC
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
 
-            // Hank TODO
-            /*
+            
             shopUI.initializeShop(shop);
-            */
+            
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());

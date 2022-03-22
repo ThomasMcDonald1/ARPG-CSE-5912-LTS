@@ -16,10 +16,9 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject worldNames;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
-    //[SerializeField] private GameObject tradeMenu;
+    [SerializeField] private GameObject tradeMenu;
 
-    // Hank TODO
-    /*
+   
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
@@ -28,7 +27,7 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] private PlayerMoney playerMoney;
     [SerializeField] public UI_Sale SaleUI;
-    */
+    
 
 
     [SerializeField] Player player;
@@ -44,11 +43,10 @@ public class InteractionManager : MonoBehaviour
 
     private void Update()
     {
-        // Hank TODO
-        /*
+        
         playerMoneyText.SetText("Player: " + playerMoney.money.ToString() + "$");
         SaleUI.updateUI();
-        */
+        
 
         if (player.NPCTarget == null) return;
         else
@@ -69,8 +67,7 @@ public class InteractionManager : MonoBehaviour
                     break;
             }
         }
-        // Hank TODO
-        /*
+        
         foreach (ShopSlot slot in shopSlots)
         {
 
@@ -86,7 +83,7 @@ public class InteractionManager : MonoBehaviour
                     slot.purchaseButton.interactable = true;
                 }
             }
-        }*/
+        }
     }
 
     private void SetNames(string name)
@@ -97,8 +94,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        // Hank TODO
-        //shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
+       shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
         if (instance != null)
         {
             Debug.LogWarning("More than 1 instance of the dialogue manager found...");
@@ -148,7 +144,7 @@ public class InteractionManager : MonoBehaviour
     {
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
-        //tradeMenu.SetActive(false);
+        tradeMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
@@ -163,7 +159,7 @@ public class InteractionManager : MonoBehaviour
     {
 
         //player.NPCTarget.GetComponent<NPC>().StartTrading();
-        //tradeMenu.SetActive(true);
+        tradeMenu.SetActive(true);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
@@ -193,9 +189,8 @@ public class InteractionManager : MonoBehaviour
         continueDialogueButton.SetActive(false);
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);
-        //tradeMenu.SetActive(false);
-        // Hank TODO
-        //shopUI.resetShop();
+        tradeMenu.SetActive(false);
+     shopUI.resetShop();
     }
 
 }

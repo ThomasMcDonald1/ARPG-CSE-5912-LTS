@@ -6,7 +6,8 @@ using UnityEngine;
 public class Lorekeeper : NPC
 {
     [Header("Ink JSON")]
-    [SerializeField]
+    [SerializeField] public Shop shop;
+    [SerializeField] public UI_shop shopUI;
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -53,14 +54,15 @@ public class Lorekeeper : NPC
             if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
-            //shopUI.initializeShop(shop);
+            shopUI.initializeShop(shop);
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());
-            //shopUI.resetShop();
+
             //InteractionManager.GetInstance().StopInteraction();
             //InteractionManager.GetInstance().DisableInteractionView();
         }
+        //shopUI.resetShop();
     }
 
 }
