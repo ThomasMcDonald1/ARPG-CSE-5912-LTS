@@ -355,6 +355,16 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<PassiveTreeState>();
     }
+
+    protected override void OnMouseScrollMoved(object sender, InfoEventArgs<float> e)
+    {
+        if (gameplayStateController.CurrentState.ToString() == "GameplayController (GameplayState)")
+        {
+            if (e.info > 0) { gameplayStateController.CameraZoom.ZoomIn(); }
+            else if (e.info < 0) { gameplayStateController.CameraZoom.ZoomOut(); }
+        }
+    }
+
     void Update()
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
