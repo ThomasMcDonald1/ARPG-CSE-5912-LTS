@@ -85,12 +85,14 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         tipText.text = tip;
         tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x, mousePos.y);
+        tipWindow.transform.position = new Vector2(mousePos.x+ tipWindow.sizeDelta.x/2, mousePos.y);
 
 
     }
     public void HideTip()
     {
+        Debug.Log("Hide ShowMessage");
+
         tipText.text = default;
         tipWindow.gameObject.SetActive(false);
     }
