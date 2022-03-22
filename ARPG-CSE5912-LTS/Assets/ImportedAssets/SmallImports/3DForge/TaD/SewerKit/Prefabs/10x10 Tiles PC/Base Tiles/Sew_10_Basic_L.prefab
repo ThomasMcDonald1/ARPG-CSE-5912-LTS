@@ -115,7 +115,8 @@ MonoBehaviour:
   OverrideConnectionChance: 0
   ConnectionChance: 0
   Tags:
-    Tags: []
+    Tags:
+    - id: 3
   AllDoorways: []
   UsedDoorways: []
   UnusedDoorways: []
@@ -1663,6 +1664,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 5cdebaadf8535b64282f4f0044953bb1, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cdebaadf8535b64282f4f0044953bb1, type: 3}
 --- !u!4 &369376224560419720 stripped
@@ -1930,6 +1935,14 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 32cd82cf121ca7c40b337af0805038cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 32cd82cf121ca7c40b337af0805038cc, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: 32cd82cf121ca7c40b337af0805038cc, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32cd82cf121ca7c40b337af0805038cc, type: 3}
