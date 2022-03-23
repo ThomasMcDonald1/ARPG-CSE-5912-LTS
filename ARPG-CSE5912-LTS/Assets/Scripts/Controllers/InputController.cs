@@ -42,6 +42,9 @@ public class InputController : MonoBehaviour
     public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementRightClickedEvent;
     public static event EventHandler<InfoEventArgs<int>> OpenPassiveTreeEvent;
 
+    // Test mouse wheel zooming
+    public static event EventHandler<InfoEventArgs<float>> DetectMouseScrollWheelEvent;
+
     Controls controls;
     private bool clickHeld;
     private bool stationaryHeld;
@@ -119,6 +122,9 @@ public class InputController : MonoBehaviour
         controls.Gameplay.ActionBar11.performed += OnActionBar11Pressed;
         controls.Gameplay.ActionBar12.performed += OnActionBar12Pressed;
         controls.Gameplay.OpenPassiveTree.performed += OnOpenPassiveTree;
+
+        // Testing new zoom
+        controls.Gameplay.CameraZoom.performed += OnZoomScrolled;
 
     }
 
@@ -290,5 +296,11 @@ public class InputController : MonoBehaviour
     private void OnOpenPassiveTree(InputAction.CallbackContext context)
     {
         OpenPassiveTreeEvent?.Invoke(this, new InfoEventArgs<int>(27));
+    }
+
+    // Testing camera zoom
+    private void OnZoomScrolled(InputAction.CallbackContext context)
+    {
+        DetectMouseScrollWheelEvent?.Invoke(this, new InfoEventArgs<float>(context.ReadValue<float>()));
     }
 }
