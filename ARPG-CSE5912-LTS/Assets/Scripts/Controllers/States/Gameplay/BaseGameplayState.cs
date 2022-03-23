@@ -97,6 +97,9 @@ public class BaseGameplayState : State
         InputController.UIElementLeftClickedEvent += OnUIElementLeftClicked;
         InputController.UIElementRightClickedEvent += OnUIElementRightClicked;
         InputController.OpenPassiveTreeEvent += OnOpenPassiveTreePressed;
+
+        // Testing mouse wheel
+        InputController.DetectMouseScrollWheelEvent += OnMouseScrollMoved;
     }
 
     protected override void RemoveListeners()
@@ -231,6 +234,11 @@ public class BaseGameplayState : State
 
     }
     protected virtual void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
+    {
+
+    }
+
+    protected virtual void OnMouseScrollMoved(object sender, InfoEventArgs<float> e)
     {
 
     }
