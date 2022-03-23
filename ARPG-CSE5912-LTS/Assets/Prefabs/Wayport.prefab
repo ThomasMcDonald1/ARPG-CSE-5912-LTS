@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2339632134219211046}
   - component: {fileID: 2173450312088191559}
-  - component: {fileID: 6250848512173139818}
+  - component: {fileID: 515879769175592887}
   m_Layer: 0
   m_Name: Wayport
   m_TagString: Untagged
@@ -139,24 +139,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8926477, y: 3.063477, z: 0.5}
-  m_Center: {x: 0.007870078, y: 1.5317385, z: 0}
---- !u!208 &6250848512173139818
-NavMeshObstacle:
+  m_Size: {x: 4.0309215, y: 3.8842654, z: 2.174449}
+  m_Center: {x: 0.020771503, y: 1.1213443, z: -0.10114679}
+--- !u!54 &515879769175592887
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6114950549895360909}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.25, y: 1.5, z: 0.25}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 1.22, y: 1, z: 0}
-  m_TimeToStationary: 0.5
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8900726353807941176
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,29 +299,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
---- !u!1 &8513509422178372317 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1874459012656072804, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
-  m_PrefabInstance: {fileID: 7792746042625557177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4646965422765439182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3195360365130283639, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
   m_PrefabInstance: {fileID: 7792746042625557177}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &6380327009511249914
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8513509422178372317}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.25, y: 1.5, z: 0.25}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -1.22, y: 1, z: 0}
-  m_TimeToStationary: 0.5
