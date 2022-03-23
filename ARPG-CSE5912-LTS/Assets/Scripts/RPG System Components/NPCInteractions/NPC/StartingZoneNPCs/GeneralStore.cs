@@ -10,6 +10,8 @@ public class GeneralStore : NPC
     // Hank TODO
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
+
 
     public List<TextAsset> DialogueJSON;
     private int currentStory;
@@ -57,7 +59,8 @@ public class GeneralStore : NPC
             if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
-
+            saleUI.shop = shop;
+            saleUI.initializeSaleUI();
             shopUI.initializeShop(shop);
 
             //SetMenu();

@@ -8,6 +8,8 @@ public class Lorekeeper : NPC
     [Header("Ink JSON")]
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
+
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -54,6 +56,8 @@ public class Lorekeeper : NPC
             if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
+            saleUI.shop = shop;
+            saleUI.initializeSaleUI();
             shopUI.initializeShop(shop);
 
             //SetMenu();

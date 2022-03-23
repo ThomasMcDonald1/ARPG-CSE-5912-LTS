@@ -10,14 +10,20 @@ public class UI_Sale : MonoBehaviour
     public SaleSlot[] saleSlots;
     public List<Ite> saleItems = new List<Ite>();
     public Shop shop;
-    public int saleItemChanged;
+    public int currentSalesItemLen;
+    public bool saleStackableItemChanged;
     [SerializeField] public PlayerMoney playerMoney;
 
     void Start()
     {
         inventory = Inventory.instance;
         saleSlots = saleParent.GetComponentsInChildren<SaleSlot>();
-        saleItemChanged = saleItems.Count;
+        currentSalesItemLen = saleItems.Count;
+        saleStackableItemChanged = false;
+    }
+
+   public void initializeSaleUI()
+    {
         switch ((int)shop.shopSaleType)
         {
             case (int)Shop.saleType.Utility:
@@ -31,15 +37,13 @@ public class UI_Sale : MonoBehaviour
                 break;
         }
     }
-
-   
   
     public void updateUI()
     {
        
         //Debug.Log("Sale slots length: " + saleSlots.Length);
-        if (saleItemChanged != saleItems.Count)
-        {
+        /*if ((currentSalesItemLen != saleItems.Count))
+        {*/
 
             for (int i = 0; i < saleSlots.Length; i++)
             {
@@ -55,7 +59,7 @@ public class UI_Sale : MonoBehaviour
 
 
                         text.SetText(inventory.amount[saleItems[i]].ToString());
-
+                        
                     }
                     else
                     {
@@ -68,9 +72,9 @@ public class UI_Sale : MonoBehaviour
                     saleSlots[i].ClearSlot();
                 }
             }
-            saleItemChanged = saleItems.Count;
+        /*    currentSalesItemLen = saleItems.Count;
 
-        }
+        }*/
 
 
     }
