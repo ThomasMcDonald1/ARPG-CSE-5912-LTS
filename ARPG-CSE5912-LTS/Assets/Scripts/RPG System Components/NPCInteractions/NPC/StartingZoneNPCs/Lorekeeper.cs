@@ -1,4 +1,5 @@
 using System;
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,15 +40,27 @@ public class Lorekeeper : NPC
 
     public override IEnumerator LookAtPlayer()
     {
+
         float time = 0.0f;
         float speed = 1.0f;
+
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
 
         while (time < 1.0f)
         {
             child.transform.rotation = Quaternion.RotateTowards(child.transform.rotation, rotate, 50f * Time.deltaTime);
             child.transform.eulerAngles = new Vector3(0, child.transform.eulerAngles.y, 0);
+
             time += Time.deltaTime * speed;
+
+            SetMenu();
+            if(new Story(GetCurrentDialogue().text).canContinue)
+            {
+                questGiver.AddQuestToLogIfNew();//add quest to quest log if havent already added
+
+            }
+
+
             yield return null;
         }
     }

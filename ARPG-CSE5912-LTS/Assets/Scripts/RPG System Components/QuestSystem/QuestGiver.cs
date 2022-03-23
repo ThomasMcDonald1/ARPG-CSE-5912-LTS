@@ -46,13 +46,13 @@ public class QuestGiver : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
-            {
-                QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        //    {
+        //        QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
+        //    }
+        //}
         UpdateQuestIcon();
 
     }
