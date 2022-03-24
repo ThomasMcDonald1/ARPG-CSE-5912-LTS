@@ -31,6 +31,20 @@ namespace ARPG.Core
                 enemyClass = this.gameObject.GetComponent<EliteWarrior>();
 
             }
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyPath")
+            {
+                classTypeName = "EnemyPath";
+                this.gameObject.AddComponent<EnemyKnight>();
+                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+
+            }
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemySage")
+            {
+                classTypeName = "EnemySage";
+                this.gameObject.AddComponent<EnemyKnight>();
+                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+
+            }
             weaponTypeName = "Unarmed";
             target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
             enemyClass.AttackTarget = target.transform;
