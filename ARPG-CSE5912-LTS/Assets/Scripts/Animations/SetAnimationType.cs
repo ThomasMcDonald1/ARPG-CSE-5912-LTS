@@ -22,6 +22,8 @@ public class SetAnimationType : MonoBehaviour
 
     [SerializeField] private AnimatorOverrideController UnarmedOverrider;
 
+    [SerializeField] private AnimatorOverrideController SummonOverrider;
+
 
     [SerializeField] private AnimatorOverrider overrider;
 
@@ -107,5 +109,11 @@ public class SetAnimationType : MonoBehaviour
         overrider.GetComponent<Animator>().SetBool("CanDualWield", true);
         overrider.GetComponent<Animator>().SetBool("AttackingMainHand", true);
         overrider.SetAnimations(DualDaggerOverrider);
+    }
+    public void ChangeToSummon()
+    {
+        overrider.GetComponent<Animator>().SetBool("CanDualWield", true);
+        overrider.GetComponent<Animator>().SetBool("AttackingMainHand", true);
+        overrider.SetAnimations(SummonOverrider);
     }
 }

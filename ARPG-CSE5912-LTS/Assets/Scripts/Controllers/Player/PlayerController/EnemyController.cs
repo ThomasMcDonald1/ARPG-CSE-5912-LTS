@@ -41,8 +41,8 @@ namespace ARPG.Core
             if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemySage")
             {
                 classTypeName = "EnemySage";
-                this.gameObject.AddComponent<EnemyKnight>();
-                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+                this.gameObject.AddComponent<SageOfSixPaths>();
+                enemyClass = this.gameObject.GetComponent<SageOfSixPaths>();
 
             }
             weaponTypeName = "Unarmed";
