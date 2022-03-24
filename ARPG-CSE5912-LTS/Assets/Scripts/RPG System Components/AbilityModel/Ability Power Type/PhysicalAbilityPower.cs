@@ -18,8 +18,18 @@ public class PhysicalAbilityPower : BaseAbilityPower
         return target.GetComponent<Stats>()[StatTypes.PercentArmorBonus] * 0.01f;
     }
 
-    public override float AdjustDefenseForPenetration(Character caster)
+    public override float AdjustDefenseForFlatPenetration(Character caster)
+    {
+        return GetStat(caster, StatTypes.FlatArmorPen);
+    }
+
+    public override float AdjustDefenseForPercentPenetration(Character caster)
     {
         return 1 - GetStat(caster, StatTypes.PercentArmorPen) * 0.01f;
+    }
+
+    public override float GetDamageBonusMultiplier(Character caster, BaseAbilityEffectElement element)
+    {
+        return caster.GetComponent<Stats>()[StatTypes.PhysDmgBonus];
     }
 }
