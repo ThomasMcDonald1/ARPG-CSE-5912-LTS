@@ -45,7 +45,13 @@ namespace ARPG.Combat
 
         }
 
-        public virtual void SeePlayer()
+        public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
+        {
+            EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
+        }
+
+        public virtual  void SeePlayer()
+
         {
 
             if (InTargetRange()) 
