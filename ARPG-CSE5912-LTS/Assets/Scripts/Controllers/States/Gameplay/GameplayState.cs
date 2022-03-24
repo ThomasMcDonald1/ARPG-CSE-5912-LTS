@@ -321,19 +321,19 @@ public class GameplayState : BaseGameplayState
 
     private void OnAbilityBeingCast(object sender, InfoEventArgs<Ability> e)
     {
-        Debug.Log("Actions locked");
+        //Debug.Log("Actions locked");
         lockedActions = true;
     }
 
     private void OnAbilityWasCancelled(object sender, InfoEventArgs<int> e)
     {
-        // Debug.Log("Actions unlocked");
+        //Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 
     private void OnAbilityWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        Debug.Log("Actions unlocked");
+        //Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 
@@ -355,6 +355,16 @@ public class GameplayState : BaseGameplayState
     {
         gameplayStateController.ChangeState<PassiveTreeState>();
     }
+
+    protected override void OnMouseScrollMoved(object sender, InfoEventArgs<float> e)
+    {
+        if (gameplayStateController.CurrentState.ToString() == "GameplayController (GameplayState)")
+        {
+            if (e.info > 0) { gameplayStateController.CameraZoom.ZoomIn(); }
+            else if (e.info < 0) { gameplayStateController.CameraZoom.ZoomOut(); }
+        }
+    }
+
     void Update()
     {
         //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);

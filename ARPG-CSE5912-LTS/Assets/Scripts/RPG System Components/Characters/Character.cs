@@ -45,7 +45,6 @@ public abstract class Character : MonoBehaviour
         playerAbilityController = GetComponent<PlayerAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
-        AttackTarget = null;
     }
 
     protected virtual void Update()
@@ -98,13 +97,6 @@ public abstract class Character : MonoBehaviour
             AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
         }
     }
-
-    public void OnCompletedCast(AbilityCast abilityCast)
-    {
-        Debug.Log("Cast was completed");
-        DeductCastingCost(abilityCast);
-        GetColliders(abilityCast);
-    }
     #endregion
     #region Public Functions
     //Put any code here that should be shared functionality across every type of character
@@ -117,8 +109,6 @@ public abstract class Character : MonoBehaviour
 
         if (abilityCanBePerformed)
         {
-            //charactersInRange = range.GetCharactersInRange();
-
             if (abilityCast.abilityRequiresCursorSelection)
             {
                 if (this is Player)
@@ -136,9 +126,9 @@ public abstract class Character : MonoBehaviour
                     //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
                     //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
-                    //1a) select target player character if it's a character-targeting ability
-                    //1b) select a point on the terrain that is centered on the player character otherwise
-                    //2) call abilityArea.PerformAOE from from within the Enemy class
+                    //1a) select target character if it's a character-targeting ability
+                    //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
+                    
                 }
             }
             else
@@ -175,9 +165,8 @@ public abstract class Character : MonoBehaviour
         List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
         ApplyAbilityEffects(charactersCollided, abilityCast);
     }
-    #endregion
-    #region Private Functions
-    void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
+
+    public void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
     {
         //Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
@@ -196,6 +185,8 @@ public abstract class Character : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region Private Functions
 
     private void CastAbilityWithoutSelection(AbilityCast abilityCast)
     {

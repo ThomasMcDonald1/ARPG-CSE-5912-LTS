@@ -1,0 +1,34 @@
+{
+  "name":"Mighty Leap",
+  "description":"Leap to target location, dealing physical damage on impact to nearby targets.",
+  "icon":"500_skillicons/Skill_standart/Warriorskill_17",
+  "powerType":"Physical",
+  "baseDamageOrHealing":300,
+  "rangeType":"Constant",
+  "range":10,
+  "aoeType":"Specify",
+  "aoeRadius":5,
+  "costType":"Mana",
+  "cost":15,
+  "castType":"Instant",
+  "cooldown":5,
+  "abilityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Displacement",
+      "effect":"Leap",
+      "origin":"Caster",
+      "hitRateType":"Guaranteed",
+      "targetType":"Living"
+    },
+    {
+      "name":"DelayedDamage",
+      "effect":"Delayed Damage",
+      "origin":"Click",
+      "vfx":"Projectiles/Explosion/Explosion_Nature_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival"
+    }
+  ]
+}

@@ -2,57 +2,42 @@ using UnityEngine;
 using UnityEngine.AI;
 using ARPG.Combat;
 
-
-
 namespace ARPG.Core
 {
     public class EnemyController : MonoBehaviour
     {
+        public EnemyTarget target;
+        private string classTypeName;
+        private string weaponTypeName;
+        private Enemy enemyClass;
 
         public string ClassTypeName
         { get { return classTypeName; } }
-
         public string WeaponTypeName
         { get { return weaponTypeName; } }
 
-        public EnemyTarget target;
-
-        private string classTypeName;
-        private string weaponTypeName;
-
-        private Enemy enemyClass;
-
-
         private void Start()
         {
-            classTypeName = "EnemyKnight";
-            weaponTypeName = "Unarmed";
-
-            enemyClass = AttachClassScript();
-
-           
-        }
-
-        private Enemy AttachClassScript()
-        {
-            Enemy enemyClass;
-            switch(classTypeName)
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyKnight")
             {
-                case "EnemyKnight":
-                    this.gameObject.AddComponent<EnemyKnight>();
-                    enemyClass = this.gameObject.GetComponent<EnemyKnight>();
-                    break;
-                default:
-                    enemyClass = null;
-                    break;
+                classTypeName = "EnemyKnight";
+                this.gameObject.AddComponent<EnemyKnight>();
+                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
             }
-            return enemyClass;
-        }
+            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EliteWarrior")
+            {
+                classTypeName = "EliteWarrior";
+                this.gameObject.AddComponent<EliteWarrior>();
+                enemyClass = this.gameObject.GetComponent<EliteWarrior>();
 
+            }
+            weaponTypeName = "Unarmed";
+            target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
+            enemyClass.AttackTarget = target.transform;
+        }
 
         private void Update()
         {
-            enemyClass.Attack(target);
             UpdateAnimator();
         }
 
@@ -64,6 +49,52 @@ namespace ARPG.Core
             GetComponent<Animator>().SetFloat("ForwardSpeed", speed);
         }
     }
+
+    //private void AttachClassScript()
+    //{
+    //    switch (classTypeName)
+    //    {
+    //        case "EnemyKnight":
+    //            this.gameObject.AddComponent<EnemyKnight>();
+    //            enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+
+    //            break;
+    //        case "EliteWarrior":
+    //            this.gameObject.AddComponent<EliteWarrior>();
+    //            enemyClass = this.gameObject.GetComponent<EliteWarrior>();
+
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
+
+    //private Enemy enemyClass;
+
+    //private void Update()
+    //{
+    //    enemyClass.Attack(target);
+    //    UpdateAnimator();
+    //}
+    //private Enemy AttachClassScript()
+    //{
+    //    Enemy enemyClass;
+    //    switch (classTypeName)
+    //    {
+    //        case "EnemyKnight":
+    //            this.gameObject.AddComponent<EnemyKnight>();
+    //            enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+    //            break;
+    //        case "EliteWarrior":
+    //            this.gameObject.AddComponent<EliteWarrior>();
+    //            enemyClass = this.gameObject.GetComponent<EliteWarrior>();
+    //            break;
+    //        default:
+    //            enemyClass = null;
+    //            break;
+    //    }
+    //    return enemyClass;
 }
+
 
 

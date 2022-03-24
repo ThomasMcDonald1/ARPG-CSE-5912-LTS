@@ -74,20 +74,75 @@ namespace LootLabels {
         /// <returns></returns>
         public GearTypes SelectRandomGearType() {
             int gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
+            Debug.Log("gearTypeCount is " + gearTypeCount);
             int randomIndex = Random.Range(0, gearTypeCount);
 
             return (GearTypes)randomIndex;
         }
-        
+
         /// <summary>
         /// Check amount of rarities pick a random one
         /// </summary>
         /// <returns></returns>
-        public virtual Rarity SelectRandomRarity() {
-            int rarityCount = System.Enum.GetNames(typeof(Rarity)).Length;
-            int randomIndex = Random.Range(0, rarityCount);
-
-            return (Rarity)randomIndex;
+        // <=20 poor Item
+        // <= 60 Normal Item
+        // <= 80 Rare Item
+        // <= 95 Epic Item
+        // <= 100 Alpha Item
+        public virtual Rarity SelectRandomRarity(Type type) {
+           // int rarityCount = System.Enum.GetNames(typeof(Rarity)).Length;
+            
+            Rarity rare = Rarity.Poor;
+            switch (type)
+            {
+                case Type.Poor:
+                    if (Random.value < 0.1)
+                    {
+                        rare = Rarity.Normal;
+                    };
+                    break;
+                case Type.Normal:
+                    if (Random.value < 0.80)
+                    {
+                        rare = Rarity.Normal;
+                    }
+                    else if (Random.value > 0.90)
+                    {
+                        rare = Rarity.Rare;
+                    }
+                    break;
+                case Type.Rare:
+                    if (Random.value < 0.85)
+                    {
+                        rare = Rarity.Rare;
+                    }
+                    else if (Random.value > 0.95)
+                    {
+                        rare = Rarity.Epic;
+                    }
+                    else
+                    {
+                        rare = Rarity.Normal;
+                    }
+                    break;
+                case Type.Epic:
+                    if (Random.value < 0.97)
+                    {
+                        rare = Rarity.Epic;
+                    }
+                    else
+                    {
+                        rare = Rarity.SuperUltraHyperExPlusAlpha;
+                    }
+                    break;
+                case Type.SuperUltraHyperExPlusAlpha:
+                    rare = Rarity.SuperUltraHyperExPlusAlpha;
+                    break;
+                default:
+                    rare = Rarity.Poor;
+                    break;
+            }
+            return rare;
         }
 
         /// <summary>
@@ -108,32 +163,35 @@ namespace LootLabels {
         /// <returns></returns>
         private int RollAmountOfStats(Rarity itemRarity) {
             int statAmount = 1;
+            //if(itemRarity <= 15)
+            //{
 
-            switch (itemRarity) {
-                case Rarity.Poor:
-                    statAmount = 1;
-                    break;
-                case Rarity.Normal:
-                    statAmount = 2;
-                    break;
-                case Rarity.Rare:
-                    statAmount = 3;
-                    break;
-                case Rarity.Epic:
-                    statAmount = 4;
-                    break;
-                case Rarity.Legendary:
-                    statAmount = 5;
-                    break;
-                case Rarity.Set:
-                    statAmount = 6;
-                    break;
-                case Rarity.SuperUltraHyperExPlusAlpha:
-                    statAmount = 7;
-                    break;
-                default:
-                    break;
-            }
+            //}
+            //switch (itemRarity) {
+            //    case Rarity.Poor:
+            //        statAmount = 1;
+            //        break;
+            //    case Rarity.Normal:
+            //        statAmount = 2;
+            //        break;
+            //    case Rarity.Rare:
+            //        statAmount = 3;
+            //        break;
+            //    case Rarity.Epic:
+            //        statAmount = 4;
+            //        break;
+            //    case Rarity.Legendary:
+            //        statAmount = 5;
+            //        break;
+            //    case Rarity.Set:
+            //        statAmount = 6;
+            //        break;
+            //    case Rarity.SuperUltraHyperExPlusAlpha:
+            //        statAmount = 7;
+            //        break;
+            //    default:
+            //        break;
+            //}
 
             return statAmount;
         }
@@ -142,13 +200,15 @@ namespace LootLabels {
         /// Create a randomized gear item
         /// </summary>
         /// <returns></returns>
-        public BaseGear CreateGear() {
-            Rarity itemRarity = SelectRandomRarity();
+        public BaseGear CreateGear(Type type) {
+            Debug.Log("Create Gear with GetModelName has been run");
+            Rarity itemRarity = SelectRandomRarity(type);
             GearTypes gearType = SelectRandomGearType();
             string modelName = ResourceManager.singleton.GetModelName(gearType);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 
             BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
+            Debug.Log("creategear is making " + itemRarity + " " + modelName);
             return gear;
         }
 

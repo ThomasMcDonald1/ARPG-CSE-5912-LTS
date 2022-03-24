@@ -45,13 +45,6 @@ public class PlayerAbilityController : Player
         GetColliders(e.info);
     }
 
-    //void OnCompletedInstantCast(object sender, InfoEventArgs<AbilityCast> e)
-    //{
-    //    //Debug.Log("Instant cast was completed");
-    //    DeductCastingCost(e.info);
-    //    GetColliders(e.info);
-    //}
-
     public void PlayerQueueAbilityCastSelectionRequired(AbilityCast abilityCast)
     {
         cursorChanger.ChangeCursorToSelectionGraphic();

@@ -48,6 +48,5 @@ public class KnockbackAbilityEffect : BaseAbilityEffect
         }
         agent.enabled = true;
         rb.isKinematic = true;
-        Debug.Log("Enemy is kinematic? " + rb.isKinematic);
     }
 }

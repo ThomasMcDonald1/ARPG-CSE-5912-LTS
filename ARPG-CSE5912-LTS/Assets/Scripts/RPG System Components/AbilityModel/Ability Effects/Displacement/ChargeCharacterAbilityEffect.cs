@@ -14,13 +14,12 @@ public class ChargeCharacterAbilityEffect : BaseAbilityEffect
         NavMeshAgent agent = abilityCast.caster.GetComponent<NavMeshAgent>();
         agent.enabled = false;
         StartCoroutine(ChargeToTarget(agent, abilityCast, target, dist));
-
         return 0;
     }
 
-    public IEnumerator ChargeToTarget(NavMeshAgent agent, AbilityCast abilityCast, Character target, float dist)
+    private IEnumerator ChargeToTarget(NavMeshAgent agent, AbilityCast abilityCast, Character target, float dist)
     {   
-        Debug.Log("Charging");
+        //Debug.Log("Charging");
         abilityCast.caster.transform.LookAt(target.transform.position);
         while (Vector3.Distance(target.transform.position, abilityCast.caster.transform.position) > 1.25f)
         {

@@ -6,6 +6,7 @@ using UnityEngine;
 using DunGen.Graph;
 using System.Collections;
 using UnityEngine.Serialization;
+using UnityEngine.AI;
 
 using Debug = UnityEngine.Debug;
 
@@ -112,6 +113,7 @@ namespace DunGen
 		public event Action Cleared;
 		public event Action Retrying;
 
+		public SaveDungeon savedDungeon;
 		public GameObject Root;
 		public DungeonFlow DungeonFlow;
 		public GenerationStatus Status { get; private set; }
@@ -202,7 +204,24 @@ namespace DunGen
 			}
 #endif
 
-			ChosenSeed = (ShouldRandomizeSeed) ? new RandomStream().Next() : Seed;
+			//ChosenSeed = (ShouldRandomizeSeed) ? new RandomStream().Next() : Seed;
+			if (savedDungeon != null)
+			{
+				if (!savedDungeon.generated)
+                {
+					savedDungeon.GenerateSeed();
+				}
+				ChosenSeed = savedDungeon.seed;
+				Debug.Log("Custom seed: " + ChosenSeed);
+			}				
+			else
+            {
+				ChosenSeed = 1882383591; //DEFAULT
+				//ChosenSeed = new RandomStream().Next();
+
+				Debug.Log("Default seed: " + ChosenSeed);
+			}
+
 			RandomStream = new RandomStream(ChosenSeed);
 
 			if (Root == null)
@@ -393,6 +412,20 @@ namespace DunGen
 						tile.TileSet = tileSet;
 					}
 				}
+
+			foreach(var tile in useableTiles)
+            {
+				foreach (Transform child in tile.transform)
+				{
+					if (child.gameObject.CompareTag("Enemy"))
+                    {
+						foreach (Transform mob in child)
+						{
+							mob.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+						}
+                    }
+				}
+			}
 		}
 
 		protected virtual void GatherTilesToInject()

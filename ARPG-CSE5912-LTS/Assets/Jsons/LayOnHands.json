@@ -1,0 +1,25 @@
+{
+  "name":"Lay On Hands",
+  "description":"Instantly heals the caster.",
+  "icon":"Update_icons/neutral_skills/healing",
+  "powerType":"Magical",
+  "baseDamageOrHealing":250,
+  "rangeType":"Self",
+  "aoeType":"Single",
+  "costType":"Mana",
+  "cost":15,
+  "castType":"Instant",
+  "cooldown":10,
+  "abliityRequiresCursorSelection":false,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Heal",
+      "effect":"Heal",
+      "origin":"Caster",
+      "vfx":"Projectiles/Explosion/Explosion_Light_2_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Living"
+    }
+  ]
+}
