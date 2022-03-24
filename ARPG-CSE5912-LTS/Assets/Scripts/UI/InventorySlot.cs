@@ -43,13 +43,13 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         switch ((int)item.type)
         {
             case(int) Ite.ItemType.weapon:
-                tipToShow += "\n" +"Damage: "+ item.attackDamage;
+                //tipToShow += "\n" +"Damage: "+ item.attackDamage;
                 break;
             case (int)Ite.ItemType.armor:
-                tipToShow += "\n" + "Defend rate: " + item.defendRate;
+                //tipToShow += "\n" + "Defend rate: " + item.defendRate;
                 break;
             case (int)Ite.ItemType.utility:
-                tipToShow += "\n" +  item.utilityUsage;
+                //tipToShow += "\n" +  item.utilityUsage;
                 break;
         }
 
