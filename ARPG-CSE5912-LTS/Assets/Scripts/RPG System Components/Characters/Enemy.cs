@@ -50,7 +50,8 @@ namespace ARPG.Combat
             EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
         }
 
-        public  void SeePlayer()
+        public virtual  void SeePlayer()
+
         {
 
             if (InTargetRange()) 
@@ -58,11 +59,8 @@ namespace ARPG.Combat
                 Vector3 realDirection = transform.forward;
                 Vector3 direction = AttackTarget.position -transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
-                if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
-                {
-                    StopRun();
-                }
-                else if (angle < SightRange && !InStopRange())
+
+                if (angle < SightRange && !InStopRange())
                 {
                     RunToPlayer();
                 }
@@ -79,6 +77,10 @@ namespace ARPG.Combat
                         GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
                         //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                     }
+                    if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
+                    {
+                        StopRun();
+                    }
                 }
                 else
                 {
@@ -91,7 +93,7 @@ namespace ARPG.Combat
             }
         }
 
-        private void Patrol()
+        protected void Patrol()
         {
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -112,13 +114,12 @@ namespace ARPG.Combat
             return finalPosition;
         }
 
-        public  void RunToPlayer()
+        public virtual  void RunToPlayer()
         {
-            if (InTargetRange())
-            {
+
                 agent.isStopped = false;
                 agent.SetDestination(AttackTarget.position);
-            }
+            
         }
 
         public void StopRun()
@@ -126,7 +127,7 @@ namespace ARPG.Combat
             agent.isStopped = true;
         }
 
-        public bool InTargetRange()
+        public virtual bool InTargetRange()
         {
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
