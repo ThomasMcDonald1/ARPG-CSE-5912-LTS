@@ -7,6 +7,7 @@ namespace ARPG.Combat
 
     public class SageOfSixPaths : Enemy
     {
+        //if sage can see, all of its paths can see, if one path can see, sage can see
         public bool canSee = false;
         public bool[] pathsVision = new bool[] { false,false,false,false,false};
 
@@ -18,26 +19,27 @@ namespace ARPG.Combat
             SightRange = 90f;
             Speed = 2f;
             agent.speed = Speed;
-            stats[StatTypes.MonsterType] = 1; //testing
+            stats[StatTypes.MonsterType] = 4; //testing
         }
         protected override void Update()
         {
+            //updates vision of all the paths
             for(int i = 0; i < pathsVision.Length; i++)
             {
                 pathsVision[i] = transform.GetChild(3).transform.GetChild(i).GetComponent<Paths>().canSee;
             }
+
+            //if sage can see, all of its paths can see, if one path can see, sage can see, if no paths can see, sage can not see
             for (int i = 0; i < pathsVision.Length; i++)
             {
                 if(pathsVision[i] == true)
                 {
                     canSee = true;
-                }
-                else if (i == pathsVision.Length - 1)
-                {
-                    canSee = false;
+                    goto Found;
                 }
             }
-
+            canSee = false;
+            Found:
             if (GetComponent<Animator>().GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
