@@ -23,9 +23,21 @@ public class MagicalAbilityPower : BaseAbilityPower
         return defense;
     }
 
-    public override float AdjustDefenseForPenetration(Character caster)
+    public override float AdjustDefenseForFlatPenetration(Character caster)
+    {
+        return GetStat(caster, StatTypes.FlatMagicPen);
+    }
+
+    public override float AdjustDefenseForPercentPenetration(Character caster)
     {
         return 1 - GetStat(caster, StatTypes.PercentMagicPen) * 0.01f;
+    }
+
+    public override float GetDamageBonusMultiplier(Character caster, BaseAbilityEffectElement element)
+    {
+        StatTypes bonusStat = element.GetAbilityEffectElementBonusMultType();
+        Stats stats = caster.GetComponent<Stats>();
+        return stats[bonusStat] + stats[StatTypes.MagDmgBonus];
     }
 
     private float GetSpecificPercentResistBonus(StatTypes resist, Character target)
