@@ -64,26 +64,26 @@ namespace LootLabels {
             //this might not be needed by setting root motion or something like that, need to look into it
             GameObject lootOrigin = null;
 
-            if (LootParent.childCount > 0) {
-                for (int i = 0; i < LootParent.childCount; i++) {
-                    if (LootParent.GetChild(i).childCount == 0) {
-                        //use this instead of instantiating a new origin
-                        lootOrigin = LootParent.GetChild(i).gameObject;
-                        lootOrigin.transform.SetPositionAndRotation(objectTransform.position, objectTransform.rotation);
-                        break;
-                    }
+            //if (LootParent.childCount > 0) {
+            //    for (int i = 0; i < LootParent.childCount; i++) {
+            //        if (LootParent.GetChild(i).childCount == 0) {
+            //            //use this instead of instantiating a new origin
+            //            lootOrigin = LootParent.GetChild(i).gameObject;
+            //            lootOrigin.transform.SetPositionAndRotation(objectTransform.position, objectTransform.rotation);
+            //            break;
+            //        }
 
-                    if (i == LootParent.childCount - 1) {
-                        lootOrigin = Instantiate(Resources.Load("LootLabels/3D models/LootOrigin", typeof(GameObject)), objectTransform.position, objectTransform.rotation) as GameObject;
-                        Debug.Log("lootOrigin is " + lootOrigin);
-                        lootOrigin.transform.SetParent(LootParent, true);
-                    }
-                }
-            }
-            else {
+            //        if (i == LootParent.childCount - 1) {
+            //            lootOrigin = Instantiate(Resources.Load("LootLabels/3D models/LootOrigin", typeof(GameObject)), objectTransform.position, objectTransform.rotation) as GameObject;
+            //            Debug.Log("lootOrigin is " + lootOrigin);
+            //            lootOrigin.transform.SetParent(LootParent, true);
+            //        }
+            //    }
+            //}
+            //else {
                 lootOrigin = Instantiate(Resources.Load("LootLabels/3D models/LootOrigin", typeof(GameObject)), objectTransform.position, objectTransform.rotation) as GameObject;
                 lootOrigin.transform.SetParent(LootParent, true);
-            }
+          //  }
 
             StartCoroutine(DropLootCoroutine(lootOrigin.transform, itemAmount, type));
         }
