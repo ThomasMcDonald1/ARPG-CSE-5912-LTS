@@ -22,12 +22,17 @@ public class Ite : ScriptableObject
 	//public int amount = 1;
 	public virtual void Use()
 	{
-		if(name == "Health")
-        {
-			playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
-			useHealingPotion();
-
+		switch (name) {
+			case "Health":
+				playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+				useHealingPotion();
+				break;
+			case "Energy":
+				playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+				useEnergyPotion();
+				break;
 		}
+		
 		// Use the item
 		// Something may happen
 		Debug.Log("using " + name);
@@ -38,6 +43,13 @@ public class Ite : ScriptableObject
 
 		playerStat[StatTypes.HP] += 1000;
 		playerStat[StatTypes.HP] = Mathf.Clamp(playerStat[StatTypes.HP], 0, playerStat[StatTypes.MaxHP]);
+	}
+	public void useEnergyPotion()
+	{
+		//Debug.Log("ADD HEALTH!!");
+
+		playerStat[StatTypes.Mana] += 100 ;
+		playerStat[StatTypes.Mana] = Mathf.Clamp(playerStat[StatTypes.Mana], 0, playerStat[StatTypes.MaxMana]);
 	}
 	public enum ItemType
 	{

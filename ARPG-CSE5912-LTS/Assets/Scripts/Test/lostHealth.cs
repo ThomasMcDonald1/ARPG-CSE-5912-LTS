@@ -15,8 +15,8 @@ public class lostHealth : MonoBehaviour
     }
     public void loseEnergy()
     {
-        Debug.Log("Previous health: " + player.stats[StatTypes.HP]);
-        player.stats[StatTypes.HP] -= 2000;
-        Debug.Log("Later health: " + player.stats[StatTypes.HP]);
+        Debug.Log("Previous energy: " + player.stats[StatTypes.Mana]);
+        player.stats[StatTypes.Mana] -= 200;
+        Debug.Log("Later health: " + player.stats[StatTypes.Mana]);
     }
 }
