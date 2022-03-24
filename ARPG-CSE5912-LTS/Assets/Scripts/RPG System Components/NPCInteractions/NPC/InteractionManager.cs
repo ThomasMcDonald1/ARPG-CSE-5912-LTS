@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.UI;
+using System;
+
 
 public class InteractionManager : MonoBehaviour
 {
@@ -17,8 +19,6 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private GameObject tradeMenu;
-
-   
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
@@ -27,7 +27,9 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] private PlayerMoney playerMoney;
     [SerializeField] public UI_Sale SaleUI;
-    
+
+    public static event EventHandler EndOfStoryEvent;
+
 
 
     [SerializeField] Player player;
@@ -81,6 +83,7 @@ public class InteractionManager : MonoBehaviour
                 else
                 {
                     slot.purchaseButton.interactable = true;
+
                 }
             }
         }
@@ -127,6 +130,8 @@ public class InteractionManager : MonoBehaviour
         else
         {
             continueDialogueButton.SetActive(false);
+            EndOfStoryEvent?.Invoke(this, EventArgs.Empty);
+
         }
     }
 

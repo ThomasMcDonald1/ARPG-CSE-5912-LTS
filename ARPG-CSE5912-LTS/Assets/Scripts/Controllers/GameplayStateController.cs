@@ -38,7 +38,7 @@ public class GameplayStateController : StateMachine
     public GameObject charaPanelButtonObj;
     public GameObject exitPanelToGameButtonObj;
 
-    public GameObject openInventoryMenuObj;
+   public GameObject openInventoryMenuObj;
     public GameObject exitInventoryMenuObj;
 
     public GameObject aoeReticleSphere;
