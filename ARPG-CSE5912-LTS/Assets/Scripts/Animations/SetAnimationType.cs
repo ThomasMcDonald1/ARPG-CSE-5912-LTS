@@ -114,6 +114,8 @@ public class SetAnimationType : MonoBehaviour
     {
         overrider.GetComponent<Animator>().SetBool("CanDualWield", true);
         overrider.GetComponent<Animator>().SetBool("AttackingMainHand", true);
+
         overrider.SetAnimations(SummonOverrider);
+
     }
 }

@@ -7,6 +7,9 @@ namespace ARPG.Combat
 
     public class SageOfSixPaths : Enemy
     {
+        public bool canSee = false;
+        public bool[] pathsVision = new bool[] { false,false,false,false,false};
+
         protected override void Start()
         {
             base.Start();
@@ -19,6 +22,22 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
+            for(int i = 0; i < pathsVision.Length; i++)
+            {
+                pathsVision[i] = transform.GetChild(3).transform.GetChild(i).GetComponent<Paths>().canSee;
+            }
+            for (int i = 0; i < pathsVision.Length; i++)
+            {
+                if(pathsVision[i] == true)
+                {
+                    canSee = true;
+                }
+                else if (i == pathsVision.Length - 1)
+                {
+                    canSee = false;
+                }
+            }
+
             if (GetComponent<Animator>().GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
@@ -29,7 +48,6 @@ namespace ARPG.Combat
                         GetComponent<Animator>().SetBool("Dead", true);
                         //get rid of enemy canvas
                         GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
-
                     }
                 }
             }

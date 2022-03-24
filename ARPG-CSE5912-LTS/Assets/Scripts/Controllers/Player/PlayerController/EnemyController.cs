@@ -34,8 +34,8 @@ namespace ARPG.Core
             if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyPath")
             {
                 classTypeName = "EnemyPath";
-                this.gameObject.AddComponent<EnemyKnight>();
-                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+                this.gameObject.AddComponent<Paths>();
+                enemyClass = this.gameObject.GetComponent<Paths>();
 
             }
             if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemySage")
