@@ -28,15 +28,17 @@ public class Player : Character
     //private GameObject GeneralClass;
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
+    Animator animator;
 
 
     void Awake()
     {
         //Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
-       // inventory = new Inventory();
-       // uiInventory.SetInventory(inventory);
-       // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+        animator = GetComponent<Animator>();
+        // inventory = new Inventory();
+        // uiInventory.SetInventory(inventory);
+        // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
     }
 
     protected override void Start()
@@ -54,8 +56,10 @@ public class Player : Character
     protected override void Update()
     {
         //inventory system
-       // playUpItem();
+        // playUpItem();
         //Sound
+        float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+        animator.SetFloat("AttackSpeed", attackSpeed);
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)
         {
@@ -191,7 +195,7 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
-            AttackTarget.GetComponent<HealthBarController>().SubtractHealth(stats[StatTypes.PHYATK]);
+            QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
         }
         GetComponent<Animator>().SetBool("StopAttack", true);
     }

@@ -9,6 +9,7 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
+        Animator animator;
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
@@ -17,12 +18,19 @@ namespace ARPG.Combat
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
         protected override void Start()
         {
             base.Start();
         }
         protected override void Update()
         {
+            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+            animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
             {
                 base.Update();
@@ -137,20 +145,21 @@ namespace ARPG.Combat
                 if (distance < BodyRange)
                 {
                     AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                    //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
                 }
         }
 
         // From animation Event
         public void EndMainHandAttack()
         {
-            Debug.Log("Being called EndMainHandAttack?");
+            //Debug.Log("Being called EndMainHandAttack?");
             if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
         }
 
         // From animation event
         public void EndOffHandAttack()
         {
-            Debug.Log("Being called EndOffHandAttack?");
+            //Debug.Log("Being called EndOffHandAttack?");
             GetComponent<Animator>().SetBool("AttackingMainHand", true);
         }
 
