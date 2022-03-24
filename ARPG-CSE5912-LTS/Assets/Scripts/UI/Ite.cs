@@ -16,16 +16,29 @@ public class Ite : ScriptableObject
 	public int defendRate;
 	public string utilityUsage;
 	public int cost;
+	public Stats playerStat;
 
 
 	//public int amount = 1;
 	public virtual void Use()
 	{
+		if(name == "Health")
+        {
+			playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+			useHealingPotion();
+
+		}
 		// Use the item
 		// Something may happen
 		Debug.Log("using " + name);
 	}
-	
+	public void useHealingPotion()
+    {
+		//Debug.Log("ADD HEALTH!!");
+
+		playerStat[StatTypes.HP] += 1000;
+		playerStat[StatTypes.HP] = Mathf.Clamp(playerStat[StatTypes.HP], 0, playerStat[StatTypes.MaxHP]);
+	}
 	public enum ItemType
 	{
 		weapon,

@@ -123,9 +123,15 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void UseItem()
     {
-        if(item != null)
+        if (item != null)
         {
             item.Use();
+            if (item.type == Ite.ItemType.utility)
+            {
+                Inventory.instance.Remove(item);
+
+            }
+
         }
     }
 
