@@ -8,4 +8,9 @@ public class PoisonAbilityEffectElement : BaseAbilityEffectElement
     {
         return StatTypes.PoisonRes;
     }
+
+    public override StatTypes GetAbilityEffectElementBonusMultType()
+    {
+        return StatTypes.PoisonDmgBonus;
+    }
 }

@@ -8,4 +8,8 @@ public class ColdAbilityEffectElement : BaseAbilityEffectElement
     {
         return StatTypes.ColdRes;
     }
+    public override StatTypes GetAbilityEffectElementBonusMultType()
+    {
+        return StatTypes.ColdDmgBonus;
+    }
 }
