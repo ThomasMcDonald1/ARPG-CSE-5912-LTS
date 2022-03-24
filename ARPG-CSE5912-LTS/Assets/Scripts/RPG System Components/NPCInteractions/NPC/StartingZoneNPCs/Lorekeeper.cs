@@ -12,25 +12,27 @@ public class Lorekeeper : NPC
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
-    QuestGiver questGiver;
     private void OnEnable()
     {
         QuestGiver.QuestCompleteEvent += OnQuestComplete;
+   
+
     }
     private void OnDisable()
     {
         QuestGiver.QuestCompleteEvent -= OnQuestComplete;
     }
-    private void OnQuestComplete(object sender, InfoEventArgs<(int, int)> e)
+    private void OnQuestComplete(object sender, EventArgs e)
     {
         NextStory();
     }
+    
     private void Start()
     {
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
-        questGiver = this.GetComponent<QuestGiver>(); 
+        //questGiver = this.GetComponent<QuestGiver>(); 
     }
 
     public override TextAsset GetCurrentDialogue()
@@ -53,12 +55,8 @@ public class Lorekeeper : NPC
 
             time += Time.deltaTime * speed;
 
-            SetMenu();
-            if(new Story(GetCurrentDialogue().text).canContinue)
-            {
-                questGiver.AddQuestToLogIfNew();//add quest to quest log if havent already added
+            //SetMenu();
 
-            }
 
 
             yield return null;
