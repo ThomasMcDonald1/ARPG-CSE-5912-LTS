@@ -32,8 +32,8 @@ namespace LootLabels {
         /// Unsubscribe the delegates in the eventhandlers, otherwise we get nullreference calls on exiting etc..
         /// </summary>
         public virtual void UnsubscribeEvents() {
-            ObjectEventHandler.UnsubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
-            ObjectEventHandler.UnsubscribeVisibilityEvents(InCameraFrustum, OutOfCameraFrustum);
+           // ObjectEventHandler.UnsubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
+           // ObjectEventHandler.UnsubscribeVisibilityEvents(InCameraFrustum, OutOfCameraFrustum);
         }
 
         /// <summary>
