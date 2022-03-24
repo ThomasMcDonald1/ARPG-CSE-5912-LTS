@@ -11,6 +11,7 @@ public class PatrolPath : MonoBehaviour
         {
             Gizmos.color = new Color(200, 100, 0);
             Gizmos.DrawSphere(GetVertex(i), vertexRadius);
+            Gizmos.color = Color.white;
             Gizmos.DrawLine(GetVertex(i), GetVertex(GetNextIndex(i)));
         }
     }
