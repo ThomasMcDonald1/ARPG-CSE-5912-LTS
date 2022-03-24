@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using ARPG.Movement;
 
 public class Player : Character
@@ -91,7 +91,6 @@ public class Player : Character
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
         }
-
     }
 
     public void TargetEnemy()
@@ -101,8 +100,7 @@ public class Player : Character
             GetComponent<Animator>().SetBool("StopAttack", false);
             if (!InCombatTargetRange())
             {
-                this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
+                StartCoroutine(MoveToEnemy());
             }
             else if (InCombatTargetRange())
             {
@@ -111,14 +109,41 @@ public class Player : Character
 
                 if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                 {
+
                     GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
                 else
                 {
+
                     GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
+            }
+        }
+    }
+
+    public IEnumerator MoveToEnemy()
+    {
+        while (AttackTarget != null && !InCombatTargetRange())
+        {
+            this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+            this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
+            yield return null;
+        }
+        if (AttackTarget != null)
+        {
+            GetComponent<MovementHandler>().Cancel();
+
+            if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+            {
+                GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+            }
+            else
+            {
+                GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
             }
         }
     }
