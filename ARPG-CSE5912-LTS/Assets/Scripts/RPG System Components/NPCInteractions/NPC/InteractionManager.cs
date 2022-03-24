@@ -46,7 +46,7 @@ public class InteractionManager : MonoBehaviour
     private void Update()
     {
         
-        playerMoneyText.SetText("Player: " + playerMoney.money.ToString() + "$");
+        playerMoneyText.SetText("Player: " + '\n'+ playerMoney.money.ToString() + "$");
         SaleUI.updateUI();
         
 

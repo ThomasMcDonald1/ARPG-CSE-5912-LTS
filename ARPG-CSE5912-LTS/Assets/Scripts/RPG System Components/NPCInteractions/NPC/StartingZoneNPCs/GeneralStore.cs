@@ -10,6 +10,8 @@ public class GeneralStore : NPC
     // Hank TODO
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
+
 
     public List<TextAsset> DialogueJSON;
     private int currentStory;
@@ -20,6 +22,7 @@ public class GeneralStore : NPC
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
+        saleUI.shop = shop;
     }
 
     public override TextAsset GetCurrentDialogue()
@@ -59,7 +62,7 @@ public class GeneralStore : NPC
             //else { SetDialogue(); }
 
             shopUI.initializeShop(shop);
-
+            
             //SetMenu();
             StartCoroutine(LookAtPlayer());
 
