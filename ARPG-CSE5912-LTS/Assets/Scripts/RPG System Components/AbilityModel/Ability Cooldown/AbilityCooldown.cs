@@ -1,17 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ARPG.Combat;
 
 public class AbilityCooldown : MonoBehaviour
 {
+    Character character;
     public float abilityCooldown;
     [HideInInspector] public float reducedCooldown;
     ActionBar actionBar;
+    List<EnemyAbility> EnemyAttackTypeList;
     Coroutine cooldownRoutine;
+    Coroutine enemyCooldownRoutine;
 
     private void Awake()
     {
-        actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        if (character is Player)
+        {
+            actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        }
+        else if (character is Enemy)
+        {
+            if (character is EnemyKnight)
+            {
+                EnemyAttackTypeList = GetComponentInParent<EnemyKnight>().EnemyAttackTypeList;
+            }
+            //add more for more enemy
+        }
     }
 
     private void OnEnable()
@@ -23,7 +38,16 @@ public class AbilityCooldown : MonoBehaviour
     void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
         if (e.info.ability.gameObject == GetComponentInParent<Ability>().gameObject)
-            CooldownAbilityOnActionButtons(e.info);
+        {
+            if (character is Player)
+            {
+                CooldownAbilityOnActionButtons(e.info);
+            }
+            else
+            {
+                CooldownAbilityOnEnemyList(e.info);
+            }
+        }
     }
 
     public void GetReducedCooldown(AbilityCast abilityCast)
@@ -45,6 +69,19 @@ public class AbilityCooldown : MonoBehaviour
         }
     }
 
+    public void CooldownAbilityOnEnemyList(AbilityCast abilityCast)
+    {
+        foreach (EnemyAbility enemyAbility in EnemyAttackTypeList)
+        {
+            if (enemyAbility.abilityAssigned == abilityCast.ability)
+            {
+                enemyAbility.cooldownTimer = abilityCooldown;
+                if (enemyCooldownRoutine == null)
+                    enemyCooldownRoutine = StartCoroutine(EnemyCooldownAbility(enemyAbility));
+            }
+        }
+    }
+
     private IEnumerator CooldownAbility(ActionButton actionButton)
     {
         actionButton.abilityInSlotOnCooldown = true;
@@ -57,6 +94,18 @@ public class AbilityCooldown : MonoBehaviour
         }
         actionButton.cooldownText.gameObject.SetActive(false);
         actionButton.abilityInSlotOnCooldown = false;
+        cooldownRoutine = null;
+    }
+
+    private IEnumerator EnemyCooldownAbility(EnemyAbility enemyAbility)
+    {
+        enemyAbility.abilityOnCooldown = true;
+        while (enemyAbility.cooldownTimer > 0)
+        {
+            enemyAbility.DecrementCooldownTimer();
+            yield return null;
+        }
+        enemyAbility.abilityOnCooldown = false;
         cooldownRoutine = null;
     }
 }

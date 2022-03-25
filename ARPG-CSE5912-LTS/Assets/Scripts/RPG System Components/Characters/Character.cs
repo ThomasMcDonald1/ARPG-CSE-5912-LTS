@@ -53,7 +53,7 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        Debug.Log(abilitiesKnown);
     }
 
     private void OnEnable()
@@ -76,6 +76,7 @@ public abstract class Character : MonoBehaviour
     {
         float distFromCaster = Vector3.Distance(e.info.hit.point, e.info.caster.transform.position);
         float distToTravel = distFromCaster - e.info.abilityRange.range;
+
         if (distFromCaster > e.info.abilityRange.range)
         {
             abilityQueued = true;
@@ -109,9 +110,17 @@ public abstract class Character : MonoBehaviour
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
+<<<<<<< HEAD
         abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
         abilityCast.castType.GetReducedCastTime(abilityCast);
         bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
+=======
+        bool abilityCanBePerformed = true;
+        if (this is Player)
+        {
+            abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+        }
+>>>>>>> 5bbca9dc (add cooldown)
 
         if (abilityCanBePerformed)
         {
@@ -128,10 +137,9 @@ public abstract class Character : MonoBehaviour
                 }
                 else
                 {
+                    //enemy no need ability can be performed i think.
                     Enemy enemy = (Enemy)this;
                     enemy.StopAllCoroutines();
-                    enemyAbilityController.enemyInSingleTargetAbilitySelectionMode = false;
-                    enemyAbilityController.enemyInAOEAbilityTargetSelectionMode = false;
                     enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
                     //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
