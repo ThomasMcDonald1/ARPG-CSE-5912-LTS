@@ -13,7 +13,6 @@ public class EnemyAbilityController : Enemy
 
     [HideInInspector] public bool enemyInAOEAbilityTargetSelectionMode;
     [HideInInspector] public bool enemyInSingleTargetAbilitySelectionMode;
-    [HideInInspector] public bool enemyNeedsToReleaseAbility;
 
     int groundLayerMask = 1 << 6;
 
@@ -22,7 +21,7 @@ public class EnemyAbilityController : Enemy
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCast;
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }
-    
+
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
@@ -45,7 +44,7 @@ public class EnemyAbilityController : Enemy
 
     private void EnemyClick(AbilityCast abilityCast)
     {
-        Ray ray = new Ray(AttackTarget.position, Vector3.down);
+        Ray ray = new Ray(AttackTarget.position + Vector3.up, Vector3.down);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -54,7 +53,6 @@ public class EnemyAbilityController : Enemy
             //TODO: If ability requires enemy or ally to be clicked, excluding the other, check that first
             if (target != null)
             {
-                enemyInSingleTargetAbilitySelectionMode = false;
                 abilityCast.hit = hit;
                 bool targetInRange = CheckCharacterInRange(target);
                 if (!targetInRange)
@@ -75,20 +73,19 @@ public class EnemyAbilityController : Enemy
         {
             abilityCast.abilityArea.DisplayAOEArea();
         }
-        if (!enemyNeedsToReleaseAbility)
-        {
-            if (abilityCast.abilityArea != null)
-            {
-                Ray ray = new Ray(AttackTarget.position, Vector3.down);
-                RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, groundLayerMask))
-                {
-                    abilityCast.hit = hit;
-                    EnemySelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
-                }
-                abilityCast.abilityArea.abilityAreaNeedsShown = false;
+        if (abilityCast.abilityArea != null)
+        {
+            Ray ray = new Ray(AttackTarget.position + Vector3.up, Vector3.down);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, groundLayerMask))
+            {
+                abilityCast.hit = hit;
+                EnemySelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
             }
+            abilityCast.abilityArea.abilityAreaNeedsShown = false;
+
         }
     }
 }

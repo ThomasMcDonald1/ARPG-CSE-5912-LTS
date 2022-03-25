@@ -33,7 +33,7 @@ public class SpecifyAbilityArea : BaseAbilityArea
             }
             else
             {
-                Ray ray = new Ray(enemy.AttackTarget.position, Vector3.down); //now enemy don't need to show, but maybe it will useful for future
+                Ray ray = new Ray(enemy.AttackTarget.position + Vector3.up, Vector3.down); //now enemy don't need to show, but maybe it will useful for future
             }
         }
     }

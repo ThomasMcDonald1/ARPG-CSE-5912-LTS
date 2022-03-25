@@ -18,6 +18,10 @@ namespace ARPG.Combat
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
+        public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
+        public virtual float cooldownTimer { get; set; }
+
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
@@ -68,6 +72,23 @@ namespace ARPG.Combat
                 else if (angle < SightRange && !InStopRange())
                 {
                     RunToPlayer();
+                    /*
+                    if (EnemyAttackTypeList != null)
+                    {
+                        if (AttackTarget != null)
+                        {
+                            for (int i = 0; i++; i < EnemyAttackTypeList.Count)
+                            {
+                                if (EnemyAttackTypeList[i].cooldownTimer == 0)
+                                {
+                                    ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    */
+                    
                 }
                 else if (angle < SightRange && InStopRange())
                 {
@@ -134,7 +155,7 @@ namespace ARPG.Combat
         {
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
-        public  bool InStopRange()
+        public bool InStopRange()
         {
             return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
         }
@@ -183,6 +204,29 @@ namespace ARPG.Combat
         public override Type GetCharacterType()
         {
             return typeof(Enemy);
+        }
+
+        private void ChooseAttackType(Ability AttackType)
+        {
+
+            /*
+            switch (AttackType)
+            {
+                case 0:
+                    //ability list 0
+                    break;
+                case 1:
+                    //ability list 1
+                    break;
+                case 2:
+                    //basic attack, last choice
+                    GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    break;
+                default:
+                    break;
+
+            }
+            */
         }
     }
     //public void Cancel()
