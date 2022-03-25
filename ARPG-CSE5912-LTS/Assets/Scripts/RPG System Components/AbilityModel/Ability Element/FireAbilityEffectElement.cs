@@ -8,4 +8,8 @@ public class FireAbilityEffectElement : BaseAbilityEffectElement
     {
         return StatTypes.FireRes;
     }
+    public override StatTypes GetAbilityEffectElementBonusMultType()
+    {
+        return StatTypes.FireDmgBonus;
+    }
 }

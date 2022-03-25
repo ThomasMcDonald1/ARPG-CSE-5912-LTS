@@ -28,6 +28,7 @@ public abstract class Character : MonoBehaviour
     public static event EventHandler<InfoEventArgs<AbilityCast>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
     public abstract Type GetCharacterType();
+    public Ability basicAttackAbility;
 
     #region Built-in
     private void Awake()
@@ -42,7 +43,7 @@ public abstract class Character : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
-        playerAbilityController = GetComponent<PlayerAbilityController>();
+        playerAbilityController = GetComponent<PlayerAbilityController>(); 
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
@@ -140,6 +141,14 @@ public abstract class Character : MonoBehaviour
         {
             //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
         }
+    }
+
+    public void QueueBasicAttack(Ability abilityToCast, Character target)
+    {
+        AbilityCast abilityCast = new AbilityCast(abilityToCast);
+        abilityCast.caster = this;
+        abilityCast.basicAttackTarget = target;
+        CastAbilityWithoutSelection(abilityCast);
     }
 
     //Could be useful for AI to find characters in range
