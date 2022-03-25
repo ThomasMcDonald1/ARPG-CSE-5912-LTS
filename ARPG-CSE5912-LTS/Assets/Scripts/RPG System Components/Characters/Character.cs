@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using ARPG.Combat;
 using UnityEngine.InputSystem;
 
 
@@ -16,6 +17,7 @@ public abstract class Character : MonoBehaviour
 
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
+    EnemyAbilityController enemyAbilityController;
     [HideInInspector] public bool abilityQueued = false;
     [HideInInspector] public Stats stats;
 
@@ -59,8 +61,8 @@ public abstract class Character : MonoBehaviour
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
         PlayerAbilityController.PlayerSelectedGroundTargetLocationEvent += OnGroundTargetSelected;
         PlayerAbilityController.PlayerSelectedSingleTargetEvent += OnSingleTargetSelected;
-        //EnemyAbilityControlller.EnemySelectedGroundTargetLocationEvent += OnGroundTargetSelected;
-        //EnemyAbilityController.EnemySelectedSingleTargetEvent += OnSingleTargetSelected;
+        EnemyAbilityController.EnemySelectedGroundTargetLocationEvent += OnGroundTargetSelected;
+        EnemyAbilityController.EnemySelectedSingleTargetEvent += OnSingleTargetSelected;
     }
     #endregion
     #region Events
@@ -126,7 +128,11 @@ public abstract class Character : MonoBehaviour
                 }
                 else
                 {
-                    //Enemy enemy = (Enemy)this;
+                    Enemy enemy = (Enemy)this;
+                    enemy.StopAllCoroutines();
+                    enemyAbilityController.enemyInSingleTargetAbilitySelectionMode = false;
+                    enemyAbilityController.enemyInAOEAbilityTargetSelectionMode = false;
+                    enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
                     //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
                     //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
