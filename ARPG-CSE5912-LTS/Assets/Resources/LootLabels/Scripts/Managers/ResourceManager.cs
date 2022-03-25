@@ -41,13 +41,13 @@ namespace LootLabels {
                 //    return modelPath + "Shoes";
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
-                case GearTypes.Potion:
-                    return modelPath + "Potion";
+                case GearTypes.HealthPotion:
+                    return modelPath + "Health Potion";
                 //case GearTypes.Shield:
                 //    return modelPath + "Shield";
                 default:
                     Debug.Log("Case not implemented");
-                    return modelPath + "Potion";
+                    return modelPath + "thingie";
             }
         }
 

@@ -31,7 +31,7 @@
         
        // Shoes,
        // Shield,
-        Potion,
+        HealthPotion,
         //All your characters gear slots, head, feet, weapon
     }
 
