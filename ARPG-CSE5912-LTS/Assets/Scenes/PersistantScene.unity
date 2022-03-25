@@ -381,6 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1525113724}
   - component: {fileID: 1525113725}
+  - component: {fileID: 1525113726}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -425,6 +426,21 @@ MonoBehaviour:
   width: 0
   loadingSceneCanvas: {fileID: 0}
   clickSpace: 1
+--- !u!114 &1525113726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525113723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d656f7cfe2a5c37498a01ef664f9df79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultStats: {fileID: 4900000, guid: fbb8443e195628449af2f1191eeb8b23, type: 3}
+  defaultStatsList:
+    DefaultStats: []
 --- !u!1 &1768226099
 GameObject:
   m_ObjectHideFlags: 0

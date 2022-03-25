@@ -118,7 +118,7 @@ public class LoadingStateController : StateMachine
             return;
         }
 
-        SceneManager.LoadSceneAsync("SceneTeleport1", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
         loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
         loadingSceneCanvasObj.SetActive(false);
         ChangeState<LoadingState>();
