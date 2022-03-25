@@ -72,6 +72,7 @@ namespace ARPG.Combat
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
+
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
                         GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");

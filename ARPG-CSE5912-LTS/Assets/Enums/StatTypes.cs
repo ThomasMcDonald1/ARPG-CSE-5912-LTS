@@ -55,7 +55,7 @@ public enum StatTypes
 
     //39-50
     BlockChance, //chance to mitigate damage by blocking with an equipped shield NOT USED?
-    Evasion, //chance to dodge an attack, taking 0 damage
+    DodgeChance, //chance to dodge an attack, taking 0 damage
     DamageReflect, //percentage of the damage the character takes that gets returned to the attacker
     FireRes, //character's resistance to fire damage
     ColdRes, //character's resistance to cold damage
