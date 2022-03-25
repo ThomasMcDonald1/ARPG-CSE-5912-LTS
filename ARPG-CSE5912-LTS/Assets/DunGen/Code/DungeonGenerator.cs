@@ -1005,6 +1005,24 @@ namespace DunGen
 
 				CurrentDungeon.PostGenerateDungeon(this);
 
+				//NAV MASH MODIFICATIONS
+				foreach(var tile in CurrentDungeon.AllTiles)
+                {
+					if (tile.gameObject.CompareTag("DungeonPart"))
+					{
+						tile.GetComponent<NavMeshSurface>().BuildNavMesh();
+					}
+				}
+
+				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+				foreach (NavMeshAgent agent in agents)
+				{
+					agent.enabled = false;
+					agent.enabled = true;
+				}
+				//NAV MASH MODIFICATIONS - END
+
+
 				// Process random props
 				foreach (var tile in CurrentDungeon.AllTiles)
 				{

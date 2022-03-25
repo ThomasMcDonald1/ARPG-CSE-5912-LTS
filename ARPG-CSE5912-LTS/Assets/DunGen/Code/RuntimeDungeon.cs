@@ -22,8 +22,8 @@ namespace DunGen
 			if (GenerateOnStart)
 			{
 				Generate();
-				BakeNavMesh();
-				AddEnemies();
+				//BakeNavMesh();
+				//AddEnemies();
 				Debug.Log("Dungeon Generated!");
 			}
 		}
