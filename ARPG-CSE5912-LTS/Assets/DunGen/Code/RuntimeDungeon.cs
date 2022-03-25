@@ -53,18 +53,11 @@ namespace DunGen
 
 		void AddEnemies()
         {
-			foreach (Transform tile in Root.transform)
+			//enable navmesh agents (for spawning conflict avoidance)
+			var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+			foreach (NavMeshAgent agent in agents)
 			{
-				foreach (Transform child in tile.transform)
-                {
-					if (child.CompareTag("Enemy"))
-					{
-						foreach (Transform enemy in child.transform)
-                        {
-							enemy.gameObject.GetComponent<NavMeshAgent>().enabled = true;
-						}
-					}
-				}
+				agent.enabled = true;
 			}
 		}
 
