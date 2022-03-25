@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatModifierFeature : Feature
 {
     public StatTypes type;
+    //Only use one of these per feature
     public int flatAmount;
     public int percentAmount;
 
