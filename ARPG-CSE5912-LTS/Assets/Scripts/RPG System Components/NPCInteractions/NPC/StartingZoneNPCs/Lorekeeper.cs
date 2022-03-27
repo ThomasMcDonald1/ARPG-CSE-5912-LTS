@@ -9,6 +9,9 @@ public class Lorekeeper : NPC
     [Header("Ink JSON")]
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
+
+
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
@@ -32,6 +35,8 @@ public class Lorekeeper : NPC
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
+        saleUI.shop = shop;
+
         //questGiver = this.GetComponent<QuestGiver>(); 
     }
 
