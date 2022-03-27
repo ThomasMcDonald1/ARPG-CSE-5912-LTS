@@ -12,20 +12,49 @@ public class Ite : ScriptableObject
 	public bool stackable;
 	public ItemType type;
 	[SerializeField] public GameObject prefab;
+	public int attackDamage;
+	public int defendRate;
+	public string utilityUsage;
+	public int cost;
+	public Stats playerStat;
+
 
 	//public int attackDamage;
 	//public int defendRate;
 	//public string utilityUsage;
-	public int cost;
 	//public int amount = 1;
 
 	public virtual void Use()
 	{
+		switch (name) {
+			case "Health":
+				playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+				useHealingPotion();
+				break;
+			case "Energy":
+				playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+				useEnergyPotion();
+				break;
+		}
+		
 		// Use the item
 		// Something may happen
 		Debug.Log("using " + name);
 	}
-	
+	public void useHealingPotion()
+    {
+		//Debug.Log("ADD HEALTH!!");
+
+		playerStat[StatTypes.HP] += 1000;
+		playerStat[StatTypes.HP] = Mathf.Clamp(playerStat[StatTypes.HP], 0, playerStat[StatTypes.MaxHP]);
+	}
+	public void useEnergyPotion()
+	{
+		//Debug.Log("ADD HEALTH!!");
+
+		playerStat[StatTypes.Mana] += 100 ;
+		playerStat[StatTypes.Mana] = Mathf.Clamp(playerStat[StatTypes.Mana], 0, playerStat[StatTypes.MaxMana]);
+	}
 	public enum ItemType
 	{
 		weapon,
