@@ -22,7 +22,6 @@ public class Ite : ScriptableObject
 	//public int attackDamage;
 	//public int defendRate;
 	//public string utilityUsage;
-	public int cost;
 	//public int amount = 1;
 
 	public virtual void Use()
