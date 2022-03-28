@@ -28,6 +28,7 @@ namespace DunGen.Editor
 
             dungeon.GenerateOnStart = EditorGUILayout.Toggle("Generate on Start", dungeon.GenerateOnStart);
 			dungeon.Root = EditorGUILayout.ObjectField(new GUIContent("Root", "An optional root object for the dungeon to be parented to. If blank, a new root GameObject will be created named \"" + Constants.DefaultDungeonRootName + "\""), dungeon.Root, typeof(GameObject), true) as GameObject;
+			dungeon.Waypoint = EditorGUILayout.ObjectField(new GUIContent("Waypoint", "The dungeon's waypoint"), dungeon.Waypoint, typeof(GameObject), true) as GameObject;
 			dungeon.savedDunData = EditorGUILayout.ObjectField(new GUIContent("SavedDungeon", "Saved dungeon scriptable object data."), dungeon.savedDunData, typeof(SaveDungeon), true) as SaveDungeon;
 
 			EditorGUILayout.BeginVertical("box");

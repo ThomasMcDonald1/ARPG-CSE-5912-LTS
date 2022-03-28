@@ -1008,10 +1008,7 @@ namespace DunGen
 				//NAV MASH MODIFICATIONS
 				foreach(var tile in CurrentDungeon.AllTiles)
                 {
-					if (tile.gameObject.CompareTag("DungeonPart"))
-					{
-						tile.GetComponent<NavMeshSurface>().BuildNavMesh();
-					}
+					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
 				}
 
 				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
@@ -1020,6 +1017,8 @@ namespace DunGen
 					agent.enabled = false;
 					agent.enabled = true;
 				}
+
+				Debug.Log("Dungeon navmesh addressed");
 				//NAV MASH MODIFICATIONS - END
 
 
