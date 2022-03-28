@@ -18,6 +18,8 @@ public class GameplayState : BaseGameplayState
     NavMeshAgent agent;
     Animator animator;
     ContextMenuPanel contextMenuPanel;
+    UtilityMenuPanel utilityMenuPanel;
+
     ActionBar actionBar;
     GameObject passiveTreeUI;
     bool lockedActions = false;
@@ -43,6 +45,7 @@ public class GameplayState : BaseGameplayState
         agent = player.GetComponent<NavMeshAgent>();
         animator = player.GetComponent<Animator>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
+        utilityMenuPanel = gameplayStateController.GetComponentInChildren<UtilityMenuPanel>();
         if (contextMenuPanel != null)
         {
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
@@ -308,6 +311,8 @@ public class GameplayState : BaseGameplayState
         {
             GameObject go = result.gameObject;
             ActionButton actionButton = go.GetComponent<ActionButton>();
+            PotionButton potionButton = go.GetComponentInChildren<PotionButton>();
+            Debug.Log("Gameobject name: "+go.name);
             if (actionButton != null)
             {
                 Debug.Log("Action Button clicked on: " + actionButton.name);
@@ -315,6 +320,15 @@ public class GameplayState : BaseGameplayState
                 contextMenuPanel.transform.position = new Vector3(contextMenuPanel.transform.position.x, 400, contextMenuPanel.transform.position.z);
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
                 contextMenuPanel.PopulateContextMenu(actionButton);
+            }
+            if(potionButton != null)
+            {
+                //Debug.Log("Action Button clicked on: " + actionButton.name);
+                utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
+                utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
+                utilityMenuPanel.utilityMenuPanelCanvas.SetActive(true);
+                utilityMenuPanel.PopulateUtilityMenu(potionButton);
+
             }
         }
     }
