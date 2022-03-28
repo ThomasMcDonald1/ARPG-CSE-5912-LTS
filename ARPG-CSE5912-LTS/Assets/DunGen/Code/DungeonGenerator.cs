@@ -1006,15 +1006,19 @@ namespace DunGen
 				CurrentDungeon.PostGenerateDungeon(this);
 
 				//NAV MASH MODIFICATIONS
-				foreach(var tile in CurrentDungeon.AllTiles)
-                {
-					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
-				}
-
 				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
 				foreach (NavMeshAgent agent in agents)
 				{
 					agent.enabled = false;
+				}
+
+				foreach (var tile in CurrentDungeon.AllTiles)
+                {
+					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
+				}
+
+				foreach (NavMeshAgent agent in agents)
+				{
 					agent.enabled = true;
 				}
 
