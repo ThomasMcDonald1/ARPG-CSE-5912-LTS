@@ -71,6 +71,8 @@ namespace DunGen
 				var y = this.Waypoint.transform.position.y;
 				var pos = waypointRoom.transform.position;
 				this.Waypoint.transform.position = new Vector3(pos.x, y, pos.z);
+
+				savedDunData.SetWaypointLocation(Waypoint.transform.position);
 			}
 		}
 
