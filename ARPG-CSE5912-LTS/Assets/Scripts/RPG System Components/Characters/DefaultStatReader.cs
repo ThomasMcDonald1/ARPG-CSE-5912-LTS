@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD
 using System.Reflection;
 using System.Linq;
-=======
->>>>>>> 8dfcb94e2bf3d641521073e3138fd6987b97ca84
 
 public class DefaultStatReader : MonoBehaviour
 {
@@ -15,7 +12,6 @@ public class DefaultStatReader : MonoBehaviour
     public class Character
     {
         public string name;
-<<<<<<< HEAD
         public Stats stats;
     }
     [System.Serializable]
@@ -94,20 +90,5 @@ public class DefaultStatReader : MonoBehaviour
         {
 
         }
-=======
-        public int[] statTypes;
-    }
-    [System.Serializable]
-    public class DefaultStatList
-    {
-        public Character[] DefaultStats;
-    }
-
-    public DefaultStatList defaultStatsList= new DefaultStatList();
-    // Update is called once per frame
-    void Start()
-    {
-        defaultStatsList = JsonUtility.FromJson<DefaultStatList>(defaultStats.text);
->>>>>>> 8dfcb94e2bf3d641521073e3138fd6987b97ca84
     }
 }
