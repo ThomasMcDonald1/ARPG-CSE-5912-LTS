@@ -37,6 +37,7 @@ public class LoadingStateController : StateMachine
         loadingSceneCanvasObj.SetActive(true);
 
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+        AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
         scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         scene.allowSceneActivation = false;
         InputController.Instance.enabled = false;
@@ -45,6 +46,7 @@ public class LoadingStateController : StateMachine
 
         await Task.Delay(2000);
 
+        Destroy(tempAudioListener);
         scene.allowSceneActivation = true;
     }
     public IEnumerator GetSceneLoadProgress()
