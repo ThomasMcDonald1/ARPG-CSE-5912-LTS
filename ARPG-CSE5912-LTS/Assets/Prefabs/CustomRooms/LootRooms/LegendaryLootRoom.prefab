@@ -57,7 +57,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6106904914501353339}
+  - {fileID: 6154751580753455338}
   - {fileID: 3922757251605663714}
   - {fileID: 8570367407454724285}
   - {fileID: 2929805452383530911}
@@ -1949,28 +1949,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400008, guid: 7a2da64e84f22264a91a97d540fe52e3, type: 3}
   m_PrefabInstance: {fileID: 8570367407454599733}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8697546158748466387
+--- !u!1001 &8726252574906657602
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 1690582017344884538}
     m_Modifications:
-    - target: {fileID: 3203169359160886178, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.24
-      objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.16861002
-      objectReference: {fileID: 0}
-    - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.16861002
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1986,7 +1974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9999948
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1994,7 +1982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0032182601
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2006,7 +1994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -0.369
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2034,11 +2022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160991626, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_Name
-      value: chest
-      objectReference: {fileID: 0}
-    - target: {fileID: 3203169359160991626, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: chest_epic
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359160991626, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2069,32 +2053,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359923166518, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-      propertyPath: disableOnClick
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3203169359923166518, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: objectToFollow
       value: 
-      objectReference: {fileID: 6106904914501772121}
+      objectReference: {fileID: 6154751580753294536}
     - target: {fileID: 3203169359923166523, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: type
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3203169359923166523, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
       propertyPath: objectName
-      value: Epic Chest
+      value: Legendary Chest
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
---- !u!1 &6106904914501772121 stripped
+--- !u!1 &6154751580753294536 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3203169359160991626, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-  m_PrefabInstance: {fileID: 8697546158748466387}
+  m_PrefabInstance: {fileID: 8726252574906657602}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6106904914501353339 stripped
+--- !u!4 &6154751580753455338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3203169359160886184, guid: 53a5e13c1a3e21a4aa58335653124786, type: 3}
-  m_PrefabInstance: {fileID: 8697546158748466387}
+  m_PrefabInstance: {fileID: 8726252574906657602}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8796283989150504635
 PrefabInstance:
