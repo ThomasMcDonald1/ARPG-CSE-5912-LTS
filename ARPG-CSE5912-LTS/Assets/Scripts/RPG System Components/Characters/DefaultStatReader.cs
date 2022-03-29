@@ -86,9 +86,5 @@ public class DefaultStatReader : MonoBehaviour
     {
         var playerStats = JsonUtility.FromJson<PlayerStats>("{\"result\":" + defaultStats.ToString() + "}");
         IEnumerable<string> variableNames = typeof(Stats).GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public).Select(f => f.Name);
-        foreach (var x in variableNames)
-        {
-
-        }
     }
 }
