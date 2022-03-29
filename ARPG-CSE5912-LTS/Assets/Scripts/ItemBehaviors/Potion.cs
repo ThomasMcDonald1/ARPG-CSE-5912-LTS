@@ -17,11 +17,9 @@ public class Potion : Ite
         switch (typeOfPotion)
         {
             case potionType.health:
-                playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
                 UseHealingPotion();
                 break;
             case potionType.mana:
-                playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
                 UseEnergyPotion();
                 break;
             default:

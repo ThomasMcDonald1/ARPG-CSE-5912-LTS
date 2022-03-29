@@ -23,7 +23,10 @@ public class Ite : ScriptableObject
 	//public int defendRate;
 	//public string utilityUsage;
 	//public int amount = 1;
-
+	public void Awake()
+	{
+		playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+	}
 	public virtual void Use()
 	{
 		// Use the item
