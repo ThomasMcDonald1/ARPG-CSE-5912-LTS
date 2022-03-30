@@ -18,17 +18,13 @@ public class WeaponEquipment : Equipment
 
     public weaponType typeOfWeapon;
 
-    public int attackRange;
-    public int minDamage;
-    public int maxDamage;
-    public int attackSpeedMod;
-    public int critChanceBonus;
+
 
 
     public override void Use()
     {
         base.Use();
-        playerStat[StatTypes.PHYATK] += maxDamage;
+        playerStat[StatTypes.PHYATK] += damage;
         //switch (typeOfWeapon)
         //{
         //    case weaponType.twohandsword:

@@ -11,9 +11,20 @@ public class Potion : Ite
         mana,
     }
     ;
+
+    public int mana;
+    public int health;
+    public int defense;
+    public int speed;
+
     public potionType typeOfPotion;
+   public void Update()
+    {
+        Debug.Log("I'm still here");
+    }
     public override void Use()
     {
+        base.Use();
         switch (typeOfPotion)
         {
             case potionType.health:

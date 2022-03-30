@@ -101,6 +101,8 @@ public class EquipManager : MonoBehaviour
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
+            oldItem.playerStat[StatTypes.PHYATK] -= oldItem.damage;
+            oldItem.playerStat[StatTypes.AttackRange] -= oldItem.attackRange;
             switch (oldItem.type)
             {
                 case Ite.ItemType.armor:
@@ -109,7 +111,7 @@ public class EquipManager : MonoBehaviour
                     break;
                 case Ite.ItemType.weapon:
                     Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
-                    if(nu != null)
+                    if (nu != null)
                     {
                         Destroy(nu);
                     }

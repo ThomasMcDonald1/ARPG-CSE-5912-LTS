@@ -54,7 +54,7 @@
         Rare,
         Epic,
         Legendary,
-        Set,
+      //  Set,
         SuperUltraHyperExPlusAlpha,
     }
     //The rarity of your objects, also used to determine label color
@@ -64,7 +64,7 @@
         Rare,
         Epic,
         Legendary,
-        Set,
+       // Set,
         SuperUltraHyperExPlusAlpha,
     }
 
