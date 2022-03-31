@@ -413,19 +413,14 @@ namespace DunGen
 					}
 				}
 
-			foreach(var tile in useableTiles)
+			//disable navmesh agents (for spawning conflict avoidance)
+			var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+			foreach (NavMeshAgent agent in agents)
             {
-				foreach (Transform child in tile.transform)
-				{
-					if (child.gameObject.CompareTag("Enemy"))
-                    {
-						foreach (Transform mob in child)
-						{
-							mob.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-						}
-                    }
-				}
-			}
+				agent.enabled = false;
+            }
+
+
 		}
 
 		protected virtual void GatherTilesToInject()
@@ -1009,6 +1004,27 @@ namespace DunGen
 				}
 
 				CurrentDungeon.PostGenerateDungeon(this);
+
+				//NAV MASH MODIFICATIONS
+				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+				foreach (NavMeshAgent agent in agents)
+				{
+					agent.enabled = false;
+				}
+
+				foreach (var tile in CurrentDungeon.AllTiles)
+                {
+					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
+				}
+
+				foreach (NavMeshAgent agent in agents)
+				{
+					agent.enabled = true;
+				}
+
+				Debug.Log("Dungeon navmesh addressed");
+				//NAV MASH MODIFICATIONS - END
+
 
 				// Process random props
 				foreach (var tile in CurrentDungeon.AllTiles)

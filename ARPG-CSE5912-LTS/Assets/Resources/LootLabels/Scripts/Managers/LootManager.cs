@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace LootLabels {
+namespace LootLabels
+{
     /// <summary>
     /// Manager takes care of creating loot
     /// </summary>
-    public class LootManager : MonoBehaviour {
+    public class LootManager : MonoBehaviour
+    {
 
         public static LootManager singleton = null;
 
@@ -39,15 +41,18 @@ namespace LootLabels {
             }
         }
 
-        void Awake() {
+        void Awake()
+        {
             //Check if instance already exists
-            if (singleton == null) {
+            if (singleton == null)
+            {
                 //if not, set instance to this
                 singleton = this;
             }
 
             //If instance already exists and it's not this:
-            else if (singleton != this) {
+            else if (singleton != this)
+            {
                 //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
                 Destroy(gameObject);
             }
@@ -57,7 +62,8 @@ namespace LootLabels {
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
-        public void DropLoot(LootSource lootSource, Transform objectTransform, Type type) {
+        public void DropLoot(LootSource lootSource, Transform objectTransform, Type type)
+        {
             int itemAmount = LootGenerator.CalculateLootAmount(lootSource);
 
             //if you want to use animations on loot, you need to put it in a empty parent object, which is located at the spawn location otherwise the position of the animation is completely wrong
@@ -81,30 +87,35 @@ namespace LootLabels {
             //    }
             //}
             //else {
-                lootOrigin = Instantiate(Resources.Load("LootLabels/3D models/LootOrigin", typeof(GameObject)), objectTransform.position, objectTransform.rotation) as GameObject;
-                lootOrigin.transform.SetParent(LootParent, true);
+            lootOrigin = Instantiate(Resources.Load("LootLabels/3D models/LootOrigin", typeof(GameObject)), objectTransform.position, objectTransform.rotation) as GameObject;
+            lootOrigin.transform.SetParent(LootParent, true);
             //}
 
             StartCoroutine(DropLootCoroutine(lootOrigin.transform, itemAmount, type));
         }
 
         //if you want a delay on each item that spawns, use this
-        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, Type type) {
+        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, Type type)
+        {
             int i = amount;
 
-            while (i != 0) {
+            while (i != 0)
+            {
                 i--;
                 yield return new WaitForSeconds(.2f);
                 GenerateLoot(lootOrigin, type);
             }
+            GameObject lootdrop = GameObject.Find("LootDrops");
         }
 
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
-        void GenerateLoot(Transform lootOrigin, Type type) {
+        void GenerateLoot(Transform lootOrigin, Type type)
+        {
             LootTypes lootType = LootGenerator.SelectRandomLootType();
 
-            switch (lootType) {
+            switch (lootType)
+            {
                 case LootTypes.Currency:
                     ChooseCurrency(lootOrigin);
                     break;
@@ -121,7 +132,8 @@ namespace LootLabels {
         /// Choses a currency to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseCurrency(Transform lootOrigin) {
+        void ChooseCurrency(Transform lootOrigin)
+        {
             BaseCurrency currency = LootGenerator.CreateCurrency();
 
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
@@ -132,11 +144,13 @@ namespace LootLabels {
         /// Choses a item type to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseItemType(Transform lootOrigin, Type type) {
+        void ChooseItemType(Transform lootOrigin, Type type)
+        {
 
             ItemTypes itemType = LootGenerator.SelectRandomItemType();
             Debug.Log("itemType is " + itemType);
-            switch (itemType) {
+            switch (itemType)
+            {
                 case ItemTypes.Gear:
                     BaseGear gear = LootGenerator.CreateGear(type);
                     Debug.Log("gear.ModelName is " + gear.ModelName);
