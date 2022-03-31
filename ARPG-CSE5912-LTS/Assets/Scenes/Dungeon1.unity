@@ -1812,6 +1812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ConfirmButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1281283982113850264, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3077579862960998334, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
       propertyPath: m_Name
       value: PassiveTreeUI
@@ -1886,26 +1890,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
---- !u!4 &214328839 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3077579863232268683, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
-  m_PrefabInstance: {fileID: 214328838}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &214328840 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4808257405062557504, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
-  m_PrefabInstance: {fileID: 214328838}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &214328841 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 559859231101395928, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
-  m_PrefabInstance: {fileID: 214328838}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &214328842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3077579862960998334, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
-  m_PrefabInstance: {fileID: 214328838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &222691645
 GameObject:
   m_ObjectHideFlags: 0
@@ -9187,6 +9171,16 @@ Transform:
   m_Father: {fileID: 1815593416}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &398926573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1281283982113850265, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+  m_PrefabInstance: {fileID: 214328838}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &398926574 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1281283982113850264, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+  m_PrefabInstance: {fileID: 214328838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &398997726
 GameObject:
   m_ObjectHideFlags: 0
@@ -10089,6 +10083,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462862253}
   m_CullTransparentMesh: 1
+--- !u!1 &474352006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7928752928817335504, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+  m_PrefabInstance: {fileID: 214328838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &490747747
 GameObject:
   m_ObjectHideFlags: 0
@@ -15120,7 +15119,7 @@ Transform:
   - {fileID: 1267922835}
   - {fileID: 1231520885}
   - {fileID: 1679746767}
-  - {fileID: 214328839}
+  - {fileID: 398926574}
   - {fileID: 1525158109}
   - {fileID: 755865912}
   - {fileID: 311963546}
@@ -17525,6 +17524,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203663698}
   m_CullTransparentMesh: 1
+--- !u!1 &1204236580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1270694749926553626, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+  m_PrefabInstance: {fileID: 214328838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1231520884
 GameObject:
   m_ObjectHideFlags: 0
@@ -26949,9 +26953,9 @@ MonoBehaviour:
   customCharacter: {fileID: 11400000, guid: 7313c35cb5d1a324a85ba2071c1533b1, type: 2}
   yesRespawnButtonObj: {fileID: 262468620}
   noRespawnButtonObj: {fileID: 1876057271}
-  passiveTreeUI: {fileID: 214328842}
-  confirmPassiveTreeButton: {fileID: 214328841}
-  closePassiveTreeButton: {fileID: 214328840}
+  passiveTreeUI: {fileID: 398926573}
+  confirmPassiveTreeButton: {fileID: 1204236580}
+  closePassiveTreeButton: {fileID: 474352006}
   CameraZoom: {fileID: 1707897249}
 --- !u!4 &1815593416
 Transform:
