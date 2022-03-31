@@ -8,4 +8,8 @@ public class LightningAbilityEffectElement : BaseAbilityEffectElement
     {
         return StatTypes.LightningRes;
     }
+    public override StatTypes GetAbilityEffectElementBonusMultType()
+    {
+        return StatTypes.LightningDmgBonus;
+    }
 }

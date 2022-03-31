@@ -9,6 +9,7 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
+        Animator animator;
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
@@ -17,12 +18,19 @@ namespace ARPG.Combat
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
 
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
         protected override void Start()
         {
             base.Start();
         }
         protected override void Update()
         {
+            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+            animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
             {
                 base.Update();
@@ -45,7 +53,13 @@ namespace ARPG.Combat
 
         }
 
-        public  void SeePlayer()
+        public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
+        {
+            EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
+        }
+
+        public virtual  void SeePlayer()
+
         {
 
             if (InTargetRange()) 
@@ -53,11 +67,8 @@ namespace ARPG.Combat
                 Vector3 realDirection = transform.forward;
                 Vector3 direction = AttackTarget.position -transform.position;
                 float angle = Vector3.Angle(direction, realDirection);
-                if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
-                {
-                    StopRun();
-                }
-                else if (angle < SightRange && !InStopRange())
+
+                if (angle < SightRange && !InStopRange())
                 {
                     RunToPlayer();
                 }
@@ -74,6 +85,10 @@ namespace ARPG.Combat
                         GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
                         //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                     }
+                    if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
+                    {
+                        StopRun();
+                    }
                 }
                 else
                 {
@@ -86,7 +101,7 @@ namespace ARPG.Combat
             }
         }
 
-        private void Patrol()
+        protected void Patrol()
         {
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -107,13 +122,12 @@ namespace ARPG.Combat
             return finalPosition;
         }
 
-        public  void RunToPlayer()
+        public virtual  void RunToPlayer()
         {
-            if (InTargetRange())
-            {
+
                 agent.isStopped = false;
                 agent.SetDestination(AttackTarget.position);
-            }
+            
         }
 
         public void StopRun()
@@ -121,7 +135,7 @@ namespace ARPG.Combat
             agent.isStopped = true;
         }
 
-        public bool InTargetRange()
+        public virtual bool InTargetRange()
         {
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
@@ -137,20 +151,21 @@ namespace ARPG.Combat
                 if (distance < BodyRange)
                 {
                     AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                    //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
                 }
         }
 
         // From animation Event
         public void EndMainHandAttack()
         {
-            Debug.Log("Being called EndMainHandAttack?");
+            //Debug.Log("Being called EndMainHandAttack?");
             if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
         }
 
         // From animation event
         public void EndOffHandAttack()
         {
-            Debug.Log("Being called EndOffHandAttack?");
+            //Debug.Log("Being called EndOffHandAttack?");
             GetComponent<Animator>().SetBool("AttackingMainHand", true);
         }
 

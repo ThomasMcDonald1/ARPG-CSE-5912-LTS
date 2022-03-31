@@ -22,6 +22,8 @@ public class AbilityCast
     public bool abilityVFXFired = false;
     public RaycastHit hit;
     public List<Character> charactersAffected;
+    public Character basicAttackTarget;
+    public bool basicAttackHit = false;
 
     public AbilityCast(Ability ability)
     {

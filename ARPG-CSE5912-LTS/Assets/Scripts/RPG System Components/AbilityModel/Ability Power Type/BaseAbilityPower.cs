@@ -9,7 +9,9 @@ public abstract class BaseAbilityPower : MonoBehaviour
     public abstract int GetBaseAttack(); //Currently unused, but will be useful if we add another stat to damage calculation
     public abstract float GetBaseDefense(Character target, BaseAbilityEffectElement effectElement);
     public abstract float GetPercentDefense(Character target, BaseAbilityEffectElement effectElement);
-    public abstract float AdjustDefenseForPenetration(Character caster);
+    public abstract float AdjustDefenseForFlatPenetration(Character caster);
+    public abstract float AdjustDefenseForPercentPenetration(Character caster);
+    public abstract float GetDamageBonusMultiplier(Character caster, BaseAbilityEffectElement element);
 
     protected virtual float GetStat(Character character, StatTypes statType)
     {

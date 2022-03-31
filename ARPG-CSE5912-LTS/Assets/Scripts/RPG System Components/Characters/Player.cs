@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using ARPG.Movement;
 
 public class Player : Character
@@ -28,15 +28,17 @@ public class Player : Character
     //private GameObject GeneralClass;
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
+    Animator animator;
 
 
     void Awake()
     {
         //Debug.Log(stats);
         agent = GetComponent<NavMeshAgent>();
-       // inventory = new Inventory();
-       // uiInventory.SetInventory(inventory);
-       // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
+        animator = GetComponent<Animator>();
+        // inventory = new Inventory();
+        // uiInventory.SetInventory(inventory);
+        // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
     }
 
     protected override void Start()
@@ -54,8 +56,10 @@ public class Player : Character
     protected override void Update()
     {
         //inventory system
-       // playUpItem();
+        // playUpItem();
         //Sound
+        float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+        animator.SetFloat("AttackSpeed", attackSpeed);
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)
         {
@@ -91,7 +95,6 @@ public class Player : Character
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
         }
-
     }
 
     public void TargetEnemy()
@@ -101,8 +104,7 @@ public class Player : Character
             GetComponent<Animator>().SetBool("StopAttack", false);
             if (!InCombatTargetRange())
             {
-                this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-                this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
+                StartCoroutine(MoveToEnemy());
             }
             else if (InCombatTargetRange())
             {
@@ -111,14 +113,41 @@ public class Player : Character
 
                 if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                 {
+
                     GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
                 else
                 {
+
                     GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
+            }
+        }
+    }
+
+    public IEnumerator MoveToEnemy()
+    {
+        while (AttackTarget != null && !InCombatTargetRange())
+        {
+            this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
+            this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
+            yield return null;
+        }
+        if (AttackTarget != null)
+        {
+            GetComponent<MovementHandler>().Cancel();
+
+            if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+            {
+                GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+            }
+            else
+            {
+                GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
             }
         }
     }
@@ -192,7 +221,7 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
-            AttackTarget.GetComponent<HealthBarController>().SubtractHealth(stats[StatTypes.PHYATK]);
+            QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
         }
         GetComponent<Animator>().SetBool("StopAttack", true);
     }

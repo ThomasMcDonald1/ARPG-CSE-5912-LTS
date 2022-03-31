@@ -5,4 +5,5 @@ using UnityEngine;
 public abstract class BaseAbilityEffectElement : MonoBehaviour
 {
     public abstract StatTypes GetAbilityEffectElementResistTarget();
+    public abstract StatTypes GetAbilityEffectElementBonusMultType();
 }
