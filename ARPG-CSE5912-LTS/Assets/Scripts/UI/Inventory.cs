@@ -115,6 +115,7 @@ public class Inventory : MonoBehaviour
         }
         else if ((int)amount[item] > 1)
         {
+
             int num = (int)amount[item] - 1;
             amount[item] = num;
         }

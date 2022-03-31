@@ -46,6 +46,12 @@ public class EquipManager : MonoBehaviour
         }
         currentEquipment[slotIndex] = newItem;
 
+        // Activate the equipment's features
+        foreach (Feature feature in newItem.features)
+        {
+            feature.Activate(gameObject);
+        }
+
         // Equipment has been removed so we trigger the callback
         if (onEquipmentChanged != null)
             onEquipmentChanged.Invoke(null, oldItem);
@@ -69,6 +75,12 @@ public class EquipManager : MonoBehaviour
 
             currentEquipment[slotIndex] = null;
             EquipmentManager.instance.UnequipItem(oldItem.equipment, character);
+
+            // Dectivate the equipment's features
+            foreach (Feature feature in oldItem.features)
+            {
+                feature.Deactivate();
+            }
 
             // Equipment has been removed so we trigger the callback
             if (onEquipmentChanged != null)

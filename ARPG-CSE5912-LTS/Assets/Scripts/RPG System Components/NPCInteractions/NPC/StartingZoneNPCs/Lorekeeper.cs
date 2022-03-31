@@ -1,4 +1,5 @@
 using System;
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,35 @@ public class Lorekeeper : NPC
     [Header("Ink JSON")]
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
+    [SerializeField] public UI_Sale saleUI;
+
+
     public List<TextAsset> DialogueJSON;
     private int currentStory;
     GameObject child;
+    private void OnEnable()
+    {
+        QuestGiver.QuestCompleteEvent += OnQuestComplete;
+   
 
+    }
+    private void OnDisable()
+    {
+        QuestGiver.QuestCompleteEvent -= OnQuestComplete;
+    }
+    private void OnQuestComplete(object sender, EventArgs e)
+    {
+        NextStory();
+    }
+    
     private void Start()
     {
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
+        saleUI.shop = shop;
+
+        //questGiver = this.GetComponent<QuestGiver>(); 
     }
 
     public override TextAsset GetCurrentDialogue()
@@ -26,15 +47,23 @@ public class Lorekeeper : NPC
 
     public override IEnumerator LookAtPlayer()
     {
+
         float time = 0.0f;
         float speed = 1.0f;
+
         Quaternion rotate = Quaternion.LookRotation(player.transform.position - child.transform.position);
 
         while (time < 1.0f)
         {
             child.transform.rotation = Quaternion.RotateTowards(child.transform.rotation, rotate, 50f * Time.deltaTime);
             child.transform.eulerAngles = new Vector3(0, child.transform.eulerAngles.y, 0);
+
             time += Time.deltaTime * speed;
+
+            //SetMenu();
+
+
+
             yield return null;
         }
     }

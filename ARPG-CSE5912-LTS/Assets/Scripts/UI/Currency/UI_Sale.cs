@@ -11,13 +11,12 @@ public class UI_Sale : MonoBehaviour
     public List<Ite> saleItems = new List<Ite>();
     public Shop shop;
     public int saleItemChanged;
-    [SerializeField] public PlayerMoney playerMoney;
 
     void Start()
     {
         inventory = Inventory.instance;
         saleSlots = saleParent.GetComponentsInChildren<SaleSlot>();
-        saleItemChanged = saleItems.Count;
+        //saleItemChanged = saleItems.Count;
         switch ((int)shop.shopSaleType)
         {
             case (int)Shop.saleType.Utility:
@@ -37,9 +36,7 @@ public class UI_Sale : MonoBehaviour
     public void updateUI()
     {
        
-        //Debug.Log("Sale slots length: " + saleSlots.Length);
-        if (saleItemChanged != saleItems.Count)
-        {
+       
 
             for (int i = 0; i < saleSlots.Length; i++)
             {
@@ -68,10 +65,6 @@ public class UI_Sale : MonoBehaviour
                     saleSlots[i].ClearSlot();
                 }
             }
-            saleItemChanged = saleItems.Count;
-
-        }
-
-
+       
     }
 }

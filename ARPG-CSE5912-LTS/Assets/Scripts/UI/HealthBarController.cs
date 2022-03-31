@@ -31,11 +31,14 @@ public class HealthBarController : MonoBehaviour
     {
         if (stats != null && healthBar != null)
             UpdateSlider();
+       // Debug.Log("HP in real time: " + stats[StatTypes.HP]);
     }
 
     public void AddHealth(int amt)
     {
+
         stats[StatTypes.HP] += amt;
+        Debug.Log("Recover HP: " + amt);
     }
 
     public void SubtractHealth(int amt)

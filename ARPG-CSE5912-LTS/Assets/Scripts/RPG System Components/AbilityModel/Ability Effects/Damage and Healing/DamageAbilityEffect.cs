@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class DamageAbilityEffect : BaseAbilityEffect
 {
-    //public int minEffectDamage;
-    //public int maxEffectDamage;
-
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> AbilityDamageReceivedEvent;
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
@@ -30,23 +27,22 @@ public class DamageAbilityEffect : BaseAbilityEffect
         //Calculate the caster's total attack damage pre-mitigation
         float damage = (baseDamage * casterLevel + baseDamage / casterLevel) / (baseDamageScaler + (casterLevel * 0.01f));
         //Debug.Log("initial damage: " + damage);
-        //Get armor pen values from caster
-        //float casterFlatArmorPen = GetStat(caster, StatTypes.FlatArmorPen);
-        float casterPercentArmorPen = GetStat(abilityCast.caster, StatTypes.PercentArmorPen);
-        //Get magic pen values from caster
-        float casterFlatMagicPen = GetStat(abilityCast.caster, StatTypes.FlatMagicPen);
-        float casterPercentMagicPen = GetStat(abilityCast.caster, StatTypes.PercentMagicPen);
-        float finalDamageWithPen;
+
         //Get the element of the effect, if any
         BaseAbilityEffectElement effectElement = GetComponent<BaseAbilityEffectElement>();
+        //Get the associated damage bonus stat
+        float damageBonusPercentMult = abilityCast.abilityPower.GetDamageBonusMultiplier(abilityCast.caster, effectElement);
+        //Apply the damage bonus percent multiplier
+        float finalDamageWithMult = damage * (1 + damageBonusPercentMult);
         //Calculate the enemy's defense pre-penetration
         float enemyDefense = abilityCast.abilityPower.GetBaseDefense(target, effectElement);
         enemyDefense *= (1 + abilityCast.abilityPower.GetPercentDefense(target, effectElement));
         //Calculate enemy defense post-penetration
-        enemyDefense *= abilityCast.abilityPower.AdjustDefenseForPenetration(abilityCast.caster);
+        enemyDefense -= abilityCast.abilityPower.AdjustDefenseForFlatPenetration(abilityCast.caster);
+        enemyDefense *= abilityCast.abilityPower.AdjustDefenseForPercentPenetration(abilityCast.caster);
 
         //Calculate the final damage the caster would do post-penetration
-        finalDamageWithPen = damage * (120 / (120 + enemyDefense));
+        float finalDamageWithPen = finalDamageWithMult * (120 / (120 + enemyDefense));
 
         //Debug.Log("damage with pen: " + finalDamageWithPen);
         //Add some randomization
@@ -73,7 +69,7 @@ public class DamageAbilityEffect : BaseAbilityEffect
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
         AbilityDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((target, finalCalculatedDamage, wasCrit)));
-        Debug.Log("Doing " + finalCalculatedDamage + " damage to " + target.name);
+        //Debug.Log("Doing " + finalCalculatedDamage + " damage to " + target.name);
         return finalCalculatedDamage;
     }
 }
