@@ -68362,6 +68362,9 @@ GameObject:
   - component: {fileID: 8534128318987869683}
   - component: {fileID: 5427852407981032916}
   - component: {fileID: 1041666601985188143}
+  - component: {fileID: 6569530493472777}
+  - component: {fileID: 3900259075825343059}
+  - component: {fileID: 382341228268445527}
   m_Layer: 8
   m_Name: EliteWarrior
   m_TagString: Untagged
@@ -68509,6 +68512,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5394380360309627795}
   lerpBar: {fileID: 362177193715197798}
+--- !u!114 &6569530493472777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a1c279fcf437e45a573bbdaadf1c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3900259075825343059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2a2d72f1a7269346b73b22bf7ca255a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &382341228268445527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db4208252acf7845943466a7b9206f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TwoHandedSwordOverrider: {fileID: 22100000, guid: c46e28f4f2ed4574e91047fe9670ab1a, type: 2}
+  BowOverrider: {fileID: 22100000, guid: ca1cd719c1691b1428a2bcf404170007, type: 2}
+  StaffOverrider: {fileID: 22100000, guid: a622a616856c8b04097f9a22ae4eb11b, type: 2}
+  SwordRightOnlyOverrider: {fileID: 22100000, guid: 900bdb3332922ce4fb33f8425812c0fb, type: 2}
+  SwordLeftOnlyOverrider: {fileID: 22100000, guid: be2e88b3d64da974eb1ec5bc6e70d2fd, type: 2}
+  DaggerRightOnlyOverrider: {fileID: 22100000, guid: 7b6fa4532795006438c389127aab849e, type: 2}
+  DaggerLeftOnlyOverrider: {fileID: 22100000, guid: 2c703605f960cfc4b8303550128844a4, type: 2}
+  SwordLeftDaggerRightOverrider: {fileID: 22100000, guid: 78fd494167db9e444b95c424008366cd, type: 2}
+  DaggerLeftSwordRightOverrider: {fileID: 22100000, guid: 516d15ced0aff754699908e9bf0b3b98, type: 2}
+  DualSwordOverrider: {fileID: 22100000, guid: 9f8a2a4514316cb469ce2525673283a1, type: 2}
+  DualDaggerOverrider: {fileID: 22100000, guid: 249be7586bcd0ed489bf96336469c372, type: 2}
+  UnarmedOverrider: {fileID: 22100000, guid: 2453406798cf69f48a360d737ab18954, type: 2}
+  SummonOverrider: {fileID: 0}
+  overrider: {fileID: 6569530493472777}
 --- !u!1 &8534128319883724304
 GameObject:
   m_ObjectHideFlags: 0
