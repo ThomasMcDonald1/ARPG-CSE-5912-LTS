@@ -11,7 +11,7 @@ public class SaveDungeon : ScriptableObject
 {
     private void OnEnable()
     {
-        //hideFlags = HideFlags.DontUnloadUnusedAsset;
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
     public bool generated = false;
