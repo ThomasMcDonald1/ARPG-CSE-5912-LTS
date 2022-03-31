@@ -12,6 +12,7 @@ public class PassiveTreeUI : MonoBehaviour
     private void Awake()
     {
         passiveSkills = new PassiveSkills(player, connections, skillNodes);
+        Debug.Log(passiveSkills == null);
         // assign each child an event listener that listens for button click
         foreach(Transform child in skillNodes.transform)
         {

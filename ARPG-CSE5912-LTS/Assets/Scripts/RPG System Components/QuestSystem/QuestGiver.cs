@@ -66,7 +66,7 @@ public class QuestGiver : MonoBehaviour
         //        QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
         //    }
         //}
-        UpdateQuestIcon();
+        // UpdateQuestIcon();
 
     }
     public void AddQuestToLogIfNew()
