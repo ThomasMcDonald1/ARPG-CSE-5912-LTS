@@ -14,7 +14,7 @@ namespace DunGen
 	{
         public DungeonGenerator Generator = new DungeonGenerator();
         public bool GenerateOnStart = true;
-		public GameObject Root, Waypoint;
+		public GameObject Root;
 		public SaveDungeon savedDunData;
 
         protected virtual void Awake()
@@ -68,11 +68,9 @@ namespace DunGen
 			var waypointRoom = GameObject.FindWithTag("WaypointRoom");
 			if (waypointRoom != null)
             {
-				var y = this.Waypoint.transform.position.y;
-				var pos = waypointRoom.transform.position;
-				this.Waypoint.transform.position = new Vector3(pos.x, y, pos.z);
-
-				savedDunData.SetWaypointLocation(Waypoint.transform.position);
+				var loc = waypointRoom.transform.position + Vector3.up;
+				Debug.Log("Dungeon wayport: spawn player at " + loc);
+				savedDunData.SetWaypointLocation(loc);
 			}
 		}
 

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e228b45736a8cf4ea000616e628a4dd, type: 3}
-  m_Name: WithBosses
+  m_Name: Dungeon1
   m_EditorClassIdentifier: 
   globalPropGroupID_obsolete: 
   globalPropRanges_obsolete: []
   Length:
-    Min: 25
+    Min: 20
     Max: 30
   BranchMode: 0
   BranchCount:
@@ -75,17 +75,9 @@ MonoBehaviour:
     NodeType: 1
     Position: 0
     Label: Start
-    Keys:
-    - ID: 0
-      Range:
-        Min: 0
-        Max: 1
-    Locks:
-    - ID: 0
-      Range:
-        Min: 0
-        Max: 1
-    LockPlacement: -1
+    Keys: []
+    Locks: []
+    LockPlacement: 0
   - Graph: {fileID: 11400000}
     TileSets:
     - {fileID: 11400000, guid: 24b4416dc33a51a4c9674eec7c3979f8, type: 2}
@@ -99,8 +91,8 @@ MonoBehaviour:
     TileSets:
     - {fileID: 11400000, guid: 33f474ac62aa4a34282455338129d66c, type: 2}
     NodeType: 0
-    Position: 0.8412836
-    Label: Wayport
+    Position: 0.75755036
+    Label: Waypoint
     Keys: []
     Locks: []
     LockPlacement: 0
