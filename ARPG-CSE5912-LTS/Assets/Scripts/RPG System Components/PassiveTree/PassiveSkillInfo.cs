@@ -18,44 +18,44 @@ public class PassiveSkillInfo
                 "HEALTH1",
                 new StatTypes[] { StatTypes.MaxHP},
                 new int[] { 20 },
-                new string[] { "STR1", "HPREGEN1"},
+                new string[] { "FIRERES1", "HPREGEN1"},
                 true
             ),
             new PassiveNode(
-                "STR1",
-                new StatTypes[] { StatTypes.STR },
+                "FIRERES1",
+                new StatTypes[] { StatTypes.FireRes },
                 new int[] { 5 },
-                new string[] { "HEALTH1", "STR2", "ARMOR1" }
+                new string[] { "HEALTH1", "FIRERES2", "ARMOR1" }
             ),
             new PassiveNode(
-                "STR2",
-                new StatTypes[] { StatTypes.STR },
+                "FIRERES2",
+                new StatTypes[] { StatTypes.FireRes },
                 new int[] { 10 },
-                new string[] { "STR1", "ARMOR1", "HPREGEN2", "STR3" }
+                new string[] { "FIRERES1", "ARMOR1", "HPREGEN2", "FIRERES3" }
             ),
             new PassiveNode(
-                "STR3",
-                new StatTypes[] { StatTypes.STR },
+                "FIRERES3",
+                new StatTypes[] { StatTypes.FireRes },
                 new int[] { 10 },
-                new string[] { "STR2", "STR4" }
+                new string[] { "FIRERES2", "FIRERES4" }
             ),
             new PassiveNode(
-                "STR4",
-                new StatTypes[] { StatTypes.STR },
+                "FIRERES4",
+                new StatTypes[] { StatTypes.FireRes },
                 new int[] { 10 },
-                new string[] { "STR3", "HPREGEN4", "ARMOR3" }
+                new string[] { "FIRERES3", "HPREGEN4", "ARMOR3" }
             ),
             new PassiveNode(
-                "STR5",
-                new StatTypes[] { StatTypes.STR },
+                "FIRERES5",
+                new StatTypes[] { StatTypes.FireRes },
                 new int[] { 10 },
-                new string[] { "STR4", "ATKSPD4", "ARMOR3", "DODGE4", "LIFESTEAL4" }
+                new string[] { "FIRERES4", "ATKSPD4", "ARMOR3", "DODGE4", "LIFESTEAL4" }
             ),
             new PassiveNode(
                 "ARMOR1",
                 new StatTypes[] { StatTypes.PHYDEF },
                 new int[] { 10 },
-                new string[] { "STR1" }
+                new string[] { "FIRERES1" }
             ),
             new PassiveNode(
                 "ARMOR2",
@@ -67,7 +67,7 @@ public class PassiveSkillInfo
                 "ARMOR3",
                 new StatTypes[] { StatTypes.PHYDEF },
                 new int[] { 10 },
-                new string[] { "ARMOR2", "STR4", "DODGE4", "MOVE2" }
+                new string[] { "ARMOR2", "FIRERES4", "DODGE4", "MOVE2" }
             ),
             new PassiveNode(
                 "HPREGEN1",
@@ -79,7 +79,7 @@ public class PassiveSkillInfo
                 "HPREGEN2",
                 new StatTypes[] { StatTypes.HealthRegen },
                 new int[] { 3 },
-                new string[] { "HPREGEN1", "HPREGEN3", "ATKSPD1", "STR2" }
+                new string[] { "HPREGEN1", "HPREGEN3", "ATKSPD1", "FIRERES2" }
             ),
             new PassiveNode(
                 "HPREGEN3",
@@ -91,7 +91,7 @@ public class PassiveSkillInfo
                 "HPREGEN4",
                 new StatTypes[] { StatTypes.HealthRegen },
                 new int[] { 4 },
-                new string[] { "HPREGEN3", "ATKSPD3", "STR4" }
+                new string[] { "HPREGEN3", "ATKSPD3", "FIRERES4" }
             ),
             new PassiveNode(
                 "ATKSPD1",
@@ -115,7 +115,7 @@ public class PassiveSkillInfo
                 "ATKSPD4",
                 new StatTypes[] { StatTypes.AtkSpeed },
                 new int[] { 5 },
-                new string[] { "ATKSPD3", "HPREGEN4", "STR5", "BLOCKCHANCE3", "CASTSPD4" }
+                new string[] { "ATKSPD3", "HPREGEN4", "FIRERES5", "BLOCKCHANCE3", "CASTSPD4" }
             ),
             new PassiveNode(
                 "MOVE1",
@@ -151,85 +151,85 @@ public class PassiveSkillInfo
                 "DODGE4",
                 new StatTypes[] { StatTypes.Evasion },
                 new int[] { 5 },
-                new string[] { "DODGE3", "ARMOR3", "STR5", "LIFESTEAL3" }
+                new string[] { "DODGE3", "ARMOR3", "FIRERES5", "LIFESTEAL3" }
             ),
             new PassiveNode(
                 "DODGE4",
                 new StatTypes[] { StatTypes.Evasion },
                 new int[] { 5 },
-                new string[] { "DODGE3", "ARMOR3", "STR5", "LIFESTEAL3" }
+                new string[] { "DODGE3", "ARMOR3", "FIRERES5", "LIFESTEAL3" }
             ),
             new PassiveNode(
                 "LIFESTEAL1",
                 new StatTypes[] { StatTypes.Lifesteal },
                 new int[] { 5 },
-                new string[] { "DODGE1", "DEX1" }
+                new string[] { "DODGE1", "COLDRES1" }
             ),
             new PassiveNode(
                 "LIFESTEAL2",
                 new StatTypes[] { StatTypes.Lifesteal },
                 new int[] { 5 },
-                new string[] { "DODGE2", "DEX2" }
+                new string[] { "DODGE2", "COLDRES2" }
             ),
             new PassiveNode(
                 "LIFESTEAL3",
                 new StatTypes[] { StatTypes.Lifesteal },
                 new int[] { 5 },
-                new string[] { "DODGE4", "DEX4" }
+                new string[] { "DODGE4", "COLDRES4" }
             ),
             new PassiveNode(
                 "LIFESTEAL4",
                 new StatTypes[] { StatTypes.Lifesteal },
                 new int[] { 5 },
-                new string[] { "STR5", "DEX5" }
+                new string[] { "FIRERES5", "COLDRES5" }
             ),
             new PassiveNode(
-                "DEX1",
-                new StatTypes[] { StatTypes.DEX },
+                "COLDRES1",
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "LIFESTEAL1", "DEX2" }
+                new string[] { "LIFESTEAL1", "COLDRES2" }
             ),
             new PassiveNode(
-                "DEX2",
-                new StatTypes[] { StatTypes.DEX },
+                "COLDRES2",
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "DEX1", "DEX3", "LIFESTEAL2", "CRIT1" }
+                new string[] { "COLDRES1", "COLDRES3", "LIFESTEAL2", "CRIT1" }
             ),
             new PassiveNode(
-                "DEX3",
-                new StatTypes[] { StatTypes.DEX },
+                "COLDRES3",
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "DEX2", "DEX4" }
+                new string[] { "COLDRES2", "COLDRES4" }
             ),
             new PassiveNode(
-                "DEX4",
-                new StatTypes[] { StatTypes.DEX },
+                "COLDRES4",
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "DEX3", "DEX5", "LIFESTEAL3", "CRIT3" }
+                new string[] { "COLDRES3", "COLDRES5", "LIFESTEAL3", "CRIT3" }
             ),
             new PassiveNode(
-                "DEX5",
-                new StatTypes[] { StatTypes.DEX },
+                "COLDRES5",
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "DEX4", "LIFESTEAL4", "CRIT3", "MP4", "CASTSPD4" }
+                new string[] { "COLDRES4", "LIFESTEAL4", "CRIT3" }
             ),
             new PassiveNode(
                 "CRIT1",
-                new StatTypes[] { StatTypes.DEX },
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "CRIT2", "DEX1", "DEX2" }
+                new string[] { "CRIT2", "COLDRES1", "COLDRES2" }
             ),
             new PassiveNode(
                 "CRIT2",
-                new StatTypes[] { StatTypes.DEX },
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
                 new string[] { "CRIT1", "CRIT3" }
             ),
             new PassiveNode(
                 "CRIT3",
-                new StatTypes[] { StatTypes.DEX },
+                new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "MP4", "CRIT2", "MPREGEN2", "DEX4", "DEX5" }
+                new string[] { "MP4", "CRIT2", "MPREGEN2", "COLDRES4", "COLDRES5" }
             ),
             new PassiveNode(
                 "MP1",
@@ -253,31 +253,31 @@ public class PassiveSkillInfo
                 "MP4",
                 new StatTypes[] { StatTypes.MaxMana },
                 new int[] { 5 },
-                new string[] { "MP3", "CRIT3", "CASTSPD3", "DEX5" }
+                new string[] { "MP3", "CRIT3", "CASTSPD3", "COLDRES5" }
             ),
             new PassiveNode(
                 "CASTSPD1",
                 new StatTypes[] { StatTypes.CastSpeed },
                 new int[] { 5 },
-                new string[] { "CDR1", "INT1", "CASTSPD2" }
+                new string[] { "CDR1", "LIGHTNINGRES1", "CASTSPD2" }
             ),
             new PassiveNode(
                 "CASTSPD2",
                 new StatTypes[] { StatTypes.CastSpeed },
                 new int[] { 5 },
-                new string[] { "CDR2", "INT1", "CASTSPD1", "CASTSPD2" }
+                new string[] { "CDR2", "LIGHTNINGRES1", "CASTSPD1", "CASTSPD2" }
             ),
             new PassiveNode(
                 "CASTSPD3",
                 new StatTypes[] { StatTypes.CastSpeed },
                 new int[] { 5 },
-                new string[] { "MP4", "INT3", "CASTSPD2", "CASTSPD4" }
+                new string[] { "MP4", "LIGHTNINGRES3", "CASTSPD2", "CASTSPD4" }
             ),
             new PassiveNode(
                 "CASTSPD4",
                 new StatTypes[] { StatTypes.CastSpeed },
                 new int[] { 5 },
-                new string[] { "INT3", "INT4", "CASTSPD3", "DEX5", "ATKSPD4" }
+                new string[] { "LIGHTNINGRES3", "LIGHTNINGRES4", "CASTSPD3", "COLDRES5", "ATKSPD4" }
             ),
             new PassiveNode(
                 "MPREGEN1",
@@ -304,28 +304,28 @@ public class PassiveSkillInfo
                 new string[] { "CASTSPD2", "MP2" }
             ),
             new PassiveNode(
-                "INT1",
-                new StatTypes[] { StatTypes.INT },
+                "LIGHTNINGRES1",
+                new StatTypes[] { StatTypes.LightningRes },
                 new int[] { 5 },
-                new string[] { "CASTSPD1", "CASTSPD2", "INT2" }
+                new string[] { "CASTSPD1", "CASTSPD2", "LIGHTNINGRES2" }
             ),
             new PassiveNode(
-                "INT2",
-                new StatTypes[] { StatTypes.INT },
+                "LIGHTNINGRES2",
+                new StatTypes[] { StatTypes.LightningRes },
                 new int[] { 5 },
-                new string[] { "INT1", "INT3" }
+                new string[] { "LIGHTNINGRES1", "LIGHTNINGRES3" }
             ),
             new PassiveNode(
-                "INT3",
-                new StatTypes[] { StatTypes.INT },
+                "LIGHTNINGRES3",
+                new StatTypes[] { StatTypes.LightningRes },
                 new int[] { 5 },
-                new string[] { "INT2", "INT4", "CASTSPD3", "CASTSPD4", "CRITDMG3" }
+                new string[] { "LIGHTNINGRES2", "LIGHTNINGRES4", "CASTSPD3", "CASTSPD4", "CRITDMG3" }
             ),
             new PassiveNode(
-                "INT4",
-                new StatTypes[] { StatTypes.INT },
+                "LIGHTNINGRES4",
+                new StatTypes[] { StatTypes.LightningRes },
                 new int[] { 5 },
-                new string[] { "INT3", "CASTSPD4", "CRITDMG2", "BLOCKCHANCE3" }
+                new string[] { "LIGHTNINGRES3", "CASTSPD4", "CRITDMG2", "BLOCKCHANCE3" }
             ),
             new PassiveNode(
                 "BLOCKCHANCE1",
@@ -343,7 +343,7 @@ public class PassiveSkillInfo
                 "BLOCKCHANCE3",
                 new StatTypes[] { StatTypes.BlockChance },
                 new int[] { 5 },
-                new string[] { "ATKSPD3", "ATKSPD4", "BLOCKCHANCE2", "INT4" }
+                new string[] { "ATKSPD3", "ATKSPD4", "BLOCKCHANCE2", "LIGHTNINGRES4" }
             ),
             new PassiveNode(
                 "BLOCKCHANCE4",
@@ -361,13 +361,13 @@ public class PassiveSkillInfo
                 "CRITDMG2",
                 new StatTypes[] { StatTypes.CritDamage },
                 new int[] { 5 },
-                new string[] { "CRITDMG1", "CRITDMG3", "BLOCKCHANCE2", "INT4" }
+                new string[] { "CRITDMG1", "CRITDMG3", "BLOCKCHANCE2", "LIGHTNINGRES4" }
             ),
             new PassiveNode(
                 "CRITDMG3",
                 new StatTypes[] { StatTypes.CritDamage },
                 new int[] { 5 },
-                new string[] { "CRITDMG1", "CRITDMG2", "INT3" }
+                new string[] { "CRITDMG1", "CRITDMG2", "LIGHTNINGRES3" }
             ),
         };
     }
