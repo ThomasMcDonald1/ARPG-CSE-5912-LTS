@@ -105,9 +105,25 @@ public class LevelController : MonoBehaviour
 
         int lvl = stats[StatTypes.LVL];
         int gap = monsterLevel - stats[StatTypes.LVL];
+        int typeConstant = 1;
+        switch (monsterType)
+        {
+            case 1: //normal
+                typeConstant = 5;
+                break;
+            case 2: //elite
+                typeConstant = 10;
+                break;
+            case 3: //boss
+                typeConstant = 50;
+                break;
+            default:
+                Debug.Log("Need to set up monster type for enemy");
+                break;
+        }
         if (lvl < 25)
         {
-            stats[StatTypes.ExpGain] = (int)((float)monsterType * (float)monsterLevel * ((float)(100 + gap * 4) / 100f));
+            stats[StatTypes.ExpGain] = (int)((float)typeConstant * (float)monsterLevel * ((float)(100 + gap * 4) / 100f));
             //if player level is less than 25, for example,
             //we have basic exp = 1
             //player level = 24, monster level = 9, monsterType will cause the exp *=50.
@@ -118,7 +134,7 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            stats[StatTypes.ExpGain] = (int)((float)monsterType * (float)monsterLevel *((float)monsterLevel/ (float)stats[StatTypes.LVL]));
+            stats[StatTypes.ExpGain] = (int)((float)typeConstant * (float)monsterLevel *((float)monsterLevel/ (float)stats[StatTypes.LVL]));
             //if level is greater than 25, for example,
             //we have basic exp = 1
             //player level = 25, monster level = 9, monsterType will cause the exp *= 50.
