@@ -10,7 +10,7 @@ public class ShieldEquipment : Equipment
     public override void Use()
     {
         base.Use();
-        playerStat[StatTypes.PHYDEF] += defense;
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>().SetValue(StatTypes.PHYDEF, armor, false);
         //switch (typeOfWeapon)
         //{
         //    case weaponType.twohandsword:

@@ -18,13 +18,21 @@ public class WeaponEquipment : Equipment
 
     public weaponType typeOfWeapon;
 
-
+    public void OnEnable()
+    {
+        //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+    }
 
 
     public override void Use()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] += damage;
         base.Use();
-        playerStat[StatTypes.PHYATK] += damage;
+       // Debug.Log("playerStat before change is " + playerStat[StatTypes.PHYATK]);
+        //playerStat.SetValue(StatTypes.PHYATK, damage, false);
+       // playerStat[StatTypes.PHYATK] += damage;
+       // Debug.Log("playerStat after change is " + playerStat[StatTypes.PHYATK]);
+
         //switch (typeOfWeapon)
         //{
         //    case weaponType.twohandsword:

@@ -42,15 +42,18 @@ public class Potion : Ite
     public void UseHealingPotion()
     {
         //Debug.Log("ADD HEALTH!!");
-
-        playerStat[StatTypes.HP] += 1000;
-        playerStat[StatTypes.HP] = Mathf.Clamp(playerStat[StatTypes.HP], 0, playerStat[StatTypes.MaxHP]);
+        int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.HP];
+        playerStat += 1000;
+        playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxHP]);
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.HP] = playerStat;
     }
     public void UseEnergyPotion()
     {
         //Debug.Log("ADD HEALTH!!");
 
-        playerStat[StatTypes.Mana] += 100;
-        playerStat[StatTypes.Mana] = Mathf.Clamp(playerStat[StatTypes.Mana], 0, playerStat[StatTypes.MaxMana]);
+        int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana];
+        playerStat += 100;
+        playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana]);
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana] = playerStat;
     }
 }

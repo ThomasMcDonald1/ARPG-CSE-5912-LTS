@@ -101,8 +101,8 @@ public class EquipManager : MonoBehaviour
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
-            oldItem.playerStat[StatTypes.PHYATK] -= oldItem.damage;
-            oldItem.playerStat[StatTypes.AttackRange] -= oldItem.attackRange;
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] -= oldItem.damage;
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.AttackRange] -= oldItem.attackRange;
             switch (oldItem.type)
             {
                 case Ite.ItemType.armor:

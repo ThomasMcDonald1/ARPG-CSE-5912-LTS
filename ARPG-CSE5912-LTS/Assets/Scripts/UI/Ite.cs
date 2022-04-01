@@ -15,17 +15,13 @@ public class Ite : ScriptableObject
 
 	public string utilityUsage;
 	public int cost;
-	public Stats playerStat;
+	//[SerializeField] public Stats playerStat;
 
 
 	//public int attackDamage;
 	//public int defendRate;
 	//public string utilityUsage;
 	//public int amount = 1;
-	public void Awake()
-	{
-		playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
-	}
 	public virtual void Use()
 	{
 		// Use the item
