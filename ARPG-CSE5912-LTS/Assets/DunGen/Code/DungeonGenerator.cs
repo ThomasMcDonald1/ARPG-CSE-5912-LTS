@@ -1006,23 +1006,23 @@ namespace DunGen
 				CurrentDungeon.PostGenerateDungeon(this);
 
 				//NAV MASH MODIFICATIONS
-				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
-				foreach (NavMeshAgent agent in agents)
-				{
-					agent.enabled = false;
-				}
+				//var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+				//foreach (NavMeshAgent agent in agents)
+				//{
+				//	agent.enabled = false;
+				//}
 
-				foreach (var tile in CurrentDungeon.AllTiles)
-                {
-					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
-				}
+				//foreach (var tile in CurrentDungeon.AllTiles)
+    //            {
+				//	tile.GetComponent<NavMeshSurface>().BuildNavMesh();
+				//}
 
-				foreach (NavMeshAgent agent in agents)
-				{
-					agent.enabled = true;
-				}
+				//foreach (NavMeshAgent agent in agents)
+				//{
+				//	agent.enabled = true;
+				//}
 
-				Debug.Log("Dungeon navmesh addressed");
+				//Debug.Log("Dungeon navmesh addressed");
 				//NAV MASH MODIFICATIONS - END
 
 
