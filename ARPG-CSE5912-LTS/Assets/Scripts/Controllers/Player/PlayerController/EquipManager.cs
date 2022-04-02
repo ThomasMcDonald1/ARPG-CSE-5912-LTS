@@ -49,6 +49,7 @@ public class EquipManager : MonoBehaviour
         // Activate the equipment's features
         foreach (Feature feature in newItem.features)
         {
+            Debug.Log(feature.name);
             feature.Activate(gameObject);
         }
 
