@@ -25,7 +25,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (removeButton.interactable)
         {
-         //   Debug.Log("Hoever!");
+            //Debug.Log("Hoever!");
             StopAllCoroutines();
             //StartCoroutine(StartTimer());
             ShowMessage();
@@ -80,7 +80,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ShowTip(String tip, Vector2 mousePos)
     {
-      //  Debug.Log("In ShowMessage");
+        //Debug.Log("In ShowMessage");
 
         tipText.text = tip;
         tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
@@ -91,7 +91,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
     public void HideTip()
     {
-      //  Debug.Log("Hide ShowMessage");
+        //Debug.Log("Hide ShowMessage");
 
         tipText.text = default;
         tipWindow.gameObject.SetActive(false);

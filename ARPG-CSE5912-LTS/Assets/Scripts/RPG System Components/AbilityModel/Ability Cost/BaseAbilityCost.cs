@@ -5,22 +5,18 @@ using UnityEngine;
 public abstract class BaseAbilityCost : MonoBehaviour
 {
     public int cost;
-    //[HideInInspector] public GameplayStateController gameplayStateController;
-    //[HideInInspector] public HealthBarController healthBarController;
-    //[HideInInspector] public EnergyBarController energyBarController;
-
-    //private void Awake()
-    //{
-    //    gameplayStateController = GetComponentInParent<GameplayStateController>();
-    //}
-
-    //private void Start()
-    //{
-    //    healthBarController = gameplayStateController.healthBarController;
-    //    energyBarController = gameplayStateController.energyBarController;
-    //}
+    //public int reducedCost;
 
     public abstract void DeductResourceFromCaster(Character caster);
 
     public abstract bool CheckCharacterHasResourceCostForCastingAbility(Character caster);
+
+    //public void GetReducedCost(AbilityCast abilityCast)
+    //{
+    //    if (abilityCast.caster.stats[StatTypes.CostReduction] > 0)
+    //    {
+    //        float reducedCost = abilityCast.abilityCost.cost - (abilityCast.abilityCost.cost * abilityCast.caster.stats[StatTypes.CostReduction] * 0.01f);
+    //        abilityCast.abilityCost.reducedCost = Mathf.RoundToInt(reducedCost);
+    //    }
+    //}
 }

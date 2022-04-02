@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e228b45736a8cf4ea000616e628a4dd, type: 3}
+  m_Name: Dungeon3
+  m_EditorClassIdentifier: 
+  globalPropGroupID_obsolete: 
+  globalPropRanges_obsolete: []
+  Length:
+    Min: 26
+    Max: 30
+  BranchMode: 0
+  BranchCount:
+    Min: 1
+    Max: 5
+  GlobalProps: []
+  KeyManager: {fileID: 0}
+  DoorwayConnectionChance: 1
+  RestrictConnectionToSameSection: 0
+  TileInjectionRules: []
+  TileTagConnectionMode: 1
+  TileConnectionTags:
+  - TagA:
+      id: 0
+    TagB:
+      id: 0
+  - TagA:
+      id: 0
+    TagB:
+      id: 1
+  - TagA:
+      id: 0
+    TagB:
+      id: 2
+  - TagA:
+      id: 1
+    TagB:
+      id: 2
+  - TagA:
+      id: 1
+    TagB:
+      id: 1
+  - TagA:
+      id: 2
+    TagB:
+      id: 2
+  - TagA:
+      id: 4
+    TagB:
+      id: 2
+  - TagA:
+      id: 4
+    TagB:
+      id: 1
+  - TagA:
+      id: 4
+    TagB:
+      id: 4
+  - TagA:
+      id: 4
+    TagB:
+      id: 0
+  Nodes:
+  - Graph: {fileID: 11400000}
+    TileSets:
+    - {fileID: 11400000, guid: 2909ff9018e07804991c2c1713f373d2, type: 2}
+    NodeType: 1
+    Position: 0
+    Label: Start
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+  - Graph: {fileID: 11400000}
+    TileSets:
+    - {fileID: 11400000, guid: f1c289496d6502a4d9d37c11ae12c513, type: 2}
+    NodeType: 2
+    Position: 1
+    Label: Goal
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+  - Graph: {fileID: 11400000, guid: bf7ae2d4adcbb9e469c98ce0d67c2795, type: 2}
+    TileSets:
+    - {fileID: 11400000, guid: 33f474ac62aa4a34282455338129d66c, type: 2}
+    NodeType: 0
+    Position: 0.75922817
+    Label: Waypoint
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+  Lines:
+  - Graph: {fileID: 11400000}
+    DungeonArchetypes:
+    - {fileID: 11400000, guid: ffb00a92ecec95c45bb545b2c4cc6573, type: 2}
+    Position: 0
+    Length: 1
+    Keys: []
+    Locks: []
+  currentFileVersion: 1

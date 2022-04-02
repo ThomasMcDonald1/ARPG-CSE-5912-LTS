@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89377a5c2dcb66b40af385ad8492cda9, type: 3}
+  m_Name: BossArchetype
+  m_EditorClassIdentifier: 
+  TileSets:
+  - {fileID: 11400000, guid: b06a3ea38d7a1504cbcf56fcb7affa47, type: 2}
+  - {fileID: 11400000, guid: b8d6bf81f83bd3b42ade936d8634ba23, type: 2}
+  - {fileID: 11400000, guid: b3cd8715e30e0c348938fecccf3baf15, type: 2}
+  BranchCapTileSets:
+  - {fileID: 11400000, guid: b3cd8715e30e0c348938fecccf3baf15, type: 2}
+  - {fileID: 11400000, guid: b2f8b820eb01eed4693ce4294e48345f, type: 2}
+  BranchCapType: 1
+  BranchingDepth:
+    Min: 5
+    Max: 10
+  BranchCount:
+    Min: 3
+    Max: 10
+  StraightenChance: 0
+  Unique: 0

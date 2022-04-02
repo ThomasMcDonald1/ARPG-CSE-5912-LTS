@@ -8,11 +8,9 @@ public abstract class Feature: MonoBehaviour
 
     public void Activate(GameObject target)
     {
-        if (Target == null)
-        {
-            Target = target;
-            OnActivate();
-        }
+        //Debug.Log("Target is now " + target.name);
+        Target = target;
+        OnActivate();       
     }
 
     public void Deactivate()

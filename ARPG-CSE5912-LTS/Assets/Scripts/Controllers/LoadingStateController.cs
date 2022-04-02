@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class LoadingStateController : StateMachine
 {
+    public static LoadingStateController Instance;
     public GameObject loadingSceneCanvasObj;
-    public Slider progressBar;
+    // public Slider progressBar;
+    public Image progressBar;
     public bool loadScene = true;
     public string sceneToLoad;
     public Text percentLoaded;
@@ -15,27 +18,49 @@ public class LoadingStateController : StateMachine
     public RawImage backgroundImage;
     public float height = 250.0f;
     public float width = 0.0f;
-
+    [HideInInspector] public AsyncOperation scene;
     private float progressValue;
 
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
-
     void Update()
     {
-        
-
-        if (loadScene == true)
-        {
-            loadScene = false;
-            StartCoroutine(loadImage());
-            StartCoroutine(LoadYourAsyncScene());
-        }
+        // if (loadScene == true)
+        // {
+        //     loadScene = false;
+        //     StartCoroutine(loadImage());
+        //     StartCoroutine(LoadYourAsyncScene());
+        // }
     }
-
-    IEnumerator LoadYourAsyncScene()
+    public async void LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0);
+        loadingSceneCanvasObj.SetActive(true);
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+        AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
+        scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        scene.allowSceneActivation = false;
+        InputController.Instance.enabled = false;
+
+        StartCoroutine(GetSceneLoadProgress());
+
+        await Task.Delay(2000);
+
+        Destroy(tempAudioListener);
+        scene.allowSceneActivation = true;
+    }
+    public IEnumerator GetSceneLoadProgress()
+    {
+        while(!scene.isDone)
+        {
+            progressBar.fillAmount = scene.progress;
+            yield return null;
+        }
+        loadingSceneCanvasObj.SetActive(false);
+    }
+    public IEnumerator LoadYourAsyncScene(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         asyncLoad.allowSceneActivation = false;
         bool checkTime = true;
@@ -43,8 +68,8 @@ public class LoadingStateController : StateMachine
         while (!asyncLoad.isDone)
         {
             progressValue = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            progressBar.value = progressValue;
-            //Debug.Log(asyncLoad.progress);
+            // progressBar.value = progressValue;
+            Debug.Log(asyncLoad.progress);
             percentLoaded.text = Mathf.Round(progressValue * 100) + "%";
 
             if (asyncLoad.progress == 0.9f)
@@ -59,11 +84,11 @@ public class LoadingStateController : StateMachine
                     clickSpace = false;
                     asyncLoad.allowSceneActivation = true;
                 }
-                
+
             }
             yield return null;
         }
-        //Debug.Log("level is loaded");
+        Debug.Log("level is loaded");
     }
 
     IEnumerator loadImage()
@@ -84,12 +109,24 @@ public class LoadingStateController : StateMachine
 
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
         loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
-        loadingSceneCanvas.enabled = true;
+        loadingSceneCanvasObj.SetActive(false);
         ChangeState<LoadingState>();
 
-        backgroundImage.texture = images[1];
-        
-        
+        // backgroundImage.texture = images[1];
+
+
     }
 }

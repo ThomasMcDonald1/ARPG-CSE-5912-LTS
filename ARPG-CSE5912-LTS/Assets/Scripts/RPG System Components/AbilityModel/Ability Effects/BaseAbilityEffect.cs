@@ -14,6 +14,7 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     protected const int maxDamage = 99999;
 
     public static event EventHandler<InfoEventArgs<Character>> AbilityMissedTargetEvent;
+    public static event EventHandler<InfoEventArgs<Character>> AbilityWasBlockedEvent;
 
     //TODO: Not sure where the best place to add damage predictions for an ability is...perhaps here? such as:
     // public abstract int Predict();
@@ -26,10 +27,17 @@ public abstract class BaseAbilityEffect : MonoBehaviour
     {
         //if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
         //    return;
+        BaseHitRate hitRate = GetComponent<BaseHitRate>();
 
-        if (GetComponent<BaseHitRate>().RollForHit(target))
+        if (hitRate.RollForHit(target))
         {
-            OnApply(target, abilityCast);
+            if (abilityCast.ability == abilityCast.caster.basicAttackAbility && target.stats[StatTypes.BlockChance] > 0 && hitRate.RollForBlock(target))
+                OnApply(target, abilityCast);
+            else if (abilityCast.ability == abilityCast.caster.basicAttackAbility && target.stats[StatTypes.BlockChance] > 0 && !hitRate.RollForBlock(target))
+                AbilityWasBlockedEvent?.Invoke(this, new InfoEventArgs<Character>(abilityCast.caster));
+            else
+                OnApply(target, abilityCast);
+
         }
         else
         {
