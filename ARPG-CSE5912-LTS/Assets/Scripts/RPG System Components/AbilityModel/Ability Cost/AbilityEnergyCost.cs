@@ -11,7 +11,6 @@ public class AbilityEnergyCost : BaseAbilityCost
 
     public override void DeductResourceFromCaster(Character caster)
     {
-        EnergyBarController energyBarController = caster.GetComponent<EnergyBarController>();
-        energyBarController.SubtractMana(cost);
+        caster.stats[StatTypes.Mana] -= cost;
     }
 }

@@ -16,9 +16,9 @@ public enum StatTypes
     Mana, //character's current mana points
     MaxMana, //character's maximum mana points
     PHYATK,
-    MAGPWR,
-    PHYDEF,
-    MAGDEF,
+    MAGPWR, //NOT USED
+    PHYDEF, //NOT USED
+    MAGDEF, //NOT USED
 
     //Secondary & Derived stats (from attributes and gear)
     //11-24
@@ -45,18 +45,18 @@ public enum StatTypes
     LightningDmgBonus, //percent modifier to the normal amount of lightning damage done by a lightning spell
     PoisonDmgBonus, //percent modifier to the normal amount of poison damage done by a poison spell
     Lifesteal, //percent of weapon attack damage that is converted into healing to the character
-    CastSpeed, //percentage that modifies base cast speed of a given spell
-    CooldownReduction, //percentage that modifies the cooldowns of all abilities
-    CostReduction, //percentage that modifies the cost of using all abilities
+    CastSpeed, //percentage that modifies base cast speed of a given spell || Default 0, if CastSpeed = 10% increase and a cast is normally 5 seconds, then new cast time is 5 - (5 * 10 * 0.01) = 4.5 seconds
+    CooldownReduction, //percentage that modifies the cooldowns of all abilities ||  Default 0, if CDR = 10% and cooldown time is normally 5 seconds, then new cooldown time is 5 - (5 * 10 * 0.01) = 4.5 seconds
+    CostReduction, //percentage that modifies the cost of using all abilities || NOT USED
     FireDmgOnHit, //flat fire damage added to main hand weapon attack
     ColdDmgOnHit, //flat cold damage added to main hand weapon attack
     LightningDmgOnHit, //flat lightning damage added to main hand weapon attack
     PoisonDmgOnHit, //flat poison damage added to main hand weapon attack
 
     //39-50
-    BlockChance, //chance to mitigate damage by blocking with an equipped shield NOT USED?
+    BlockChance, //chance to mitigate damage by blocking with an equipped shield
     Evasion, //chance to dodge an attack, taking 0 damage
-    DamageReflect, //percentage of the damage the character takes that gets returned to the attacker
+    DamageReflect, //flat damage that gets returned to the attacker if character takes damage
     FireRes, //character's resistance to fire damage
     ColdRes, //character's resistance to cold damage
     LightningRes, //character's resistance to lightning damage

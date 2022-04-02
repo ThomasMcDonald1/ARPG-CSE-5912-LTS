@@ -16,5 +16,11 @@ public class HitRateAgainstEvasion : BaseHitRate
         return Final(evade);
     }
 
+    public override int CalculateBlock(Character target)
+    {
+        int block = (int)Mathf.Clamp(target.stats[StatTypes.BlockChance], 0, 100);
+        return Final(block);
+    }
+
     //TODO: Add methods here for modifying the evasion number
 }
