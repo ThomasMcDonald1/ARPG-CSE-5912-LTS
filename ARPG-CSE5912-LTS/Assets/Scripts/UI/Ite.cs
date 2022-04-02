@@ -22,6 +22,8 @@ public class Ite : ScriptableObject
 	//public int amount = 1;
 	public virtual void Use()
 	{
+		Inventory.instance.Remove(this);
+
 		switch (name) {
 			case "Health":
 				playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();

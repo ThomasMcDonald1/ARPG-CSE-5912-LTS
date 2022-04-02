@@ -323,7 +323,6 @@ public class GameplayState : BaseGameplayState
             }
             if(potionButton != null)
             {
-                //Debug.Log("Action Button clicked on: " + actionButton.name);
                 utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
                 utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
                 utilityMenuPanel.utilityMenuPanelCanvas.SetActive(true);
