@@ -1006,28 +1006,12 @@ namespace DunGen
 				CurrentDungeon.PostGenerateDungeon(this);
 
 				//NAV MASH MODIFICATIONS
-				//var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
-				//foreach (NavMeshAgent agent in agents)
-				//{
-				//	agent.enabled = false;
-				//}
-
-				//foreach (var tile in CurrentDungeon.AllTiles)
-    //            {
-				//	tile.GetComponent<NavMeshSurface>().BuildNavMesh();
-				//}
-
-				//foreach (NavMeshAgent agent in agents)
-				//{
-				//	agent.enabled = true;
-				//}
-
-				//Debug.Log("Dungeon navmesh addressed");
-				//NAV MASH MODIFICATIONS - END
+				BakeDungeon();
+                //NAV MASH MODIFICATIONS - END
 
 
-				// Process random props
-				foreach (var tile in CurrentDungeon.AllTiles)
+                // Process random props
+                foreach (var tile in CurrentDungeon.AllTiles)
 				{
 					if (ShouldSkipFrame(false))
 						yield return null;
@@ -1067,6 +1051,50 @@ namespace DunGen
 			foreach (var door in CurrentDungeon.Doors)
 				if (door != null)
 					door.SetActive(true);
+		}
+
+		void BakeDungeon()
+        {
+			var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+			foreach (NavMeshAgent agent in agents)
+			{
+				agent.enabled = false;
+			}
+
+			int settingsCount = NavMesh.GetSettingsCount();
+			for (int i = 0; i < settingsCount; i++)
+			{
+				var settings = NavMesh.GetSettingsByIndex(i);
+
+				// Find a surface if it already exists
+				NavMeshSurface surface = CurrentDungeon.gameObject.GetComponents<NavMeshSurface>()
+										.Where(s => s.agentTypeID == settings.agentTypeID)
+										.FirstOrDefault();
+
+				if (surface == null)
+				{
+					surface = CurrentDungeon.gameObject.AddComponent<NavMeshSurface>();
+
+					surface.agentTypeID = settings.agentTypeID;
+					surface.collectObjects = CollectObjects.Children;
+				}
+
+				surface.BuildNavMesh();
+			}
+
+			foreach (NavMeshAgent agent in agents)
+			{
+				agent.enabled = true;
+			}
+
+			var obstacles = UnityEngine.Object.FindObjectsOfType<NavMeshObstacle>();
+			foreach (var obstacle in obstacles)
+			{
+				obstacle.enabled = false;
+				obstacle.enabled = true;
+			}
+
+			Debug.Log("Dungeon navmesh addressed");
 		}
 
 		protected void ProcessProps(Tile tile, GameObject root)
