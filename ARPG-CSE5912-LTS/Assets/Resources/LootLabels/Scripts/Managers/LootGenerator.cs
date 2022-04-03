@@ -126,14 +126,17 @@ namespace LootLabels {
                     }
                     break;
                 case Type.Epic:
-                    if (Random.value < 0.97)
+                    if (Random.value < 0.98)
                     {
                         rare = Rarity.Epic;
                     }
                     else
                     {
-                        rare = Rarity.SuperUltraHyperExPlusAlpha;
+                        rare = Rarity.Legendary;
                     }
+                    break;
+                case Type.Legendary:
+                    rare = Rarity.Legendary;
                     break;
                 case Type.SuperUltraHyperExPlusAlpha:
                     rare = Rarity.SuperUltraHyperExPlusAlpha;
@@ -161,37 +164,35 @@ namespace LootLabels {
         /// </summary>
         /// <param name="itemRarity"></param>
         /// <returns></returns>
-        private int RollAmountOfStats(Rarity itemRarity) {
-            int statAmount = 1;
-            //if(itemRarity <= 15)
-            //{
+        public double RollAmountOfStats(Rarity itemRarity) {
+            double statAmount = 1;
 
-            //}
-            //switch (itemRarity) {
-            //    case Rarity.Poor:
-            //        statAmount = 1;
-            //        break;
-            //    case Rarity.Normal:
-            //        statAmount = 2;
-            //        break;
-            //    case Rarity.Rare:
-            //        statAmount = 3;
-            //        break;
-            //    case Rarity.Epic:
-            //        statAmount = 4;
-            //        break;
-            //    case Rarity.Legendary:
-            //        statAmount = 5;
-            //        break;
-            //    case Rarity.Set:
-            //        statAmount = 6;
-            //        break;
-            //    case Rarity.SuperUltraHyperExPlusAlpha:
-            //        statAmount = 7;
-            //        break;
-            //    default:
-            //        break;
-            //}
+            switch (itemRarity)
+            {
+                case Rarity.Poor:
+                    statAmount = 0.7;
+                    break;
+                case Rarity.Normal:
+                    statAmount = 1;
+                    break;
+                case Rarity.Rare:
+                    statAmount = 2;
+                    break;
+                case Rarity.Epic:
+                    statAmount = 4;
+                    break;
+                case Rarity.Legendary:
+                    statAmount = 5;
+                    break;
+                //case Rarity.Set:
+                //    statAmount = 6;
+                    //break;
+                case Rarity.SuperUltraHyperExPlusAlpha:
+                    statAmount = 7;
+                    break;
+                default:
+                    break;
+            }
 
             return statAmount;
         }
