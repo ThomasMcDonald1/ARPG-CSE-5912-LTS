@@ -44,6 +44,7 @@ public class HealthBarController : MonoBehaviour
     public void SubtractHealth(int amt)
     {
         stats[StatTypes.HP] -= amt;
+        Debug.Log("I have taken" + amt + " health");
 
         if (regen == null)
             regen = StartCoroutine(RegenHealth());
