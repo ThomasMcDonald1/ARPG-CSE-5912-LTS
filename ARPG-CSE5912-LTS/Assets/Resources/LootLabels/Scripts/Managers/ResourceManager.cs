@@ -47,7 +47,7 @@ namespace LootLabels {
                 //    return modelPath + "Shield";
                 default:
                     Debug.Log("Case not implemented");
-                    return modelPath + "Potion";
+                    return modelPath + "HealthPotion";
             }
         }
 
