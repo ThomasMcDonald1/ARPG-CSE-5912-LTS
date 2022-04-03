@@ -7,13 +7,10 @@ public class PrefixTables: MonoBehaviour
     public List<PrefixSuffix> rarePrefixTable = new List<PrefixSuffix>();
     public List<PrefixSuffix> epicPrefixTable = new List<PrefixSuffix>();
     public List<PrefixSuffix> legendaryPrefixTable = new List<PrefixSuffix>();
-    public List<PrefixSuffix> rareSuffixTable = new List<PrefixSuffix>();
-    public List<PrefixSuffix> epicSuffixTable = new List<PrefixSuffix>();
-    public List<PrefixSuffix> legendarySuffixTable = new List<PrefixSuffix>();
 
     public PrefixSuffix GetRandomPrefixForRarityAndGearType(LootLabels.Rarity rarity, LootLabels.GearTypes gearType)
     {
-        PrefixSuffix prefix = new PrefixSuffix(null, null, null);
+        PrefixSuffix prefix;
 
         switch (rarity)
         {
@@ -31,6 +28,7 @@ public class PrefixTables: MonoBehaviour
                 prefix = GetRandomLegendaryPrefixForGearType(gearType);
                 break;
             default:
+                prefix = GetRandomRarePrefixForGearType(gearType);
                 break;
         }
         return prefix;
@@ -55,11 +53,11 @@ public class PrefixTables: MonoBehaviour
         return legendaryPrefixTable[random];
     }
 
-    private int GetRandom(List<PrefixSuffix> prefixSuffixTable, LootLabels.GearTypes gearType)
+    private int GetRandom(List<PrefixSuffix> prefixTable, LootLabels.GearTypes gearType)
     {
-        int random = Random.Range(0, prefixSuffixTable.Count);
-        while (!prefixSuffixTable[random].GearTypeRequirements.Contains(gearType))
-            random = Random.Range(0, prefixSuffixTable.Count);
+        int random = Random.Range(0, prefixTable.Count);
+        while (!prefixTable[random].GearTypeRequirements.Contains(gearType))
+            random = Random.Range(0, prefixTable.Count);
         return random;
     }
 }
