@@ -24,10 +24,19 @@ public class Inventory : MonoBehaviour
     public List<Ite> armorItems = new List<Ite>();
     public List<Ite> utilItems = new List<Ite>();
 
+   
+    public List<PotionButton> potionButtons = new List<PotionButton>();
+
+
     private GameObject player;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        potionButtons.Add(GameObject.FindGameObjectWithTag("QuickPotionEqp1").GetComponent<PotionButton>());
+        potionButtons.Add(GameObject.FindGameObjectWithTag("QuickPotionEqp2").GetComponent<PotionButton>());
+        potionButtons.Add(GameObject.FindGameObjectWithTag("QuickPotionEqp3").GetComponent<PotionButton>());
+        potionButtons.Add(GameObject.FindGameObjectWithTag("QuickPotionEqp4").GetComponent<PotionButton>());
+
     }
 
 
@@ -87,9 +96,20 @@ public class Inventory : MonoBehaviour
                 if (onItemChangedCallback != null)
                     onItemChangedCallback.Invoke();
             }
+            updatePotionQuckEqp(item);
         }
     }
+    public void updatePotionQuckEqp(Ite item)
+    {
+        foreach (PotionButton potionButton in potionButtons)
+        {
+            if(potionButton.item!=null&& item.name == potionButton.item.name)
+            {
+                potionButton.AddItem(item, amount[item].ToString());
 
+            }
+        }
+    }
     
     
     // Remove an item
