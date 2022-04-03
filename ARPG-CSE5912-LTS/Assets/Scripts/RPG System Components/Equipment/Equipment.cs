@@ -12,7 +12,13 @@ public class Equipment : Ite
     public int levelRequiredToEquip;
     public StatTypes statRequiredToEquip;
     public int statAmountRequired;
-
+    public int attackRange;
+    public int damage;
+    public int attackSpeedMod;
+    public int critChanceBonus;
+    public int defendRate;
+    public int defense;
+    public int evasion;
     //All equipment has the potential to have up to 5 additional random bonuses rolled when the equipment is created
     public List<Feature> features;
 

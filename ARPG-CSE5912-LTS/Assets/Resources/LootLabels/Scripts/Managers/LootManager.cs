@@ -157,11 +157,83 @@ namespace LootLabels
 
                     GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     droppedItem.GetComponent<DroppedGear>().gear = gear;
+                    
+                    if (droppedItem.GetComponent<ItemPickup>() != null)
+                    {
+                        Ite item = droppedItem.GetComponent<ItemPickup>().item;
+                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item);
+                        Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
+                    }
                     break;
                 default:
                     Debug.Log("Itemtype not yet implemented");
                     break;
             }
+        }
+
+        private void RollStatsForItemsLevel(Rarity itemRarity, Ite item)
+        {
+            double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
+            //Ite ite = Instantiate(item);
+            if (string.Equals("Health Potion", item.name))
+            {
+                Potion potion = (Potion)item;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.health = (int)(potion.health * multiplier);
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                Debug.Log("health potion health amount is " + potion.health);
+                Debug.Log("potion.name is " + potion.name);
+            }
+            else if (string.Equals("Mano Potion", item.name))
+            {
+                Potion potion = (Potion)item;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.mana = (int)(potion.mana * multiplier);
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                Debug.Log("health potion health amount is " + potion.health);
+                Debug.Log("potion.name is " + potion.name);
+            }
+            else if (string.Equals("Knight Sword", item.name))
+            {
+                WeaponEquipment weapon = (WeaponEquipment)item;
+            }
+        }
+
+        private Ite RollStatsForItems(Rarity itemRarity, Ite item)
+        {
+            double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
+            Ite ite = Instantiate(item);
+            if(string.Equals("Health Potion", item.name))
+            {
+                Potion potion = (Potion)ite;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.health = (int)(potion.health * multiplier);
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                Debug.Log("health potion health amount is " + potion.health);
+                Debug.Log("potion.name is " + potion.name);
+                return potion;
+            }
+            else if(string.Equals("Mano Potion", item.name))
+            {
+                Potion potion = (Potion)ite;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.mana = (int)(potion.mana * multiplier);
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                Debug.Log("health potion health amount is " + potion.health);
+                Debug.Log("potion.name is " + potion.name);
+                return potion;
+            }
+            else if(string.Equals("Knight Sword", item.name))
+            {
+                WeaponEquipment weapon = (WeaponEquipment)ite;
+            }
+            return ite;              
         }
     }
 }

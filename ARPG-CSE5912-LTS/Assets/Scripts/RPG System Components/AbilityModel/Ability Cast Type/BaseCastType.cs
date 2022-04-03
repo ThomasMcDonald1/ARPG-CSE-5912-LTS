@@ -9,6 +9,7 @@ public abstract class BaseCastType : MonoBehaviour
     GameplayStateController gameplayStateController;
     [HideInInspector] public CastingBar castingBar;
     public float castTime;
+    [HideInInspector] public float reducedCastTime;
 
     public abstract void WaitCastTime(AbilityCast abilityCast);
     protected abstract void InstantiateSpellcastVFX(AbilityCast abilityCast);
@@ -20,6 +21,11 @@ public abstract class BaseCastType : MonoBehaviour
         gameplayStateController = GetComponentInParent<GameplayStateController>();
         castingBar = gameplayStateController.castingBar;
         castingBar.castBarCanvas.SetActive(false);
+    }
+
+    public void GetReducedCastTime(AbilityCast abilityCast)
+    {
+        abilityCast.castType.reducedCastTime = abilityCast.castType.castTime - (abilityCast.castType.castTime * abilityCast.caster.stats[StatTypes.CastSpeed] * 0.01f);
     }
 
     private void OnEnable()

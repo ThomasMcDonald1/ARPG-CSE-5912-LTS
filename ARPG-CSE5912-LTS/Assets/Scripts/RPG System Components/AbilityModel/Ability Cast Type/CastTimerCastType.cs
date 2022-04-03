@@ -66,8 +66,8 @@ public class CastTimerCastType : BaseCastType
     {
         FaceCasterToHitPoint(abilityCast.caster, abilityCast.hit);
         InstantiateSpellcastVFX(abilityCast);
-        float displayTime = abilityCast.castType.castTime;
-        float rate = 1.0f / abilityCast.castType.castTime;
+        float displayTime = abilityCast.castType.reducedCastTime;
+        float rate = 1.0f / abilityCast.castType.reducedCastTime;
         float progress = 0.0f;
         castingBar.castingBarSlider.value = 0f;
         while (progress < 1.0f)
@@ -93,11 +93,11 @@ public class CastTimerCastType : BaseCastType
         float spawnDistance = 1;
         Vector3 spawnPos = casterPos + casterDir * spawnDistance;
         instance.transform.position = spawnPos;
-        yield return new WaitForSeconds(castTime);
+        yield return new WaitForSeconds(reducedCastTime);
         castingRoutine = null;
         if (cProj != null && abilityCast.createsProjectileVFX)
         {
-            cProj.Time = castTime;
+            cProj.Time = reducedCastTime;
             cProj.Create(spawnPos, casterRot, abilityCast.hit);
             Destroy(instance);
         }

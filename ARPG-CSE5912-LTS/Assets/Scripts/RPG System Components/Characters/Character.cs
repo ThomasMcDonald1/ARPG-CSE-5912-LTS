@@ -29,6 +29,7 @@ public abstract class Character : MonoBehaviour
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
     public abstract Type GetCharacterType();
     public Ability basicAttackAbility;
+    [HideInInspector] public float baseRunSpeed = 7f;
 
     #region Built-in
     private void Awake()
@@ -106,7 +107,9 @@ public abstract class Character : MonoBehaviour
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
-        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
+        abilityCast.castType.GetReducedCastTime(abilityCast);
+        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
 
         if (abilityCanBePerformed)
         {

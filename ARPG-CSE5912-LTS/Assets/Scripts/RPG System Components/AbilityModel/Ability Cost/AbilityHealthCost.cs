@@ -11,7 +11,6 @@ public class AbilityHealthCost : BaseAbilityCost
 
     public override void DeductResourceFromCaster(Character caster)
     {
-        HealthBarController healthBarController = caster.GetComponent<HealthBarController>();
-        healthBarController.SubtractHealth(cost);
+        caster.stats[StatTypes.HP] -= cost;
     }
 }
