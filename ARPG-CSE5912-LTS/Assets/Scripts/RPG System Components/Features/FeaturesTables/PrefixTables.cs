@@ -38,25 +38,28 @@ public class PrefixTables: MonoBehaviour
 
     private PrefixSuffix GetRandomRarePrefixForGearType(LootLabels.GearTypes gearType)
     {
-        int random = Random.Range(0, rarePrefixTable.Count);
-
-        while (!rarePrefixTable[random].GearTypeRequirements.Contains(gearType))
-        {
-            random = Random.Range(0, rarePrefixTable.Count);
-        }
+        int random = GetRandom(rarePrefixTable, gearType);
 
         return rarePrefixTable[random];
     }
 
     private PrefixSuffix GetRandomEpicPrefixForGearType(LootLabels.GearTypes gearType)
     {
-        //Add to here the things that will be created for epic prefix tables
-        return null;
+        int random = GetRandom(epicPrefixTable, gearType);
+        return epicPrefixTable[random];
     }
 
     private PrefixSuffix GetRandomLegendaryPrefixForGearType(LootLabels.GearTypes gearType)
     {
-        //Add to here the things that will be created for legendary prefix tables
-        return null;
+        int random = GetRandom(legendaryPrefixTable, gearType);
+        return legendaryPrefixTable[random];
+    }
+
+    private int GetRandom(List<PrefixSuffix> prefixSuffixTable, LootLabels.GearTypes gearType)
+    {
+        int random = Random.Range(0, prefixSuffixTable.Count);
+        while (!prefixSuffixTable[random].GearTypeRequirements.Contains(gearType))
+            random = Random.Range(0, prefixSuffixTable.Count);
+        return random;
     }
 }
