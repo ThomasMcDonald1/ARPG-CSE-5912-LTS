@@ -41,8 +41,8 @@ namespace LootLabels {
                 //    return modelPath + "Shoes";
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
-                case GearTypes.Potion:
-                    return modelPath + "Potion";
+                case GearTypes.HealthPotion:
+                    return modelPath + "HealthPotion";
                 //case GearTypes.Shield:
                 //    return modelPath + "Shield";
                 default:
