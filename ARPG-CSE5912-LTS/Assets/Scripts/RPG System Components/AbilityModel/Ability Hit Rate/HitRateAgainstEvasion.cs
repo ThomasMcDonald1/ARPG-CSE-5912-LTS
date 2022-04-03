@@ -9,7 +9,7 @@ public class HitRateAgainstEvasion : BaseHitRate
         //TODO: Check for automatic hits or misses and return Final(0) or Final(100) respectively
 
         Stats stats = target.GetComponent<Stats>();
-        int evade = (int)Mathf.Clamp(stats[StatTypes.DodgeChance], 0, 100);
+        int evade = (int)Mathf.Clamp(stats[StatTypes.Evasion], 0, 100);
         //TODO: Modify the evasion number when taking into account status effects, 
         //or other things which might change a character's evasion
 

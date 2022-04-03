@@ -110,17 +110,17 @@ public abstract class Character : MonoBehaviour
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
-<<<<<<< HEAD
-        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
-        abilityCast.castType.GetReducedCastTime(abilityCast);
-        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
-=======
+//<<<<<<< HEAD
+//        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
+//        abilityCast.castType.GetReducedCastTime(abilityCast);
+//        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
+//=======
         bool abilityCanBePerformed = true;
         if (this is Player)
         {
             abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
         }
->>>>>>> 5bbca9dc (add cooldown)
+//>>>>>>> 5bbca9dc (add cooldown)
 
         if (abilityCanBePerformed)
         {
