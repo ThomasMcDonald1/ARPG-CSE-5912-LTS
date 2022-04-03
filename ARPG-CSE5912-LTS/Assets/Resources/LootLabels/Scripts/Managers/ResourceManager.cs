@@ -31,8 +31,8 @@ namespace LootLabels {
             string modelPath = "LootLabels/3D models/";
             Debug.Log(" in GetModelName gearType is " + gearType);
             switch (gearType) {
-                case GearTypes.Gloves:
-                    return modelPath + "Gloves";
+                //case GearTypes.Gloves:
+                //    return modelPath + "Gloves";
                 //case GearTypes.Shoulders:
                 //    return modelPath + "Shoulders";
                 //case GearTypes.Belt:
@@ -77,8 +77,8 @@ namespace LootLabels {
             string iconPath = "LootLabels/Icons/UI_Icon_";
 
             switch (gearType) {
-                case GearTypes.Gloves:
-                    return iconPath + "InvGloves";
+                //case GearTypes.Gloves:
+                //    return iconPath + "InvGloves";
                 //case GearTypes.Shoulders:
                 //    return iconPath + "InvShoulders";
                 //case GearTypes.Belt:

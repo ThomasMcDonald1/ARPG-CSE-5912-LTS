@@ -29,6 +29,7 @@ public abstract class Character : MonoBehaviour
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
     public abstract Type GetCharacterType();
     public Ability basicAttackAbility;
+    [HideInInspector] public float baseRunSpeed = 7f;
 
     #region Built-in
     private void Awake()

@@ -60,6 +60,8 @@ public class Player : Character
         //Sound
         float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
         animator.SetFloat("AttackSpeed", attackSpeed);
+        agent.speed = baseRunSpeed * (1 + stats[StatTypes.RunSpeed] * 0.01f);
+
         playerVelocity = GetComponent<NavMeshAgent>().velocity;
         if (playerVelocity.magnitude > 0)
         {
