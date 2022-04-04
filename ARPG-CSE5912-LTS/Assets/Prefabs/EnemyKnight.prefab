@@ -588,7 +588,6 @@ GameObject:
   - component: {fileID: 8032445643060167867}
   - component: {fileID: 8032445643060167869}
   - component: {fileID: 8032445643060167871}
-  - component: {fileID: 8032445643060167857}
   - component: {fileID: 5927917699326188694}
   - component: {fileID: 1685213765937985645}
   - component: {fileID: 8325788293563977714}
@@ -597,7 +596,7 @@ GameObject:
   - component: {fileID: 6360598446303299822}
   - component: {fileID: 3008176755271037925}
   - component: {fileID: 6063802580932386307}
-  - component: {fileID: 4070086808009219538}
+  - component: {fileID: 4813988313856835231}
   m_Layer: 8
   m_Name: EnemyKnight
   m_TagString: Untagged
@@ -705,19 +704,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8032445643060167857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8032445643060167858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51706366afdc28b4398b50749dc174ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &5927917699326188694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4070086808009219538
+--- !u!114 &4813988313856835231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -850,10 +836,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8032445643060167858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c6ef05f2469b59478d1cb00273e208f, type: 3}
+  m_Script: {fileID: 11500000, guid: 213bdd308468fd4468c911ec9b0a7364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
+  agent: {fileID: 0}
+  abilitiesKnown: []
+  charactersInRange: []
+  gameplayStateController: {fileID: 0}
+  abilityQueued: 0
+  stats: {fileID: 0}
+  smooth: 0
+  yVelocity: 0
+  NPCInteractionRange: 0
+  basicAttackAbility: {fileID: 0}
+  baseRunSpeed: 7
+  target: {fileID: 0}
   lootSource: 0
   type: 1
 --- !u!1 &8032445643484962512
