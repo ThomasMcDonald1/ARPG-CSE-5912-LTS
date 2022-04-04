@@ -5,7 +5,7 @@ namespace ARPG.Combat
 {
 
 
-    public class Paths : Enemy
+    public class Paths : EnemyAbilityController
     {
         public bool canSee = false;
         protected override void Start()
