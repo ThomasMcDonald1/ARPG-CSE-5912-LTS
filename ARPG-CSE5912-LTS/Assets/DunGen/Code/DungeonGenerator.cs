@@ -1101,63 +1101,34 @@ namespace DunGen
 		void SetEnemyLevels()
 		{
 			var playerStats = GameObject.FindObjectOfType<Player>().GetComponent<Stats>();
-			var normalMobs = UnityEngine.Object.FindObjectsOfType<NormalEnemy>();
-			var eliteMobs = UnityEngine.Object.FindObjectsOfType<EliteEnemy>();
-			var bossMobs = UnityEngine.Object.FindObjectsOfType<BossEnemy>();
+			var enemies = UnityEngine.Object.FindObjectsOfType<ARPG.Combat.Enemy>();
 
-			foreach (var enemy in normalMobs)
+            foreach (var enemy in enemies)
             {
-				var enemyStats = enemy.gameObject.GetComponent<Stats>();
-				if (enemyStats != null)
+				if (!enemy.CompareTag("Player"))
                 {
-					enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL), false);
-					Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
-				}
-			}
+					var enemyStats = enemy.gameObject.GetComponent<Stats>();
+					if (enemyStats != null)
+					{
+						switch (enemy.GetEnemyLootSource())
+						{
+							case LootLabels.LootSource.Boss:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL) + 10, false);
+								break;
+							case LootLabels.LootSource.Elite:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL) + 5, false);
+								break;
+							case LootLabels.LootSource.Normal:
+							default:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL), false);
+								break;
 
-			foreach (var enemy in eliteMobs)
-			{
-				var enemyStats = enemy.gameObject.GetComponent<Stats>();
-				if (enemyStats != null)
-				{
-					enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL)+5, false);
-					Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
-				}
-			}
-
-			foreach (var enemy in bossMobs)
-			{
-				var enemyStats = enemy.gameObject.GetComponent<Stats>();
-				if (enemyStats != null)
-				{
-					enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL)+10, false);
-					Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
-				}
-			}
-
-			//foreach (var enemy in enemies)
-			//         {
-			//	var enemyStats = enemy.gameObject.GetComponent<Stats>();
-			//	if(enemyStats != null)
-			//             {
-			//		switch(enemy.lootSource)
-			//		{
-			//			case LootLabels.LootSource.Boss:
-			//				enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL)+10, false);
-			//				break;
-			//			case LootLabels.LootSource.Elite:
-			//				enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL)+5, false);
-			//				break;
-			//			case LootLabels.LootSource.Normal:
-			//			default:
-			//				enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL), false);
-			//				break;
-
-			//		}
-			//		Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
-			//	}
-			//         }
-		}
+						}
+						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
+					}
+				}                
+            }
+        }
 
 		protected void ProcessProps(Tile tile, GameObject root)
 		{
