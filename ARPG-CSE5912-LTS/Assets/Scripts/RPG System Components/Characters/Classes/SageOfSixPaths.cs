@@ -5,7 +5,7 @@ namespace ARPG.Combat
 {
 
 
-    public class SageOfSixPaths : Enemy
+    public class SageOfSixPaths : EnemyAbilityController
     {
         //if sage can see, all of its paths can see, if one path can see, sage can see
         public bool canSee = false;

@@ -40,7 +40,7 @@ public class PlayerAbilityController : Player
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        //Debug.Log("Cast was completed");
+        Debug.Log("Cast was completed");
         DeductCastingCost(e.info);
         GetColliders(e.info);
     }
