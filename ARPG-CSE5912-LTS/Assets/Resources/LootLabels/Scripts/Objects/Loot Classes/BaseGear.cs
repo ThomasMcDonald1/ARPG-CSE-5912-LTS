@@ -23,7 +23,7 @@
             ItemType = ItemTypes.Gear;
             GearType = gearType;
             ItemRarity = rarity;
-            ItemName = ItemRarity + " " + GearType;
+            ItemName = GearType.ToString();
             ModelName = modelName;
             IconName = iconName;
             Debug.Log("ItemName is " + ItemName);

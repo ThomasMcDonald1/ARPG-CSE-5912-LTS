@@ -8,10 +8,13 @@ public class FeatureTablesGenerator : MonoBehaviour
     List<LootLabels.GearTypes> armorsReqList;
     List<LootLabels.GearTypes> armorsAndShieldReqList;
     List<LootLabels.GearTypes> allReqList;
-    PrefixTables prefixTables;
+    [HideInInspector] public PrefixTables prefixTables;
+    [HideInInspector] public SuffixTables suffixTables;
     RarePrefixFeaturesLists rarePrefixFeaturesLists;
     EpicPrefixFeaturesLists epicPrefixFeaturesLists;
     LegendaryPrefixFeaturesLists legendaryPrefixFeaturesLists;
+    RareAndEpicSuffixFeaturesLists rareAndEpicSuffixFeaturesLists;
+    LegendarySuffixFeaturesLists legendarySuffixFeaturesLists;
 
     public void Awake()
     {
@@ -19,19 +22,20 @@ public class FeatureTablesGenerator : MonoBehaviour
         rarePrefixFeaturesLists = GetComponent<RarePrefixFeaturesLists>();
         epicPrefixFeaturesLists = GetComponent<EpicPrefixFeaturesLists>();
         legendaryPrefixFeaturesLists = GetComponent<LegendaryPrefixFeaturesLists>();
+        rareAndEpicSuffixFeaturesLists = GetComponent<RareAndEpicSuffixFeaturesLists>();
+        legendarySuffixFeaturesLists = GetComponent<LegendarySuffixFeaturesLists>();
     }
 
     private void Start()
     {
         weaponsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword };
-        armorsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs };
-        armorsAndShieldReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield };
-        allReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword, LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield, LootLabels.GearTypes.Jewelry };
+        armorsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest};
+        armorsAndShieldReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Shield };
+        allReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword, LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Shield, LootLabels.GearTypes.Jewelry };
         rarePrefixFeaturesLists.CreateRarePrefixFeaturesLists();
         CreateRarePrefixTable();
-        CreateRareSuffixTable();
+        CreateRareAndEpicSuffixTable();
         CreateEpicPrefixTable();
-        CreateEpicSuffixTable();
         CreateLegendaryPrefixTable();
         CreateLegendarySuffixTable();
     }
@@ -101,40 +105,141 @@ public class FeatureTablesGenerator : MonoBehaviour
         PrefixSuffix mordreths = new PrefixSuffix("Mordreth's ", legendaryPrefixFeaturesLists.mordreths, weaponsReqList);
         prefixTables.legendaryPrefixTable.Add(mordreths);
         PrefixSuffix vextals = new PrefixSuffix("Vextal's ", legendaryPrefixFeaturesLists.vextals, allReqList);
-        prefixTables.legendarySuffixTable.Add(vextals);
+        prefixTables.legendaryPrefixTable.Add(vextals);
         PrefixSuffix fezzeraks = new PrefixSuffix("Fezzerak's ", legendaryPrefixFeaturesLists.fezzeraks, allReqList);
-        prefixTables.legendarySuffixTable.Add(fezzeraks);
+        prefixTables.legendaryPrefixTable.Add(fezzeraks);
         PrefixSuffix dalneaus = new PrefixSuffix("Dalneau's ", legendaryPrefixFeaturesLists.dalneaus, armorsAndShieldReqList);
-        prefixTables.legendarySuffixTable.Add(dalneaus);
+        prefixTables.legendaryPrefixTable.Add(dalneaus);
         PrefixSuffix zaltens = new PrefixSuffix("Zaltens's ", legendaryPrefixFeaturesLists.zaltens, allReqList);
-        prefixTables.legendarySuffixTable.Add(zaltens);
+        prefixTables.legendaryPrefixTable.Add(zaltens);
         PrefixSuffix aldrichs = new PrefixSuffix("Aldrich's ", legendaryPrefixFeaturesLists.aldrichs, armorsReqList);
-        prefixTables.legendarySuffixTable.Add(aldrichs);
+        prefixTables.legendaryPrefixTable.Add(aldrichs);
         PrefixSuffix vleks = new PrefixSuffix("Vlek's ", legendaryPrefixFeaturesLists.vleks, allReqList);
-        prefixTables.legendarySuffixTable.Add(vleks);
+        prefixTables.legendaryPrefixTable.Add(vleks);
         PrefixSuffix ivorens = new PrefixSuffix("Ivoren's ", legendaryPrefixFeaturesLists.ivorens, allReqList);
-        prefixTables.legendarySuffixTable.Add(ivorens);
+        prefixTables.legendaryPrefixTable.Add(ivorens);
         PrefixSuffix vlimliks = new PrefixSuffix("Vlimlik's ", legendaryPrefixFeaturesLists.vlimliks, CreateSingleGearTypeList(LootLabels.GearTypes.Shield));
-        prefixTables.legendarySuffixTable.Add(vlimliks);
+        prefixTables.legendaryPrefixTable.Add(vlimliks);
         PrefixSuffix barkors = new PrefixSuffix("Barkor's ", legendaryPrefixFeaturesLists.barkors, allReqList);
-        prefixTables.legendarySuffixTable.Add(barkors);
+        prefixTables.legendaryPrefixTable.Add(barkors);
         PrefixSuffix fordrands = new PrefixSuffix("Fordrand's ", legendaryPrefixFeaturesLists.fordrands, CreateSingleGearTypeList(LootLabels.GearTypes.Shield));
-        prefixTables.legendarySuffixTable.Add(fordrands);
+        prefixTables.legendaryPrefixTable.Add(fordrands);
     }
 
-    public void CreateRareSuffixTable()
+    public void CreateRareAndEpicSuffixTable()
     {
-
-    }
-
-    public void CreateEpicSuffixTable()
-    {
-
+        PrefixSuffix thorns = new PrefixSuffix(" of Thorns", rareAndEpicSuffixFeaturesLists.thorns, armorsAndShieldReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(thorns);
+        PrefixSuffix theBear = new PrefixSuffix(" of the Bear", rareAndEpicSuffixFeaturesLists.theBear, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theBear);
+        PrefixSuffix theOwl = new PrefixSuffix(" of the Owl", rareAndEpicSuffixFeaturesLists.theOwl, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theOwl);
+        PrefixSuffix theBull = new PrefixSuffix(" of the Bull", rareAndEpicSuffixFeaturesLists.theBull, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theBull);
+        PrefixSuffix theCrab = new PrefixSuffix(" of the Crab", rareAndEpicSuffixFeaturesLists.theCrab, armorsAndShieldReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theCrab);
+        PrefixSuffix theTurtle = new PrefixSuffix(" of the Turtle", rareAndEpicSuffixFeaturesLists.theTurtle, armorsAndShieldReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theTurtle);
+        PrefixSuffix frenziedStrikes = new PrefixSuffix(" of Frenzied Strikes", rareAndEpicSuffixFeaturesLists.frenziedStrikes, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(frenziedStrikes);
+        PrefixSuffix pinpointStrikes = new PrefixSuffix(" of Pinpoint Strikes", rareAndEpicSuffixFeaturesLists.pinpointStrikes, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(pinpointStrikes);
+        PrefixSuffix brutality = new PrefixSuffix(" of Brutality", rareAndEpicSuffixFeaturesLists.brutality, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(brutality);
+        PrefixSuffix piercingStrikes = new PrefixSuffix(" of Piercing Strikes", rareAndEpicSuffixFeaturesLists.piercingStrikes, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(piercingStrikes);
+        PrefixSuffix elementalMastery = new PrefixSuffix(" of Elemental Mastery", rareAndEpicSuffixFeaturesLists.elementalMastery, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(elementalMastery);
+        PrefixSuffix theHammer = new PrefixSuffix(" of the Hammer", rareAndEpicSuffixFeaturesLists.theHammer, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theHammer);
+        PrefixSuffix theSpirits = new PrefixSuffix(" of the Spirits", rareAndEpicSuffixFeaturesLists.theSpirits, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theSpirits);
+        PrefixSuffix theQuick = new PrefixSuffix(" of the Quick", rareAndEpicSuffixFeaturesLists.theQuick, CreateDoubleGearTypeList(LootLabels.GearTypes.Boots, LootLabels.GearTypes.Jewelry));
+        suffixTables.rareAndEpicSuffixTable.Add(theQuick);
+        PrefixSuffix observation = new PrefixSuffix(" of Observation", rareAndEpicSuffixFeaturesLists.observation, CreateSingleGearTypeList(LootLabels.GearTypes.Jewelry));
+        suffixTables.rareAndEpicSuffixTable.Add(observation);
+        PrefixSuffix crushing = new PrefixSuffix(" of Crushing", rareAndEpicSuffixFeaturesLists.crushing, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(crushing);
+        PrefixSuffix blasting = new PrefixSuffix(" of Blasting", rareAndEpicSuffixFeaturesLists.blasting, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(blasting);
+        PrefixSuffix incineration = new PrefixSuffix(" of Incineration", rareAndEpicSuffixFeaturesLists.incineration, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(incineration);
+        PrefixSuffix chilling = new PrefixSuffix(" of Chilling", rareAndEpicSuffixFeaturesLists.chilling, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(chilling);
+        PrefixSuffix thunder = new PrefixSuffix(" of Thunder", rareAndEpicSuffixFeaturesLists.thunder, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(thunder);
+        PrefixSuffix theSnake = new PrefixSuffix(" of the Snake", rareAndEpicSuffixFeaturesLists.theSnake, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(theSnake);
+        PrefixSuffix siphoning = new PrefixSuffix(" of Siphoning", rareAndEpicSuffixFeaturesLists.siphoning, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(siphoning);
+        PrefixSuffix acumen = new PrefixSuffix(" of Acumen", rareAndEpicSuffixFeaturesLists.acumen, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(acumen);
+        PrefixSuffix invigoration = new PrefixSuffix(" of Invigoration", rareAndEpicSuffixFeaturesLists.invigoration, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(invigoration);
+        PrefixSuffix flame = new PrefixSuffix(" of Flame", rareAndEpicSuffixFeaturesLists.flame, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(flame);
+        PrefixSuffix frost = new PrefixSuffix(" of Frost", rareAndEpicSuffixFeaturesLists.frost, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(frost);
+        PrefixSuffix shocking = new PrefixSuffix(" of Shocking", rareAndEpicSuffixFeaturesLists.shocking, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(shocking);
+        PrefixSuffix stinging = new PrefixSuffix(" of Stinging", rareAndEpicSuffixFeaturesLists.stinging, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(stinging);
+        PrefixSuffix theTower = new PrefixSuffix(" of the Tower", rareAndEpicSuffixFeaturesLists.theTower, CreateSingleGearTypeList(LootLabels.GearTypes.Shield));
+        suffixTables.rareAndEpicSuffixTable.Add(theTower);
+        PrefixSuffix tumbling = new PrefixSuffix(" of Tumbling", rareAndEpicSuffixFeaturesLists.tumbling, CreateDoubleGearTypeList(LootLabels.GearTypes.Boots, LootLabels.GearTypes.Jewelry));
+        suffixTables.rareAndEpicSuffixTable.Add(tumbling);
+        PrefixSuffix fireResistance = new PrefixSuffix(" of Fire Resistance", rareAndEpicSuffixFeaturesLists.fireResistance, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(fireResistance);
+        PrefixSuffix coldResistance = new PrefixSuffix(" of Cold Resistance", rareAndEpicSuffixFeaturesLists.coldResistance, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(coldResistance);
+        PrefixSuffix lightningResistance = new PrefixSuffix(" of Lightning Resistance", rareAndEpicSuffixFeaturesLists.lightningResistance, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(lightningResistance);
+        PrefixSuffix poisonResistance = new PrefixSuffix(" of Poison Resistance", rareAndEpicSuffixFeaturesLists.poisonResistance, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(poisonResistance);
+        PrefixSuffix fireWarding = new PrefixSuffix(" of Fire Warding", rareAndEpicSuffixFeaturesLists.fireWarding, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(fireWarding);
+        PrefixSuffix coldWarding = new PrefixSuffix(" of Cold Warding", rareAndEpicSuffixFeaturesLists.coldWarding, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(coldWarding);
+        PrefixSuffix lightningWarding = new PrefixSuffix(" of Lightning Warding", rareAndEpicSuffixFeaturesLists.lightningWarding, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(lightningWarding);
+        PrefixSuffix poisonWarding = new PrefixSuffix(" of Poison Warding", rareAndEpicSuffixFeaturesLists.poisonWarding, allReqList);
+        suffixTables.rareAndEpicSuffixTable.Add(poisonWarding);
+        PrefixSuffix alteredFlesh = new PrefixSuffix(" of Altered Flesh", rareAndEpicSuffixFeaturesLists.alteredFlesh, CreateSingleGearTypeList(LootLabels.GearTypes.Jewelry));
+        suffixTables.rareAndEpicSuffixTable.Add(alteredFlesh);
     }
 
     public void CreateLegendarySuffixTable()
     {
-
+        PrefixSuffix spiritStriking = new PrefixSuffix(" of Spirit Striking", legendarySuffixFeaturesLists.spiritStriking, weaponsReqList);
+        suffixTables.legendarySuffixTable.Add(spiritStriking);
+        PrefixSuffix theCheetah = new PrefixSuffix(" of the Cheetah", legendarySuffixFeaturesLists.theCheetah, CreateSingleGearTypeList(LootLabels.GearTypes.Boots));
+        suffixTables.legendarySuffixTable.Add(theCheetah);
+        PrefixSuffix spikes = new PrefixSuffix(" of Spikes", legendarySuffixFeaturesLists.spikes, CreateSingleGearTypeList(LootLabels.GearTypes.Shield));
+        suffixTables.legendarySuffixTable.Add(spikes);
+        PrefixSuffix carnage = new PrefixSuffix(" of Carnage", legendarySuffixFeaturesLists.carnage, weaponsReqList);
+        suffixTables.legendarySuffixTable.Add(carnage);
+        PrefixSuffix destruction = new PrefixSuffix(" of Destruction", legendarySuffixFeaturesLists.destruction, weaponsReqList);
+        suffixTables.legendarySuffixTable.Add(destruction);
+        PrefixSuffix clearMind = new PrefixSuffix(" of Clear Mind", legendarySuffixFeaturesLists.clearMind, allReqList);
+        suffixTables.legendarySuffixTable.Add(clearMind);
+        PrefixSuffix demonicVigor = new PrefixSuffix(" of Demonic Vigor", legendarySuffixFeaturesLists.demonicVigor, allReqList);
+        suffixTables.legendarySuffixTable.Add(demonicVigor);
+        PrefixSuffix celestialBlessings = new PrefixSuffix(" of Celestial Blessings", legendarySuffixFeaturesLists.celestialBlessings, allReqList);
+        suffixTables.legendarySuffixTable.Add(celestialBlessings);
+        PrefixSuffix theTiger = new PrefixSuffix(" of the Tiger", legendarySuffixFeaturesLists.theTiger, allReqList);
+        suffixTables.legendarySuffixTable.Add(theTiger);
+        PrefixSuffix theWall = new PrefixSuffix(" of the Wall", legendarySuffixFeaturesLists.theWall, CreateSingleGearTypeList(LootLabels.GearTypes.Shield));
+        suffixTables.legendarySuffixTable.Add(theWall);
+        PrefixSuffix theInferno = new PrefixSuffix(" of the Inferno", legendarySuffixFeaturesLists.theInferno, allReqList);
+        suffixTables.legendarySuffixTable.Add(theInferno);
+        PrefixSuffix theStorm = new PrefixSuffix(" of the Storm", legendarySuffixFeaturesLists.theStorm, allReqList);
+        suffixTables.legendarySuffixTable.Add(theStorm);
+        PrefixSuffix frostbite = new PrefixSuffix(" of Frostbite", legendarySuffixFeaturesLists.frostbite, allReqList);
+        suffixTables.legendarySuffixTable.Add(frostbite);
+        PrefixSuffix theViper = new PrefixSuffix(" of the Viper", legendarySuffixFeaturesLists.theViper, allReqList);
+        suffixTables.legendarySuffixTable.Add(theViper);
+        PrefixSuffix theColossus = new PrefixSuffix(" of the Colossus", legendarySuffixFeaturesLists.theColossus, allReqList);
+        suffixTables.legendarySuffixTable.Add(theColossus);
     }
 
     private List<LootLabels.GearTypes> CreateSingleGearTypeList(LootLabels.GearTypes gearReq)
