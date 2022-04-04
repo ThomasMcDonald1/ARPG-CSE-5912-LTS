@@ -11,7 +11,7 @@ public class QuestGiver : MonoBehaviour
     [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
     [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
-    public static event EventHandler QuestCompleteEvent;
+    public static event EventHandler<InfoEventArgs<Quest>> QuestCompleteEvent;
     private void OnEnable()
     {
         InteractionManager.EndOfStoryEvent += OnEndOfStory;
@@ -80,7 +80,7 @@ public class QuestGiver : MonoBehaviour
     {
         if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
         {
-            QuestCompleteEvent?.Invoke(this, EventArgs.Empty);
+            QuestCompleteEvent?.Invoke(this, new InfoEventArgs<Quest>(quests[questIndex]));
             iconRenderer.sprite = questionIconSprite;
             if (questIndex < quests.Length-1)
             {
