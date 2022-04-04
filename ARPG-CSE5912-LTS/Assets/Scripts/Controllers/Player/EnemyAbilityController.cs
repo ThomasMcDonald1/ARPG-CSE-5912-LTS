@@ -8,6 +8,7 @@ using System;
 
 public class EnemyAbilityController : Enemy
 {
+    /*
     public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedGroundTargetLocationEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedSingleTargetEvent;
 
@@ -88,4 +89,5 @@ public class EnemyAbilityController : Enemy
 
         }
     }
+    */
 }
