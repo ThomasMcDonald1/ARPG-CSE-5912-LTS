@@ -61,7 +61,7 @@ namespace LootLabels
 
             LootGenerator = GetComponent<LootGenerator>();
             RarityColors = GetComponent<RarityColors>();
-            featureTablesGenerator = GetComponent<FeatureTablesGenerator>();
+            featureTablesGenerator = GetComponentInParent<GameplayStateController>().GetComponentInChildren<FeatureTablesGenerator>();
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
@@ -164,10 +164,10 @@ namespace LootLabels
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
                         Ite item = droppedItem.GetComponent<ItemPickup>().item;
+                        //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        //if (potion != null)
+                        //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-                        Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
-                        if (potion != null)
-                            Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         Equipment equipment = (Equipment)item;
                         if (equipment != null)
                         {
@@ -177,6 +177,7 @@ namespace LootLabels
                             equipment.suffix = suffix;
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                         }
+
                         Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
