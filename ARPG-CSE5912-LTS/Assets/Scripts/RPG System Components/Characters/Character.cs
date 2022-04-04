@@ -109,23 +109,14 @@ public abstract class Character : MonoBehaviour
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
-//<<<<<<< HEAD
-//        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
-//        abilityCast.castType.GetReducedCastTime(abilityCast);
-//        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
-//=======
-        bool abilityCanBePerformed = true;
+        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
+        abilityCast.castType.GetReducedCastTime(abilityCast);
         if (this is Player)
         {
-            abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
-        }
-//>>>>>>> 5bbca9dc (add cooldown)
-
-        if (abilityCanBePerformed)
-        {
-            if (abilityCast.abilityRequiresCursorSelection)
+            bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+            if (abilityCanBePerformed)
             {
-                if (this is Player)
+                if (abilityCast.abilityRequiresCursorSelection)
                 {
                     Player player = (Player)this;
                     player.StopAllCoroutines();
@@ -136,26 +127,24 @@ public abstract class Character : MonoBehaviour
                 }
                 else
                 {
-                    //enemy no need ability can be performed i think.
-                    Enemy enemy = (Enemy)this;
-                    enemy.StopAllCoroutines();
-                    enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
-                    //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
-
-                    //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
-                    //1a) select target character if it's a character-targeting ability
-                    //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
-                    
+                    CastAbilityWithoutSelection(abilityCast);
                 }
             }
             else
             {
-                CastAbilityWithoutSelection(abilityCast);
+                //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
             }
-        }      
+        }
         else
         {
-            //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
+            Enemy enemy = (Enemy)this;
+            enemy.StopAllCoroutines();
+            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
+
+            //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
+            //1a) select target character if it's a character-targeting ability
+            //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
         }
     }
 
