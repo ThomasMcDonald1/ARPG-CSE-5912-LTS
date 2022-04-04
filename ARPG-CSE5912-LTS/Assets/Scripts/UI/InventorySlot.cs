@@ -28,7 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             //Debug.Log("Hoever!");
             StopAllCoroutines();
             //StartCoroutine(StartTimer());
-            ShowMessage();
+            //ShowMessage();
         }
     }
 
@@ -66,8 +66,8 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void OnEnable()
     {
-        OnMouseHover -= ShowTip;
-        OnMouseLoseFocus -= HideTip;
+       // OnMouseHover -= ShowTip;
+       // OnMouseLoseFocus -= HideTip;
 
     }
 

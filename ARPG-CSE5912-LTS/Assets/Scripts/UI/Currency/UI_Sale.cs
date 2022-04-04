@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
 public class UI_Sale : MonoBehaviour
 {
     public Transform saleParent;
@@ -17,6 +16,13 @@ public class UI_Sale : MonoBehaviour
         inventory = Inventory.instance;
         saleSlots = saleParent.GetComponentsInChildren<SaleSlot>();
         //saleItemChanged = saleItems.Count;
+       
+    }
+
+   
+  
+    public void updateUI()
+    {
         switch ((int)shop.shopSaleType)
         {
             case (int)Shop.saleType.Utility:
@@ -29,16 +35,9 @@ public class UI_Sale : MonoBehaviour
                 saleItems = inventory.weaponItems;
                 break;
         }
-    }
 
-   
-  
-    public void updateUI()
-    {
-       
-       
 
-            for (int i = 0; i < saleSlots.Length; i++)
+        for (int i = 0; i < saleSlots.Length; i++)
             {
                 //Debug.Log("items.Count is " + inventory.items.Count);
                 if (i < saleItems.Count)
@@ -48,10 +47,9 @@ public class UI_Sale : MonoBehaviour
                     // Debug.Log(inventory.items[i].name + " index: " + i + " amount: " + inventory.amount[inventory.items[i]]);
                     if (saleItems[i].stackable)
                     {
-                        // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
+                        
 
-
-                        text.SetText(inventory.amount[saleItems[i]].ToString());
+                        text.SetText(inventory.amount[saleItems[i].name].ToString());
 
                     }
                     else
