@@ -8,4 +8,9 @@ public class HitRateGuaranteed : BaseHitRate
     {
         return Final(0);
     }
+
+    public override int CalculateBlock(Character target)
+    {
+        return Final(0);
+    }
 }

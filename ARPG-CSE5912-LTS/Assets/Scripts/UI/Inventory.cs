@@ -50,13 +50,13 @@ public class Inventory : MonoBehaviour
                 {
                    
                     //Debug.Log(item.type + "has: " + items.Count);
-                    if (inventoryItem.name.Equals(item.name) && amount.ContainsKey(item))
+                    if (inventoryItem.name.Equals(item.name) && amount.ContainsKey(item.name))
                     {
                         //Debug.Log("Room:  " + items.Count);
 
 
-                        int num = (int)amount[item] + 1;
-                        amount[item] = num;
+                        int num = (int)amount[item.name] + 1;
+                        amount[item.name] = num;
                         //Debug.Log(item.type + "has: " + inventoryItem.amount);
 
                        // iteInInventory = true;
@@ -76,11 +76,11 @@ public class Inventory : MonoBehaviour
                     onItemChangedCallback.Invoke();
 
             }
-            else if (item.stackable && !amount.ContainsKey(item))
+            else if (item.stackable && !amount.ContainsKey(item.name))
             {
                 // item.amount += 1;
                 //int num = (int)amount[item] + 1;
-                amount.Add(item, 1);
+                amount.Add(item.name, 1);
                 list.Add(item);
 
                 if (onItemChangedCallback != null)
@@ -112,24 +112,63 @@ public class Inventory : MonoBehaviour
         if (!item.stackable)
         {
             list.Remove(item);
+            Destroy(item);
         }
-        else if ((int)amount[item] > 1)
+        else if ((int)amount[item.name] > 1)
         {
-            int num = (int)amount[item] - 1;
-            amount[item] = num;
+
+            int num = (int)amount[item.name] - 1;
+            amount[item.name] = num;
         }
-        else if ((int)amount[item] == 1)
+        else if ((int)amount[item.name] == 1)
         {
-            amount[item] = "0";
+            amount[item.name] = "0";
             list.Remove(item);
-            amount.Remove(item);
+            amount.Remove(item.name);
+            Destroy(item);
         }
-        //Debug.Log("item prefab:" + item.prefab);
-        ItemDrop.DropItem(player.transform.position, item);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
     }
+    //sell an item
 
+    public void Sell(Ite item)
+    {
+        List<Ite> list = null;
+        switch (item.type)
+        {
+            case Ite.ItemType.armor:
+                list = armorItems;
+                break;
+            case Ite.ItemType.weapon:
+                list = weaponItems;
+                break;
+            case Ite.ItemType.utility:
+                list = utilItems;
+                break;
+
+        }
+
+        if (!item.stackable)
+        {
+            list.Remove(item);
+        }
+        else if ((int)amount[item.name] > 1)
+        {
+            int num = (int)amount[item.name] - 1;
+            amount[item.name] = num;
+        }
+        else if ((int)amount[item.name] == 1)
+        {
+            amount[item.name] = "0";
+            list.Remove(item);
+            amount.Remove(item.name);
+        }
+        //Debug.Log("item prefab:" + item.prefab);
+
+        if (onItemChangedCallback != null)
+            onItemChangedCallback.Invoke();
+    }
     // Remove an item
     public void RemoveEquip(Ite item)
     {
@@ -152,16 +191,16 @@ public class Inventory : MonoBehaviour
         {
             list.Remove(item);
         }
-        else if ((int)amount[item] > 1)
+        else if ((int)amount[item.name] > 1)
         {
-            int num = (int)amount[item] - 1;
-            amount[item] = num;
+            int num = (int)amount[item.name] - 1;
+            amount[item.name] = num;
         }
-        else if ((int)amount[item] == 1)
+        else if ((int)amount[item.name] == 1)
         {
-            amount[item] = "0";
+            amount[item.name] = "0";
             list.Remove(item);
-            amount.Remove(item);
+            amount.Remove(item.name);
         }
         //Debug.Log("item prefab:" + item.prefab);
         if (onItemChangedCallback != null)

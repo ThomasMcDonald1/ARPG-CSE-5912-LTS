@@ -22,8 +22,9 @@ namespace DunGen
 			if (GenerateOnStart)
 			{
 				Generate();
-				BakeNavMesh();
-				AddEnemies();
+				//BakeNavMesh();
+				//AddEnemies();
+				SetWayport();
 				Debug.Log("Dungeon Generated!");
 			}
 		}
@@ -53,21 +54,25 @@ namespace DunGen
 
 		void AddEnemies()
         {
-			foreach (Transform tile in Root.transform)
+			//enable navmesh agents (for spawning conflict avoidance)
+			var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+			foreach (NavMeshAgent agent in agents)
 			{
-				foreach (Transform child in tile.transform)
-                {
-					if (child.CompareTag("Enemy"))
-					{
-						foreach (Transform enemy in child.transform)
-                        {
-							enemy.gameObject.GetComponent<NavMeshAgent>().enabled = true;
-						}
-					}
-				}
+				agent.enabled = true;
 			}
 		}
 
+		void SetWayport()
+        {
+			Debug.Log("Set waypoint");
+			var waypointRoom = GameObject.FindWithTag("WaypointRoom");
+			if (waypointRoom != null)
+            {
+				var loc = waypointRoom.transform.position + Vector3.up;
+				Debug.Log("Dungeon wayport: spawn player at " + loc);
+				savedDunData.SetWaypointLocation(loc);
+			}
+		}
 
 	}
 }

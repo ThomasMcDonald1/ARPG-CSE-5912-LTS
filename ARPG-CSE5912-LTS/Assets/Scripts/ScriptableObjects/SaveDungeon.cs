@@ -11,11 +11,12 @@ public class SaveDungeon : ScriptableObject
 {
     private void OnEnable()
     {
-        //hideFlags = HideFlags.DontUnloadUnusedAsset;
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
     public bool generated = false;
     public int seed = -1;
+    public Vector3 waypointLocation;
 
     public void GenerateSeed()
     {
@@ -26,6 +27,11 @@ public class SaveDungeon : ScriptableObject
             Debug.Log("Dungeon seed: " + seed);
             generated = true;
         }
+    }
+
+    public void SetWaypointLocation(Vector3 loc)
+    {
+        waypointLocation = loc;
     }
 
 }

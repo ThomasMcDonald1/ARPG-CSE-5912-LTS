@@ -7,6 +7,7 @@ public class AbilityCooldown : MonoBehaviour
 {
     Character character;
     public float abilityCooldown;
+    [HideInInspector] public float reducedCooldown;
     ActionBar actionBar;
     List<EnemyAbility> EnemyAttackTypeList;
     Coroutine cooldownRoutine;
@@ -49,13 +50,18 @@ public class AbilityCooldown : MonoBehaviour
         }
     }
 
+    public void GetReducedCooldown(AbilityCast abilityCast)
+    {
+        abilityCast.abilityCooldown.reducedCooldown = abilityCast.abilityCooldown.abilityCooldown - (abilityCast.abilityCooldown.abilityCooldown * abilityCast.caster.stats[StatTypes.CooldownReduction] * 0.01f);
+    }
+
     public void CooldownAbilityOnActionButtons(AbilityCast abilityCast)
     {
         foreach (ActionButton actionButton in actionBar.actionButtons)
         {
             if (actionButton.abilityAssigned == abilityCast.ability)
             {
-                actionButton.cooldownTimer = abilityCooldown;
+                actionButton.cooldownTimer = reducedCooldown;
                 actionButton.cooldownText.gameObject.SetActive(true);
                 if (cooldownRoutine == null)
                     cooldownRoutine = StartCoroutine(CooldownAbility(actionButton));
@@ -82,7 +88,7 @@ public class AbilityCooldown : MonoBehaviour
         while (actionButton.cooldownTimer > 0)
         {
             actionButton.cooldownText.text = Mathf.RoundToInt(actionButton.cooldownTimer).ToString();
-            actionButton.cooldownFill.fillAmount = actionButton.cooldownTimer / abilityCooldown;
+            actionButton.cooldownFill.fillAmount = actionButton.cooldownTimer / reducedCooldown;
             actionButton.DecrementCooldownTimer();
             yield return null;
         }

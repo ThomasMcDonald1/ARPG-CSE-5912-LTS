@@ -1,6 +1,6 @@
-
 using UnityEngine;
-
+using System;
+using System.Collections;
 
 public class QuestGiver : MonoBehaviour
 {
@@ -11,6 +11,21 @@ public class QuestGiver : MonoBehaviour
     [SerializeField] private Sprite questionIconSprite, questionIconGraySprite, exclamationIconSprite;
     [SerializeField] private SpriteRenderer iconRenderer;
     [SerializeField] private QuestLog testLog;//for testing only
+    public static event EventHandler QuestCompleteEvent;
+    private void OnEnable()
+    {
+        InteractionManager.EndOfStoryEvent += OnEndOfStory;
+
+
+    }
+    private void OnDisable()
+    {
+        InteractionManager.EndOfStoryEvent -= OnEndOfStory;
+    }
+    private void OnEndOfStory(object sender, EventArgs e)
+    {
+        AddQuestToLogIfNew();
+    }
     public int QuestIndex
     {
         get
@@ -43,20 +58,29 @@ public class QuestGiver : MonoBehaviour
     //test
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
-            {
-                QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
-            }
-        }
-        UpdateQuestIcon();
 
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        //    {
+        //        QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
+        //    }
+        //}
+        // UpdateQuestIcon();
+
+    }
+    public void AddQuestToLogIfNew()
+    {
+        if (!QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
+        {
+            QuestLog.QuestLogInstance.AddQuest(quests[questIndex]);
+        }
     }
     public void UpdateQuestIcon()
     {
         if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
         {
+            QuestCompleteEvent?.Invoke(this, EventArgs.Empty);
             iconRenderer.sprite = questionIconSprite;
             if (questIndex < quests.Length-1)
             {

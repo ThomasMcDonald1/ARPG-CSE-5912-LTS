@@ -8,9 +8,10 @@ public class GeneralStore : NPC
 
     [Header("Ink JSON")]
     // Hank TODO
-    /*[SerializeField] public Shop shop;
+    [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
-    [SerializeField] public UI_Sale saleUI;*/
+    [SerializeField] public UI_Sale saleUI;
+
 
     public List<TextAsset> DialogueJSON;
     private int currentStory;
@@ -21,6 +22,7 @@ public class GeneralStore : NPC
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
+        saleUI.shop = shop;
     }
 
     public override TextAsset GetCurrentDialogue()
@@ -59,9 +61,8 @@ public class GeneralStore : NPC
             else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
             //else { SetDialogue(); }
 
-            // Hank TODO
-            //shopUI.initializeShop(shop);
-
+            shopUI.initializeShop(shop);
+            
             //SetMenu();
             StartCoroutine(LookAtPlayer());
 

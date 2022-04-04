@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameplayStateController : StateMachine
 {
+    public static GameplayStateController Instance;
     // References to things that will need to be controlled and known by the state controller go here
     public GameObject pauseMenuCanvasObj;
     public GameObject gameplayUICanvasObj;
@@ -38,7 +39,7 @@ public class GameplayStateController : StateMachine
     public GameObject charaPanelButtonObj;
     public GameObject exitPanelToGameButtonObj;
 
-    public GameObject openInventoryMenuObj;
+   public GameObject openInventoryMenuObj;
     public GameObject exitInventoryMenuObj;
 
     public GameObject aoeReticleSphere;
@@ -62,8 +63,23 @@ public class GameplayStateController : StateMachine
     public GameObject confirmPassiveTreeButton;
     public GameObject closePassiveTreeButton;
 
+    // Camera Stuff
+    public GameplayCameraZoom CameraZoom;
+
+    //TODO: Maybe a keybinds button, if we have time to add
+
     private void Awake()
     {
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         pauseMenuCanvas = pauseMenuCanvasObj.GetComponent<Canvas>();
         gameplayUICanvas = gameplayUICanvasObj.GetComponent<Canvas>();

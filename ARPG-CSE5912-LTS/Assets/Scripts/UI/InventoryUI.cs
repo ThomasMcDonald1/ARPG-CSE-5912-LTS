@@ -42,7 +42,7 @@ public class InventoryUI : MonoBehaviour
                     // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
 
 
-                    text.SetText(inventory.amount[inventory.weaponItems[i]].ToString());
+                    text.SetText(inventory.amount[inventory.weaponItems[i].name].ToString());
 
                 }
                 else
@@ -68,7 +68,7 @@ public class InventoryUI : MonoBehaviour
                 if (inventory.armorItems[i].stackable)
                 {
                     // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
-                    text.SetText(inventory.amount[inventory.armorItems[i]].ToString());
+                    text.SetText(inventory.amount[inventory.armorItems[i].name].ToString());
 
                 }
                 else
@@ -96,7 +96,7 @@ public class InventoryUI : MonoBehaviour
                     // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
 
 
-                    text.SetText(inventory.amount[inventory.utilItems[i]].ToString());
+                    text.SetText(inventory.amount[inventory.utilItems[i].name].ToString());
 
                 }
                 else

@@ -32,9 +32,9 @@ namespace LootLabels {
                 case Rarity.Legendary:
                     rarityColor = Legendary;
                     break;
-                case Rarity.Set:
-                    rarityColor = Set;
-                    break;
+                //case Rarity.Set:
+                //    rarityColor = Set;
+                //    break;
                 case Rarity.SuperUltraHyperExPlusAlpha:
                     rarityColor = Ultra;
                     break;

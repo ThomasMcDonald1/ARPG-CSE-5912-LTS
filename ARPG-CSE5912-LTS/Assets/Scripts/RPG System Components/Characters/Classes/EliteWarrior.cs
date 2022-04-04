@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using System;
 namespace ARPG.Combat
 {
-    public class EliteWarrior : Enemy
+    public class EliteWarrior : EnemyAbilityController
     {
 
         protected override void Start()

@@ -19,7 +19,7 @@ GameObject:
   m_TagString: DungeonPart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &400000
 Transform:
@@ -117,7 +117,8 @@ MonoBehaviour:
   OverrideConnectionChance: 0
   ConnectionChance: 0
   Tags:
-    Tags: []
+    Tags:
+    - id: 3
   AllDoorways: []
   UsedDoorways: []
   UnusedDoorways: []
@@ -307,34 +308,6 @@ MonoBehaviour:
         m_RotationOrder: 4
       TileSet: {fileID: 0}
     - Value: {fileID: 5610504988753324844}
-      MainPathWeight: 1
-      BranchPathWeight: 1
-      DepthWeightScale:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      TileSet: {fileID: 0}
-    - Value: {fileID: 7906064996268854124}
       MainPathWeight: 1
       BranchPathWeight: 1
       DepthWeightScale:
@@ -859,7 +832,6 @@ Transform:
   - {fileID: 61778649375995993}
   - {fileID: 1699965255513001330}
   - {fileID: 5610504988753491724}
-  - {fileID: 7906064996269217612}
   - {fileID: 3099941090258885386}
   - {fileID: 8094219995527893544}
   - {fileID: 1309425273684572491}
@@ -1177,6 +1149,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Chair (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1223,14 +1199,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
---- !u!4 &61778649375995993 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
-  m_PrefabInstance: {fileID: 61778649376121561}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &61778649376220281 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
+  m_PrefabInstance: {fileID: 61778649376121561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &61778649375995993 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
   m_PrefabInstance: {fileID: 61778649376121561}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1212598760023617089
@@ -1240,9 +1216,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4341582487475219684}
     m_Modifications:
+    - target: {fileID: 100000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
       propertyPath: m_Name
       value: Sew_Burn_Wall_1A_fire_flare
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
       propertyPath: m_RootOrder
@@ -1288,6 +1284,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
 --- !u!1 &1212598760023582953 stripped
@@ -1311,9 +1315,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Wall_Metal_3A
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5f36dd55990a21c40bf3135708cbe248, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5f36dd55990a21c40bf3135708cbe248, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5f36dd55990a21c40bf3135708cbe248, type: 3}
       propertyPath: m_LocalScale.y
@@ -1386,6 +1394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Camp_Fire_Stand_Pot
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1432,14 +1444,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
---- !u!4 &1699965255513001330 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
-  m_PrefabInstance: {fileID: 1699965255513135090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1699965255513035090 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
+  m_PrefabInstance: {fileID: 1699965255513135090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1699965255513001330 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 0be5ba420634bcf49b9341557ce16661, type: 3}
   m_PrefabInstance: {fileID: 1699965255513135090}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3099941090258747778
@@ -1449,13 +1461,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4341582487475219684}
     m_Modifications:
+    - target: {fileID: 100000, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_Name
       value: Sew_Burn_Wall_1B_fire
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1520,6 +1552,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Wall_Brick_10D
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1581,6 +1617,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 5d7c244360d887d40b941081f440814e, type: 3}
       propertyPath: m_Name
       value: Sew_Chest3_Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5d7c244360d887d40b941081f440814e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5d7c244360d887d40b941081f440814e, type: 3}
       propertyPath: m_RootOrder
@@ -1649,6 +1689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Wall_Brick_10D (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1711,6 +1755,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Chair
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1757,14 +1805,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
---- !u!4 &5022650692667608659 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
-  m_PrefabInstance: {fileID: 5022650692667741395}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5022650692667773555 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
+  m_PrefabInstance: {fileID: 5022650692667741395}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5022650692667608659 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
   m_PrefabInstance: {fileID: 5022650692667741395}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5610504988753358220
@@ -1777,6 +1825,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: de87935b8fb45a54baad570c93da4448, type: 3}
       propertyPath: m_Name
       value: Sew_Camp_SackF
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: de87935b8fb45a54baad570c93da4448, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: de87935b8fb45a54baad570c93da4448, type: 3}
       propertyPath: m_RootOrder
@@ -1857,6 +1909,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sew_Wall_Brick_10D (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1920,9 +1976,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4341582487475219684}
     m_Modifications:
+    - target: {fileID: 100000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
       propertyPath: m_Name
       value: Sew_Burn_Wall_1A_fire_flare (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
       propertyPath: m_RootOrder
@@ -1968,16 +2044,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19900000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19900002, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85415ef000a727842a241cb12c98566b, type: 3}
---- !u!4 &6286287798631799125 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
-  m_PrefabInstance: {fileID: 6286287798631924701}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6286287798632023413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
+  m_PrefabInstance: {fileID: 6286287798631924701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6286287798631799125 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400008, guid: 85415ef000a727842a241cb12c98566b, type: 3}
   m_PrefabInstance: {fileID: 6286287798631924701}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6354899709329133339
@@ -1990,6 +2074,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
       propertyPath: m_Name
       value: Sew_Chair (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a318661a936fbe44aaae4ef3ab6aeec2, type: 3}
       propertyPath: m_RootOrder
@@ -2062,6 +2150,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2108,86 +2200,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
---- !u!4 &7570556031534417328 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
-  m_PrefabInstance: {fileID: 7570556031534292784}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7570556031534324112 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
   m_PrefabInstance: {fileID: 7570556031534292784}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7906064996268821964
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4341582487475219684}
-    m_Modifications:
-    - target: {fileID: 100000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_Name
-      value: Sew_Ruins_Pillar_2D
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.63576
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.63
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.69155157
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.7223271
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -92.494
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
---- !u!1 &7906064996268854124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-  m_PrefabInstance: {fileID: 7906064996268821964}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7906064996269217612 stripped
+--- !u!4 &7570556031534417328 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: bbad2c8f0513cb948846cc8a6658b036, type: 3}
-  m_PrefabInstance: {fileID: 7906064996268821964}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 616978fb7c0ab714589c5ba2cde6b779, type: 3}
+  m_PrefabInstance: {fileID: 7570556031534292784}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8094219995527760032
 PrefabInstance:
@@ -2196,13 +2217,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4341582487475219684}
     m_Modifications:
+    - target: {fileID: 100000, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_Name
       value: Sew_Burn_Wall_1B_fire (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 154489615f629df418b1580bb077f690, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2246,14 +2287,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 154489615f629df418b1580bb077f690, type: 3}
---- !u!1 &8094219995527663112 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
-  m_PrefabInstance: {fileID: 8094219995527760032}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8094219995527893544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400008, guid: 154489615f629df418b1580bb077f690, type: 3}
+  m_PrefabInstance: {fileID: 8094219995527760032}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8094219995527663112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: 154489615f629df418b1580bb077f690, type: 3}
   m_PrefabInstance: {fileID: 8094219995527760032}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8940512704772845366
@@ -2266,6 +2307,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
       propertyPath: m_Name
       value: Sew_Table_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
       propertyPath: m_RootOrder
@@ -2313,13 +2358,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
---- !u!4 &8940512704772978102 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
-  m_PrefabInstance: {fileID: 8940512704772845366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8940512704772942230 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
+  m_PrefabInstance: {fileID: 8940512704772845366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8940512704772978102 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: d7ab8eef6d1396947bf0f8dbc84006b2, type: 3}
   m_PrefabInstance: {fileID: 8940512704772845366}
   m_PrefabAsset: {fileID: 0}

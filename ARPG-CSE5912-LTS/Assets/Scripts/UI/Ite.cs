@@ -12,10 +12,15 @@ public class Ite : ScriptableObject
 	public bool stackable;
 	public ItemType type;
 	[SerializeField] public GameObject prefab;
-	public int attackDamage;
-	public int defendRate;
-	public string utilityUsage;
 
+	public string utilityUsage;
+	public int cost;
+	//[SerializeField] public Stats playerStat;
+
+
+	//public int attackDamage;
+	//public int defendRate;
+	//public string utilityUsage;
 	//public int amount = 1;
 	public virtual void Use()
 	{
@@ -23,7 +28,6 @@ public class Ite : ScriptableObject
 		// Something may happen
 		Debug.Log("using " + name);
 	}
-	
 	public enum ItemType
 	{
 		weapon,

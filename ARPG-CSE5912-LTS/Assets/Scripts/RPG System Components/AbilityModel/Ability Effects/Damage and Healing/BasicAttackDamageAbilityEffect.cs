@@ -7,6 +7,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
 {
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackDamageReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackHealingReceivedEvent;
+    public static event EventHandler<InfoEventArgs<(Character, int)>> ThornsDamageReceivedEvent;
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
     {
@@ -73,6 +74,14 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
             abilityCast.caster.stats[StatTypes.HP] += lifeToStealInt;
             abilityCast.caster.stats[StatTypes.HP] = Mathf.Clamp(abilityCast.caster.stats[StatTypes.HP], 0, abilityCast.caster.stats[StatTypes.MaxHP]);
             BasicAttackHealingReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((abilityCast.caster, lifeToStealInt, wasCrit)));
+        }
+
+        int damageReflect = Mathf.RoundToInt(GetStat(target, StatTypes.DamageReflect));
+        if (damageReflect > 0)
+        {
+            abilityCast.caster.stats[StatTypes.HP] -= damageReflect;
+            abilityCast.caster.stats[StatTypes.HP] = Mathf.Clamp(abilityCast.caster.stats[StatTypes.HP], 0, abilityCast.caster.stats[StatTypes.MaxHP]);
+            ThornsDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int)>((abilityCast.caster, damageReflect)));
         }
 
         return finalCalculatedDamage;

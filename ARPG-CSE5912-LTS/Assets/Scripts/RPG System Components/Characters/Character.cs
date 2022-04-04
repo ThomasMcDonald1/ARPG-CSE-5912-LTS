@@ -31,6 +31,7 @@ public abstract class Character : MonoBehaviour
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
     public abstract Type GetCharacterType();
     public Ability basicAttackAbility;
+    [HideInInspector] public float baseRunSpeed = 7f;
 
     #region Built-in
     private void Awake()
@@ -48,16 +49,11 @@ public abstract class Character : MonoBehaviour
         playerAbilityController = GetComponent<PlayerAbilityController>(); 
         smooth = 0.3f;
         yVelocity = 0.0f;
-        if (this is Enemy)
-        {
-            Debug.Log("enemy is" + gameObject.name);
-            Debug.Log(abilitiesKnown);
-        }
     }
 
     protected virtual void Update()
     {
-        
+        Debug.Log(abilitiesKnown);
     }
 
     private void OnEnable()
@@ -114,11 +110,17 @@ public abstract class Character : MonoBehaviour
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
+//<<<<<<< HEAD
+//        abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
+//        abilityCast.castType.GetReducedCastTime(abilityCast);
+//        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
+//=======
         bool abilityCanBePerformed = true;
         if (this is Player)
         {
             abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
         }
+//>>>>>>> 5bbca9dc (add cooldown)
 
         if (abilityCanBePerformed)
         {

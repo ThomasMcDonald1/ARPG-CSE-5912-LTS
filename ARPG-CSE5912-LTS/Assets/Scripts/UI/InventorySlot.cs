@@ -25,7 +25,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (removeButton.interactable)
         {
-            Debug.Log("Hoever!");
+            //Debug.Log("Hoever!");
             StopAllCoroutines();
             //StartCoroutine(StartTimer());
             ShowMessage();
@@ -39,18 +39,17 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
     private void ShowMessage()
     {
-        Debug.Log("In ShowMessage");
         tipToShow = item.name;
         switch ((int)item.type)
         {
             case(int) Ite.ItemType.weapon:
-                tipToShow += "\n" +"Damage: "+ item.attackDamage;
+                //tipToShow += "\n" +"Damage: "+ item.attackDamage;
                 break;
             case (int)Ite.ItemType.armor:
-                tipToShow += "\n" + "Defend rate: " + item.defendRate;
+                //tipToShow += "\n" + "Defend rate: " + item.defendRate;
                 break;
             case (int)Ite.ItemType.utility:
-                tipToShow += "\n" +  item.utilityUsage;
+                //tipToShow += "\n" +  item.utilityUsage;
                 break;
         }
 
@@ -81,15 +80,19 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void ShowTip(String tip, Vector2 mousePos)
     {
+        //Debug.Log("In ShowMessage");
+
         tipText.text = tip;
         tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x, mousePos.y);
+        tipWindow.transform.position = new Vector2(mousePos.x+ tipWindow.sizeDelta.x/2, mousePos.y);
 
 
     }
     public void HideTip()
     {
+        //Debug.Log("Hide ShowMessage");
+
         tipText.text = default;
         tipWindow.gameObject.SetActive(false);
     }
@@ -120,9 +123,15 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void UseItem()
     {
-        if(item != null)
+        if (item != null)
         {
             item.Use();
+            if (item.type == Ite.ItemType.utility)
+            {
+                Inventory.instance.Remove(item);
+
+            }
+
         }
     }
 
