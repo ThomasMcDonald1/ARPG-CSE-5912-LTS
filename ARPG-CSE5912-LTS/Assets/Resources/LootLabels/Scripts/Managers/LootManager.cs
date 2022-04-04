@@ -61,11 +61,11 @@ namespace LootLabels
 
             LootGenerator = GetComponent<LootGenerator>();
             RarityColors = GetComponent<RarityColors>();
-            featureTablesGenerator = GetComponent<FeatureTablesGenerator>();
+            featureTablesGenerator = GetComponentInParent<GameplayStateController>().GetComponentInChildren<FeatureTablesGenerator>();
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
-        public void DropLoot(LootSource lootSource, Transform objectTransform, Type type)
+        public void DropLoot(LootSource lootSource, Transform objectTransform, LootType type)
         {
             int itemAmount = LootGenerator.CalculateLootAmount(lootSource);
 
@@ -98,7 +98,7 @@ namespace LootLabels
         }
 
         //if you want a delay on each item that spawns, use this
-        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, Type type)
+        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
 
@@ -113,7 +113,7 @@ namespace LootLabels
 
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
-        void GenerateLoot(Transform lootOrigin, Type type)
+        void GenerateLoot(Transform lootOrigin, LootType type)
         {
             LootTypes lootType = LootGenerator.SelectRandomLootType();
 
@@ -147,7 +147,7 @@ namespace LootLabels
         /// Choses a item type to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseItemType(Transform lootOrigin, Type type)
+        void ChooseItemType(Transform lootOrigin, LootType type)
         {
 
             ItemTypes itemType = LootGenerator.SelectRandomItemType();
@@ -164,14 +164,17 @@ namespace LootLabels
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
                         Ite item = droppedItem.GetComponent<ItemPickup>().item;
+                        //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        //if (potion != null)
+                        //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-
+                        Equipment equipment = (Equipment)item;
+                        
                         if (droppedItem.GetComponent<ItemPickup>().item.name.Contains("Potion")){
                             Potion potion = (Potion)item;
                             Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        }
-                        
-                        else//(equipment != null)
+                        }                        
+                        else if(equipment != null)
                         {
                             Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
@@ -180,6 +183,7 @@ namespace LootLabels
                             equipment.suffix = suffix;
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                         }
+
                         Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;

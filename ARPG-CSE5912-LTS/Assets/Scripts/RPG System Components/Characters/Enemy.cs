@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using LootLabels;
 
 namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
         Animator animator;
+        [SerializeField] LootSource lootSource;
+        [SerializeField] LootType lootType;
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
@@ -174,12 +177,12 @@ namespace ARPG.Combat
         // From animation Event
         public void Hit()
         {
-                float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
-                if (distance < BodyRange)
-                {
-                    AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                    //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
-                }
+            float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
+            if (distance < BodyRange)
+            {
+                AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
+            }
         }
 
         // From animation Event
@@ -198,14 +201,14 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-                EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
-                StartCoroutine(Die(10));
+            EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
+            StartCoroutine(Die(10));
+            LootManager.singleton.DropLoot(lootSource, transform, lootType);
         }
         IEnumerator Die(int seconds)
         {
             yield return new WaitForSeconds(seconds);
             Destroy(gameObject);
-
         }
         public void ProduceItem()
         {
