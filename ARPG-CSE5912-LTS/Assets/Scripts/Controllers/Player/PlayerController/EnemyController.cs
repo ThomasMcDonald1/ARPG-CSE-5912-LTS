@@ -4,51 +4,54 @@ using ARPG.Combat;
 
 namespace ARPG.Core
 {
-    //public class EnemyController : EnemyAbilityController
-    public class EnemyController : Enemy
+    public abstract class EnemyController : EnemyAbilityController
     {
         public EnemyTarget target;
-        private string classTypeName;
+        //private string classTypeName;
         private string weaponTypeName;
-        private Enemy enemyClass;
+        //private Enemy enemyClass;
 
         public string ClassTypeName
-        { get { return classTypeName; } }
+        { get { return GetClassTypeName(); } }
         public string WeaponTypeName
         { get { return weaponTypeName; } }
+     
+        public abstract string GetClassTypeName();
+        //public abstract string GetWeaponTypeName();
+        public abstract void GetAttackTarget();
 
         private void Start()
         {
-            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyKnight")
-            {
-                classTypeName = "EnemyKnight";
-                this.gameObject.AddComponent<EnemyKnight>();
-                enemyClass = this.gameObject.GetComponent<EnemyKnight>();
-            }
-            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EliteWarrior")
-            {
-                classTypeName = "EliteWarrior";
-                this.gameObject.AddComponent<EliteWarrior>();
-                enemyClass = this.gameObject.GetComponent<EliteWarrior>();
+            //if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyKnight")
+            //{
+            //    //classTypeName = "EnemyKnight";
+            //    //this.gameObject.AddComponent<EnemyKnight>();
+            //    enemyClass = this.gameObject.GetComponent<EnemyKnight>();
+            //}
+            //if (GetComponent<Transform>().GetChild(0).gameObject.name == "EliteWarrior")
+            //{
+            //    //classTypeName = "EliteWarrior";
+            //    //this.gameObject.AddComponent<EliteWarrior>();
+            //    enemyClass = this.gameObject.GetComponent<EliteWarrior>();
 
-            }
-            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyPath")
-            {
-                classTypeName = "EnemyPath";
-                this.gameObject.AddComponent<Paths>();
-                enemyClass = this.gameObject.GetComponent<Paths>();
+            //}
+            //if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyPath")
+            //{
+            //    //classTypeName = "EnemyPath";
+            //    //this.gameObject.AddComponent<Paths>();
+            //    enemyClass = this.gameObject.GetComponent<Paths>();
 
-            }
-            if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemySage")
-            {
-                classTypeName = "EnemySage";
-                this.gameObject.AddComponent<SageOfSixPaths>();
-                enemyClass = this.gameObject.GetComponent<SageOfSixPaths>();
+            //}
+            //if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemySage")
+            //{
+            //    //classTypeName = "EnemySage";
+            //    //this.gameObject.AddComponent<SageOfSixPaths>();
+            //    enemyClass = this.gameObject.GetComponent<SageOfSixPaths>();
 
-            }
+            //}
             weaponTypeName = "Unarmed";
             target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
-            enemyClass.AttackTarget = target.transform;
+            AttackTarget = target.transform;
         }
 
         private void Update()

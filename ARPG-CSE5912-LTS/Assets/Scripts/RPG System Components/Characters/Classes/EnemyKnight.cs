@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using ARPG.Core;
+
 namespace ARPG.Combat
 {
-    public class EnemyKnight : EnemyAbilityController
+    public class EnemyKnight : EnemyController
     {
-
         protected override void Start()
         {
             base.Start();
@@ -18,8 +19,13 @@ namespace ARPG.Combat
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;
-            
         }
+
+        public override string GetClassTypeName()
+        {
+            return "EnemyKnight";
+        }
+
         /*
         protected override void Update()
         {
@@ -37,10 +43,10 @@ namespace ARPG.Combat
         */
 
 
-            //protected override void Update()
-            //{
-            //    base.Update();
-            //}
-        }
+        //protected override void Update()
+        //{
+        //    base.Update();
+        //}
+    }
 
 }
