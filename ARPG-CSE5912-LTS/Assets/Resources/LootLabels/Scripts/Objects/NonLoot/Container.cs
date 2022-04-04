@@ -12,6 +12,7 @@ namespace LootLabels {
         public LootSource lootSource;   //the rarity of the source to determine loot drops
         public LootType type;               //the rarity of the dropped loot
         bool chestOpened = false;   //Toggle to check if the chest has been opened yet
+        bool enemyDead = false;
         
         // Use this for initialization
         void Start() {
@@ -35,9 +36,22 @@ namespace LootLabels {
             Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 3);
             foreach (var hitCollider in hitColliders)
             {
-                if (hitCollider.CompareTag("Player"))
+                if (hitCollider.CompareTag("Player") && this.GetComponent<Stats>() == null)
                 {
                     OpenChest();
+                }
+                else if(this.GetComponent<Stats>() != null)
+                {
+                    if(this.GetComponent<Stats>()[StatTypes.HP] <= 0 && !enemyDead)
+                    {
+                        enemyDead = true;
+                        if (GetComponent<AudioSource>())
+                        {
+                            GetComponent<AudioSource>().Play();
+                        }
+                        StartCoroutine(DropLootCoroutine());
+                    }
+                    
                 }
             }
         }
