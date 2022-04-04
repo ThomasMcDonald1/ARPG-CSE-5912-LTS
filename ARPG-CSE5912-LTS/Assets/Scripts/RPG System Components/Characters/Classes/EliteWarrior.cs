@@ -24,10 +24,10 @@ namespace ARPG.Combat
             return "EliteWarrior";
         }
 
-        //protected override void Update()
-        //{
-        //    base.Update();
-        //}
+        protected override void Update()
+        {
+            base.Update();
+        }
     }
 
 }

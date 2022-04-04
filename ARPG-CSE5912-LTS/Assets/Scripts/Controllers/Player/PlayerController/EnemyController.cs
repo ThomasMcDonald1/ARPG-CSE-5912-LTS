@@ -19,8 +19,9 @@ namespace ARPG.Core
         public abstract string GetClassTypeName();
         //public abstract string GetWeaponTypeName();
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             //if (GetComponent<Transform>().GetChild(0).gameObject.name == "EnemyKnight")
             //{
             //    //classTypeName = "EnemyKnight";
@@ -54,8 +55,9 @@ namespace ARPG.Core
             Debug.Log("Attack target is: " + AttackTarget.name);
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             UpdateAnimator();
         }
 

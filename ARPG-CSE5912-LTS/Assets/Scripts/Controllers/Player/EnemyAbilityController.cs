@@ -8,6 +8,15 @@ using System;
 
 public class EnemyAbilityController : Enemy
 {
+    protected override void Start()
+    {
+        base.Start();
+    }
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedGroundTargetLocationEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedSingleTargetEvent;
 
