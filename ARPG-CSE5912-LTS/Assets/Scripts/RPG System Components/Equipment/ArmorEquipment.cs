@@ -5,7 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment/Armor")]
 public class ArmorEquipment : Equipment
 {
-
+    //TODO: if Heavy armor, add Armor.
+    //TODO: if Medium armor, add half Armor, half Evasion
+    //TODO: if Light armor, add Evasion
     public override void Use()
     {
         base.Use();

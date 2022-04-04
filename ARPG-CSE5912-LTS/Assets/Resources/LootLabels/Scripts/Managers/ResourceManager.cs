@@ -27,7 +27,7 @@ namespace LootLabels {
         /// </summary>
         /// <param name="gearType"></param>
         /// <returns></returns>
-        public string GetModelName(GearTypes gearType) {
+        public string GetModelName(GearTypes gearType, Rarity itemRarity) {
             string modelPath = "LootLabels/3D models/";
             Debug.Log(" in GetModelName gearType is " + gearType);
             switch (gearType) {
@@ -42,12 +42,28 @@ namespace LootLabels {
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
                 case GearTypes.HealthPotion:
-                    return modelPath + "HealthPotion";
+                   return modelPath + "HealthPotion";
+                case GearTypes.Sword:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendarySword";
+                        default:
+                            return modelPath + "Sword";
+                    }
                 //case GearTypes.Shield:
                 //    return modelPath + "Shield";
                 default:
                     Debug.Log("Case not implemented");
-                    return modelPath + "Potion";
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendarySword";
+                        default:
+                            return modelPath + "Sword";
+                    }
+
+                    //return modelPath + "HealthPotion";
             }
         }
 
