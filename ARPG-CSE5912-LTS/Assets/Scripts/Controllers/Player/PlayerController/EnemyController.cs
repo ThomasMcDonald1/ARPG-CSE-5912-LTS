@@ -18,7 +18,6 @@ namespace ARPG.Core
      
         public abstract string GetClassTypeName();
         //public abstract string GetWeaponTypeName();
-        public abstract void GetAttackTarget();
 
         private void Start()
         {
