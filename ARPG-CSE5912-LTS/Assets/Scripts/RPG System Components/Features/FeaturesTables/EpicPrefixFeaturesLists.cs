@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class EpicPrefixFeaturesLists : FeaturesLists
 {
-    public List<Feature> travelers = new List<Feature>();
-    public List<Feature> vampiric = new List<Feature>();
-    public List<Feature> berserkers = new List<Feature>();
-    public List<Feature> exploiters = new List<Feature>();
-    public List<Feature> bloodletters = new List<Feature>();
-    public List<Feature> impalers = new List<Feature>();
-    public List<Feature> psionics = new List<Feature>();
-    public List<Feature> fierySorcerers = new List<Feature>();
-    public List<Feature> icySorcerers = new List<Feature>();
-    public List<Feature> thunderingSorcerers = new List<Feature>();
-    public List<Feature> corrosiveSorcerers = new List<Feature>();
+    public List<GameObject> travelers = new List<GameObject>();
+    public List<GameObject> vampiric = new List<GameObject>();
+    public List<GameObject> berserkers = new List<GameObject>();
+    public List<GameObject> exploiters = new List<GameObject>();
+    public List<GameObject> bloodletters = new List<GameObject>();
+    public List<GameObject> impalers = new List<GameObject>();
+    public List<GameObject> psionics = new List<GameObject>();
+    public List<GameObject> fierySorcerers = new List<GameObject>();
+    public List<GameObject> icySorcerers = new List<GameObject>();
+    public List<GameObject> thunderingSorcerers = new List<GameObject>();
+    public List<GameObject> corrosiveSorcerers = new List<GameObject>();
 
     public void CreateEpicPrefixFeaturesLists()
     {
@@ -33,90 +33,105 @@ public class EpicPrefixFeaturesLists : FeaturesLists
 
     private void CreateTravelers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("TravelersEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("TravelersEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.RunSpeed;
-        travelers.Add(feature);
+        travelers.Add(featureGO);
     }
 
     private void CreateVampiric()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("VampiricEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("VampiricEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.Lifesteal;
-        vampiric.Add(feature);
+        vampiric.Add(featureGO);
     }
 
     private void CreateBerserkers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("BerserkersEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("BerserkersEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.AtkSpeed;
-        berserkers.Add(feature);
+        berserkers.Add(featureGO);
     }
 
     private void CreateExploiters()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("ExploitersEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("ExploitersEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.CritChance;
-        exploiters.Add(feature);
+        exploiters.Add(featureGO);
     }
 
     private void CreateBloodletters()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("BloodlettersEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("BloodlettersEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.CritDamage;
-        bloodletters.Add(feature);
+        bloodletters.Add(featureGO);
     }
 
     private void CreateImpalers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("ImpalersEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("ImpalersEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.PercentArmorPen;
-        impalers.Add(feature);
+        impalers.Add(featureGO);
     }
 
     private void CreatePsionics()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("PsionicsEpicPrefix");
+        GameObject featureGO = CreatePercentStatFeature("PsionicsEpicPrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.PercentMagicPen;
-        psionics.Add(feature);
+        psionics.Add(featureGO);
     }
 
     private void CreateFierySorcerers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("FireDmgOnHit");
+        GameObject featureGO = CreateFlatStatFeature("FireDmgOnHit");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.FireDmgOnHit;
-        fierySorcerers.Add(feature);
-        FlatStatModifierFeature feature2 = CreateFlatStatFeature("FireDmgBonus");
+        fierySorcerers.Add(featureGO);
+        GameObject featureGO2 = CreateFlatStatFeature("FireDmgBonus");
+        PercentStatModifierFeature feature2 = featureGO2.GetComponent<PercentStatModifierFeature>();
         feature2.type = StatTypes.FireDmgBonus;
-        fierySorcerers.Add(feature);
+        fierySorcerers.Add(featureGO2);
     }
 
     private void CreateIcySorcerers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("ColdDmgOnHit");
+        GameObject featureGO = CreateFlatStatFeature("ColdDmgOnHit");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.ColdDmgOnHit;
-        fierySorcerers.Add(feature);
-        FlatStatModifierFeature feature2 = CreateFlatStatFeature("ColdDmgBonus");
+        fierySorcerers.Add(featureGO);
+        GameObject featureGO2 = CreateFlatStatFeature("ColdDmgBonus");
+        PercentStatModifierFeature feature2 = featureGO2.GetComponent<PercentStatModifierFeature>();
         feature2.type = StatTypes.ColdDmgBonus;
-        fierySorcerers.Add(feature);
+        fierySorcerers.Add(featureGO2);
     }
 
     private void CreateThunderingSorcerers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("LightningDmgOnHit");
+        GameObject featureGO = CreateFlatStatFeature("LightningDmgOnHit");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.LightningDmgOnHit;
-        fierySorcerers.Add(feature);
-        FlatStatModifierFeature feature2 = CreateFlatStatFeature("LightningDmgBonus");
+        fierySorcerers.Add(featureGO);
+        GameObject featureGO2 = CreateFlatStatFeature("LightningDmgBonus");
+        PercentStatModifierFeature feature2 = featureGO2.GetComponent<PercentStatModifierFeature>();
         feature2.type = StatTypes.LightningDmgBonus;
-        fierySorcerers.Add(feature);
+        fierySorcerers.Add(featureGO2);
     }
 
     private void CreateCorrosiveSorcerers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("PoisonDmgOnHit");
+        GameObject featureGO = CreateFlatStatFeature("PoisonDmgOnHit");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.PoisonDmgOnHit;
-        fierySorcerers.Add(feature);
-        FlatStatModifierFeature feature2 = CreateFlatStatFeature("PoisonDmgBonus");
+        fierySorcerers.Add(featureGO);
+        GameObject featureGO2 = CreateFlatStatFeature("PoisonDmgBonus");
+        PercentStatModifierFeature feature2 = featureGO2.GetComponent<PercentStatModifierFeature>();
         feature2.type = StatTypes.PoisonDmgBonus;
-        fierySorcerers.Add(feature);
+        fierySorcerers.Add(featureGO2);
     }
 }

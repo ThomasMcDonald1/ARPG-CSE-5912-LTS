@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class RarePrefixFeaturesLists : FeaturesLists
 {
-    public List<Feature> punishers = new List<Feature>();
-    public List<Feature> warlocks = new List<Feature>();
-    public List<Feature> lorekeepers = new List<Feature>();
-    public List<Feature> spellslingers = new List<Feature>();
-    public List<Feature> sages = new List<Feature>();
-    public List<Feature> fieryEnchanters = new List<Feature>();
-    public List<Feature> icyEnchanters = new List<Feature>();
-    public List<Feature> thunderingEnchanters = new List<Feature>();
-    public List<Feature> corrosiveEnchanters = new List<Feature>();
-    public List<Feature> knights = new List<Feature>();
-    public List<Feature> brawlers = new List<Feature>();
-    public List<Feature> wizards = new List<Feature>();
-    public List<Feature> fighters = new List<Feature>();
-    public List<Feature> brutalizers = new List<Feature>();
-    public List<Feature> evokers = new List<Feature>();
+    public List<GameObject> punishers = new List<GameObject>();
+    public List<GameObject> warlocks = new List<GameObject>();
+    public List<GameObject> lorekeepers = new List<GameObject>();
+    public List<GameObject> spellslingers = new List<GameObject>();
+    public List<GameObject> sages = new List<GameObject>();
+    public List<GameObject> fieryEnchanters = new List<GameObject>();
+    public List<GameObject> icyEnchanters = new List<GameObject>();
+    public List<GameObject> thunderingEnchanters = new List<GameObject>();
+    public List<GameObject> corrosiveEnchanters = new List<GameObject>();
+    public List<GameObject> knights = new List<GameObject>();
+    public List<GameObject> brawlers = new List<GameObject>();
+    public List<GameObject> wizards = new List<GameObject>();
+    public List<GameObject> fighters = new List<GameObject>();
+    public List<GameObject> brutalizers = new List<GameObject>();
+    public List<GameObject> evokers = new List<GameObject>();
 
     public void CreateRarePrefixFeaturesLists()
     {
@@ -41,106 +41,121 @@ public class RarePrefixFeaturesLists : FeaturesLists
 
     private void CreatePunishers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("PunishersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("PunishersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.FlatArmorPen;
-        punishers.Add(feature);
+        punishers.Add(featureGO);
     }
 
     private void CreateWarlocks()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("WarlocksRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("WarlocksRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.FlatMagicPen;
-        warlocks.Add(feature);
+        warlocks.Add(featureGO);
     }
 
     private void CreateLorekeepers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("LorekeepersRarePrefix");
+        GameObject featureGO = CreatePercentStatFeature("LorekeepersRarePrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.ExpGainMod;
-        lorekeepers.Add(feature);
+        lorekeepers.Add(featureGO);
     }
 
     private void CreateSpellslingers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("SpellslingersRarePrefix");
+        GameObject featureGO = CreatePercentStatFeature("SpellslingersRarePrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.CastSpeed;
-        spellslingers.Add(feature);
+        spellslingers.Add(featureGO);
     }
 
     private void CreateSages()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("SagesRarePrefix");
+        GameObject featureGO = CreatePercentStatFeature("SagesRarePrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.CooldownReduction;
-        sages.Add(feature);
+        sages.Add(featureGO);
     }
 
     private void CreateFieryEnchanters()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("FieryEnchantersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("FieryEnchantersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.FireDmgOnHit;
-        fieryEnchanters.Add(feature);
+        fieryEnchanters.Add(featureGO);
     }
 
     private void CreateIcyEnchanters()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("IcyEnchantersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("IcyEnchantersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.ColdDmgOnHit;
-        icyEnchanters.Add(feature);
+        icyEnchanters.Add(featureGO);
     }
 
     private void CreateThunderingEnchanters()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("ThunderingEnchantersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("ThunderingEnchantersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.LightningDmgOnHit;
-        thunderingEnchanters.Add(feature);
+        thunderingEnchanters.Add(featureGO);
     }
 
     private void CreateCorrosiveEnchanters()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("CorrosiveEnchantersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("CorrosiveEnchantersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PoisonDmgOnHit;
-        corrosiveEnchanters.Add(feature);
+        corrosiveEnchanters.Add(featureGO);
     }
 
     private void CreateKnights()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("KnightsRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("KnightsRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.Armor;
-        knights.Add(feature);
+        knights.Add(featureGO);
     }
 
     private void CreateBrawlers()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("BrawlersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("BrawlersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.MaxHP;
-        brawlers.Add(feature);
+        brawlers.Add(featureGO);
     }
 
     private void CreateWizards()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("WizardsRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("WizardsRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.MaxMana;
-        wizards.Add(feature);
+        wizards.Add(featureGO);
     }
 
     private void CreateFighters()
     {
-        FlatStatModifierFeature feature = CreateFlatStatFeature("FightersRarePrefix");
+        GameObject featureGO = CreateFlatStatFeature("FightersRarePrefix");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PHYATK;
-        fighters.Add(feature);
+        fighters.Add(featureGO);
     }
 
     private void CreateBrutalizers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("BrutalizersRarePrefix");
+        GameObject featureGO = CreatePercentStatFeature("BrutalizersRarePrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.PhysDmgBonus;
-        brutalizers.Add(feature);
+        brutalizers.Add(featureGO);
     }
 
     private void CreateEvokers()
     {
-        PercentStatModifierFeature feature = CreatePercentStatFeature("EvokersRarePrefix");
+        GameObject featureGO = CreatePercentStatFeature("EvokersRarePrefix");
+        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         feature.type = StatTypes.MagDmgBonus;
-        evokers.Add(feature);
+        evokers.Add(featureGO);
     }
 }
