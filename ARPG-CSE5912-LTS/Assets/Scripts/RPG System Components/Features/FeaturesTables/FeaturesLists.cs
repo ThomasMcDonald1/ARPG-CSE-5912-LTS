@@ -7,16 +7,16 @@ public class FeaturesLists: MonoBehaviour
     public GameObject CreateFlatStatFeature(string name)
     {
         GameObject featureGO = new GameObject(name);
+        featureGO.transform.SetParent(gameObject.transform);
         featureGO.AddComponent<FlatStatModifierFeature>();
-        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         return featureGO;
     }
 
     public GameObject CreatePercentStatFeature(string name)
     {
         GameObject featureGO = new GameObject(name);
+        featureGO.transform.SetParent(gameObject.transform);
         featureGO.AddComponent<PercentStatModifierFeature>();
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
         return featureGO;
     }
 }

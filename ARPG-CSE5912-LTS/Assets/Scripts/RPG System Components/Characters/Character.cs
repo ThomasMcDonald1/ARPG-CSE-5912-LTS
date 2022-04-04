@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-
 //The most fundamental level of defining a character. Encompasses Player character, NPCs, and enemies.
 public abstract class Character : MonoBehaviour
 {

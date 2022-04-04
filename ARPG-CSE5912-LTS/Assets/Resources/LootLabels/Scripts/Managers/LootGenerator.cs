@@ -91,19 +91,19 @@ namespace LootLabels {
         // <= 80 Rare Item
         // <= 95 Epic Item
         // <= 100 Alpha Item
-        public virtual Rarity SelectRandomRarity(Type type) {
+        public virtual Rarity SelectRandomRarity(LootType type) {
            // int rarityCount = System.Enum.GetNames(typeof(Rarity)).Length;
             
             Rarity rare = Rarity.Poor;
             switch (type)
             {
-                case Type.Poor:
+                case LootType.Poor:
                     if (Random.value < 0.1)
                     {
                         rare = Rarity.Normal;
                     };
                     break;
-                case Type.Normal:
+                case LootType.Normal:
                     if (Random.value < 0.80)
                     {
                         rare = Rarity.Normal;
@@ -113,7 +113,7 @@ namespace LootLabels {
                         rare = Rarity.Rare;
                     }
                     break;
-                case Type.Rare:
+                case LootType.Rare:
                     if (Random.value < 0.85)
                     {
                         rare = Rarity.Rare;
@@ -127,7 +127,7 @@ namespace LootLabels {
                         rare = Rarity.Normal;
                     }
                     break;
-                case Type.Epic:
+                case LootType.Epic:
                     if (Random.value < 0.98)
                     {
                         rare = Rarity.Epic;
@@ -137,7 +137,7 @@ namespace LootLabels {
                         rare = Rarity.Legendary;
                     }
                     break;
-                case Type.Legendary:
+                case LootType.Legendary:
                     rare = Rarity.Legendary;
                     break;
                 //case Type.SuperUltraHyperExPlusAlpha:
@@ -203,7 +203,7 @@ namespace LootLabels {
         /// Create a randomized gear item
         /// </summary>
         /// <returns></returns>
-        public BaseGear CreateGear(Type type) {
+        public BaseGear CreateGear(LootType type) {
             Debug.Log("Create Gear with GetModelName has been run");
             Rarity itemRarity = SelectRandomRarity(type);
             GearTypes gearType = SelectRandomGearType();
