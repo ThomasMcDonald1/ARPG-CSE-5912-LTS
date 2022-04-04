@@ -25,7 +25,7 @@ public class Lorekeeper : NPC
     {
         QuestGiver.QuestCompleteEvent -= OnQuestComplete;
     }
-    private void OnQuestComplete(object sender, EventArgs e)
+    private void OnQuestComplete(object sender, InfoEventArgs<Quest> e)
     {
         NextStory();
     }
