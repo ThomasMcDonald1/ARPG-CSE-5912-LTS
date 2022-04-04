@@ -19,8 +19,8 @@ public class Equipment : Ite
     public int defendRate;
     public int defense;
     public int evasion;
-    //All equipment has the potential to have up to 5 additional random bonuses rolled when the equipment is created
-    public List<Feature> features;
+    public PrefixSuffix prefix;
+    public PrefixSuffix suffix;
 
     // Start is called before the first frame update
     public override void Use()
@@ -35,4 +35,4 @@ public class Equipment : Ite
         RemoveFromInventory();
     }
 }
-public enum EquipmentSlot { Head, Chest, Legs, MainHand, OffHand, Feet }
+public enum EquipmentSlot { MainHand, OffHand, Head, Chest, Feet, Jewelry }

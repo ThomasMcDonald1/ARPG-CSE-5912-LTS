@@ -32,7 +32,6 @@
         Shield,
         Helm,
         Armor,
-        Legs,
         Boots,
         Jewelry,
         HealthPotion,

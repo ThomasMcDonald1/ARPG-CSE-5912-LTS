@@ -15,6 +15,8 @@ namespace LootLabels
 
         LootGenerator lootGenerator;
         RarityColors rarityColors;
+        [SerializeField] GameObject featureTablesGeneratorGO;
+        FeatureTablesGenerator featureTablesGenerator;
 
         public RarityColors RarityColors
         {
@@ -59,6 +61,7 @@ namespace LootLabels
 
             LootGenerator = GetComponent<LootGenerator>();
             RarityColors = GetComponent<RarityColors>();
+            featureTablesGenerator = GetComponent<FeatureTablesGenerator>();
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
@@ -162,6 +165,18 @@ namespace LootLabels
                     {
                         Ite item = droppedItem.GetComponent<ItemPickup>().item;
                         droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        if (potion != null)
+                            Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        Equipment equipment = (Equipment)item;
+                        if (equipment != null)
+                        {
+                            PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.prefix = prefix;
+                            PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.suffix = suffix;
+                            gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
+                        }
                         Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;

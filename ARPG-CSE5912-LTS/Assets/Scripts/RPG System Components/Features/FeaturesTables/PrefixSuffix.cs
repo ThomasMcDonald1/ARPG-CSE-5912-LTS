@@ -5,12 +5,12 @@ using UnityEngine;
 public class PrefixSuffix
 {
     public string Name;
-    public List<Feature> Features;
+    public List<GameObject> FeaturesGOs;
     public List<LootLabels.GearTypes> GearTypeRequirements;
-    public PrefixSuffix(string name, List<Feature> features, List<LootLabels.GearTypes> gearTypeRequirements)
+    public PrefixSuffix(string name, List<GameObject> featuresGOs, List<LootLabels.GearTypes> gearTypeRequirements)
     {
         Name = name;
-        Features = features;
+        FeaturesGOs = featuresGOs;
         GearTypeRequirements = gearTypeRequirements;
     }
 }
