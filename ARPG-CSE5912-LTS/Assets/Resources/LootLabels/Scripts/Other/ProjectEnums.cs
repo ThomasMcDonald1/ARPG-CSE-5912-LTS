@@ -31,7 +31,7 @@
         TwoHandedSword,
         Shield,
         Helm,
-        Chest,
+        Armor,
         Boots,
         Jewelry,
         HealthPotion,
