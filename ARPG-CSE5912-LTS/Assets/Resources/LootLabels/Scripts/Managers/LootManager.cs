@@ -174,8 +174,9 @@ namespace LootLabels
                             Potion potion = (Potion)item;
                             Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         }                        
-                        else
+                        else if(item.type != Ite.ItemType.utility)
                         {
+                            Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
