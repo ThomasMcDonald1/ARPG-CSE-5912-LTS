@@ -1,11 +1,10 @@
+using ARPG.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace ARPG.Combat
 {
-
-
-    public class SageOfSixPaths : Enemy
+    public class SageOfSixPaths : EnemyController
     {
         //if sage can see, all of its paths can see, if one path can see, sage can see
         public bool canSee = false;
@@ -53,6 +52,11 @@ namespace ARPG.Combat
                     }
                 }
             }
+        }
+
+        public override string GetClassTypeName()
+        {
+            return "EnemySage";
         }
     }
 }

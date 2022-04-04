@@ -29,7 +29,7 @@ public class EquipmentUI : MonoBehaviour
         {
             if (manager.currentEquipment[i] != null)
             {
-                Debug.Log("i is " + i);
+                //Debug.Log("i is " + i);
                 slots[i].AddItem(manager.currentEquipment[i]);
 
             }

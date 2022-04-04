@@ -50,7 +50,7 @@
         Elite,
         Boss,
     }
-    public enum Type
+    public enum LootType
     {
         Poor,
         Normal,

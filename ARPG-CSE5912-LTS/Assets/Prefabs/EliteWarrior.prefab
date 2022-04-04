@@ -68367,7 +68367,7 @@ GameObject:
   - component: {fileID: 4529465453534684749}
   - component: {fileID: 6672918121026197529}
   - component: {fileID: 5337932039527175977}
-  - component: {fileID: 3381272479864300234}
+  - component: {fileID: 1948127661467568366}
   m_Layer: 8
   m_Name: EliteWarrior
   m_TagString: Untagged
@@ -68585,7 +68585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightThis: 0
   outline: {fileID: 0}
-  mouseoverColor: {r: 1, g: 0.81960785, b: 0.3529412, a: 1}
+  mouseoverColor: {r: 0.23137257, g: 0.23137257, b: 0.23137257, a: 1}
 --- !u!114 &5337932039527175977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68598,7 +68598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3381272479864300234
+--- !u!114 &1948127661467568366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68607,7 +68607,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8534128318987869680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b5f35511cbb10146a6226b4a01663e7, type: 3}
+  m_Script: {fileID: 11500000, guid: d08ff6ae5c0c7ec4a82b2c6b579d6dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
@@ -68619,11 +68619,13 @@ MonoBehaviour:
   smooth: 0
   yVelocity: 0
   NPCInteractionRange: 0
-  basicAttackAbility: {fileID: 0}
+  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
   baseRunSpeed: 7
-  target: {fileID: 0}
   lootSource: 1
-  type: 2
+  lootType: 2
+  enemyInAOEAbilityTargetSelectionMode: 0
+  enemyInSingleTargetAbilitySelectionMode: 0
+  target: {fileID: 0}
 --- !u!1 &8534128319883724304
 GameObject:
   m_ObjectHideFlags: 0

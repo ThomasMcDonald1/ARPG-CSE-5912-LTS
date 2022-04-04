@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using ARPG.Combat;
 using UnityEngine.InputSystem;
-
 
 //The most fundamental level of defining a character. Encompasses Player character, NPCs, and enemies.
 public abstract class Character : MonoBehaviour
@@ -16,6 +16,7 @@ public abstract class Character : MonoBehaviour
 
     public GameplayStateController gameplayStateController;
     PlayerAbilityController playerAbilityController;
+    EnemyAbilityController enemyAbilityController;
     [HideInInspector] public bool abilityQueued = false;
     [HideInInspector] public Stats stats;
 
@@ -51,7 +52,7 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        //Debug.Log(abilitiesKnown);
     }
 
     private void OnEnable()
@@ -59,8 +60,8 @@ public abstract class Character : MonoBehaviour
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
         PlayerAbilityController.PlayerSelectedGroundTargetLocationEvent += OnGroundTargetSelected;
         PlayerAbilityController.PlayerSelectedSingleTargetEvent += OnSingleTargetSelected;
-        //EnemyAbilityControlller.EnemySelectedGroundTargetLocationEvent += OnGroundTargetSelected;
-        //EnemyAbilityController.EnemySelectedSingleTargetEvent += OnSingleTargetSelected;
+        EnemyAbilityController.EnemySelectedGroundTargetLocationEvent += OnGroundTargetSelected;
+        EnemyAbilityController.EnemySelectedSingleTargetEvent += OnSingleTargetSelected;
     }
     #endregion
     #region Events
@@ -74,6 +75,7 @@ public abstract class Character : MonoBehaviour
     {
         float distFromCaster = Vector3.Distance(e.info.hit.point, e.info.caster.transform.position);
         float distToTravel = distFromCaster - e.info.abilityRange.range;
+
         if (distFromCaster > e.info.abilityRange.range)
         {
             abilityQueued = true;
@@ -109,13 +111,12 @@ public abstract class Character : MonoBehaviour
         abilityCast.caster = this;
         abilityCast.abilityCooldown.GetReducedCooldown(abilityCast);
         abilityCast.castType.GetReducedCastTime(abilityCast);
-        bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(abilityCast.caster);
-
-        if (abilityCanBePerformed)
+        if (this is Player)
         {
-            if (abilityCast.abilityRequiresCursorSelection)
+            bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+            if (abilityCanBePerformed)
             {
-                if (this is Player)
+                if (abilityCast.abilityRequiresCursorSelection)
                 {
                     Player player = (Player)this;
                     player.StopAllCoroutines();
@@ -126,23 +127,24 @@ public abstract class Character : MonoBehaviour
                 }
                 else
                 {
-                    //Enemy enemy = (Enemy)this;
-                    //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
-
-                    //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
-                    //1a) select target character if it's a character-targeting ability
-                    //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
-                    
+                    CastAbilityWithoutSelection(abilityCast);
                 }
             }
             else
             {
-                CastAbilityWithoutSelection(abilityCast);
+                //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
             }
-        }      
+        }
         else
         {
-            //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
+            Enemy enemy = (Enemy)this;
+            enemy.StopAllCoroutines();
+            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
+
+            //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
+            //1a) select target character if it's a character-targeting ability
+            //1b) select a point on the terrain that is centered on the player character or some enemies otherwise
         }
     }
 
@@ -151,6 +153,7 @@ public abstract class Character : MonoBehaviour
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
         abilityCast.basicAttackTarget = target;
+        //Debug.Log("Basic attack target stored in QueueBasicAttack: " + abilityCast.basicAttackTarget);
         CastAbilityWithoutSelection(abilityCast);
     }
 
@@ -174,8 +177,11 @@ public abstract class Character : MonoBehaviour
 
     public void GetColliders(AbilityCast abilityCast)
     {
-        List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
-        ApplyAbilityEffects(charactersCollided, abilityCast);
+        if (this == abilityCast.caster)
+        {
+            List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
+            ApplyAbilityEffects(charactersCollided, abilityCast);
+        }
     }
 
     public void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)

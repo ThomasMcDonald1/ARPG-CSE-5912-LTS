@@ -3,27 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ARPG.Combat;
 
 public class SpecifyAbilityArea : BaseAbilityArea
 {
     Player player;
+    Enemy enemy;
     int groundLayerMask = 1 << 6;
 
     private void Awake()
     {
         player = GetComponentInParent<Player>();
+        enemy = GetComponentInParent<Enemy>();
     }
 
     private void FixedUpdate()
     {
         if (abilityAreaNeedsShown)
         {
-            //Get the point upon which to center the indicator
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if (Physics.Raycast(ray, out RaycastHit hit, groundLayerMask))
+            if (player != null)
             {
-                player.gameplayStateController.aoeReticleCylinder.transform.position = hit.point;
+                //Get the point upon which to center the indicator
+                Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+                if (Physics.Raycast(ray, out RaycastHit hit, groundLayerMask))
+                {
+                    player.gameplayStateController.aoeReticleCylinder.transform.position = hit.point;
+                }
+            }
+            else
+            {
+                Ray ray = new Ray(enemy.AttackTarget.position + Vector3.up, Vector3.down); //now enemy don't need to show, but maybe it will useful for future
             }
         }
     }
@@ -47,6 +57,7 @@ public class SpecifyAbilityArea : BaseAbilityArea
         abilityCast.charactersAffected = characters;
         return characters;
     }
+
 
     public override void DisplayAOEArea()
     {

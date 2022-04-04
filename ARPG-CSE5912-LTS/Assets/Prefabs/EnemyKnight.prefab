@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 6360598446303299822}
   - component: {fileID: 3008176755271037925}
   - component: {fileID: 6063802580932386307}
-  - component: {fileID: 4813988313856835231}
+  - component: {fileID: 3464978647597197707}
   m_Layer: 8
   m_Name: EnemyKnight
   m_TagString: Untagged
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4813988313856835231
+--- !u!114 &3464978647597197707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8032445643060167858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213bdd308468fd4468c911ec9b0a7364, type: 3}
+  m_Script: {fileID: 11500000, guid: 1600f51fb1e1d1e4a9176f2349d2d912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
@@ -848,11 +848,13 @@ MonoBehaviour:
   smooth: 0
   yVelocity: 0
   NPCInteractionRange: 0
-  basicAttackAbility: {fileID: 0}
+  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
   baseRunSpeed: 7
-  target: {fileID: 0}
   lootSource: 0
-  type: 1
+  lootType: 1
+  enemyInAOEAbilityTargetSelectionMode: 0
+  enemyInSingleTargetAbilitySelectionMode: 0
+  target: {fileID: 0}
 --- !u!1 &8032445643484962512
 GameObject:
   m_ObjectHideFlags: 0

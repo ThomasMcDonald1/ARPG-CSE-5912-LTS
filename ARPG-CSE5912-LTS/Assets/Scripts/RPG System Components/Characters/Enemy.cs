@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using LootLabels;
 
 namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
         Animator animator;
+        [SerializeField] LootSource lootSource;
+        [SerializeField] LootType lootType;
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
@@ -17,6 +20,10 @@ namespace ARPG.Combat
         protected virtual float Speed { get; set; }
 
         public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
+
+        public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
+        public virtual float cooldownTimer { get; set; }
+
 
         private void Awake()
         {
@@ -26,9 +33,14 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
+            
+            //Debug.Log("enemy is" + gameObject.name);
+            //Debug.Log(abilitiesKnown);
         }
         protected override void Update()
         {
+
+            //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
@@ -71,10 +83,28 @@ namespace ARPG.Combat
                 if (angle < SightRange && !InStopRange())
                 {
                     RunToPlayer();
+                    /*
+                    if (EnemyAttackTypeList != null)
+                    {
+                        if (AttackTarget != null)
+                        {
+                            for (int i = 0; i++; i < EnemyAttackTypeList.Count)
+                            {
+                                if (EnemyAttackTypeList[i].cooldownTimer == 0)
+                                {
+                                    ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    */
+                    
                 }
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
+
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
                         GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
@@ -139,7 +169,7 @@ namespace ARPG.Combat
         {
             return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
         }
-        public  bool InStopRange()
+        public bool InStopRange()
         {
             return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
         }
@@ -147,12 +177,12 @@ namespace ARPG.Combat
         // From animation Event
         public void Hit()
         {
-                float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
-                if (distance < BodyRange)
-                {
-                    AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                    //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
-                }
+            float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
+            if (distance < BodyRange)
+            {
+                AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
+            }
         }
 
         // From animation Event
@@ -171,14 +201,14 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-                EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
-                StartCoroutine(Die(10));
+            EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
+            StartCoroutine(Die(10));
+            LootManager.singleton.DropLoot(lootSource, transform, lootType);
         }
         IEnumerator Die(int seconds)
         {
             yield return new WaitForSeconds(seconds);
             Destroy(gameObject);
-
         }
         public void ProduceItem()
         {
@@ -188,6 +218,29 @@ namespace ARPG.Combat
         public override Type GetCharacterType()
         {
             return typeof(Enemy);
+        }
+
+        private void ChooseAttackType(Ability AttackType)
+        {
+
+            /*
+            switch (AttackType)
+            {
+                case 0:
+                    //ability list 0
+                    break;
+                case 1:
+                    //ability list 1
+                    break;
+                case 2:
+                    //basic attack, last choice
+                    GetComponent<Animator>().SetTrigger("AttackTrigger");
+                    break;
+                default:
+                    break;
+
+            }
+            */
         }
     }
     //public void Cancel()
