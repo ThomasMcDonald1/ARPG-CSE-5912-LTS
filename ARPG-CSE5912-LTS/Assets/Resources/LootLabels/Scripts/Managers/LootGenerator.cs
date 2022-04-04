@@ -38,10 +38,12 @@ namespace LootLabels {
         /// <returns></returns>
         public int CalculateLootAmount(LootSource lootSource) {
             switch (lootSource) {
-                case LootSource.Lesser:
-                    return Random.Range(2, 2);
-                case LootSource.Epic:
-                    return Random.Range(9, 11);
+                case LootSource.Normal:
+                    return Random.Range(2, 3);
+                case LootSource.Elite:
+                    return Random.Range(4, 6);
+                case LootSource.Boss:
+                    return Random.Range(7, 10);
                 default:
                     Debug.Log("no lootsource");
                     return 0;
@@ -138,9 +140,9 @@ namespace LootLabels {
                 case Type.Legendary:
                     rare = Rarity.Legendary;
                     break;
-                case Type.SuperUltraHyperExPlusAlpha:
-                    rare = Rarity.SuperUltraHyperExPlusAlpha;
-                    break;
+                //case Type.SuperUltraHyperExPlusAlpha:
+                //    rare = Rarity.SuperUltraHyperExPlusAlpha;
+                //    break;
                 default:
                     rare = Rarity.Poor;
                     break;
@@ -164,7 +166,7 @@ namespace LootLabels {
         /// </summary>
         /// <param name="itemRarity"></param>
         /// <returns></returns>
-        public double RollAmountOfStats(Rarity itemRarity) {
+        public double RollAmountOfStats(Rarity itemRarity, Ite item, GearTypes gearType) {
             double statAmount = 1;
 
             switch (itemRarity)
@@ -182,14 +184,14 @@ namespace LootLabels {
                     statAmount = 4;
                     break;
                 case Rarity.Legendary:
-                    statAmount = 5;
+                    statAmount = 1;
                     break;
                 //case Rarity.Set:
                 //    statAmount = 6;
                     //break;
-                case Rarity.SuperUltraHyperExPlusAlpha:
-                    statAmount = 7;
-                    break;
+                //case Rarity.SuperUltraHyperExPlusAlpha:
+                //    statAmount = 7;
+                //    break;
                 default:
                     break;
             }
@@ -205,7 +207,7 @@ namespace LootLabels {
             Debug.Log("Create Gear with GetModelName has been run");
             Rarity itemRarity = SelectRandomRarity(type);
             GearTypes gearType = SelectRandomGearType();
-            string modelName = ResourceManager.singleton.GetModelName(gearType);
+            string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 
             BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);

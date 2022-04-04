@@ -88,8 +88,9 @@ public class EquipManager : MonoBehaviour
         }
 
         // Activate the equipment's features
-        foreach (Feature feature in newItem.features)
+        foreach (GameObject featureGO in newItem.prefix.FeaturesGOs)
         {
+            Feature feature = featureGO.GetComponent<Feature>();
             Debug.Log(feature.name);
             feature.Activate(gameObject);
         }
@@ -126,8 +127,9 @@ public class EquipManager : MonoBehaviour
             currentEquipment[slotIndex] = null;
 
             // Dectivate the equipment's features
-            foreach (Feature feature in oldItem.features)
+            foreach (GameObject featureGO in oldItem.prefix.FeaturesGOs)
             {
+                Feature feature = featureGO.GetComponent<Feature>();
                 feature.Deactivate();
             }
 
