@@ -174,12 +174,12 @@ namespace ARPG.Combat
         // From animation Event
         public void Hit()
         {
-                float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
-                if (distance < BodyRange)
-                {
-                    AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                    //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
-                }
+            //float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
+            //if (distance < BodyRange)
+            //{
+            //    AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+            //    QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
+            //}
         }
 
         // From animation Event
@@ -198,14 +198,13 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-                EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
-                StartCoroutine(Die(10));
+            EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
+            StartCoroutine(Die(10));
         }
         IEnumerator Die(int seconds)
         {
             yield return new WaitForSeconds(seconds);
             Destroy(gameObject);
-
         }
         public void ProduceItem()
         {

@@ -6,7 +6,6 @@ using UnityEngine.AI;
 using ARPG.Combat;
 using UnityEngine.InputSystem;
 
-
 //The most fundamental level of defining a character. Encompasses Player character, NPCs, and enemies.
 public abstract class Character : MonoBehaviour
 {

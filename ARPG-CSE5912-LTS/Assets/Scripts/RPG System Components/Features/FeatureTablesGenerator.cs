@@ -19,6 +19,7 @@ public class FeatureTablesGenerator : MonoBehaviour
     public void Awake()
     {
         prefixTables = GetComponent<PrefixTables>();
+        suffixTables = GetComponent<SuffixTables>();
         rarePrefixFeaturesLists = GetComponent<RarePrefixFeaturesLists>();
         epicPrefixFeaturesLists = GetComponent<EpicPrefixFeaturesLists>();
         legendaryPrefixFeaturesLists = GetComponent<LegendaryPrefixFeaturesLists>();
@@ -33,10 +34,14 @@ public class FeatureTablesGenerator : MonoBehaviour
         armorsAndShieldReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Armor, LootLabels.GearTypes.Shield };
         allReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword, LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Armor, LootLabels.GearTypes.Shield, LootLabels.GearTypes.Jewelry };
         rarePrefixFeaturesLists.CreateRarePrefixFeaturesLists();
+        epicPrefixFeaturesLists.CreateEpicPrefixFeaturesLists();
+        legendaryPrefixFeaturesLists.CreateLegendaryPrefixFeaturesLists();
+        rareAndEpicSuffixFeaturesLists.CreateRareOrEpicSuffixFeaturesLists();
+        legendarySuffixFeaturesLists.CreateLegendarySuffixFeaturesLists();
         CreateRarePrefixTable();
-        CreateRareAndEpicSuffixTable();
         CreateEpicPrefixTable();
         CreateLegendaryPrefixTable();
+        CreateRareAndEpicSuffixTable();
         CreateLegendarySuffixTable();
     }
 
