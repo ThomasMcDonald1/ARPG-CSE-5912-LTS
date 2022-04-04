@@ -48,11 +48,16 @@ public abstract class Character : MonoBehaviour
         playerAbilityController = GetComponent<PlayerAbilityController>(); 
         smooth = 0.3f;
         yVelocity = 0.0f;
+        if (this is Enemy)
+        {
+            Debug.Log("enemy is" + gameObject.name);
+            Debug.Log(abilitiesKnown);
+        }
     }
 
     protected virtual void Update()
     {
-        Debug.Log(abilitiesKnown);
+        
     }
 
     private void OnEnable()

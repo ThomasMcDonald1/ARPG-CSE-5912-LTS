@@ -30,9 +30,14 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
+            
+            //Debug.Log("enemy is" + gameObject.name);
+            //Debug.Log(abilitiesKnown);
         }
         protected override void Update()
         {
+
+            //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
