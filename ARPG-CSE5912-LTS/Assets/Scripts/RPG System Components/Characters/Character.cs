@@ -153,6 +153,7 @@ public abstract class Character : MonoBehaviour
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
         abilityCast.basicAttackTarget = target;
+        //Debug.Log("Basic attack target stored in QueueBasicAttack: " + abilityCast.basicAttackTarget);
         CastAbilityWithoutSelection(abilityCast);
     }
 

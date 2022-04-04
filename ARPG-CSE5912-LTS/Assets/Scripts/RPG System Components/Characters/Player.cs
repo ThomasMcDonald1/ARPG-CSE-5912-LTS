@@ -223,6 +223,7 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
+            //Debug.Log("AttackTarget: " + AttackTarget.name);
             QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
         }
         GetComponent<Animator>().SetBool("StopAttack", true);
