@@ -46,8 +46,9 @@
 
     //assign to objects that drop loot to determine loot amounts
     public enum LootSource {
-        Lesser,
-        Epic,
+        Normal,
+        Elite,
+        Boss,
     }
     public enum Type
     {
@@ -57,7 +58,7 @@
         Epic,
         Legendary,
       //  Set,
-        SuperUltraHyperExPlusAlpha,
+       // SuperUltraHyperExPlusAlpha,
     }
     //The rarity of your objects, also used to determine label color
     public enum Rarity {
@@ -67,7 +68,7 @@
         Epic,
         Legendary,
        // Set,
-        SuperUltraHyperExPlusAlpha,
+       // SuperUltraHyperExPlusAlpha,
     }
 
     /// <summary>
