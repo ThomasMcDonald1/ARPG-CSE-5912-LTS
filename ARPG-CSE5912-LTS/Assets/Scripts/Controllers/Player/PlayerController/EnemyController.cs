@@ -4,7 +4,8 @@ using ARPG.Combat;
 
 namespace ARPG.Core
 {
-    public class EnemyController : MonoBehaviour
+    //public class EnemyController : EnemyAbilityController
+    public class EnemyController : Enemy
     {
         public EnemyTarget target;
         private string classTypeName;
