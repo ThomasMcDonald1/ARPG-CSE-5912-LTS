@@ -24,9 +24,9 @@ public class FeatureTablesGenerator : MonoBehaviour
     private void Start()
     {
         weaponsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword };
-        armorsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs };
-        armorsAndShieldReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield };
-        allReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword, LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Chest, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield, LootLabels.GearTypes.Jewelry };
+        armorsReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Armor, LootLabels.GearTypes.Legs };
+        armorsAndShieldReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Armor, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield };
+        allReqList = new List<LootLabels.GearTypes>() { LootLabels.GearTypes.Dagger, LootLabels.GearTypes.TwoHandedSword, LootLabels.GearTypes.Sword, LootLabels.GearTypes.Helm, LootLabels.GearTypes.Boots, LootLabels.GearTypes.Armor, LootLabels.GearTypes.Legs, LootLabels.GearTypes.Shield, LootLabels.GearTypes.Jewelry };
         rarePrefixFeaturesLists.CreateRarePrefixFeaturesLists();
         CreateRarePrefixTable();
         CreateRareSuffixTable();

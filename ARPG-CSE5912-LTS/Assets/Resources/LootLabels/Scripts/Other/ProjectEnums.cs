@@ -31,7 +31,7 @@
         TwoHandedSword,
         Shield,
         Helm,
-        Chest,
+        Armor,
         Legs,
         Boots,
         Jewelry,

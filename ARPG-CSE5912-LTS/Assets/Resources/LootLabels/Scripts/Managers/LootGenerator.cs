@@ -164,7 +164,7 @@ namespace LootLabels {
         /// </summary>
         /// <param name="itemRarity"></param>
         /// <returns></returns>
-        public double RollAmountOfStats(Rarity itemRarity) {
+        public double RollAmountOfStats(Rarity itemRarity, Ite item, GearTypes gearType) {
             double statAmount = 1;
 
             switch (itemRarity)
@@ -182,7 +182,7 @@ namespace LootLabels {
                     statAmount = 4;
                     break;
                 case Rarity.Legendary:
-                    statAmount = 5;
+                    statAmount = 1;
                     break;
                 //case Rarity.Set:
                 //    statAmount = 6;
@@ -205,7 +205,7 @@ namespace LootLabels {
             Debug.Log("Create Gear with GetModelName has been run");
             Rarity itemRarity = SelectRandomRarity(type);
             GearTypes gearType = SelectRandomGearType();
-            string modelName = ResourceManager.singleton.GetModelName(gearType);
+            string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 
             BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
