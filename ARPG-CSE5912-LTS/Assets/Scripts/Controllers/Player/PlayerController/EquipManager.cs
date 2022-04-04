@@ -53,6 +53,10 @@ public class EquipManager : MonoBehaviour
                     break;
 
             }
+            if (nu != null)
+            {
+                Destroy(nu);
+            }
         }
         currentEquipment[slotIndex] = newItem;
         if(newItem.type == Ite.ItemType.weapon)
@@ -87,6 +91,9 @@ public class EquipManager : MonoBehaviour
             }
         }
 
+        Debug.Log("newItem is " + newItem);
+        Debug.Log("prefix is " + newItem.prefix);
+        Debug.Log("FeaturesGo is " + newItem.prefix.FeaturesGOs);
         // Activate the equipment's features
         foreach (GameObject featureGO in newItem.prefix.FeaturesGOs)
         {

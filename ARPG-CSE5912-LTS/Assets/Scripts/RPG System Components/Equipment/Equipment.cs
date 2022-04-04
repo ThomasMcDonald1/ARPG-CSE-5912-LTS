@@ -19,13 +19,13 @@ public class Equipment : Ite
     public int defendRate;
     public int defense;
     public int evasion;
-    public PrefixSuffix prefix;
+    [SerializeField] public PrefixSuffix prefix;
     public PrefixSuffix suffix;
 
     // Start is called before the first frame update
     public override void Use()
     {
-        Debug.Log("equipment is " + equipment);
+        //Debug.Log("equipment is " + equipment);
         base.Use();
         EquipManager.instance.Equip(this);
         if (this.equipment != null)
