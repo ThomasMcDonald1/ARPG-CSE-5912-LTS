@@ -53,7 +53,7 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log(abilitiesKnown);
+        //Debug.Log(abilitiesKnown);
     }
 
     private void OnEnable()
