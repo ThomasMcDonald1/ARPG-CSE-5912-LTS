@@ -35,9 +35,9 @@ namespace LootLabels {
                 //case Rarity.Set:
                 //    rarityColor = Set;
                 //    break;
-                case Rarity.SuperUltraHyperExPlusAlpha:
-                    rarityColor = Ultra;
-                    break;
+                //case Rarity.SuperUltraHyperExPlusAlpha:
+                //    rarityColor = Ultra;
+                //    break;
                 default:
                     rarityColor = Color.white;
                     break;

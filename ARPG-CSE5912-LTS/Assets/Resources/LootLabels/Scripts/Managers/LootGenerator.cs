@@ -38,10 +38,12 @@ namespace LootLabels {
         /// <returns></returns>
         public int CalculateLootAmount(LootSource lootSource) {
             switch (lootSource) {
-                case LootSource.Lesser:
-                    return Random.Range(2, 2);
-                case LootSource.Epic:
-                    return Random.Range(9, 11);
+                case LootSource.Normal:
+                    return Random.Range(2, 3);
+                case LootSource.Elite:
+                    return Random.Range(4, 6);
+                case LootSource.Boss:
+                    return Random.Range(7, 10);
                 default:
                     Debug.Log("no lootsource");
                     return 0;
@@ -138,9 +140,9 @@ namespace LootLabels {
                 case Type.Legendary:
                     rare = Rarity.Legendary;
                     break;
-                case Type.SuperUltraHyperExPlusAlpha:
-                    rare = Rarity.SuperUltraHyperExPlusAlpha;
-                    break;
+                //case Type.SuperUltraHyperExPlusAlpha:
+                //    rare = Rarity.SuperUltraHyperExPlusAlpha;
+                //    break;
                 default:
                     rare = Rarity.Poor;
                     break;
@@ -187,9 +189,9 @@ namespace LootLabels {
                 //case Rarity.Set:
                 //    statAmount = 6;
                     //break;
-                case Rarity.SuperUltraHyperExPlusAlpha:
-                    statAmount = 7;
-                    break;
+                //case Rarity.SuperUltraHyperExPlusAlpha:
+                //    statAmount = 7;
+                //    break;
                 default:
                     break;
             }
