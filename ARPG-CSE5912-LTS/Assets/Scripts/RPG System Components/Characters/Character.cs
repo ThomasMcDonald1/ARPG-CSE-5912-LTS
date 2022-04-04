@@ -177,8 +177,11 @@ public abstract class Character : MonoBehaviour
 
     public void GetColliders(AbilityCast abilityCast)
     {
-        List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
-        ApplyAbilityEffects(charactersCollided, abilityCast);
+        if (this == abilityCast.caster)
+        {
+            List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
+            ApplyAbilityEffects(charactersCollided, abilityCast);
+        }
     }
 
     public void ApplyAbilityEffects(List<Character> targets, AbilityCast abilityCast)
