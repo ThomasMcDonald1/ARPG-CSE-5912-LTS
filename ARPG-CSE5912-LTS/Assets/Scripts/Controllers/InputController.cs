@@ -41,6 +41,7 @@ public class InputController : MonoBehaviour
     public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementLeftClickedEvent;
     public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementRightClickedEvent;
     public static event EventHandler<InfoEventArgs<int>> OpenPassiveTreeEvent;
+    public static event EventHandler<InfoEventArgs<List<RaycastResult>>> UIElementHoveredEvent;
 
     // Test mouse wheel zooming
     public static event EventHandler<InfoEventArgs<float>> DetectMouseScrollWheelEvent;
@@ -92,6 +93,11 @@ public class InputController : MonoBehaviour
         {
             List<RaycastResult> results = GetUIElementsClicked();
             UIElementRightClickedEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+        }
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            List<RaycastResult> results = GetUIElementsClicked();
+            UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
         }
     }
 
