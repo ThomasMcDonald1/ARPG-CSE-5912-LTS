@@ -322,16 +322,10 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
-        //figure out if the raycast results contain an item
+        //figure out if the raycast results contain an item or ability
         foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            Ite item = go.GetComponent<Ite>();
-            if (item != null)
-            {
-                Debug.Log("Item hovered over: " + item.name);
-                //TODO: Display item tooltip
-            }
             Ability ability = go.GetComponent<Ability>();
             if (ability != null)
             {
