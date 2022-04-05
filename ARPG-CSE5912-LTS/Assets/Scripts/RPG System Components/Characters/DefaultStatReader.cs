@@ -57,16 +57,13 @@ public class DefaultStatReader : MonoBehaviour
         public int Lifesteal;
         public int CastSpeed;
         public int CooldownReduction;
-        public int CostReduction;
         public int FireDmgOnHit;
         public int ColdDmgOnHit;
         public int LightningDmgOnHit;
         public int PoisonDmgOnHit;
 
         public int BlockChance;
-        // public int BlockAmount;
-        // public int DodgeChance;
-        // public int DeflectChance;
+        public int Evasion;
         public int DamageReflect;
         public int FireRes;
         public int ColdRes;
