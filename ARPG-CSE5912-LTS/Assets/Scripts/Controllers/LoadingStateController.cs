@@ -20,6 +20,7 @@ public class LoadingStateController : StateMachine
     public float width = 0.0f;
     [HideInInspector] public AsyncOperation scene;
     private float progressValue;
+    private DefaultStatReader defaultStatReader;
 
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
@@ -31,6 +32,23 @@ public class LoadingStateController : StateMachine
         //     StartCoroutine(loadImage());
         //     StartCoroutine(LoadYourAsyncScene());
         // }
+    }
+    public async void InitalizeGameScene()
+    {
+        loadingSceneCanvasObj.SetActive(true);
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+        AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
+        scene = SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
+        scene.allowSceneActivation = false;
+        InputController.Instance.enabled = false;
+
+        StartCoroutine(GetSceneLoadProgress());
+
+        await Task.Delay(2000);
+
+        Destroy(tempAudioListener);
+        scene.allowSceneActivation = true;
     }
     public async void LoadScene(string sceneName)
     {
@@ -120,13 +138,35 @@ public class LoadingStateController : StateMachine
             return;
         }
 
+        defaultStatReader = GetComponent<DefaultStatReader>();
         SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
         loadingSceneCanvas = loadingSceneCanvasObj.GetComponent<Canvas>();
         loadingSceneCanvasObj.SetActive(false);
         ChangeState<LoadingState>();
 
         // backgroundImage.texture = images[1];
-
-
+    }
+    public void InitializePlayerStats()
+    {
+        DefaultStatReader.Instance.InitializeStats(DefaultStatReader.CharacterIndex.Player);
+    }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "GameScene")
+        {
+            if (GameObject.Find("Player") != null)
+            {
+                Debug.Log("Initalizing Player Stats");
+                InitializePlayerStats();
+            }
+        }
     }
 }
