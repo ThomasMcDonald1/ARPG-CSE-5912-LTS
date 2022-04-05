@@ -15,6 +15,8 @@ namespace LootLabels
 
         LootGenerator lootGenerator;
         RarityColors rarityColors;
+        [SerializeField] GameObject featureTablesGeneratorGO;
+        FeatureTablesGenerator featureTablesGenerator;
 
         public RarityColors RarityColors
         {
@@ -59,10 +61,11 @@ namespace LootLabels
 
             LootGenerator = GetComponent<LootGenerator>();
             RarityColors = GetComponent<RarityColors>();
+            featureTablesGenerator = GetComponentInParent<GameplayStateController>().GetComponentInChildren<FeatureTablesGenerator>();
         }
 
         //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
-        public void DropLoot(LootSource lootSource, Transform objectTransform, Type type)
+        public void DropLoot(LootSource lootSource, Transform objectTransform, LootType type)
         {
             int itemAmount = LootGenerator.CalculateLootAmount(lootSource);
 
@@ -95,7 +98,7 @@ namespace LootLabels
         }
 
         //if you want a delay on each item that spawns, use this
-        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, Type type)
+        IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
 
@@ -110,7 +113,7 @@ namespace LootLabels
 
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
-        void GenerateLoot(Transform lootOrigin, Type type)
+        void GenerateLoot(Transform lootOrigin, LootType type)
         {
             LootTypes lootType = LootGenerator.SelectRandomLootType();
 
@@ -144,7 +147,7 @@ namespace LootLabels
         /// Choses a item type to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseItemType(Transform lootOrigin, Type type)
+        void ChooseItemType(Transform lootOrigin, LootType type)
         {
 
             ItemTypes itemType = LootGenerator.SelectRandomItemType();
@@ -161,9 +164,25 @@ namespace LootLabels
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
                         Ite item = droppedItem.GetComponent<ItemPickup>().item;
-                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item);
-                        Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
-                        Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        //if (potion != null)
+                        //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        Equipment equipment = (Equipment)item;
+                        
+                        if (droppedItem.GetComponent<ItemPickup>().item.name.Contains("Potion")){
+                            Potion potion = (Potion)item;
+                            Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        }                        
+                        else if(equipment != null)
+                        {
+                            PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.prefix = prefix;
+                            PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.suffix = suffix;
+                            gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
+                        }
+
                         Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
@@ -175,39 +194,39 @@ namespace LootLabels
 
         private void RollStatsForItemsLevel(Rarity itemRarity, Ite item)
         {
-            double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
+           // double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
             //Ite ite = Instantiate(item);
-            if (string.Equals("Health Potion", item.name))
-            {
-                Potion potion = (Potion)item;
-                Debug.Log("potion health before change is" + potion.health);
-                potion.health = (int)(potion.health * multiplier);
-                string name = itemRarity.ToString() + " " + potion.name;
-                potion.name = name;
-                Debug.Log("health potion health amount is " + potion.health);
-                Debug.Log("potion.name is " + potion.name);
-            }
-            else if (string.Equals("Mano Potion", item.name))
-            {
-                Potion potion = (Potion)item;
-                Debug.Log("potion health before change is" + potion.health);
-                potion.mana = (int)(potion.mana * multiplier);
-                string name = itemRarity.ToString() + " " + potion.name;
-                potion.name = name;
-                Debug.Log("health potion health amount is " + potion.health);
-                Debug.Log("potion.name is " + potion.name);
-            }
-            else if (string.Equals("Knight Sword", item.name))
-            {
-                WeaponEquipment weapon = (WeaponEquipment)item;
-            }
+            //if (string.Equals("Health Potion", item.name))
+            //{
+            //    Potion potion = (Potion)item;
+            //    Debug.Log("potion health before change is" + potion.health);
+            //    potion.health = (int)(potion.health * multiplier);
+            //    string name = itemRarity.ToString() + " " + potion.name;
+            //    potion.name = name;
+            //    Debug.Log("health potion health amount is " + potion.health);
+            //    Debug.Log("potion.name is " + potion.name);
+            //}
+            //else if (string.Equals("Mano Potion", item.name))
+            //{
+            //    Potion potion = (Potion)item;
+            //    Debug.Log("potion health before change is" + potion.health);
+            //    potion.mana = (int)(potion.mana * multiplier);
+            //    string name = itemRarity.ToString() + " " + potion.name;
+            //    potion.name = name;
+            //    Debug.Log("health potion health amount is " + potion.health);
+            //    Debug.Log("potion.name is " + potion.name);
+            //}
+            //else if (string.Equals("Knight Sword", item.name))
+            //{
+            //    WeaponEquipment weapon = (WeaponEquipment)item;
+            //}
         }
 
-        private Ite RollStatsForItems(Rarity itemRarity, Ite item)
+        private Ite RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
         {
-            double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
             Ite ite = Instantiate(item);
-            if(string.Equals("Health Potion", item.name))
+            double multiplier = LootGenerator.RollAmountOfStats(itemRarity, ite, gearType);
+            if (string.Equals("Health Potion", item.name))
             {
                 Potion potion = (Potion)ite;
                 Debug.Log("potion health before change is" + potion.health);

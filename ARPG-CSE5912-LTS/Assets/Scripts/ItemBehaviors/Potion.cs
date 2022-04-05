@@ -9,6 +9,7 @@ public class Potion : Ite
     {
         health,
         mana,
+        teleport,
     }
     ;
 

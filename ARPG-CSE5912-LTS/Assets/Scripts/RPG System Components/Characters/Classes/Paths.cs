@@ -1,11 +1,10 @@
+using ARPG.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace ARPG.Combat
 {
-
-
-    public class Paths : Enemy
+    public class Paths : EnemyController
     {
         public bool canSee = false;
         protected override void Start()
@@ -112,7 +111,11 @@ namespace ARPG.Combat
                 Patrol();
             }
         }
+        public override string GetClassTypeName()
+        {
+            return "EnemyPath";
+        }
     }
 
-    }
+}
 

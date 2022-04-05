@@ -26,13 +26,15 @@
     //types of gear
     //each item is a separate gear slot, if you need more types that can go in a single slot add another enum
     public enum GearTypes {
-       // Lance,
-        Gloves,
-        
-       // Shoes,
-       // Shield,
+        Dagger,
+        Sword,
+        TwoHandedSword,
+        Shield,
+        Helm,
+        Armor,
+        Boots,
+        Jewelry,
         HealthPotion,
-        //All your characters gear slots, head, feet, weapon
     }
 
     //types of currency
@@ -44,10 +46,11 @@
 
     //assign to objects that drop loot to determine loot amounts
     public enum LootSource {
-        Lesser,
-        Epic,
+        Normal,
+        Elite,
+        Boss,
     }
-    public enum Type
+    public enum LootType
     {
         Poor,
         Normal,
@@ -55,7 +58,7 @@
         Epic,
         Legendary,
       //  Set,
-        SuperUltraHyperExPlusAlpha,
+       // SuperUltraHyperExPlusAlpha,
     }
     //The rarity of your objects, also used to determine label color
     public enum Rarity {
@@ -65,7 +68,7 @@
         Epic,
         Legendary,
        // Set,
-        SuperUltraHyperExPlusAlpha,
+       // SuperUltraHyperExPlusAlpha,
     }
 
     /// <summary>

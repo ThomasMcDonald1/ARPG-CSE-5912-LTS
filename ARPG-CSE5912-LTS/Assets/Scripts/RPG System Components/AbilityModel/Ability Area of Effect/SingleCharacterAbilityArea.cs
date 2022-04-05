@@ -12,6 +12,7 @@ public class SingleCharacterAbilityArea : BaseAbilityArea
         if (abilityCast.basicAttackTarget != null)
         {
             character = abilityCast.basicAttackTarget;
+            //Debug.Log("Character being basic attacked is: " + character.name);
         }
         else if (abilityCast.abilityRequiresCursorSelection)
         {

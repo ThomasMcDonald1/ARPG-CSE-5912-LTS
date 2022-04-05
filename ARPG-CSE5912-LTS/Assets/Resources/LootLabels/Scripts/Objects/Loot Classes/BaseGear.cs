@@ -23,7 +23,10 @@
             ItemType = ItemTypes.Gear;
             GearType = gearType;
             ItemRarity = rarity;
-            ItemName = ItemRarity + " " + GearType;
+            if (gearType == GearTypes.TwoHandedSword)
+                ItemName = "Two-Handed Sword";
+            else
+                ItemName = GearType.ToString();
             ModelName = modelName;
             IconName = iconName;
             Debug.Log("ItemName is " + ItemName);

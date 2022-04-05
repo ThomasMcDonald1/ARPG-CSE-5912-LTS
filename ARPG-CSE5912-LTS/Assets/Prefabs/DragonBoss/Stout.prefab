@@ -2958,6 +2958,9 @@ GameObject:
   - component: {fileID: 1220933597790240743}
   - component: {fileID: 1220933597790240762}
   - component: {fileID: 4681924164782076357}
+  - component: {fileID: 7681376183822446284}
+  - component: {fileID: -2855591316396369986}
+  - component: {fileID: 7634804957182838708}
   m_Layer: 8
   m_Name: Stout
   m_TagString: Untagged
@@ -3097,9 +3100,59 @@ MonoBehaviour:
   smooth: 0
   yVelocity: 0
   NPCInteractionRange: 0
+  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
+  baseRunSpeed: 7
+  lootSource: 2
+  lootType: 3
   chaseDistance: 15
   longRange: 10
   meleeRange: 2
   vertexThreshold: 5
   HealthBar: {fileID: 0}
   patrolPath: {fileID: 0}
+--- !u!114 &7681376183822446284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220933597790240760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee50ca543e960c4aa0927c9e2f4b299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelHeight: 25
+  objectToFollow: {fileID: 0}
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  stack: 0
+  autoHide: 0
+  clampToScreen: 0
+  disableOnClick: 0
+--- !u!114 &-2855591316396369986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220933597790240760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184487e0de42b3498946a9d44f537d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighlightThis: 0
+  outline: {fileID: 0}
+  mouseoverColor: {r: 1, g: 0.81960785, b: 0.3529412, a: 1}
+--- !u!114 &7634804957182838708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220933597790240760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

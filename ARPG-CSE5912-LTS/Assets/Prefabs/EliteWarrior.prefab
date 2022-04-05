@@ -68359,12 +68359,15 @@ GameObject:
   - component: {fileID: 8534128318987869689}
   - component: {fileID: 8534128318987869695}
   - component: {fileID: 8534128318987869693}
-  - component: {fileID: 8534128318987869683}
   - component: {fileID: 5427852407981032916}
   - component: {fileID: 1041666601985188143}
   - component: {fileID: 6569530493472777}
   - component: {fileID: 3900259075825343059}
   - component: {fileID: 382341228268445527}
+  - component: {fileID: 4529465453534684749}
+  - component: {fileID: 6672918121026197529}
+  - component: {fileID: 5337932039527175977}
+  - component: {fileID: 1948127661467568366}
   m_Layer: 8
   m_Name: EliteWarrior
   m_TagString: Untagged
@@ -68472,19 +68475,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8534128318987869683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8534128318987869680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51706366afdc28b4398b50749dc174ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &5427852407981032916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68562,6 +68552,80 @@ MonoBehaviour:
   UnarmedOverrider: {fileID: 22100000, guid: 2453406798cf69f48a360d737ab18954, type: 2}
   SummonOverrider: {fileID: 0}
   overrider: {fileID: 6569530493472777}
+--- !u!114 &4529465453534684749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee50ca543e960c4aa0927c9e2f4b299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelHeight: 25
+  objectToFollow: {fileID: 0}
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  stack: 0
+  autoHide: 0
+  clampToScreen: 0
+  disableOnClick: 0
+--- !u!114 &6672918121026197529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184487e0de42b3498946a9d44f537d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighlightThis: 0
+  outline: {fileID: 0}
+  mouseoverColor: {r: 0.23137257, g: 0.23137257, b: 0.23137257, a: 1}
+--- !u!114 &5337932039527175977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1948127661467568366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534128318987869680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08ff6ae5c0c7ec4a82b2c6b579d6dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  abilitiesKnown: []
+  charactersInRange: []
+  gameplayStateController: {fileID: 0}
+  abilityQueued: 0
+  stats: {fileID: 0}
+  smooth: 0
+  yVelocity: 0
+  NPCInteractionRange: 0
+  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
+  baseRunSpeed: 7
+  lootSource: 1
+  lootType: 2
+  enemyInAOEAbilityTargetSelectionMode: 0
+  enemyInSingleTargetAbilitySelectionMode: 0
+  target: {fileID: 0}
 --- !u!1 &8534128319883724304
 GameObject:
   m_ObjectHideFlags: 0

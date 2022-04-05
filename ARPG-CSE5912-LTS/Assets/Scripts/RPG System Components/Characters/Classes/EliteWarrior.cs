@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using ARPG.Core;
+
 namespace ARPG.Combat
 {
-    public class EliteWarrior : Enemy
+    public class EliteWarrior : EnemyController
     {
 
         protected override void Start()
@@ -17,11 +19,15 @@ namespace ARPG.Combat
             Speed = 1f;
             agent.speed = Speed;
         }
+        public override string GetClassTypeName()
+        {
+            return "EliteWarrior";
+        }
 
-        //protected override void Update()
-        //{
-        //    base.Update();
-        //}
+        protected override void Update()
+        {
+            base.Update();
+        }
     }
 
 }
