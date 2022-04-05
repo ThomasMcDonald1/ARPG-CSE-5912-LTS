@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 using System.Linq;
+using System;
+using Newtonsoft.Json;
 
 public class DefaultStatReader : MonoBehaviour
 {
+    public static DefaultStatReader Instance;
+    public enum CharacterIndex {
+        Player
+    }
     public TextAsset defaultStats;
-    // Start is called before the first frame update
+    public IEnumerable<string> statNames;
+    private CharacterStats characterStatsList;
     [System.Serializable]
     public class Character
     {
         public string name;
-        public Stats stats;
+        public StatList stats;
     }
     [System.Serializable]
-    public class Stats
+    public class StatList
     {
         public int LVL;
         public int EXP;
@@ -51,19 +58,15 @@ public class DefaultStatReader : MonoBehaviour
         public int CastSpeed;
         public int CooldownReduction;
         public int CostReduction;
-        public int FireDmgOnHitMain;
-        public int ColdDmgOnHitMain;
-        public int LightningDmgOnHitMain;
-        public int PoisonDmgOnHitMain;
-        public int FireDmgOnHitOff;
-        public int ColdDmgOnHitOff;
-        public int LightningDmgOnHitOff;
-        public int PoisonDmgOnHitOff;
+        public int FireDmgOnHit;
+        public int ColdDmgOnHit;
+        public int LightningDmgOnHit;
+        public int PoisonDmgOnHit;
 
         public int BlockChance;
-        public int BlockAmount;
-        public int DodgeChance;
-        public int DeflectChance;
+        // public int BlockAmount;
+        // public int DodgeChance;
+        // public int DeflectChance;
         public int DamageReflect;
         public int FireRes;
         public int ColdRes;
@@ -76,15 +79,38 @@ public class DefaultStatReader : MonoBehaviour
         public int PercentPoisonResistBonus;
     }
     [System.Serializable]
-    public class PlayerStats
+    public class CharacterStats
     {
         public Character[] result;
     }
 
-    // Update is called once per frame
     void Start()
     {
-        var playerStats = JsonUtility.FromJson<PlayerStats>("{\"result\":" + defaultStats.ToString() + "}");
-        IEnumerable<string> variableNames = typeof(Stats).GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public).Select(f => f.Name);
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        characterStatsList = JsonUtility.FromJson<CharacterStats>("{\"result\":" + defaultStats.ToString() + "}");
+        statNames = typeof(StatList).GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public).Select(f => f.Name);
+    }
+    public void InitializeStats(CharacterIndex index)
+    {
+        string objToInitialize = characterStatsList.result[(int)index].name;
+        GameObject obj = GameObject.Find(objToInitialize);
+        Stats objStats = obj.GetComponent<Stats>();
+        foreach (string stat in statNames)
+        {
+            Enum.TryParse(stat, out StatTypes statName);
+            StatList statList = characterStatsList.result[(int)index].stats;
+            int statValue = (int)statList.GetType().GetField(stat).GetValue(statList);
+            objStats[statName] = statValue;
+            // Debug.Log($"{statName} : {statValue}");
+        }
     }
 }
