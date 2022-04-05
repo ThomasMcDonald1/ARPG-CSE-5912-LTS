@@ -25,13 +25,14 @@ public class Potion : Ite
     }
     public override void Use()
     {
+        //Debug.Log("Use potion!");
         base.Use();
-        switch (typeOfPotion)
+        switch ((int)typeOfPotion)
         {
-            case potionType.health:
+            case (int)potionType.health:
                 UseHealingPotion();
                 break;
-            case potionType.mana:
+            case (int)potionType.mana:
                 UseEnergyPotion();
                 break;
             default:
@@ -42,7 +43,7 @@ public class Potion : Ite
 
     public void UseHealingPotion()
     {
-        //Debug.Log("ADD HEALTH!!");
+       // Debug.Log("ADD HEALTH!!");
         int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.HP];
         playerStat += 1000;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxHP]);
@@ -50,11 +51,12 @@ public class Potion : Ite
     }
     public void UseEnergyPotion()
     {
-        //Debug.Log("ADD HEALTH!!");
+       // Debug.Log("ADD Energy!!");
 
         int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana];
+
         playerStat += 100;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana]);
-        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana] = playerStat;
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana] = playerStat;
     }
 }

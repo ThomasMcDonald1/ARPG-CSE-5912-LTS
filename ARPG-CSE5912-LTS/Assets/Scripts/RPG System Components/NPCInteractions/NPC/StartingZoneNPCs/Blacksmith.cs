@@ -25,7 +25,6 @@ public class Blacksmith : NPC
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
-        saleUI.shop = shop;
 
     }
 
@@ -67,7 +66,8 @@ public class Blacksmith : NPC
 
             
             shopUI.initializeShop(shop);
-            
+            saleUI.shop = shop;
+
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());
