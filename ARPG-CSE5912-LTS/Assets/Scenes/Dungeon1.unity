@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 10
+  reducedCooldown: 0
 --- !u!114 &5332109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &5332110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &46825132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,6 +656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 10
+  reducedCooldown: 0
 --- !u!114 &46825137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,6 +1113,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123177890}
   m_CullTransparentMesh: 1
+--- !u!1001 &135357292
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 225380626}
+    m_Modifications:
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301776, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 336995140935301779, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+      propertyPath: m_Name
+      value: FeaturesTableGenerator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+--- !u!1 &135357293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 336995140935301779, guid: ea1c6ce7893ac1d429d3a2327f1eed71, type: 3}
+  m_PrefabInstance: {fileID: 135357292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &137105837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2045,6 +2111,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114496760411518002, guid: bd4adbeb2831ed740b2fb44d2cfe5919, type: 3}
+      propertyPath: featureTablesGeneratorGO
+      value: 
+      objectReference: {fileID: 135357293}
     - target: {fileID: 114687843854682546, guid: bd4adbeb2831ed740b2fb44d2cfe5919, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -3358,6 +3428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &307848636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8351,6 +8422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 3
+  reducedCooldown: 0
 --- !u!114 &371563564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8365,6 +8437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &371563565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13614,6 +13687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 3
+  reducedCooldown: 0
 --- !u!114 &877669814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13628,6 +13702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 1.5
+  reducedCastTime: 0
 --- !u!114 &877669815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16597,6 +16672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &1156563576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16637,6 +16713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 10
+  reducedCooldown: 0
 --- !u!114 &1156563579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17245,6 +17322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 11400000, guid: 7313c35cb5d1a324a85ba2071c1533b1, type: 2}
+  overrider: {fileID: 0}
+  animController: {fileID: 0}
   currentEquipment: []
 --- !u!54 &1197381020
 Rigidbody:
@@ -17333,6 +17412,7 @@ MonoBehaviour:
   yVelocity: 2
   NPCInteractionRange: 2
   basicAttackAbility: {fileID: 1965449172}
+  baseRunSpeed: 7
   dialogueUI: {fileID: 1271335938}
   uiInventory: {fileID: 1679746768}
   cursorChanger: {fileID: 1815593414}
@@ -18822,6 +18902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 5
+  reducedCooldown: 0
 --- !u!114 &1316839572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18836,6 +18917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &1316839573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24915,6 +24997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityCooldown: 5
+  reducedCooldown: 0
 --- !u!114 &1698175454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24929,6 +25012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castingBar: {fileID: 0}
   castTime: 0
+  reducedCastTime: 0
 --- !u!114 &1698175455
 MonoBehaviour:
   m_ObjectHideFlags: 0
