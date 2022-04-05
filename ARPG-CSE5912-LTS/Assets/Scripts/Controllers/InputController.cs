@@ -266,6 +266,10 @@ public class InputController : MonoBehaviour
             position = Mouse.current.position.ReadValue()
         };
         List<RaycastResult> results = new List<RaycastResult>();
+        if (uiRaycaster == null)
+        {
+            FindCanvas();
+        }
         uiRaycaster.Raycast(eventData, results);
 
         return results;
