@@ -35,7 +35,6 @@ public class Lorekeeper : NPC
         Player.InteractNPC += Interact;
         child = transform.GetChild(0).gameObject;
         currentStory = 0;
-        saleUI.shop = shop;
 
         //questGiver = this.GetComponent<QuestGiver>(); 
     }
@@ -87,6 +86,7 @@ public class Lorekeeper : NPC
 
             //SetMenu();
             StartCoroutine(LookAtPlayer());
+            saleUI.shop = shop;
 
             //InteractionManager.GetInstance().StopInteraction();
             //InteractionManager.GetInstance().DisableInteractionView();
