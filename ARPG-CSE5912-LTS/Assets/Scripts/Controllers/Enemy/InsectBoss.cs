@@ -18,17 +18,13 @@ public class InsectBoss : Enemy
     GameObject player;
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
-    private NavMeshPath path;
-    private NavMeshAgent agent;
+
 
     private int CurrentPatrolVertexIndex = 0;
     private int AttackCycle = 0;
 
     private void Awake()
     {
-        path = new NavMeshPath();
-        agent = GetComponent<NavMeshAgent>();
-
         stats = GetComponent<Stats>();
         GetComponent<Stats>()[StatTypes.MaxHP] = 500;
         GetComponent<Stats>()[StatTypes.HP] = 500;
