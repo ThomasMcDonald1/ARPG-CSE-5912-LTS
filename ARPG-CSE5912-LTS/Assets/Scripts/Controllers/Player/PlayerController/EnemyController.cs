@@ -61,7 +61,7 @@ namespace ARPG.Core
             UpdateAnimator();
         }
 
-        private void UpdateAnimator()
+        protected void UpdateAnimator()
         {
             Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);

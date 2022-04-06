@@ -176,7 +176,6 @@ namespace LootLabels
                         }                        
                         else if(equipment != null)
                         {
-                            //Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);

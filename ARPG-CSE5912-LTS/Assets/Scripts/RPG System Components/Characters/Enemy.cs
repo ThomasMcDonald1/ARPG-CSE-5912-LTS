@@ -11,7 +11,7 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
-        Animator animator;
+        protected Animator animator;
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
 
@@ -75,10 +75,12 @@ namespace ARPG.Combat
             EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
         }
 
-        public virtual  void SeePlayer()
+        protected virtual  void SeePlayer()
 
         {
+            GetComponent<Animator>().ResetTrigger("AttackMainHandTrigger");
 
+            GetComponent<Animator>().ResetTrigger("AttackOffHandTrigger");
             if (InTargetRange()) 
             {
                 Vector3 realDirection = transform.forward;
@@ -104,12 +106,14 @@ namespace ARPG.Combat
                         }
                     }
                     */
-                    
+
                 }
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
-
+                    Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 50f * Time.deltaTime);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
                         GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
@@ -138,6 +142,8 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
+
+
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {

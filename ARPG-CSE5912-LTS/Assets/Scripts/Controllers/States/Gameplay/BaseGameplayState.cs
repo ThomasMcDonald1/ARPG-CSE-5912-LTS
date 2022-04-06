@@ -97,6 +97,7 @@ public class BaseGameplayState : State
         InputController.UIElementLeftClickedEvent += OnUIElementLeftClicked;
         InputController.UIElementRightClickedEvent += OnUIElementRightClicked;
         InputController.OpenPassiveTreeEvent += OnOpenPassiveTreePressed;
+        InputController.UIElementHoveredEvent += OnUIElementHovered;
 
         // Testing mouse wheel
         InputController.DetectMouseScrollWheelEvent += OnMouseScrollMoved;
@@ -240,6 +241,11 @@ public class BaseGameplayState : State
 
     protected virtual void OnMouseScrollMoved(object sender, InfoEventArgs<float> e)
     {
+
+    }
+
+    protected virtual void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e) 
+    { 
 
     }
 }

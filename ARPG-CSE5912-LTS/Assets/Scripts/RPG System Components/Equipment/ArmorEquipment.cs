@@ -11,7 +11,7 @@ public class ArmorEquipment : Equipment
     public override void Use()
     {
         base.Use();
-        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYDEF] += defense;
+        //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYDEF] += defense;
         //switch (typeOfWeapon)
         //{
         //    case weaponType.twohandsword:

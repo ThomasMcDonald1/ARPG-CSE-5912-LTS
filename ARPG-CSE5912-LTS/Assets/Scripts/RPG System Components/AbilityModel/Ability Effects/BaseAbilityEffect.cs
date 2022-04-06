@@ -37,7 +37,7 @@ public abstract class BaseAbilityEffect : MonoBehaviour
             else if (abilityCast.ability == abilityCast.caster.basicAttackAbility && target.stats[StatTypes.BlockChance] > 0 && !hitRate.RollForBlock(target))
                 AbilityWasBlockedEvent?.Invoke(this, new InfoEventArgs<Character>(abilityCast.caster));
             else
-                OnApply(target, abilityCast);
+               OnApply(target, abilityCast);
 
         }
         else
