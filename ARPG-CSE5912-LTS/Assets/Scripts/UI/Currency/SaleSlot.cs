@@ -30,7 +30,6 @@ public class SaleSlot : MonoBehaviour
         removeButton.interactable = false;
 
         amount.SetText("");
-
     }
 
  
