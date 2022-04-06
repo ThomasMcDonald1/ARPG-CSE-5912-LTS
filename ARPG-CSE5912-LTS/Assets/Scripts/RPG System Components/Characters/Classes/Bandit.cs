@@ -9,25 +9,28 @@ namespace ARPG.Combat
     {
         private void OnEnable()
         {
-            BasicAttackDamageAbilityEffect.DamageEnemyEvent += OnDamageRun;
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageRun;
         }
 
         private void OnDisable()
         {
-            BasicAttackDamageAbilityEffect.DamageEnemyEvent -= OnDamageRun;
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageRun;
         }
-        public void OnDamageRun(object sender, EventArgs e)
+        public void OnDamageRun(object sender, InfoEventArgs<(Character,int, bool)> e)
         {
-            if (GetComponent<Animator>().GetBool("Dead") == false)
+            if (e.info.Item1 == this)
             {
-                //Debug.Log("damaged!!!!");
-                //look away from the player
-                transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
+                if (GetComponent<Animator>().GetBool("Dead") == false)
+                {
+                    //Debug.Log("damaged!!!!");
+                    //look away from the player
+                    transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
 
-                //point away from player
-                Vector3 runTo = transform.position + transform.forward * 10;
-                // And get it to head towards the found NavMesh position
-                agent.SetDestination(runTo);
+                    //point away from player
+                    Vector3 runTo = transform.position + transform.forward * 10;
+                    // And get it to head towards the found NavMesh position
+                    agent.SetDestination(runTo);
+                }
             }
         }
         protected override void Start()

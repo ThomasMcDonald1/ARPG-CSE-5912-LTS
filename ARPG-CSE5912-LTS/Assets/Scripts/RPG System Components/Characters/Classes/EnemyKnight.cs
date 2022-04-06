@@ -12,7 +12,6 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-
             Range = 5f;
             BodyRange = 1.5f;
             SightRange = 90f;
@@ -20,17 +19,6 @@ namespace ARPG.Combat
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;
-            Debug.Log(abilitiesKnown);
-            if (abilitiesKnown != null)
-            {
-                for (int i = 0; i < abilitiesKnown.Count; i++)
-                {
-                    EnemyAbility enemyability = new EnemyAbility();
-                    enemyability.abilityAssigned = abilitiesKnown[i];
-                    EnemyAttackTypeList.Add(enemyability);
-                }
-                
-            }
         }
 
         public override string GetClassTypeName()
@@ -38,20 +26,27 @@ namespace ARPG.Combat
             return "EnemyKnight";
         }
 
-        
-        protected override void Update()
-        {
-            base.Update();
-            
-        }
-        
-
         /*
         protected override void Update()
         {
-            base.Update();
+            if (abilitiesKnown != null)
+            {
+                Debug.Log(abilitiesKnown.Count);
+                for (int i = 0; i < abilitiesKnown.Count; i++)
+                {
+                    EnemyAbility enemyability = new EnemyAbility();
+                    enemyability.abilityAssigned = abilitiesKnown[i];
+                    EnemyAttackTypeList.Add(enemyability);
+                }
+            }
         }
         */
+
+
+        protected override void Update()
+        {
+            base.Update();
+        }
     }
 
 }

@@ -33,7 +33,7 @@ public class OnHitElementalDamageAbilityEffect : BaseAbilityEffect
                 float casterFlatMagicPen = GetStat(abilityCast.caster, StatTypes.FlatMagicPen);
                 float casterPercentMagicPen = GetStat(abilityCast.caster, StatTypes.PercentMagicPen);
                 float enemyDefense = abilityCast.abilityPower.GetBaseDefense(target, element);
-                enemyDefense *= (1 + abilityCast.abilityPower.GetPercentDefense(target, element));
+                enemyDefense *= (1 + abilityCast.abilityPower.GetPercentDefense(target, element) * 0.01f);
                 enemyDefense *= abilityCast.abilityPower.AdjustDefenseForPercentPenetration(abilityCast.caster);
                 float finalDamageWithPen = baseDamage * (120 / (120 + enemyDefense));
                 float damageRandomFloor = finalDamageWithPen * 0.95f;

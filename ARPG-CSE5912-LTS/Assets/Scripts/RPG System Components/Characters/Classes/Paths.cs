@@ -21,6 +21,7 @@ namespace ARPG.Combat
         {
             UpdateAnimator();
             //base.Update();
+
             if (transform.parent.parent.GetComponent<Animator>().GetBool("Dead") == false)
             {
                 if (transform.parent.parent.gameObject.GetComponent<SageOfSixPaths>().stats[StatTypes.HP] <= 0)
