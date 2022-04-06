@@ -121,7 +121,7 @@ namespace LootLabels
             switch (lootType)
             {
                 case LootTypes.Currency:
-                    ChooseCurrency(lootOrigin);
+                    ChooseCurrency(lootOrigin,type);
                     break;
                 case LootTypes.Items:
                     ChooseItemType(lootOrigin, type);
@@ -136,9 +136,9 @@ namespace LootLabels
         /// Choses a currency to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseCurrency(Transform lootOrigin)
+        void ChooseCurrency(Transform lootOrigin, LootType type)
         {
-            BaseCurrency currency = LootGenerator.CreateCurrency();
+            BaseCurrency currency = LootGenerator.CreateCurrency(type);
 
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
