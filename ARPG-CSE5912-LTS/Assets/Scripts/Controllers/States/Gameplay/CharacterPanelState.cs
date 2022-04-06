@@ -59,10 +59,11 @@ public class CharacterPanelState : BaseGameplayState
         foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            Ite item = go.GetComponent<Ite>();
-            if (item != null)
+            Debug.Log("GameObject: " + go.name);
+            InventorySlot slot = go.GetComponent<InventorySlot>();
+            if (slot != null)
             {
-                Debug.Log("Item hovered over: " + item.name);
+                Debug.Log("Item hovered over: " + slot.name);
                 //TODO: Display item tooltip
             }
         }
