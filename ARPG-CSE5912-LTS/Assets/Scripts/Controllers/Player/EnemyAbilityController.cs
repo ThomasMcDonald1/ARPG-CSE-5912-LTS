@@ -34,9 +34,12 @@ public class EnemyAbilityController : Enemy
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        Debug.Log("Enemy Cast was completed");
-        DeductCastingCost(e.info);
-        GetColliders(e.info);
+        if (e.info.caster == this)
+        {
+            Debug.Log("Enemy Cast was completed");
+            DeductCastingCost(e.info);
+            GetColliders(e.info);
+        }
     }
 
     public void EnemyQueueAbilityCastSelectionRequired(AbilityCast abilityCast)

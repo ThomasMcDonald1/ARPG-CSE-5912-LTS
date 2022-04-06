@@ -7,17 +7,16 @@ using TMPro;
 public class TipManager : MonoBehaviour
 {
     public TextMeshProUGUI tipText;
+
     public RectTransform tipWindow;
 
-    public static Action<String,Vector2> OnMouseHover;
-    public static Action OnMouseLoseFocus;
+    public static TipManager instance;
 
-    private void OnEnable()
+    void Awake()
     {
-        OnMouseHover -= ShowTip;
-        OnMouseLoseFocus -= HideTip;
-        
+        instance = this;
     }
+   
 
     // Start is called before the first frame update
     void Start()
@@ -25,18 +24,18 @@ public class TipManager : MonoBehaviour
         HideTip();
     }
 
-   public  void ShowTip(String tip, Vector2 mousePos)
+   public  void ShowTip(string tip)
     {
+
         tipText.text = tip;
-        tipWindow.sizeDelta = new Vector2(tipText.preferredWidth >200 ? 200:tipText.preferredWidth, tipText.preferredHeight);
+        tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x /2, mousePos.y);
-
-
+        tipWindow.transform.position =   new Vector2(Input.mousePosition.x + tipWindow.sizeDelta.x / 2, Input.mousePosition.y + tipWindow.sizeDelta.x / 2);
+      
     }
     public void HideTip()
     {
         tipText.text = default;
-        tipWindow.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
