@@ -53,46 +53,76 @@ public class EquipManager : MonoBehaviour
                     break;
 
             }
+            if (nu != null)
+            {
+                Destroy(nu);
+            }
         }
         currentEquipment[slotIndex] = newItem;
         if(newItem.type == Ite.ItemType.weapon)
         {
-            WeaponEquipment weapon = (WeaponEquipment)newItem;
-            nu = (GameObject)Instantiate(weapon.prefab);
-            nu.transform.parent = rightHand.transform;
-            nu.transform.localPosition = new Vector3(0, 0, 0);
-            nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            switch (weapon.typeOfWeapon)
+            nu = (GameObject)Instantiate(newItem.prefab);
+            nu.GetComponent<Animator>().enabled = false;
+            Destroy(nu.GetComponent<LootLabels.DroppedGear>());
+            Destroy(nu.GetComponent<LootLabels.CreateLabel>());
+            Destroy(nu.GetComponent<LootLabels.ObjectHighlight>());
+            if (newItem.equipSlot == EquipmentSlot.OffHand)
             {
-                case WeaponEquipment.weaponType.twohandsword:
-                    animController.ChangeToTwoHandedSword();
-                    //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
-                    //UseHealingPotion();
-                    break;
-                case WeaponEquipment.weaponType.righthandsword:
+                nu.transform.parent = leftHand.transform;
+                nu.transform.localPosition = new Vector3(0, 0, 0);
+                nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                WeaponEquipment weapon = (WeaponEquipment)newItem;
 
-                    animController.ChangeToOnlySwordRight();
-                    //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
-                    //UseEnergyPotion();
-                    break;
-                case WeaponEquipment.weaponType.lefthandsword:
-                    animController.ChangeToOnlySwordLeft();
-                    nu.transform.parent = leftHand.transform;
-                    nu.transform.localPosition = new Vector3(0, 0, 0);
-                    nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
-                    break;
-                default:
-                    Debug.Log("Don't know what this weapon does");
-                    break;
+
+                // nu.GetComponent<LootLabels.CreateLabel>().enabled = false;
+                // nu.GetComponent<LootLabels.ObjectHighlight>().enabled = false;
+                nu.transform.SetParent(rightHand.transform);
+                nu.transform.localPosition = Vector3.zero;
+                nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                switch (weapon.typeOfWeapon)
+                {
+                    case WeaponEquipment.weaponType.twohandsword:
+                        animController.ChangeToTwoHandedSword();
+                        //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+                        //UseHealingPotion();
+                        break;
+                    case WeaponEquipment.weaponType.righthandsword:
+
+                        animController.ChangeToOnlySwordRight();
+                        //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
+                        //UseEnergyPotion();
+                        break;
+                    case WeaponEquipment.weaponType.lefthandsword:
+                        animController.ChangeToOnlySwordLeft();
+                        nu.transform.parent = leftHand.transform;
+                        nu.transform.localPosition = new Vector3(0, 0, 0);
+                        nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case WeaponEquipment.weaponType.dagger:
+                        animController.ChangeToOnlyDaggerRight();
+                        break;
+                    default:
+                        Debug.Log("Don't know what this weapon does");
+                        break;
+                }
             }
         }
 
+        Debug.Log("newItem is " + newItem);
+        Debug.Log("prefix is " + newItem.prefix);
+        Debug.Log("FeaturesGo is " + newItem.prefix.FeaturesGOs);
         // Activate the equipment's features
         foreach (GameObject featureGO in newItem.prefix.FeaturesGOs)
         {
-            Feature feature = featureGO.GetComponent<Feature>();
-            Debug.Log(feature.name);
-            feature.Activate(gameObject);
+            if (featureGO != null)
+            {
+                Feature feature = featureGO.GetComponent<Feature>();
+                Debug.Log(feature.name);
+                feature.Activate(gameObject);
+            }
         }
 
         // Equipment has been removed so we trigger the callback
@@ -119,6 +149,9 @@ public class EquipManager : MonoBehaviour
                     Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
                     if (nu != null)
                     {
+                        //nu.GetComponent<Animator>().enabled = true;
+                        //nu.GetComponent<LootLabels.CreateLabel>().enabled = true;
+                        //nu.GetComponent<LootLabels.ObjectHighlight>().enabled = true;
                         Destroy(nu);
                     }
                     animController.ChangeToUnarmed();
@@ -131,8 +164,11 @@ public class EquipManager : MonoBehaviour
             // Dectivate the equipment's features
             foreach (GameObject featureGO in oldItem.prefix.FeaturesGOs)
             {
-                Feature feature = featureGO.GetComponent<Feature>();
-                feature.Deactivate();
+                if (featureGO != null)
+                {
+                    Feature feature = featureGO.GetComponent<Feature>();
+                    feature.Deactivate();
+                }
             }
 
             // Equipment has been removed so we trigger the callback

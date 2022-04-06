@@ -23,6 +23,7 @@ public class PercentStatModifierFeature : Feature
 
     protected override void OnDeactivate()
     {
-        stats[type] = Mathf.RoundToInt(stats[type] / percentAmount * 0.01f);
+        if (percentAmount != 0)
+            stats[type] = Mathf.RoundToInt(stats[type] / percentAmount * 0.01f);
     }
 }
