@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using LootLabels;
+using TMPro;
 
 namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
-        Animator animator;
+        protected Animator animator;
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
 
@@ -33,7 +34,11 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-            
+            TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
+            Debug.Log("name" + transform.GetChild(0).name);
+            Debug.Log("level" + stats[StatTypes.LVL].ToString());
+
+            enemyUIText.text = transform.GetChild(0).name + " LV " + stats[StatTypes.LVL].ToString();
             //Debug.Log("enemy is" + gameObject.name);
             //Debug.Log(abilitiesKnown);
         }
@@ -70,10 +75,12 @@ namespace ARPG.Combat
             EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
         }
 
-        public virtual  void SeePlayer()
+        protected virtual  void SeePlayer()
 
         {
+            GetComponent<Animator>().ResetTrigger("AttackMainHandTrigger");
 
+            GetComponent<Animator>().ResetTrigger("AttackOffHandTrigger");
             if (InTargetRange()) 
             {
                 Vector3 realDirection = transform.forward;
@@ -99,12 +106,14 @@ namespace ARPG.Combat
                         }
                     }
                     */
-                    
+
                 }
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
-
+                    Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
+                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
                         GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
@@ -133,6 +142,8 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
+
+
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
@@ -180,8 +191,9 @@ namespace ARPG.Combat
             float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
             if (distance < BodyRange)
             {
-                AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
+                //Debug.Log("Attack target is: " + AttackTarget);
+                //AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>(), this);
             }
         }
 

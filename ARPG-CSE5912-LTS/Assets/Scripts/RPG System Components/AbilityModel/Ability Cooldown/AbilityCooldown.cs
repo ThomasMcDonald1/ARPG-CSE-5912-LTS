@@ -9,24 +9,14 @@ public class AbilityCooldown : MonoBehaviour
     public float abilityCooldown;
     [HideInInspector] public float reducedCooldown;
     ActionBar actionBar;
-    List<EnemyAbility> EnemyAttackTypeList;
+    //List<EnemyAbility> EnemyAttackTypeList;
     Coroutine cooldownRoutine;
     Coroutine enemyCooldownRoutine;
 
     private void Awake()
     {
-        if (character is Player)
-        {
-            actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
-        }
-        else if (character is Enemy)
-        {
-            if (character is EnemyKnight)
-            {
-                EnemyAttackTypeList = GetComponentInParent<EnemyKnight>().EnemyAttackTypeList;
-            }
+        actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
             //add more for more enemy
-        }
     }
 
     private void OnEnable()
@@ -37,16 +27,13 @@ public class AbilityCooldown : MonoBehaviour
 
     void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (e.info.ability.gameObject == GetComponentInParent<Ability>().gameObject)
+        if (e.info.caster is Player)
         {
-            if (character is Player)
-            {
-                CooldownAbilityOnActionButtons(e.info);
-            }
-            else
-            {
-                CooldownAbilityOnEnemyList(e.info);
-            }
+            CooldownAbilityOnActionButtons(e.info);
+        }
+        else
+        {
+            CooldownAbilityOnEnemyList(e.info);
         }
     }
 
@@ -71,7 +58,8 @@ public class AbilityCooldown : MonoBehaviour
 
     public void CooldownAbilityOnEnemyList(AbilityCast abilityCast)
     {
-        foreach (EnemyAbility enemyAbility in EnemyAttackTypeList)
+        Enemy enemyCaster = (Enemy)abilityCast.caster;
+        foreach (EnemyAbility enemyAbility in enemyCaster.EnemyAttackTypeList)
         {
             if (enemyAbility.abilityAssigned == abilityCast.ability)
             {

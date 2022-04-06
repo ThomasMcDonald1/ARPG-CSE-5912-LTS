@@ -43,10 +43,10 @@ namespace ARPG.Combat
         */
 
 
-        //protected override void Update()
-        //{
-        //    base.Update();
-        //}
+        protected override void Update()
+        {
+            base.Update();
+        }
     }
 
 }

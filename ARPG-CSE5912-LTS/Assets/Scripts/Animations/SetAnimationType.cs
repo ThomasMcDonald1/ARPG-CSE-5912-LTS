@@ -23,7 +23,7 @@ public class SetAnimationType : MonoBehaviour
     [SerializeField] private AnimatorOverrideController UnarmedOverrider;
 
     [SerializeField] private AnimatorOverrideController SummonOverrider;
-
+    [SerializeField] private AnimatorOverrideController MageOverrider;
 
     [SerializeField] private AnimatorOverrider overrider;
 
@@ -112,10 +112,18 @@ public class SetAnimationType : MonoBehaviour
     }
     public void ChangeToSummon()
     {
-        overrider.GetComponent<Animator>().SetBool("CanDualWield", true);
+        overrider.GetComponent<Animator>().SetBool("CanDualWield", false);
         overrider.GetComponent<Animator>().SetBool("AttackingMainHand", true);
 
         overrider.SetAnimations(SummonOverrider);
+
+    }
+    public void ChangeToMage()
+    {
+        overrider.GetComponent<Animator>().SetBool("CanDualWield", false);
+        overrider.GetComponent<Animator>().SetBool("AttackingMainHand", true);
+
+        overrider.SetAnimations(MageOverrider);
 
     }
 }
