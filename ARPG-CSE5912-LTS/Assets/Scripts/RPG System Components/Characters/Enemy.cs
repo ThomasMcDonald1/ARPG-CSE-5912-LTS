@@ -112,7 +112,7 @@ namespace ARPG.Combat
                 {
                     StopRun();
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 50f * Time.deltaTime);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
