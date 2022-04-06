@@ -346,7 +346,7 @@ public class GameplayState : BaseGameplayState
                 Ability ability = actionButton.abilityAssigned;
                 if (ability != null)
                 {
-                    Debug.Log("Ability is: " + ability.name);
+                    //Debug.Log("Ability is: " + ability.name);
                     //TODO: Display ability tooltip
 
                 }
