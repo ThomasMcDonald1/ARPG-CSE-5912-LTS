@@ -18,7 +18,10 @@ namespace LootLabels {
 
             CreateLabel();
         }
-
+        private void OnTriggerEnter(Collider other)
+        {
+            
+        }
         /// <summary>
         /// Creates the label!!
         /// Called in animator or in start when there is no animator

@@ -101,6 +101,7 @@ namespace LootLabels
         IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
+            Debug.Log("amount is " + i);
 
             while (i != 0)
             {
@@ -120,7 +121,7 @@ namespace LootLabels
             switch (lootType)
             {
                 case LootTypes.Currency:
-                    ChooseCurrency(lootOrigin);
+                    ChooseCurrency(lootOrigin,type);
                     break;
                 case LootTypes.Items:
                     ChooseItemType(lootOrigin, type);
@@ -135,9 +136,9 @@ namespace LootLabels
         /// Choses a currency to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseCurrency(Transform lootOrigin)
+        void ChooseCurrency(Transform lootOrigin, LootType type)
         {
-            BaseCurrency currency = LootGenerator.CreateCurrency();
+            BaseCurrency currency = LootGenerator.CreateCurrency(type);
 
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
@@ -168,22 +169,25 @@ namespace LootLabels
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-                        Equipment equipment = item as Equipment;
+                       // Equipment equipment = (Equipment)item;
                         
-                        if (droppedItem.GetComponent<ItemPickup>().item.name.Contains("Potion")){
-                            Potion potion = (Potion)item;
-                            Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        }                        
-                        else if(equipment != null)
+                        //if (item.type == Ite.ItemType.utility){
+                        //    Potion potion = (Potion)item;
+                        //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        //}                        
+                        //else
+                        if(droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
                         {
+                            Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
+                            droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
 
-                        Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
+                        //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
                 default:
@@ -248,10 +252,14 @@ namespace LootLabels
                 Debug.Log("potion.name is " + potion.name);
                 return potion;
             }
-            else if(string.Equals("Knight Sword", item.name))
-            {
-                WeaponEquipment weapon = (WeaponEquipment)ite;
-            }
+            //else if(item.type == Ite.ItemType.weapon)
+            //{
+            //    WeaponEquipment weapon = (WeaponEquipment)ite;
+            //}
+            //else
+            //{
+            //    ArmorEquipment armor = (ArmorEquipment)ite;
+            //}
             return ite;              
         }
     }

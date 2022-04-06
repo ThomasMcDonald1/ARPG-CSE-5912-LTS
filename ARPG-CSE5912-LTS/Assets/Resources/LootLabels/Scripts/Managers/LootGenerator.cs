@@ -7,21 +7,24 @@ namespace LootLabels {
         /// Return a random value for dropped currency
         /// </summary>
         /// <returns></returns>
-        public int CalculateCurrencyAmount() {
+        public int CalculateCurrencyAmount(LootType type) {
             int seed = Random.Range(1, 5);
             int randomValue;
-            switch (seed) {
-                case 1:
-                    randomValue = Random.Range(1, 99);
+            switch (type) {
+                case LootType.Poor:
+                    randomValue = Random.Range(1, 50);
                     break;
-                case 2:
-                    randomValue = Random.Range(100, 999);
+                case LootType.Normal:
+                    randomValue = Random.Range(50, 150);
                     break;
-                case 3:
-                    randomValue = Random.Range(1000, 9999);
+                case LootType.Rare:
+                    randomValue = Random.Range(80, 250);
                     break;
-                case 4:
-                    randomValue = Random.Range(10000, 99999);
+                case LootType.Epic:
+                    randomValue = Random.Range(400, 800);
+                    break;
+                case LootType.Legendary:
+                    randomValue = Random.Range(1000, 2000);
                     break;
                 default:
                     randomValue = 0;
@@ -219,9 +222,9 @@ namespace LootLabels {
         /// Create a randomized currency item
         /// </summary>
         /// <returns></returns>
-        public BaseCurrency CreateCurrency() {
+        public BaseCurrency CreateCurrency(LootType type) {
             CurrencyTypes currencyType = SelectRandomCurrency();
-            int amount = CalculateCurrencyAmount();
+            int amount = CalculateCurrencyAmount(type);
             string modelName = ResourceManager.singleton.GetModelName(currencyType);
             string iconName = ResourceManager.singleton.GetIconName(currencyType);
 

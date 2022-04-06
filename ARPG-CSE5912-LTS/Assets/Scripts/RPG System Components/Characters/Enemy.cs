@@ -180,8 +180,9 @@ namespace ARPG.Combat
             float distance = Vector3.Distance(this.transform.position, AttackTarget.transform.position);
             if (distance < BodyRange)
             {
-                AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>());
+                //Debug.Log("Attack target is: " + AttackTarget);
+                //AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
+                QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>(), this);
             }
         }
 
