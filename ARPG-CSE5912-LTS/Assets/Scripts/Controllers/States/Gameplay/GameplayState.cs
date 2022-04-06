@@ -338,12 +338,12 @@ public class GameplayState : BaseGameplayState
         foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            Ite item = go.GetComponent<Ite>();
-            if (item != null)
-            {
-                Debug.Log("Item hovered over: " + item.name);
-                //TODO: Display item tooltip
-            }
+            //Ite item = go.GetComponent<Ite>();
+            //if (item != null)
+            //{
+            //    Debug.Log("Item hovered over: " + item.name);
+            //    //TODO: Display item tooltip
+            //}
             Ability ability = go.GetComponent<Ability>();
             if (ability != null)
             {
