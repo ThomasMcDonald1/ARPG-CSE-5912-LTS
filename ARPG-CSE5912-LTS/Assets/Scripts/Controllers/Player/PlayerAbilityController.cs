@@ -40,9 +40,12 @@ public class PlayerAbilityController : Player
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        Debug.Log("Cast was completed");
-        DeductCastingCost(e.info);
-        GetColliders(e.info);
+        if (e.info.caster == this)
+        {
+            Debug.Log("Player cast was completed");
+            DeductCastingCost(e.info);
+            GetColliders(e.info);
+        }
     }
 
     public void PlayerQueueAbilityCastSelectionRequired(AbilityCast abilityCast)
