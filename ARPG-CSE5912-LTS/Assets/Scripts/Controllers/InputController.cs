@@ -12,7 +12,9 @@ public class InputController : MonoBehaviour
     public static InputController Instance { get { return instance; } }
 
     [SerializeField] GameObject gameplayUICanvas;
-    GraphicRaycaster uiRaycaster;
+    GraphicRaycaster gameplayUIRaycaster;
+    [SerializeField] GraphicRaycaster inventoryUIRaycaster;
+    [SerializeField] GameplayStateController gameplayStateController;
 
     //Events associated with input being pressed
     public static event EventHandler<InfoEventArgs<RaycastHit>> ClickEvent;
@@ -63,7 +65,7 @@ public class InputController : MonoBehaviour
         }
         controls = new Controls();
 
-        uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+        gameplayUIRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
     }
 
     private void FindCanvas()
@@ -73,14 +75,14 @@ public class InputController : MonoBehaviour
             gameplayUICanvas = GameObject.Find("GameplayUICanvas");
             if (gameplayUICanvas != null)
             {
-                uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+                gameplayUIRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
             }
             if (gameplayUICanvas == null)
             {
                 gameplayUICanvas = GameObject.Find("MainMenuCanvas");
                 if (gameplayUICanvas != null)
                 {
-                    uiRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
+                    gameplayUIRaycaster = gameplayUICanvas.GetComponent<GraphicRaycaster>();
                 }
             }
         }
@@ -94,7 +96,12 @@ public class InputController : MonoBehaviour
             List<RaycastResult> results = GetUIElementsClicked();
             UIElementRightClickedEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
         }
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (gameplayStateController.CurrentState is CharacterPanelState && EventSystem.current.IsPointerOverGameObject())
+        {
+            List<RaycastResult> results = GetUIElementsHoveredInventory();
+            UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+        }
+        else if (gameplayStateController.CurrentState is GameplayState && EventSystem.current.IsPointerOverGameObject())
         {
             List<RaycastResult> results = GetUIElementsClicked();
             UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
@@ -272,7 +279,19 @@ public class InputController : MonoBehaviour
             position = Mouse.current.position.ReadValue()
         };
         List<RaycastResult> results = new List<RaycastResult>();
-        uiRaycaster.Raycast(eventData, results);
+        gameplayUIRaycaster.Raycast(eventData, results);
+
+        return results;
+    }
+
+    private List<RaycastResult> GetUIElementsHoveredInventory()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
+        List<RaycastResult> results = new List<RaycastResult>();
+        inventoryUIRaycaster.Raycast(eventData, results);
 
         return results;
     }
