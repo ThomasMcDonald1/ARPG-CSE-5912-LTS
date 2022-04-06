@@ -11,7 +11,7 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
-        Animator animator;
+        protected Animator animator;
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
 

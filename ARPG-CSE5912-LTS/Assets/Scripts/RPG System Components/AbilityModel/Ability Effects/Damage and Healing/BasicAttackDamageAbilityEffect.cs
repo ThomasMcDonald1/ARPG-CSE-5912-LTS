@@ -8,6 +8,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackDamageReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackHealingReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int)>> ThornsDamageReceivedEvent;
+    public static event EventHandler DamageEnemyEvent;
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
     {
@@ -60,6 +61,8 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
+        DamageEnemyEvent.Invoke(this, EventArgs.Empty);
+
         //Send event
         BasicAttackDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((target, finalCalculatedDamage, wasCrit)));
 
