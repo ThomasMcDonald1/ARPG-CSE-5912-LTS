@@ -101,7 +101,7 @@ public class MainMenuRootState : BaseMenuState
         {
             Debug.Log("Start Button Clicked!");
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
-            LoadingStateController.Instance.LoadScene("GameScene");
+            LoadingStateController.Instance.InitalizeGameScene();
             FindObjectOfType<AudioManager>().Play("MenuClick");
         }
         else

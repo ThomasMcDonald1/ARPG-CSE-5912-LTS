@@ -18,6 +18,8 @@ public class GameplayState : BaseGameplayState
     NavMeshAgent agent;
     Animator animator;
     ContextMenuPanel contextMenuPanel;
+    UtilityMenuPanel utilityMenuPanel;
+
     ActionBar actionBar;
     GameObject passiveTreeUI;
     bool lockedActions = false;
@@ -43,6 +45,7 @@ public class GameplayState : BaseGameplayState
         agent = player.GetComponent<NavMeshAgent>();
         animator = player.GetComponent<Animator>();
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
+        utilityMenuPanel = gameplayStateController.GetComponentInChildren<UtilityMenuPanel>();
         if (contextMenuPanel != null)
         {
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
@@ -70,7 +73,6 @@ public class GameplayState : BaseGameplayState
     void OnExitToMenuClicked()
     {
         Time.timeScale = 1;
-        GameObject.Find("Visible").SetActive(false);
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
@@ -309,6 +311,8 @@ public class GameplayState : BaseGameplayState
         {
             GameObject go = result.gameObject;
             ActionButton actionButton = go.GetComponent<ActionButton>();
+            PotionButton potionButton = go.GetComponentInChildren<PotionButton>();
+            //Debug.Log("Gameobject name: "+go.name);
             if (actionButton != null)
             {
                 Debug.Log("Action Button clicked on: " + actionButton.name);
@@ -316,6 +320,35 @@ public class GameplayState : BaseGameplayState
                 contextMenuPanel.transform.position = new Vector3(contextMenuPanel.transform.position.x, 400, contextMenuPanel.transform.position.z);
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
                 contextMenuPanel.PopulateContextMenu(actionButton);
+            }
+            if(potionButton != null)
+            {
+                utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
+                utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
+                utilityMenuPanel.utilityMenuPanelCanvas.SetActive(true);
+                utilityMenuPanel.PopulateUtilityMenu(potionButton);
+
+            }
+        }
+    }
+
+    protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+        //figure out if the raycast results contain an item or ability
+        foreach (RaycastResult result in e.info)
+        {
+            GameObject go = result.gameObject;
+            //Debug.Log("GameObject: " + go.name);
+            ActionButton actionButton = go.GetComponent<ActionButton>();
+            if (actionButton != null)
+            {
+                Ability ability = actionButton.abilityAssigned;
+                if (ability != null)
+                {
+                    Debug.Log("Ability is: " + ability.name);
+                    //TODO: Display ability tooltip
+
+                }
             }
         }
     }
@@ -328,7 +361,7 @@ public class GameplayState : BaseGameplayState
 
     private void OnAbilityWasCancelled(object sender, InfoEventArgs<int> e)
     {
-        // Debug.Log("Actions unlocked");
+        //Debug.Log("Actions unlocked");
         lockedActions = false;
     }
 

@@ -125,8 +125,10 @@ public class EquipManager : MonoBehaviour
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] -= oldItem.damage;
-            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.AttackRange] -= oldItem.attackRange;
+            //NOTE: Weapons don't add to PHYATK stat. Instead, PHYATK will come from putting points in it via the Passive Tree and/or by leveling up
+            //      Instead, the BasicAttackDamageAbilityEffect will read the weapon's minimum and maximum damage numbers and make calculations with them
+            //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] -= oldItem.damage;
+            //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.AttackRange] -= oldItem.attackRange;
             switch (oldItem.type)
             {
                 case Ite.ItemType.armor:

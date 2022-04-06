@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class WeaponEquipment : Equipment
 {
+    public int attackRange;
+    public int minimumDamage;
+    public int maximumDamage;
+    public int attackSpeed;
+    public int critChance;
     public enum weaponType
     {
         twohandsword,
@@ -26,7 +31,9 @@ public class WeaponEquipment : Equipment
 
     public override void Use()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] += damage;
+        //NOTE: Weapons don't add to PHYATK stat. Instead, PHYATK will come from putting points in it via the Passive Tree and/or by leveling up
+        //      Instead, the BasicAttackDamageAbilityEffect will read the weapon's minimum and maximum damage numbers and make calculations with them
+        //GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.PHYATK] += damage;
         base.Use();
        // Debug.Log("playerStat before change is " + playerStat[StatTypes.PHYATK]);
         //playerStat.SetValue(StatTypes.PHYATK, damage, false);

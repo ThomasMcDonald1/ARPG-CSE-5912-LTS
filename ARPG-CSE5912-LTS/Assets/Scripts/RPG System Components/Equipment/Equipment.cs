@@ -9,16 +9,16 @@ public class Equipment : Ite
     public Item equipment;
 
     //All equipment has the following:
-    public int levelRequiredToEquip;
-    public StatTypes statRequiredToEquip;
-    public int statAmountRequired;
-    public int attackRange;
-    public int damage;
-    public int attackSpeedMod;
-    public int critChanceBonus;
-    public int defendRate;
-    public int defense;
-    public int evasion;
+    // public int levelRequiredToEquip;
+    // public StatTypes statRequiredToEquip;
+    // public int statAmountRequired;
+    // public int attackRange;
+    // public int damage;
+    // public int attackSpeedMod;
+    // public int critChanceBonus;
+    // public int defendRate;
+    // public int defense;
+    // public int evasion;
     [SerializeField] public PrefixSuffix prefix;
     public PrefixSuffix suffix;
 

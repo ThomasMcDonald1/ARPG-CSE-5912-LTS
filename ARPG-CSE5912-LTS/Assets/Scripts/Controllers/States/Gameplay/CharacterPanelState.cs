@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CharacterPanelState : BaseGameplayState
 {
@@ -50,5 +51,21 @@ public class CharacterPanelState : BaseGameplayState
         //characterPanel.enabled = false;
 
 
+    }
+
+    protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
+        //figure out if the raycast results contain an item or ability
+        foreach (RaycastResult result in e.info)
+        {
+            GameObject go = result.gameObject;
+            Debug.Log("GameObject: " + go.name);
+            InventorySlot slot = go.GetComponent<InventorySlot>();
+            if (slot != null)
+            {
+                Debug.Log("Item hovered over: " + slot.name);
+                //TODO: Display item tooltip
+            }
+        }
     }
 }
