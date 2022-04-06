@@ -10,7 +10,7 @@ namespace ARPG.Combat
 {
     public class EvilWizard : EnemyController
     {
-        private int attackCounter = 0;
+        private int attackCounter = 200;
         protected override void Start()
         {
             base.Start();
@@ -75,8 +75,7 @@ namespace ARPG.Combat
             //Print the time of when the function is first called.
             Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
-            //yield on a new YieldInstruction that waits for 5 seconds.
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
             FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = true;
             //After we have waited 5 seconds print the time again.
             Debug.Log("Finished Coroutine at timestamp : " + Time.time);
@@ -88,6 +87,7 @@ namespace ARPG.Combat
                 if(attackCounter == 200)
                 {
                     Debug.Log("damaged!");
+                    AudioManager.instance.Play("Force");
                     float playerSpeed = FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed;
                     FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = false;
                     StartCoroutine(Remobilize());
