@@ -7,6 +7,7 @@ public class InstantCastType : BaseCastType
 {
     Coroutine instantCastRoutine;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> EnemyAbilityInstantCastWasCompletedEvent;
 
     public override Type GetCastType()
     {

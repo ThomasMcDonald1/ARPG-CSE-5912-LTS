@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using ARPG.Core;
+using TMPro;
 public class GameplayState : BaseGameplayState
 {
     //[SerializeField] private DialogueUI dialogueUI;
