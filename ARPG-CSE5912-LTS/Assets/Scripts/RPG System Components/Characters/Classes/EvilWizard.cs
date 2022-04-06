@@ -3,16 +3,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 namespace ARPG.Combat
 {
     public class EvilWizard : EnemyController
     {
+        private int attackCounter = 0;
         protected override void Start()
         {
             base.Start();
-            Range = 10f;
-            BodyRange = 5f;
+            Range = 20f;
+            BodyRange = 10f;
             SightRange = 360f;
             Speed = 3f;
             agent.speed = Speed;
@@ -42,12 +45,12 @@ namespace ARPG.Combat
                 }
                 else if (angle < SightRange && InStopRange())
                 {
+                    GetComponent<Animator>().SetBool("Summon", true);
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 50f * Time.deltaTime);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
                     StopRun();
-                    GetComponent<Animator>().SetBool("Summon",true);
                     if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
                         StopRun();
@@ -67,8 +70,37 @@ namespace ARPG.Combat
                 Patrol();
             }
         }
+        IEnumerator Remobilize()
+        {
+            //Print the time of when the function is first called.
+            Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+            //yield on a new YieldInstruction that waits for 5 seconds.
+            yield return new WaitForSeconds(2f);
+            FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = true;
+            //After we have waited 5 seconds print the time again.
+            Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        }
         protected override void Update()
         {
+            if (GetComponent<Animator>().GetBool("Summon"))
+            {
+                if(attackCounter == 200)
+                {
+                    Debug.Log("damaged!");
+                    float playerSpeed = FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed;
+                    FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = false;
+                    StartCoroutine(Remobilize());
+
+
+                    //FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed = playerSpeed;
+                    attackCounter = 0;
+                }
+                else
+                {
+                    attackCounter++;
+                }
+            }
             UpdateAnimator();
             //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
