@@ -129,32 +129,32 @@ public class RareAndEpicSuffixFeaturesLists : FeaturesLists
 
     private void CreateTheTurtle()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentArmorBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentArmorBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentArmorBonus;
         theTurtle.Add(featureGO);
     }
 
     private void CreateFrenziedStrikes()
     {
-        GameObject featureGO = CreatePercentStatFeature("AtkSpeed");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("AtkSpeed");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.AtkSpeed;
         frenziedStrikes.Add(featureGO);
     }
 
     private void CreatePinpointStrikes()
     {
-        GameObject featureGO = CreatePercentStatFeature("CritChance");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("CritChance");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.CritChance;
         pinpointStrikes.Add(featureGO);
     }
 
     private void CreateBrutality()
     {
-        GameObject featureGO = CreatePercentStatFeature("CritDamage");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("CritDamage");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.CritDamage;
         brutality.Add(featureGO);
     }
@@ -177,104 +177,104 @@ public class RareAndEpicSuffixFeaturesLists : FeaturesLists
 
     private void CreateTheHammer()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentArmorPen");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentArmorPen");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentArmorPen;
         theHammer.Add(featureGO);
     }
 
     private void CreateTheSpirits()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentMagicPen");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentMagicPen");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentMagicPen;
         theSpirits.Add(featureGO);
     }
 
     private void CreateTheQuick()
     {
-        GameObject featureGO = CreatePercentStatFeature("RunSpeed");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("RunSpeed");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.RunSpeed;
         theQuick.Add(featureGO);
     }
 
     private void CreateObservation()
     {
-        GameObject featureGO = CreatePercentStatFeature("ExpGainMod");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("ExpGainMod");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.ExpGainMod;
         observation.Add(featureGO);
     }
 
     private void CreateCrushing()
     {
-        GameObject featureGO = CreatePercentStatFeature("PhysDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PhysDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PhysDmgBonus;
         crushing.Add(featureGO);
     }
 
     private void CreateBlasting()
     {
-        GameObject featureGO = CreatePercentStatFeature("MagDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("MagDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.MagDmgBonus;
         blasting.Add(featureGO);
     }
 
     private void CreateIncineration()
     {
-        GameObject featureGO = CreatePercentStatFeature("FireDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("FireDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.FireDmgBonus;
         incineration.Add(featureGO);
     }
 
     private void CreateChilling()
     {
-        GameObject featureGO = CreatePercentStatFeature("ColdDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("ColdDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.ColdDmgBonus;
         chilling.Add(featureGO);
     }
 
     private void CreateThunder()
     {
-        GameObject featureGO = CreatePercentStatFeature("LightningDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("LightningDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.LightningDmgBonus;
         thunder.Add(featureGO);
     }
 
     private void CreateTheSnake()
     {
-        GameObject featureGO = CreatePercentStatFeature("PoisonDmgBonus");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PoisonDmgBonus");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PoisonDmgBonus;
         theSnake.Add(featureGO);
     }
 
     private void CreateSiphoning()
     {
-        GameObject featureGO = CreatePercentStatFeature("Lifesteal");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("Lifesteal");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.Lifesteal;
         siphoning.Add(featureGO);
     }
 
     private void CreateAcumen()
     {
-        GameObject featureGO = CreatePercentStatFeature("CastSpeed");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("CastSpeed");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.CastSpeed;
         acumen.Add(featureGO);
     }
 
     private void CreateInvigoration()
     {
-        GameObject featureGO = CreatePercentStatFeature("CooldownReduction");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("CooldownReduction");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.CooldownReduction;
         invigoration.Add(featureGO);
     }
@@ -361,40 +361,40 @@ public class RareAndEpicSuffixFeaturesLists : FeaturesLists
 
     private void CreateFireWarding()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentFireRes");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentFireRes");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentFireResistBonus;
         fireWarding.Add(featureGO);
     }
 
     private void CreateColdWarding()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentColdRes");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentColdRes");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentColdResistBonus;
         coldWarding.Add(featureGO);
     }
 
     private void CreateLightningWarding()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentLightningRes");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentLightningRes");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentLightningResistBonus;
         lightningWarding.Add(featureGO);
     }
 
     private void CreatePoisonWarding()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentPoisonRes");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentPoisonRes");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentPoisonResistBonus;
         poisonWarding.Add(featureGO);
     }
 
     private void CreateAlteredFlesh()
     {
-        GameObject featureGO = CreatePercentStatFeature("PercentAllRes");
-        PercentStatModifierFeature feature = featureGO.GetComponent<PercentStatModifierFeature>();
+        GameObject featureGO = CreateFlatStatFeature("PercentAllRes");
+        FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
         feature.type = StatTypes.PercentAllResistBonus;
         alteredFlesh.Add(featureGO);
     }
