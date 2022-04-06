@@ -78,7 +78,9 @@ namespace ARPG.Combat
         public virtual  void SeePlayer()
 
         {
+            GetComponent<Animator>().ResetTrigger("AttackMainHandTrigger");
 
+            GetComponent<Animator>().ResetTrigger("AttackOffHandTrigger");
             if (InTargetRange()) 
             {
                 Vector3 realDirection = transform.forward;
@@ -104,7 +106,7 @@ namespace ARPG.Combat
                         }
                     }
                     */
-                    
+
                 }
                 else if (angle < SightRange && InStopRange())
                 {
@@ -138,6 +140,8 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
+
+
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
