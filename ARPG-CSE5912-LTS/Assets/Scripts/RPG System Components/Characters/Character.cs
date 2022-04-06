@@ -45,7 +45,8 @@ public abstract class Character : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
-        playerAbilityController = GetComponent<PlayerAbilityController>(); 
+        playerAbilityController = GetComponent<PlayerAbilityController>();
+        enemyAbilityController = GetComponent<EnemyAbilityController>();
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
@@ -135,11 +136,19 @@ public abstract class Character : MonoBehaviour
                 //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
             }
         }
-        else
+        else if (this is Enemy)
         {
-            Enemy enemy = (Enemy)this;
-            enemy.StopAllCoroutines();
-            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            //need a enemy check mana too..
+            if (abilityCast.abilityRequiresCursorSelection)
+            {
+                Enemy enemy = (Enemy)this;
+                enemy.StopAllCoroutines();
+                enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            }
+            else
+            {
+                CastAbilityWithoutSelection(abilityCast);
+            }
             //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
             //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:

@@ -31,7 +31,7 @@ public class SpecifyAbilityArea : BaseAbilityArea
                     player.gameplayStateController.aoeReticleCylinder.transform.position = hit.point;
                 }
             }
-            else
+            else if (enemy != null)
             {
                 Ray ray = new Ray(enemy.AttackTarget.position + Vector3.up, Vector3.down); //now enemy don't need to show, but maybe it will useful for future
             }
@@ -61,9 +61,12 @@ public class SpecifyAbilityArea : BaseAbilityArea
 
     public override void DisplayAOEArea()
     {
-        player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
-        player.gameplayStateController.aoeReticleCylinder.SetActive(true);
-        abilityAreaNeedsShown = true;
+        if (player != null)
+        {
+            player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
+            player.gameplayStateController.aoeReticleCylinder.SetActive(true);
+            abilityAreaNeedsShown = true;
+        }
     }
 
     public override Type GetAbilityArea()

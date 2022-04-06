@@ -43,7 +43,7 @@ public class AbilityCooldown : MonoBehaviour
             {
                 CooldownAbilityOnActionButtons(e.info);
             }
-            else
+            else if (character is Enemy)
             {
                 CooldownAbilityOnEnemyList(e.info);
             }
@@ -106,6 +106,6 @@ public class AbilityCooldown : MonoBehaviour
             yield return null;
         }
         enemyAbility.abilityOnCooldown = false;
-        cooldownRoutine = null;
+        enemyCooldownRoutine = null;
     }
 }

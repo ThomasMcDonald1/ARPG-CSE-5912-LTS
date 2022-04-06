@@ -31,10 +31,14 @@ public abstract class BaseCastType : MonoBehaviour
     private void OnEnable()
     {
         Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
-        MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving;
+        MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving; 
     }
 
     private void OnPlayerBeganMoving(object sender, InfoEventArgs<int> e)
+    {
+        StopCasting();
+    }
+    private void OnEnemyBeganMoving(object sender, InfoEventArgs<int> e)
     {
         StopCasting();
     }

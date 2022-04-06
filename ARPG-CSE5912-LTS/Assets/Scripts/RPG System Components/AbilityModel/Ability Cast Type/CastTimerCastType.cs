@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using ARPG.Combat;
 
 public class CastTimerCastType : BaseCastType
 {
@@ -22,8 +23,15 @@ public class CastTimerCastType : BaseCastType
     {
         if (castingRoutine == null)
         {
-            AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
-            castingRoutine = StartCoroutine(CastTimeCoroutine(abilityCast));
+            if (abilityCast.caster is Player)
+            {
+                AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
+                castingRoutine = StartCoroutine(CastTimeCoroutine(abilityCast));
+            }
+            else if (abilityCast.caster is Enemy)
+            {
+                castingRoutine = StartCoroutine(CastTimeEnemyCoroutine(abilityCast));
+            }
         }
     }
 
@@ -81,6 +89,23 @@ public class CastTimerCastType : BaseCastType
             yield return null;
         }
         castingBar.castBarCanvas.SetActive(false);
+        CompleteCast(abilityCast);
+    }
+
+    private IEnumerator CastTimeEnemyCoroutine(AbilityCast abilityCast)
+    {
+        FaceCasterToHitPoint(abilityCast.caster, abilityCast.hit);
+        InstantiateSpellcastVFX(abilityCast);
+        float displayTime = abilityCast.castType.reducedCastTime;
+        float rate = 1.0f / abilityCast.castType.reducedCastTime;
+        float progress = 0.0f;
+        while (progress < 1.0f)
+        {
+            displayTime -= rate * Time.deltaTime;
+            progress += rate * Time.deltaTime;
+
+            yield return null;
+        }
         CompleteCast(abilityCast);
     }
 

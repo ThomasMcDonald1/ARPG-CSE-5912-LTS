@@ -34,6 +34,7 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
+            EnemyAttackTypeList = new List<EnemyAbility>();
             TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
             Debug.Log("name" + transform.GetChild(0).name);
             Debug.Log("level" + stats[StatTypes.LVL].ToString());
@@ -95,17 +96,18 @@ namespace ARPG.Combat
                     {
                         if (AttackTarget != null)
                         {
-                            for (int i = 0; i++; i < EnemyAttackTypeList.Count)
+                            for (int i = 0; i < EnemyAttackTypeList.Count; i++)
                             {
                                 if (EnemyAttackTypeList[i].cooldownTimer == 0)
                                 {
-                                    ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
+                                    //ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
                                     break;
                                 }
                             }
                         }
                     }
                     */
+                    
 
                 }
                 else if (angle < SightRange && InStopRange())
@@ -114,6 +116,26 @@ namespace ARPG.Combat
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                    if (true)
+                    { //here is for check mana
+                        if (EnemyAttackTypeList != null)
+                        {
+                            for (int i = 0; i < EnemyAttackTypeList.Count; i++)
+                            {
+                                
+                                if (EnemyAttackTypeList[i].abilityOnCooldown == false)
+                                {
+                                    Debug.Log("I got there");
+                                    Debug.Log(EnemyAttackTypeList[i].abilityAssigned);
+                                    Debug.Log(EnemyAttackTypeList[i].cooldownTimer);
+                                    QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                                    //ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
+                                    break;
+                                }
+                            }
+
+                        }
+                    }
                     if (GetComponent<Animator>().GetBool("AttackingMainHand"))
                     {
                         GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
@@ -196,6 +218,7 @@ namespace ARPG.Combat
             }
         }
 
+
         // From animation Event
         public void EndMainHandAttack()
         {
@@ -231,28 +254,9 @@ namespace ARPG.Combat
             return typeof(Enemy);
         }
 
-        private void ChooseAttackType(Ability AttackType)
-        {
-
-            /*
-            switch (AttackType)
-            {
-                case 0:
-                    //ability list 0
-                    break;
-                case 1:
-                    //ability list 1
-                    break;
-                case 2:
-                    //basic attack, last choice
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    break;
-                default:
-                    break;
-
-            }
-            */
-        }
+        
+            
+        
     }
     //public void Cancel()
     //{
