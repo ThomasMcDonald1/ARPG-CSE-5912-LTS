@@ -56,16 +56,18 @@ public class CharacterPanelState : BaseGameplayState
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
         //figure out if the raycast results contain an item or ability
-        foreach (RaycastResult result in e.info)
+       /* foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            Debug.Log("GameObject: " + go.name);
-            InventorySlot slot = go.GetComponent<InventorySlot>();
-            if (slot != null)
+            Debug.Log("GameObject: " + go);
+            InventorySlot slot = go.GetComponentInChildren<InventorySlot>();
+            if (slot != null && slot.item!=null)
             {
-                Debug.Log("Item hovered over: " + slot.name);
-                //TODO: Display item tooltip
+                
+
             }
-        }
+            Debug.Log("Item hovered over: " + slot.item.name);
+
+        }*/
     }
 }

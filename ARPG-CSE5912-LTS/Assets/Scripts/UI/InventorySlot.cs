@@ -16,26 +16,43 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     //private float timeToWait = 0.05f;
     [SerializeField] public  TextMeshProUGUI tipText;
     [SerializeField] public RectTransform tipWindow;
-    Ite item;
+    public Ite item;
 
     public static Action<String, Vector2> OnMouseHover;
     public static Action OnMouseLoseFocus;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+       
         if (removeButton.interactable)
         {
             //Debug.Log("Hoever!");
-            StopAllCoroutines();
+            //StopAllCoroutines();
             //StartCoroutine(StartTimer());
-            ShowMessage();
+            TipManager.instance.ShowTip(item.name);
         }
+       /* foreach (GameObject obj in objs)
+        {
+            InventorySlot invSlot = obj.GetComponentInChildren<InventorySlot>();
+            Debug.Log("Inventory item: " + invSlot.item.name);
+          
+        }
+       */
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopAllCoroutines();
-        HideTip();
+        /*   //StopAllCoroutines();
+           List<GameObject> objs = eventData.hovered;
+           foreach (GameObject obj in objs)
+           {
+               Debug.Log("Obj:  " + obj);
+
+               InventorySlot invSlot = obj.GetComponentInChildren<InventorySlot>();*/
+        /*if (!invSlot.Equals(this)){*/
+
+        TipManager.instance.HideTip();
+
+
     }
     private void ShowMessage()
     {
