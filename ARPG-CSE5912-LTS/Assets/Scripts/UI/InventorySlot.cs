@@ -16,10 +16,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     //private float timeToWait = 0.05f;
     [SerializeField] public  TextMeshProUGUI tipText;
     [SerializeField] public RectTransform tipWindow;
-    Ite item;
+    public Ite item;
 
-    public static Action<String, Vector2> OnMouseHover;
-    public static Action OnMouseLoseFocus;
+    private float timeToWait = 0.5f;
+
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -27,7 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             //Debug.Log("Hoever!");
             StopAllCoroutines();
-            //StartCoroutine(StartTimer());
+            StartCoroutine(StartTimer());
             ShowMessage();
         }
     }
@@ -35,7 +36,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerExit(PointerEventData eventData)
     {
         StopAllCoroutines();
-        HideTip();
+       
     }
     private void ShowMessage()
     {
@@ -54,49 +55,27 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
 
 
-        ShowTip(tipToShow,Input.mousePosition);
+        
     }
 
-   /* private IEnumerator StartTimer()
+    private IEnumerator StartTimer()
     {
         //Debug.Log("In Timer");
         yield return new WaitForSeconds(timeToWait);
         ShowMessage();
-    }*/
-
-    private void OnEnable()
-    {
-        OnMouseHover -= ShowTip;
-        OnMouseLoseFocus -= HideTip;
-
     }
+
+  
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        HideTip();
-       
+      
+        
     }
 
-    public void ShowTip(String tip, Vector2 mousePos)
-    {
-        //Debug.Log("In ShowMessage");
 
-        tipText.text = tip;
-        tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
-        tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x+ tipWindow.sizeDelta.x/2, mousePos.y);
-
-
-    }
-    public void HideTip()
-    {
-        //Debug.Log("Hide ShowMessage");
-
-        tipText.text = default;
-        tipWindow.gameObject.SetActive(false);
-    }
- 
     public void AddItem(Ite newItem)
     {
         item = newItem;
