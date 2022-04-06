@@ -62,9 +62,16 @@ public class EquipManager : MonoBehaviour
         if(newItem.type == Ite.ItemType.weapon)
         {
             WeaponEquipment weapon = (WeaponEquipment)newItem;
+
             nu = (GameObject)Instantiate(weapon.prefab);
-            nu.transform.parent = rightHand.transform;
-            nu.transform.localPosition = new Vector3(0, 0, 0);
+            nu.GetComponent<Animator>().enabled = false;
+            Destroy(nu.GetComponent<LootLabels.DroppedGear>());
+            Destroy(nu.GetComponent<LootLabels.CreateLabel>());
+            Destroy(nu.GetComponent<LootLabels.ObjectHighlight>());
+            // nu.GetComponent<LootLabels.CreateLabel>().enabled = false;
+            // nu.GetComponent<LootLabels.ObjectHighlight>().enabled = false;
+            nu.transform.SetParent(rightHand.transform);
+            nu.transform.localPosition = Vector3.zero;
             nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
             switch (weapon.typeOfWeapon)
             {
@@ -85,6 +92,9 @@ public class EquipManager : MonoBehaviour
                     nu.transform.localPosition = new Vector3(0, 0, 0);
                     nu.transform.localRotation = Quaternion.Euler(0, 0, 0);
                     break;
+                case WeaponEquipment.weaponType.dagger:
+                    animController.ChangeToOnlyDaggerRight();
+                    break;
                 default:
                     Debug.Log("Don't know what this weapon does");
                     break;
@@ -97,9 +107,12 @@ public class EquipManager : MonoBehaviour
         // Activate the equipment's features
         foreach (GameObject featureGO in newItem.prefix.FeaturesGOs)
         {
-            Feature feature = featureGO.GetComponent<Feature>();
-            Debug.Log(feature.name);
-            feature.Activate(gameObject);
+            if (featureGO != null)
+            {
+                Feature feature = featureGO.GetComponent<Feature>();
+                Debug.Log(feature.name);
+                feature.Activate(gameObject);
+            }
         }
 
         // Equipment has been removed so we trigger the callback
@@ -124,6 +137,9 @@ public class EquipManager : MonoBehaviour
                     Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
                     if (nu != null)
                     {
+                        //nu.GetComponent<Animator>().enabled = true;
+                        //nu.GetComponent<LootLabels.CreateLabel>().enabled = true;
+                        //nu.GetComponent<LootLabels.ObjectHighlight>().enabled = true;
                         Destroy(nu);
                     }
                     animController.ChangeToUnarmed();
@@ -136,8 +152,11 @@ public class EquipManager : MonoBehaviour
             // Dectivate the equipment's features
             foreach (GameObject featureGO in oldItem.prefix.FeaturesGOs)
             {
-                Feature feature = featureGO.GetComponent<Feature>();
-                feature.Deactivate();
+                if (featureGO != null)
+                {
+                    Feature feature = featureGO.GetComponent<Feature>();
+                    feature.Deactivate();
+                }
             }
 
             // Equipment has been removed so we trigger the callback

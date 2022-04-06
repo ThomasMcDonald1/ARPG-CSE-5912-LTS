@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour
         if (!item.stackable)
         {
             list.Remove(item);
-            Destroy(item);
+          //  Destroy(item);
         }
         else if ((int)amount[item.name] > 1)
         {
@@ -125,7 +125,7 @@ public class Inventory : MonoBehaviour
             amount[item.name] = "0";
             list.Remove(item);
             amount.Remove(item.name);
-            Destroy(item);
+           // Destroy(item);
         }
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();

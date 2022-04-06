@@ -41,6 +41,41 @@ namespace LootLabels {
                 //    return modelPath + "Shoes";
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
+                case GearTypes.Helm:
+                    switch (itemRarity)
+                    {
+                        //case Rarity.Legendary:
+                        //    return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Helm";
+                    }
+                case GearTypes.Armor:
+                    switch (itemRarity)
+                    {
+                        //case Rarity.Legendary:
+                        //    return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Armor";
+                    }
+                case GearTypes.Boots:
+                    switch (itemRarity)
+                    {
+                        //case Rarity.Legendary:
+                        //    return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Boots";
+                    }
+                // return modelPath + "Sword";
+                case GearTypes.Dagger:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Dagger";
+                    }
+                   // return modelPath + "Sword";
+
                 case GearTypes.HealthPotion:
                    return modelPath + "HealthPotion";
                 case GearTypes.Sword:
