@@ -86,8 +86,14 @@ namespace LootLabels {
                         default:
                             return modelPath + "Sword";
                     }
-                //case GearTypes.Shield:
-                //    return modelPath + "Shield";
+                case GearTypes.Shield:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendaryShield";
+                        default:
+                            return modelPath + "Shield";
+                    }
                 default:
                     Debug.Log("Case not implemented");
                     switch (itemRarity)
