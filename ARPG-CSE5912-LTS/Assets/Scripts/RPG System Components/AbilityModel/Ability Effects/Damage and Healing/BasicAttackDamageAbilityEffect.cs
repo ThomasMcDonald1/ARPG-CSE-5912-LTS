@@ -61,7 +61,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
-        DamageEnemyEvent.Invoke(this, EventArgs.Empty);
+        DamageEnemyEvent?.Invoke(this, EventArgs.Empty);
 
         //Send event
         BasicAttackDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((target, finalCalculatedDamage, wasCrit)));
