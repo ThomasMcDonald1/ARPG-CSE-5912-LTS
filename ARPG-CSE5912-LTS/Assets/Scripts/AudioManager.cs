@@ -80,6 +80,8 @@ public class AudioManager : MonoBehaviour
 
         Sound s1 = Array.Find(sounds, sound => sound.name == "Footsteps");
         Sound s2 = Array.Find(sounds, sound => sound.name == "MenuClick");
+        Sound s3 = Array.Find(sounds, sound => sound.name == "Force");
+
         if (s1 != null)
         {
             s1.UpdateVolume(volume);
@@ -87,6 +89,10 @@ public class AudioManager : MonoBehaviour
         if (s2 != null)
         {
             s2.UpdateVolume(volume);
+        }
+        if (s3 != null)
+        {
+            s3.UpdateVolume(volume);
         }
 
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class HealthBarController : MonoBehaviour
 
     public static HealthBarController instance;
     protected Stats stats;
+
 
     private void Awake()
     {

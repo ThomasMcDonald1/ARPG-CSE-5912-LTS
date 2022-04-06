@@ -335,18 +335,17 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
-        //figure out if the raycast results contain an item or ability
+        //figure out if the raycast results contain an ability
         foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
             //Debug.Log("GameObject: " + go.name);
             ActionButton actionButton = go.GetComponent<ActionButton>();
             if (actionButton != null)
-            {
                 Ability ability = actionButton.abilityAssigned;
                 if (ability != null)
                 {
-                    //Debug.Log("Ability is: " + ability.name);
+                    //Debug.Log("Ability hovered over: " + ability.name);
                     //TODO: Display ability tooltip
 
                 }

@@ -27,18 +27,17 @@ namespace ARPG.Combat
             {
                 pathsVision[i] = transform.GetChild(3).transform.GetChild(i).GetComponent<Paths>().canSee;
             }
-
+            canSee = false;
             //if sage can see, all of its paths can see, if one path can see, sage can see, if no paths can see, sage can not see
             for (int i = 0; i < pathsVision.Length; i++)
             {
                 if(pathsVision[i] == true)
                 {
                     canSee = true;
-                    goto Found;
+                    break;
                 }
             }
-            canSee = false;
-            Found:
+
             if (GetComponent<Animator>().GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
