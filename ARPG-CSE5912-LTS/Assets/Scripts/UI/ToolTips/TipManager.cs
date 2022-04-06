@@ -28,11 +28,10 @@ public class TipManager : MonoBehaviour
     {
 
         tipText.text = tip;
-        gameObject.SetActive(true);
         tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(Input.mousePosition.x + tipWindow.sizeDelta.x / 2, Input.mousePosition.y+ tipWindow.sizeDelta.x / 2);
-
+        tipWindow.transform.position =   new Vector2(Input.mousePosition.x + tipWindow.sizeDelta.x / 2, Input.mousePosition.y + tipWindow.sizeDelta.x / 2);
+      
     }
     public void HideTip()
     {

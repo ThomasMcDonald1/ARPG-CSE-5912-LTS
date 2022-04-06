@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CharacterPanelState : BaseGameplayState
@@ -56,18 +57,49 @@ public class CharacterPanelState : BaseGameplayState
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
         //figure out if the raycast results contain an item or ability
-       /* foreach (RaycastResult result in e.info)
+       foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            Debug.Log("GameObject: " + go);
-            InventorySlot slot = go.GetComponentInChildren<InventorySlot>();
-            if (slot != null && slot.item!=null)
+            //Debug.Log("GameObject: " + go);
+
+            Button invButton = go.GetComponent<Button>();
+            //Image itemImg = go.GetComponent<Image>()
+            //Button xButton = invButton;
+          
+
+            if (invButton != null&&invButton.CompareTag("invSlotButton"))
             {
-                
+
+                InventorySlot invSlot = invButton.GetComponentInParent<InventorySlot>();
+                if (invSlot!=null && invSlot.item != null)
+                {
+                    Debug.Log("Item hovered over: " + invSlot.item.name);
+                    TipManager.instance.ShowTip(invSlot.item.name);
+
+                }
+                else 
+                {
+                    TipManager.instance.HideTip();
+
+                }
+
+
 
             }
-            Debug.Log("Item hovered over: " + slot.item.name);
+            else if(invButton != null && !invButton.CompareTag("invSlotButton"))
+            {
+                TipManager.instance.HideTip();
+            }
+           
+           
 
-        }*/
+
+
+
+
+
+
+
+        }
     }
 }

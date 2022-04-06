@@ -12,10 +12,9 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public Image icon;
     public TextMeshProUGUI amount;
     public Button removeButton;
-    public string tipToShow;
+  
     //private float timeToWait = 0.05f;
-    [SerializeField] public  TextMeshProUGUI tipText;
-    [SerializeField] public RectTransform tipWindow;
+ 
     public Ite item;
 
     public static Action<String, Vector2> OnMouseHover;
@@ -29,7 +28,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             //Debug.Log("Hoever!");
             //StopAllCoroutines();
             //StartCoroutine(StartTimer());
-            TipManager.instance.ShowTip(item.name);
+           //TipManager.instance.ShowTip(item.name);
         }
        /* foreach (GameObject obj in objs)
         {
@@ -41,39 +40,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        /*   //StopAllCoroutines();
-           List<GameObject> objs = eventData.hovered;
-           foreach (GameObject obj in objs)
-           {
-               Debug.Log("Obj:  " + obj);
-
-               InventorySlot invSlot = obj.GetComponentInChildren<InventorySlot>();*/
-        /*if (!invSlot.Equals(this)){*/
-
-        TipManager.instance.HideTip();
+       //TipManager.instance.HideTip();
 
 
     }
-    private void ShowMessage()
-    {
-        tipToShow = item.name;
-        switch ((int)item.type)
-        {
-            case(int) Ite.ItemType.weapon:
-                //tipToShow += "\n" +"Damage: "+ item.attackDamage;
-                break;
-            case (int)Ite.ItemType.armor:
-                //tipToShow += "\n" + "Defend rate: " + item.defendRate;
-                break;
-            case (int)Ite.ItemType.utility:
-                //tipToShow += "\n" +  item.utilityUsage;
-                break;
-        }
-
-
-        ShowTip(tipToShow,Input.mousePosition);
-    }
-
+ 
    /* private IEnumerator StartTimer()
     {
         //Debug.Log("In Timer");
@@ -81,38 +52,17 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         ShowMessage();
     }*/
 
-    private void OnEnable()
-    {
-        OnMouseHover -= ShowTip;
-        OnMouseLoseFocus -= HideTip;
-
-    }
-
+  
     // Start is called before the first frame update
     void Start()
     {
-        HideTip();
-       
-    }
-
-    public void ShowTip(String tip, Vector2 mousePos)
-    {
-        //Debug.Log("In ShowMessage");
-
-        tipText.text = tip;
-        tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > 200 ? 200 : tipText.preferredWidth, tipText.preferredHeight);
-        tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x+ tipWindow.sizeDelta.x/2, mousePos.y);
-
+        //HideTip();
+        ClearSlot();
 
     }
-    public void HideTip()
-    {
-        //Debug.Log("Hide ShowMessage");
 
-        tipText.text = default;
-        tipWindow.gameObject.SetActive(false);
-    }
+  
+ 
  
     public void AddItem(Ite newItem)
     {
