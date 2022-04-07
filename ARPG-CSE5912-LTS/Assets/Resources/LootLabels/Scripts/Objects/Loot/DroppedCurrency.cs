@@ -24,7 +24,7 @@ namespace LootLabels {
             {
                 playerMoney.addMoney(currency.CurrencyValue);
             }
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         /// <summary>
         /// Creates the label!!
