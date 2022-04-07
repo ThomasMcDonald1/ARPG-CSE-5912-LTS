@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4f18b76eb541e48898966923b43d32, type: 3}
   m_Name: LegendaryDagger
   m_EditorClassIdentifier: 
-  name: Dagger
+  name: Legendary Dagger
   icon: {fileID: 21300000, guid: 478e4a3f88da71042b80cf13db05b586, type: 3}
   showInInventory: 1
   stackable: 0
@@ -22,16 +22,6 @@ MonoBehaviour:
   cost: 0
   equipSlot: 0
   equipment: {fileID: 0}
-  levelRequiredToEquip: 10
-  statRequiredToEquip: 0
-  statAmountRequired: 0
-  attackRange: 0
-  damage: 9
-  attackSpeedMod: 6
-  critChanceBonus: 8
-  defendRate: 0
-  defense: 0
-  evasion: 0
   prefix:
     Name: 'Vextal''s '
     FeaturesGOs:
@@ -45,4 +35,9 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     GearTypeRequirements: 0000000002000000010000000400000006000000050000000300000007000000
+  attackRange: 0
+  minimumDamage: 0
+  maximumDamage: 0
+  attackSpeed: 0
+  critChance: 0
   typeOfWeapon: 5

@@ -165,11 +165,12 @@ namespace LootLabels
                     
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
-                        Ite item = droppedItem.GetComponent<ItemPickup>().item;
+                        Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                        Debug.Log("item is " + item);
                         //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        /*droppedItem.GetComponent<ItemPickup>().item =*/ RollStatsForItems(gear.ItemRarity, item, gear.GearType);
                        // Equipment equipment = (Equipment)item;
                         
                         //if (item.type == Ite.ItemType.utility){
@@ -280,71 +281,61 @@ namespace LootLabels
             return stat;
 
         }
-        private void RollStatsForItemsLevel(Rarity itemRarity, Ite item)
-        {
-           // double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
-            //Ite ite = Instantiate(item);
-            //if (string.Equals("Health Potion", item.name))
-            //{
-            //    Potion potion = (Potion)item;
-            //    Debug.Log("potion health before change is" + potion.health);
-            //    potion.health = (int)(potion.health * multiplier);
-            //    string name = itemRarity.ToString() + " " + potion.name;
-            //    potion.name = name;
-            //    Debug.Log("health potion health amount is " + potion.health);
-            //    Debug.Log("potion.name is " + potion.name);
-            //}
-            //else if (string.Equals("Mano Potion", item.name))
-            //{
-            //    Potion potion = (Potion)item;
-            //    Debug.Log("potion health before change is" + potion.health);
-            //    potion.mana = (int)(potion.mana * multiplier);
-            //    string name = itemRarity.ToString() + " " + potion.name;
-            //    potion.name = name;
-            //    Debug.Log("health potion health amount is " + potion.health);
-            //    Debug.Log("potion.name is " + potion.name);
-            //}
-            //else if (string.Equals("Knight Sword", item.name))
-            //{
-            //    WeaponEquipment weapon = (WeaponEquipment)item;
-            //}
-        }
 
-        private Ite RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
+        private void RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
         {
-            Ite ite = Instantiate(item);
-            double multiplier = LootGenerator.RollAmountOfStats(itemRarity, ite, gearType);
+            //Ite ite = Instantiate(item);
+            double multiplier = LootGenerator.RollAmountOfStats(itemRarity, item, gearType);
             if (string.Equals("Health Potion", item.name))
             {
-                Potion potion = (Potion)ite;
+                Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.health = (int)(potion.health * multiplier);
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
                 Debug.Log("potion.name is " + potion.name);
-                return potion;
+                item = potion;
             }
             else if(string.Equals("Mano Potion", item.name))
             {
-                Potion potion = (Potion)ite;
+                Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.mana = (int)(potion.mana * multiplier);
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
                 Debug.Log("potion.name is " + potion.name);
-                return potion;
+                item = potion;
             }
-            //else if(item.type == Ite.ItemType.weapon)
-            //{
-            //    WeaponEquipment weapon = (WeaponEquipment)ite;
-            //}
-            //else
-            //{
-            //    ArmorEquipment armor = (ArmorEquipment)ite;
-            //}
-            return ite;              
+            else if (item.type == Ite.ItemType.weapon)
+            {
+                Equipment equip = (Equipment)item;
+                if (equip.equipSlot == EquipmentSlot.OffHand)
+                {
+                    ShieldEquipment shield = (ShieldEquipment)item;
+                    shield.armor = (int)(shield.armor * multiplier);
+                    shield.armor = (int)(shield.blockChance * multiplier);
+                    item = shield;
+                }
+                else
+                {
+                    WeaponEquipment weapon = (WeaponEquipment)item;
+                    weapon.attackRange = (int)(weapon.attackRange * multiplier);
+                    weapon.minimumDamage = (int)(weapon.minimumDamage * multiplier);
+                    weapon.maximumDamage = (int)(weapon.maximumDamage * multiplier);
+                    weapon.attackSpeed = (int)(weapon.attackSpeed * multiplier);
+                    weapon.critChance = (int)(weapon.critChance * multiplier);
+                    item = weapon;
+                }
+            }
+            else
+            {
+                ArmorEquipment armor = (ArmorEquipment)item;
+                armor.Evasion = (int)(armor.Evasion * multiplier);
+                armor.Armor = (int)(armor.Armor * multiplier);
+                item = armor;
+            }
         }
     }
 }

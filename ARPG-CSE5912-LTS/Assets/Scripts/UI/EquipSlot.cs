@@ -26,7 +26,8 @@ public class EquipSlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        Inventory.instance.Remove(item);
+        if(item != null)
+            Inventory.instance.Remove(item);
     }
 
     public void UseItem()
