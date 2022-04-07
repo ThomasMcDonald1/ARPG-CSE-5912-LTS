@@ -4130,6 +4130,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692652317}
   m_CullTransparentMesh: 1
+--- !u!114 &730710676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8181858855221146510, guid: 47ab12595dcda344e863e5a6e4b4ade2, type: 3}
+  m_PrefabInstance: {fileID: 971448911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &731356367
 GameObject:
   m_ObjectHideFlags: 0
@@ -7432,6 +7443,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f525701f70256d04091b8f829445f3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &971448915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5294268009564551498, guid: 47ab12595dcda344e863e5a6e4b4ade2, type: 3}
+  m_PrefabInstance: {fileID: 971448911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971448912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c7fe55e52130649b52e3d083acc8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000298370
 GameObject:
   m_ObjectHideFlags: 0
@@ -8222,6 +8244,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayUICanvas: {fileID: 2061881056}
+  inventoryUIRaycaster: {fileID: 730710676}
+  gameplayStateController: {fileID: 971448915}
 --- !u!4 &1115541517
 Transform:
   m_ObjectHideFlags: 0
@@ -12753,8 +12777,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 611545888}
   m_HandleRect: {fileID: 611545886}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.66481394
+  m_Value: 1
+  m_Size: 0.6648139
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
