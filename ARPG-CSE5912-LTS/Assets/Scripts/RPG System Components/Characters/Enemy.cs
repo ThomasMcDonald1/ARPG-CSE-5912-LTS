@@ -232,6 +232,11 @@ namespace ARPG.Combat
             return typeof(Enemy);
         }
 
+        public LootSource GetEnemyLootSource()
+        {
+            return lootSource;
+        }
+
         private void ChooseAttackType(Ability AttackType)
         {
 

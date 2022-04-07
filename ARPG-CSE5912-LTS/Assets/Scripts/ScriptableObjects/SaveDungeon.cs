@@ -16,7 +16,7 @@ public class SaveDungeon : ScriptableObject
 
     public bool generated = false;
     public int seed = -1;
-    public Vector3 waypointLocation;
+    public Vector3 waypointLocation, startLocation;
 
     public void GenerateSeed()
     {
@@ -32,6 +32,11 @@ public class SaveDungeon : ScriptableObject
     public void SetWaypointLocation(Vector3 loc)
     {
         waypointLocation = loc;
+    }
+
+    public void SetDungeonStartLocation(Vector3 loc)
+    {
+        startLocation = loc;
     }
 
 }

@@ -21,6 +21,7 @@ namespace DunGen
         {
 			if (GenerateOnStart)
 			{
+				SetStart();
 				Generate();
 				//BakeNavMesh();
 				//AddEnemies();
@@ -69,8 +70,16 @@ namespace DunGen
 			if (waypointRoom != null)
             {
 				var loc = waypointRoom.transform.position + Vector3.up;
-				Debug.Log("Dungeon wayport: spawn player at " + loc);
 				savedDunData.SetWaypointLocation(loc);
+			}
+		}
+
+		void SetStart()
+		{
+			if (Root != null)
+			{
+				var loc = Root.transform.position + Vector3.up;
+				savedDunData.SetDungeonStartLocation(loc);
 			}
 		}
 
