@@ -7,6 +7,7 @@ public class Equipment : Ite
 {
     public EquipmentSlot equipSlot;
     public Item equipment;
+    //public Stats playerStat;
 
     //All equipment has the following:
     // public int levelRequiredToEquip;

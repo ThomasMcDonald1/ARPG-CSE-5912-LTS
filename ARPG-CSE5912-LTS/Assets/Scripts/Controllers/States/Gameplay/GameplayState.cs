@@ -322,7 +322,7 @@ public class GameplayState : BaseGameplayState
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
                 contextMenuPanel.PopulateContextMenu(actionButton);
             }
-            if(potionButton != null)
+            if (potionButton != null)
             {
                 utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
                 utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
@@ -342,6 +342,7 @@ public class GameplayState : BaseGameplayState
             //Debug.Log("GameObject: " + go.name);
             ActionButton actionButton = go.GetComponent<ActionButton>();
             if (actionButton != null)
+            {
                 Ability ability = actionButton.abilityAssigned;
                 if (ability != null)
                 {
@@ -350,6 +351,7 @@ public class GameplayState : BaseGameplayState
 
                 }
             }
+
         }
     }
 
