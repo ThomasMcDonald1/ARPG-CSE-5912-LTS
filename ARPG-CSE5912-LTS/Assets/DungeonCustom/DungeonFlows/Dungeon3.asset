@@ -15,13 +15,25 @@ MonoBehaviour:
   globalPropGroupID_obsolete: 
   globalPropRanges_obsolete: []
   Length:
-    Min: 26
+    Min: 30
     Max: 30
   BranchMode: 0
   BranchCount:
     Min: 1
     Max: 5
-  GlobalProps: []
+  GlobalProps:
+  - ID: 1
+    Count:
+      Min: 0
+      Max: 0
+  - ID: 2
+    Count:
+      Min: 0
+      Max: 0
+  - ID: 3
+    Count:
+      Min: 15
+      Max: 25
   KeyManager: {fileID: 0}
   DoorwayConnectionChance: 1
   RestrictConnectionToSameSection: 0
@@ -87,7 +99,7 @@ MonoBehaviour:
     Keys: []
     Locks: []
     LockPlacement: 0
-  - Graph: {fileID: 11400000, guid: bf7ae2d4adcbb9e469c98ce0d67c2795, type: 2}
+  - Graph: {fileID: 11400000}
     TileSets:
     - {fileID: 11400000, guid: 33f474ac62aa4a34282455338129d66c, type: 2}
     NodeType: 0

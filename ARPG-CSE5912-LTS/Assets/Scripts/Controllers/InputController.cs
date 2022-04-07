@@ -86,6 +86,20 @@ public class InputController : MonoBehaviour
                 }
             }
         }
+
+        if (inventoryUIRaycaster == null)
+        {
+            var inventoryUI = GameObject.Find("InventoryUI");
+            if (inventoryUI != null)
+            {
+                inventoryUIRaycaster = inventoryUI.GetComponent<GraphicRaycaster>();
+            }
+        }
+
+        if (gameplayStateController == null)
+        {
+            gameplayStateController = GameObject.FindObjectOfType<GameplayStateController>();
+        }
     }
 
     private void Update()
@@ -274,6 +288,7 @@ public class InputController : MonoBehaviour
 
     private List<RaycastResult> GetUIElementsClicked()
     {
+        FindCanvas();
         PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
             position = Mouse.current.position.ReadValue()
