@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace LootLabels
@@ -102,7 +101,6 @@ namespace LootLabels
         IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
-            Debug.Log("amount is " + i);
 
             while (i != 0)
             {
@@ -122,7 +120,7 @@ namespace LootLabels
             switch (lootType)
             {
                 case LootTypes.Currency:
-                    ChooseCurrency(lootOrigin,type);
+                    ChooseCurrency(lootOrigin);
                     break;
                 case LootTypes.Items:
                     ChooseItemType(lootOrigin, type);
@@ -137,9 +135,9 @@ namespace LootLabels
         /// Choses a currency to drop and creates it
         /// </summary>
         /// <param name="lootOrigin"></param>
-        void ChooseCurrency(Transform lootOrigin, LootType type)
+        void ChooseCurrency(Transform lootOrigin)
         {
-            BaseCurrency currency = LootGenerator.CreateCurrency(type);
+            BaseCurrency currency = LootGenerator.CreateCurrency();
 
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
@@ -170,58 +168,24 @@ namespace LootLabels
                         //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        /*droppedItem.GetComponent<ItemPickup>().item =*/ RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-                       // Equipment equipment = (Equipment)item;
+                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        Equipment equipment = (Equipment)item;
                         
-                        //if (item.type == Ite.ItemType.utility){
-                        //    Potion potion = (Potion)item;
-                        //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        //}                        
-                        //else
-                        if(droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
+                        if (droppedItem.GetComponent<ItemPickup>().item.name.Contains("Potion")){
+                            Potion potion = (Potion)item;
+                            Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
+                        }                        
+                        else if(equipment != null)
                         {
-                            Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
-                            foreach(GameObject featureGO in prefix.FeaturesGOs){
-                                Feature feature = featureGO.GetComponent<Feature>();
-                                Type typeFeature = feature.GetType();
-                                if(typeFeature == typeof(FlatStatModifierFeature))
-                                {
-                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
-
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
-                                }
-                                else
-                                {
-                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
-                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
-                                }
-
-                            }
-                            foreach (GameObject featureGO in suffix.FeaturesGOs)
-                            {
-                                Feature feature = featureGO.GetComponent<Feature>();
-                                Type typeFeature = feature.GetType();
-                                if (typeFeature == typeof(FlatStatModifierFeature))
-                                {
-                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
-                                }
-                                else
-                                {
-                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
-                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
-                                }
-
-                            }
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
-                            droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
-
-                        //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
+                        item.name = gear.ItemName;
+                        item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
+                        Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
                 default:
@@ -279,7 +243,6 @@ namespace LootLabels
 
             }
             return stat;
-
         }
 
         private void RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
@@ -336,6 +299,11 @@ namespace LootLabels
                 armor.Armor = (int)(armor.Armor * multiplier);
                 item = armor;
             }
+            else if(string.Equals("Knight Sword", item.name))
+            {
+                WeaponEquipment weapon = (WeaponEquipment)ite;
+            }
+            return ite;              
         }
     }
 }
