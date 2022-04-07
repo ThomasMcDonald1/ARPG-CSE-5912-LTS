@@ -22,11 +22,15 @@ public class Inventory : MonoBehaviour
     public List<Ite> weaponItems = new List<Ite>(); 
     public List<Ite> armorItems = new List<Ite>();
     public List<Ite> utilItems = new List<Ite>();
+    public PotionButton[] potionButtons;
 
     private GameObject player;
+    private GameObject potionSlots;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        potionSlots = GameObject.FindGameObjectWithTag("PotionSlot");
+        potionButtons = potionSlots.GetComponentsInChildren<PotionButton>();
     }
 
 
@@ -84,9 +88,21 @@ public class Inventory : MonoBehaviour
                 list.Add(item);
 
                 if (onItemChangedCallback != null)
+                {
                     onItemChangedCallback.Invoke();
+
+                }
+               
             }
         }
+        foreach (PotionButton pButton in potionButtons)
+        {
+            if (pButton.item != null && pButton.item.Equals(item))
+            {
+                pButton.AddItem(item, amount[item.name].ToString());
+            }
+        }
+
     }
 
     

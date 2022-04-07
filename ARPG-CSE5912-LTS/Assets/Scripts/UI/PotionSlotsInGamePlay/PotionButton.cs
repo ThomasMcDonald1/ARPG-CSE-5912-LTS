@@ -53,10 +53,11 @@ public class PotionButton : MonoBehaviour
     }
     public void clearButton()
     {
+        UtilityMenuPanel.instance.itemNamesExited.Remove(item);
+
         item = null;
         icon.sprite = null;
         icon.enabled = false;
         amountText.SetText("");
-
     }
 }

@@ -30,11 +30,11 @@ public class UtilityMenuPanel : MonoBehaviour
     public void PopulateUtilityMenu(PotionButton button)
     {
         //Debug.Log("Hi!!");
-        ClearUtilityMenu();
+       ClearUtilityMenu();
         utilities= Inventory.instance.utilItems;
         foreach (Ite item in utilities)
         {
-            //Debug.Log("Potions that are excited: " + itemNamesExited);
+           // Debug.Log("Potions that are Exited: " + itemNamesExited);
             if (!checkInTheButtons(item)){ 
                 Sprite iconToSet = item.icon;
                 string nameToSet = item.name;
