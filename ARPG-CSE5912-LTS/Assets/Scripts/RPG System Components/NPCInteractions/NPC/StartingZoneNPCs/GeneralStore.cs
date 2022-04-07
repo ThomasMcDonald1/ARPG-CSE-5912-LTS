@@ -44,11 +44,31 @@ public class GeneralStore : NPC
         }
     }
 
-    public override void NextStory()
+    private void OnEnable()
     {
-        if (currentStory < DialogueJSON.Count - 1)
+        InteractionManager.EndOfStoryEvent += NextStory;
+
+
+    }
+    private void OnDisable()
+    {
+        InteractionManager.EndOfStoryEvent -= NextStory;
+    }
+
+    private void NextStory(object sender, EventArgs e)
+    {
+        if (player.NPCTarget != this) return;
+        switch (currentStory)
         {
-            currentStory++;
+            case 0:
+                currentStory++;
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
     }
 
@@ -56,9 +76,16 @@ public class GeneralStore : NPC
     {
         if (Interactable())
         {
-            if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
-            else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
-            //else { SetDialogue(); }
+            InteractionManager.GetInstance().EnableTradeButton();
+            InteractionManager.GetInstance().DisablePorterButton();
+            if (currentStory == 0)
+            {
+                InteractionManager.GetInstance().BeginDialogue();
+            }
+            else
+            {
+                InteractionManager.GetInstance().EnterOptionsMenu();
+            }
 
             shopUI.initializeShop(shop);
             saleUI.shop = shop;

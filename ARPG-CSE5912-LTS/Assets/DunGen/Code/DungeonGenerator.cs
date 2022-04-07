@@ -1005,25 +1005,10 @@ namespace DunGen
 
 				CurrentDungeon.PostGenerateDungeon(this);
 
-				//NAV MASH MODIFICATIONS
-				var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
-				foreach (NavMeshAgent agent in agents)
-				{
-					agent.enabled = false;
-				}
-
-				foreach (var tile in CurrentDungeon.AllTiles)
-                {
-					tile.GetComponent<NavMeshSurface>().BuildNavMesh();
-				}
-
-				foreach (NavMeshAgent agent in agents)
-				{
-					agent.enabled = true;
-				}
-
-				Debug.Log("Dungeon navmesh addressed");
-				//NAV MASH MODIFICATIONS - END
+				//CUSTOM MODIFICATIONS
+				BakeDungeon();
+				SetEnemyLevels();
+				//CUSTOM MODIFICATIONS - END
 
 
 				// Process random props
@@ -1068,6 +1053,82 @@ namespace DunGen
 				if (door != null)
 					door.SetActive(true);
 		}
+
+		void BakeDungeon()
+        {
+			var agents = UnityEngine.Object.FindObjectsOfType<NavMeshAgent>();
+			foreach (NavMeshAgent agent in agents)
+			{
+				agent.enabled = false;
+			}
+
+			int settingsCount = NavMesh.GetSettingsCount();
+			for (int i = 0; i < settingsCount; i++)
+			{
+				var settings = NavMesh.GetSettingsByIndex(i);
+
+				// Find a surface if it already exists
+				NavMeshSurface surface = CurrentDungeon.gameObject.GetComponents<NavMeshSurface>()
+										.Where(s => s.agentTypeID == settings.agentTypeID)
+										.FirstOrDefault();
+
+				if (surface == null)
+				{
+					surface = CurrentDungeon.gameObject.AddComponent<NavMeshSurface>();
+
+					surface.agentTypeID = settings.agentTypeID;
+					surface.collectObjects = CollectObjects.Children;
+				}
+
+				surface.BuildNavMesh();
+			}
+
+			foreach (NavMeshAgent agent in agents)
+			{
+				agent.enabled = true;
+			}
+
+			var obstacles = UnityEngine.Object.FindObjectsOfType<NavMeshObstacle>();
+			foreach (var obstacle in obstacles)
+			{
+				obstacle.enabled = false;
+				obstacle.enabled = true;
+			}
+
+			Debug.Log("Dungeon navmesh addressed");
+		}
+
+		void SetEnemyLevels()
+		{
+			var playerStats = GameObject.FindObjectOfType<Player>().GetComponent<Stats>();
+			var enemies = UnityEngine.Object.FindObjectsOfType<ARPG.Combat.Enemy>();
+
+            foreach (var enemy in enemies)
+            {
+				if (!enemy.CompareTag("Player"))
+                {
+					var enemyStats = enemy.gameObject.GetComponent<Stats>();
+					if (enemyStats != null)
+					{
+						switch (enemy.GetEnemyLootSource())
+						{
+							case LootLabels.LootSource.Boss:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL) + 10, false);
+								break;
+							case LootLabels.LootSource.Elite:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL) + 5, false);
+								break;
+							case LootLabels.LootSource.Normal:
+							default:
+								enemyStats.SetValue(StatTypes.LVL, (int)playerStats.GetValue(StatTypes.LVL), false);
+								break;
+
+						}
+						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
+					}
+				}                
+            }
+        }
 
 		protected void ProcessProps(Tile tile, GameObject root)
 		{

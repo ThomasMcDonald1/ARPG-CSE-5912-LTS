@@ -23,7 +23,20 @@ public class Kilixis : EnemyAbilityController
 
     private void Awake()
     {
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
         navAgent = GetComponent<NavMeshAgent>();
+        navAgent.speed = 3.5f;
+        stats[StatTypes.AtkSpeed] = 1;
+        stats[StatTypes.MaxHP] = 500;
+        stats[StatTypes.HP] = 500;
+        stats[StatTypes.LVL] = 10;
+        stats[StatTypes.MonsterType] = 3;
+
         player = GameObject.FindWithTag("Player");
         PlayerTarget = null;
 
@@ -37,23 +50,13 @@ public class Kilixis : EnemyAbilityController
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        navAgent.speed = 3.5f;
-        stats[StatTypes.AtkSpeed] = 1;
-        stats[StatTypes.MaxHP] = 500;
-        stats[StatTypes.HP] = 500;
-        stats[StatTypes.LVL] = 10;
-        stats[StatTypes.MonsterType] = 3;
-    }
-
     protected override void Update()
     {
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
             GetComponent<Animator>().SetBool("Dead", true);
+            PlayerTarget = null;
         }
 
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
@@ -75,13 +78,13 @@ public class Kilixis : EnemyAbilityController
             if (GetComponent<Animator>().GetBool("AnimationEnded") && !InMeleeRange())
             {
                 navAgent.isStopped = false;
-                navAgent.SetDestination(player.transform.position);
+                navAgent.destination = PlayerTarget.position;
             }
 
             if (InMeleeRange())
             {
                 navAgent.isStopped = true;
-                navAgent.SetDestination(transform.position);
+                navAgent.destination = transform.position;
                 switch (AttackCycle)
                 {
                     case 0:
