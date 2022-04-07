@@ -310,13 +310,24 @@ namespace LootLabels
             }
             else if (item.type == Ite.ItemType.weapon)
             {
-                WeaponEquipment weapon = (WeaponEquipment)item;
-                weapon.attackRange = (int)(weapon.attackRange * multiplier);
-                weapon.minimumDamage = (int)(weapon.minimumDamage * multiplier);
-                weapon.maximumDamage = (int)(weapon.maximumDamage * multiplier);
-                weapon.attackSpeed = (int)(weapon.attackSpeed * multiplier);
-                weapon.critChance = (int)(weapon.critChance * multiplier);
-                item = weapon;
+                Equipment equip = (Equipment)item;
+                if (equip.equipSlot == EquipmentSlot.OffHand)
+                {
+                    ShieldEquipment shield = (ShieldEquipment)item;
+                    shield.armor = (int)(shield.armor * multiplier);
+                    shield.armor = (int)(shield.blockChance * multiplier);
+                    item = shield;
+                }
+                else
+                {
+                    WeaponEquipment weapon = (WeaponEquipment)item;
+                    weapon.attackRange = (int)(weapon.attackRange * multiplier);
+                    weapon.minimumDamage = (int)(weapon.minimumDamage * multiplier);
+                    weapon.maximumDamage = (int)(weapon.maximumDamage * multiplier);
+                    weapon.attackSpeed = (int)(weapon.attackSpeed * multiplier);
+                    weapon.critChance = (int)(weapon.critChance * multiplier);
+                    item = weapon;
+                }
             }
             else
             {
