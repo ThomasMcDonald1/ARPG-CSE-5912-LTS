@@ -297,7 +297,7 @@ namespace LootLabels
                 Debug.Log("potion.name is " + potion.name);
                 item = potion;
             }
-            else if(string.Equals("Mano Potion", item.name))
+            else if(string.Equals("Mana Potion", item.name))
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
