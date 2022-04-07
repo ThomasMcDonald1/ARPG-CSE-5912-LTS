@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment/Jewelry")]
-public class JewelryEquipment : MonoBehaviour
+public class JewelryEquipment : Equipment
 {
 
 }

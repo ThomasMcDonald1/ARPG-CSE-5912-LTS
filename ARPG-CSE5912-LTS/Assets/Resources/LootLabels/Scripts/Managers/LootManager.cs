@@ -182,7 +182,8 @@ namespace LootLabels
                             equipment.suffix = suffix;
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                         }
-
+                        item.name = gear.ItemName;
+                        item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
                         Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;

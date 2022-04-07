@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using LootLabels;
 
 /* The base item class. All items should derive from this. */
 
@@ -11,6 +11,7 @@ public class Ite : ScriptableObject
 	public bool showInInventory = true;
 	public bool stackable;
 	public ItemType type;
+	public Color itemNameColor;
 	[SerializeField] public GameObject prefab;
 
 	public string utilityUsage;
