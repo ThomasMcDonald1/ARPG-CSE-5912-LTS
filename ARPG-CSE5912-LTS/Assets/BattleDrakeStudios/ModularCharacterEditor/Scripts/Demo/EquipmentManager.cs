@@ -67,6 +67,7 @@ public class EquipmentManager : MonoBehaviour {
             else
             {
                 characterManager.DeactivatePart(part.bodyType);
+                //characterManager.ActivatePart(part.bodyType, character.;
             }
         }
     }

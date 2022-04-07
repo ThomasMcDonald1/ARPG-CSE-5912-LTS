@@ -68,29 +68,31 @@ namespace LootLabels {
                     switch (randomIndex)
                     {
                         case 0:
-                            return modelPath + "LightArmor";
+                            return modelPath + "Armor";
                         case 1:
                             return modelPath + "Armor";
                         case 2:
                             return modelPath + "HeavyArmor";
-
-                    }
-                    switch (itemRarity)
-                    {
-                        //case Rarity.Legendary:
-                        //    return modelPath + "legendaryDagger";
                         default:
                             return modelPath + "Armor";
+
                     }
+                    //switch (itemRarity)
+                    //{
+                    //    //case Rarity.Legendary:
+                    //    //    return modelPath + "legendaryDagger";
+                    //    default:
+                    //        return modelPath + "Armor";
+                    //}
                 case GearTypes.Boots:
                     switch (randomIndex)
                     {
-                        case 0:
-                            return modelPath + "LightBoots";
-                        case 1:
-                            return modelPath + "Boots";
-                        case 2:
-                            return modelPath + "HeavyBoots";
+                        //case 0:
+                        //    return modelPath + "LightBoots";
+                        //case 1:
+                        //    return modelPath + "Boots";
+                        //case 2:
+                        //    return modelPath + "HeavyBoots";
                         default:
                             return modelPath + "Boots";
 
