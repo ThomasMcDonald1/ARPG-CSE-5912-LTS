@@ -8,23 +8,22 @@ namespace LootLabels {
         /// </summary>
         /// <returns></returns>
         public int CalculateCurrencyAmount(LootType type) {
-            int seed = Random.Range(1, 5);
             int randomValue;
             switch (type) {
                 case LootType.Poor:
-                    randomValue = Random.Range(1, 50);
+                    randomValue = Random.Range(1, 3);
                     break;
                 case LootType.Normal:
-                    randomValue = Random.Range(50, 150);
+                    randomValue = Random.Range(4, 8);
                     break;
                 case LootType.Rare:
-                    randomValue = Random.Range(80, 250);
+                    randomValue = Random.Range(10, 16);
                     break;
                 case LootType.Epic:
-                    randomValue = Random.Range(400, 800);
+                    randomValue = Random.Range(25, 36);
                     break;
                 case LootType.Legendary:
-                    randomValue = Random.Range(1000, 2000);
+                    randomValue = Random.Range(40, 51);
                     break;
                 default:
                     randomValue = 0;
@@ -42,11 +41,11 @@ namespace LootLabels {
         public int CalculateLootAmount(LootSource lootSource) {
             switch (lootSource) {
                 case LootSource.Normal:
-                    return Random.Range(2, 3);
+                    return Random.Range(2, 4);
                 case LootSource.Elite:
-                    return Random.Range(4, 6);
+                    return Random.Range(4, 7);
                 case LootSource.Boss:
-                    return Random.Range(7, 10);
+                    return Random.Range(7, 11);
                 default:
                     Debug.Log("no lootsource");
                     return 0;

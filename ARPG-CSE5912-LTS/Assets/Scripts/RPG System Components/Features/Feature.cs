@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Feature: MonoBehaviour
 {
     protected GameObject Target { get; private set; }
-
     public void Activate(GameObject target)
     {
         //Debug.Log("Target is now " + target.name);
