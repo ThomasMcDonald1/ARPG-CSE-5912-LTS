@@ -55,7 +55,7 @@ public class TipManager : MonoBehaviour
 
                 break;
         }
-        tipText.text = item.name;
+        tipText.text = tipToShow;
         
         tipWindow.sizeDelta = new Vector2(tipText.preferredWidth >200 ? 200:tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
