@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LootLabels
@@ -183,6 +184,38 @@ namespace LootLabels
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
+                            foreach(GameObject featureGO in prefix.FeaturesGOs){
+                                Feature feature = featureGO.GetComponent<Feature>();
+                                Type typeFeature = feature.GetType();
+                                if(typeFeature == typeof(FlatStatModifierFeature))
+                                {
+                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
+
+                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
+                                }
+                                else
+                                {
+                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
+                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
+                                }
+
+                            }
+                            foreach (GameObject featureGO in suffix.FeaturesGOs)
+                            {
+                                Feature feature = featureGO.GetComponent<Feature>();
+                                Type typeFeature = feature.GetType();
+                                if (typeFeature == typeof(FlatStatModifierFeature))
+                                {
+                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
+                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
+                                }
+                                else
+                                {
+                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
+                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
+                                }
+
+                            }
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
@@ -196,6 +229,57 @@ namespace LootLabels
             }
         }
 
+        private int RollStatsForFeatures(Rarity ItemRarity)
+        {
+            int stat = 1;
+            switch (ItemRarity)
+            {
+                case Rarity.Poor:
+                    stat = UnityEngine.Random.Range(1, 5);
+                    break;
+                case Rarity.Normal:
+                    stat = UnityEngine.Random.Range(6, 11);
+                    break;
+                case Rarity.Rare:
+                    stat = UnityEngine.Random.Range(13, 18);
+                    break;
+                case Rarity.Epic:
+                    stat = UnityEngine.Random.Range(21, 26);
+                    break;
+                case Rarity.Legendary:
+                    stat = UnityEngine.Random.Range(28, 33);
+                    break;
+
+            }
+            return stat;
+
+        }
+
+        private int RollStatsForPercent(Rarity ItemRarity)
+        {
+            int stat = 1;
+            switch (ItemRarity)
+            {
+                case Rarity.Poor:
+                    stat = UnityEngine.Random.Range(1, 5);
+                    break;
+                case Rarity.Normal:
+                    stat = UnityEngine.Random.Range(6, 11);
+                    break;
+                case Rarity.Rare:
+                    stat = UnityEngine.Random.Range(13, 18);
+                    break;
+                case Rarity.Epic:
+                    stat = UnityEngine.Random.Range(21, 26);
+                    break;
+                case Rarity.Legendary:
+                    stat = UnityEngine.Random.Range(28, 33);
+                    break;
+
+            }
+            return stat;
+
+        }
         private void RollStatsForItemsLevel(Rarity itemRarity, Ite item)
         {
            // double multiplier = LootGenerator.RollAmountOfStats(itemRarity);

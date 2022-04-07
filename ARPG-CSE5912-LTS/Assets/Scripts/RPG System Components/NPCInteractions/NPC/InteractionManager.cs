@@ -18,7 +18,13 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject worldNames;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject dialogueBox;
+
+    [SerializeField] private GameObject travelMenu;
+
     [SerializeField] private GameObject tradeMenu;
+    [SerializeField] private GameObject TradeButton;
+    [SerializeField] private GameObject PorterButton;
+
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
@@ -30,11 +36,9 @@ public class InteractionManager : MonoBehaviour
 
     public static event EventHandler EndOfStoryEvent;
 
-
-
     [SerializeField] Player player;
 
-    [SerializeField] private float typingSpeed = 0.04f;
+    [SerializeField] private float typingSpeed = 0;
 
     private Story currentStory;
 
@@ -45,10 +49,10 @@ public class InteractionManager : MonoBehaviour
 
     private void Update()
     {
-        
-        playerMoneyText.SetText("Player: " + '\n'+ playerMoney.money.ToString() + "$");
+
+        playerMoneyText.SetText("Player: " + '\n' + playerMoney.money.ToString() + "$");
         SaleUI.updateUI();
-        
+
 
         if (player.NPCTarget == null) return;
         else
@@ -64,12 +68,15 @@ public class InteractionManager : MonoBehaviour
                 case "StartLorekeeper":
                     SetNames("Larry");
                     break;
+                case "StartPorter":
+                    SetNames("Perry");
+                    break;
                 default:
                     SetNames("");
                     break;
             }
         }
-        
+
         foreach (ShopSlot slot in shopSlots)
         {
 
@@ -89,6 +96,16 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    public void EnablePorterButton()
+    {
+        PorterButton.SetActive(true);
+    }
+
+    public void DisablePorterButton()
+    {
+        PorterButton.SetActive(false);
+    }
+
     private void SetNames(string name)
     {
         DisplayDialogueName.text = name;
@@ -97,7 +114,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-       shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
+        shopSlots = ShopSlots.GetComponentsInChildren<ShopSlot>();
         if (instance != null)
         {
             Debug.LogWarning("More than 1 instance of the dialogue manager found...");
@@ -110,7 +127,7 @@ public class InteractionManager : MonoBehaviour
         return instance;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    private void EnterDialogueMode(TextAsset inkJSON)
     {
         dialogueBox.SetActive(true);
         optionsMenu.SetActive(false);
@@ -131,7 +148,6 @@ public class InteractionManager : MonoBehaviour
         {
             continueDialogueButton.SetActive(false);
             EndOfStoryEvent?.Invoke(this, EventArgs.Empty);
-
         }
     }
 
@@ -147,6 +163,7 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterOptionsMenu()
     {
+        travelMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
         tradeMenu.SetActive(false);
@@ -155,6 +172,7 @@ public class InteractionManager : MonoBehaviour
 
     public void DisableInteractionView()
     {
+        travelMenu.SetActive(false);
         dialogueBox.SetActive(false);
         optionsMenu.SetActive(false);
         worldNames.SetActive(true);
@@ -162,19 +180,37 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
-
-        //player.NPCTarget.GetComponent<NPC>().StartTrading();
         tradeMenu.SetActive(true);
+        travelMenu.SetActive(false);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+    }
 
-        //StopCoroutine(player.NPCTarget.GetComponent<NPC>().BeginInteraction());
+    public void EnterTravelMenu()
+    {
+        travelMenu.SetActive(true);
+        tradeMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
+    }
 
+    // For NPCs who will not trade
+    public void DisableTradeButton()
+    {
+        TradeButton.SetActive(false);
+    }
+
+    // For NPCs who will trade
+    public void EnableTradeButton()
+    {
+        TradeButton.SetActive(true);
     }
 
     public void BeginDialogue()
     {
+        worldNames.SetActive(false);
         currentStory = new Story(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue().text);
         EnterDialogueMode(player.NPCTarget.GetComponent<NPC>().GetCurrentDialogue());
         if (currentStory.canContinue)
@@ -189,13 +225,20 @@ public class InteractionManager : MonoBehaviour
 
     public void StopInteraction()
     {
+        TradeButton.SetActive(true);
         player.NPCTarget = null;
         worldNames.SetActive(true);
         continueDialogueButton.SetActive(false);
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);
         tradeMenu.SetActive(false);
-     shopUI.resetShop();
+        travelMenu.SetActive(false);
+        shopUI.resetShop();
+    }
+
+    public void EnterRuinsOfYeager()
+    {
+        LoadingStateController.Instance.LoadScene("Dungeon1");
     }
 
 }
