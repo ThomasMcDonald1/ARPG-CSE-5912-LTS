@@ -30,12 +30,24 @@ public class ItemPickup : MonoBehaviour
 		switch (item.type)
 		{
 			case Ite.ItemType.armor:
+				if(Inventory.instance.armorItems.Count >= Inventory.instance.space)
+                {
+					return;
+                }
 				Inventory.instance.Add(item, Inventory.instance.armorItems);
 				break;
 			case Ite.ItemType.weapon:
+				if (Inventory.instance.weaponItems.Count >= Inventory.instance.space)
+				{
+					return;
+				}
 				Inventory.instance.Add(item, Inventory.instance.weaponItems);
 				break;
 			case Ite.ItemType.utility:
+				if (Inventory.instance.utilItems.Count >= Inventory.instance.space)
+				{
+					return;
+				}
 				Inventory.instance.Add(item, Inventory.instance.utilItems);
 				break;
 

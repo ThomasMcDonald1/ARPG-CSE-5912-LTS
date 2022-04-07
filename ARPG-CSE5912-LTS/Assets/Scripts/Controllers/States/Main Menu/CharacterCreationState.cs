@@ -71,10 +71,12 @@ public class CharacterCreationState : BaseMenuState
     void OnConfirmButtonClicked()
     {
         Debug.Log("Confirm Button Clicked!");
+
         if (characterManager.NameIsValid())
         {
             Debug.Log("Now entering game");
             GetCharacterDetails();
+            SetDefaultOutfit();
             nameError.SetActive(false);
             int slotNum = FindEmptySlot();
             mainMenuController.saveSlotDataObjs[slotNum].containsData = true;
@@ -251,6 +253,12 @@ public class CharacterCreationState : BaseMenuState
     {
         Debug.Log("Player name changed to " + n);
         characterManager.SetCharacterName(n);
+    }
+
+
+    void SetDefaultOutfit()
+    {
+        customCharacter.SetDefaultOutfit(characterManager.GetDefaultOutfitIds());
     }
 
     void ResetCharacter()

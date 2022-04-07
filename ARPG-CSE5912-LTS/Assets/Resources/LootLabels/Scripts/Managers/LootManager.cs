@@ -165,7 +165,8 @@ namespace LootLabels
                     
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
-                        Ite item = droppedItem.GetComponent<ItemPickup>().item;
+                        Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                        Debug.Log("item is " + item);
                         //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
