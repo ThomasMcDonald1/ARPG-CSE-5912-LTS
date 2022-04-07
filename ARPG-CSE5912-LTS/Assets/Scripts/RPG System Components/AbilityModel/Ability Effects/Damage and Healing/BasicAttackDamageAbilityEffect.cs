@@ -8,7 +8,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackDamageReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackHealingReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int)>> ThornsDamageReceivedEvent;
-
+    public EquipManager equippedWeapon;
     protected override int OnApply(Character target, AbilityCast abilityCast)
     {
         Animator animator = abilityCast.caster.GetComponent<Animator>();
@@ -26,6 +26,14 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //TODO: get damage range from the weapon instead of using this placeholder dagger
         float minWeaponDamage = 1;
         float maxWeaponDamage = 4;
+        if (equippedWeapon.currentEquipment[0] != null)
+        {
+            WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
+            minWeaponDamage = weapon.minimumDamage;
+            maxWeaponDamage = weapon.maximumDamage;
+        }
+        Debug.Log("minWeaponDamage is " + minWeaponDamage);
+        Debug.Log("maxWeaponDamage is " + maxWeaponDamage);
         //Choose a random number from within the minimum and maximum weapon damage range
         float chosenWeaponDamage = UnityEngine.Random.Range(minWeaponDamage, maxWeaponDamage);
         //Calculate initial base damage from the above
@@ -60,6 +68,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
+
         //Send event
         BasicAttackDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((target, finalCalculatedDamage, wasCrit)));
 

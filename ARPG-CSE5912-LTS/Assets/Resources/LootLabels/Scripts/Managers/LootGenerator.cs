@@ -7,21 +7,23 @@ namespace LootLabels {
         /// Return a random value for dropped currency
         /// </summary>
         /// <returns></returns>
-        public int CalculateCurrencyAmount() {
-            int seed = Random.Range(1, 5);
+        public int CalculateCurrencyAmount(LootType type) {
             int randomValue;
-            switch (seed) {
-                case 1:
-                    randomValue = Random.Range(1, 99);
+            switch (type) {
+                case LootType.Poor:
+                    randomValue = Random.Range(1, 3);
                     break;
-                case 2:
-                    randomValue = Random.Range(100, 999);
+                case LootType.Normal:
+                    randomValue = Random.Range(4, 8);
                     break;
-                case 3:
-                    randomValue = Random.Range(1000, 9999);
+                case LootType.Rare:
+                    randomValue = Random.Range(10, 16);
                     break;
-                case 4:
-                    randomValue = Random.Range(10000, 99999);
+                case LootType.Epic:
+                    randomValue = Random.Range(25, 36);
+                    break;
+                case LootType.Legendary:
+                    randomValue = Random.Range(40, 51);
                     break;
                 default:
                     randomValue = 0;
@@ -39,11 +41,11 @@ namespace LootLabels {
         public int CalculateLootAmount(LootSource lootSource) {
             switch (lootSource) {
                 case LootSource.Normal:
-                    return Random.Range(2, 3);
+                    return Random.Range(2, 4);
                 case LootSource.Elite:
-                    return Random.Range(4, 6);
+                    return Random.Range(4, 7);
                 case LootSource.Boss:
-                    return Random.Range(7, 10);
+                    return Random.Range(7, 11);
                 default:
                     Debug.Log("no lootsource");
                     return 0;
@@ -219,9 +221,9 @@ namespace LootLabels {
         /// Create a randomized currency item
         /// </summary>
         /// <returns></returns>
-        public BaseCurrency CreateCurrency() {
+        public BaseCurrency CreateCurrency(LootType type) {
             CurrencyTypes currencyType = SelectRandomCurrency();
-            int amount = CalculateCurrencyAmount();
+            int amount = CalculateCurrencyAmount(type);
             string modelName = ResourceManager.singleton.GetModelName(currencyType);
             string iconName = ResourceManager.singleton.GetIconName(currencyType);
 

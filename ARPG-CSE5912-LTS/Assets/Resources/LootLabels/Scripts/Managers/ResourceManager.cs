@@ -30,6 +30,8 @@ namespace LootLabels {
         public string GetModelName(GearTypes gearType, Rarity itemRarity) {
             string modelPath = "LootLabels/3D models/";
             Debug.Log(" in GetModelName gearType is " + gearType);
+            int armorTypeCount = System.Enum.GetNames(typeof(ArmorEquipment.armorType)).Length;
+            int randomIndex = Random.Range(0, armorTypeCount);
             switch (gearType) {
                 //case GearTypes.Gloves:
                 //    return modelPath + "Gloves";
@@ -41,6 +43,76 @@ namespace LootLabels {
                 //    return modelPath + "Shoes";
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
+                case GearTypes.Helm:
+                    Debug.Log("armorTypeCount is " + armorTypeCount);
+                    switch (randomIndex)
+                    {
+                        case 0:
+                            return modelPath + "LightHelm";
+                        case 1:
+                            return modelPath + "Helm";
+                        case 2:
+                            return modelPath + "HeavyHelm";
+                        default:
+                            return modelPath + "Helm";
+
+                    }
+                    //switch (itemRarity)
+                    //{
+                    //    //case Rarity.Legendary:
+                    //    //    return modelPath + "legendaryDagger";
+                    //    default:
+                    //        return modelPath + "Helm";
+                    //}
+                case GearTypes.Armor:
+                    switch (randomIndex)
+                    {
+                        case 0:
+                            return modelPath + "LightArmor";
+                        case 1:
+                            return modelPath + "Armor";
+                        case 2:
+                            return modelPath + "HeavyArmor";
+
+                    }
+                    switch (itemRarity)
+                    {
+                        //case Rarity.Legendary:
+                        //    return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Armor";
+                    }
+                case GearTypes.Boots:
+                    switch (randomIndex)
+                    {
+                        case 0:
+                            return modelPath + "LightBoots";
+                        case 1:
+                            return modelPath + "Boots";
+                        case 2:
+                            return modelPath + "HeavyBoots";
+                        default:
+                            return modelPath + "Boots";
+
+                    }
+                    //switch (itemRarity)
+                    //{
+                    //    //case Rarity.Legendary:
+                    //    //    return modelPath + "legendaryDagger";
+                    //    default:
+                    //        return modelPath + "Boots";
+                    //}
+                // return modelPath + "Sword";
+                case GearTypes.Dagger:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendaryDagger";
+                        default:
+                            return modelPath + "Dagger";
+                    }
+                   // return modelPath + "Sword";
+
                 case GearTypes.HealthPotion:
                    return modelPath + "HealthPotion";
                 case GearTypes.Sword:
@@ -51,8 +123,14 @@ namespace LootLabels {
                         default:
                             return modelPath + "Sword";
                     }
-                //case GearTypes.Shield:
-                //    return modelPath + "Shield";
+                case GearTypes.Shield:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "legendaryShield";
+                        default:
+                            return modelPath + "Shield";
+                    }
                 default:
                     Debug.Log("Case not implemented");
                     switch (itemRarity)
