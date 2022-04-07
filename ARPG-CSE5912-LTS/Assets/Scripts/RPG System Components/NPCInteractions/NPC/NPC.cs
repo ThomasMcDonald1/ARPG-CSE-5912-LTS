@@ -44,5 +44,5 @@ public abstract class NPC : MonoBehaviour
     }
 
     public abstract TextAsset GetCurrentDialogue();
-    public abstract void NextStory();
+    //public abstract void NextStory();
 }
