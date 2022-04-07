@@ -13,12 +13,10 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public TextMeshProUGUI amount;
     public Button removeButton;
     public string tipToShow;
-    //private float timeToWait = 0.05f;
-    [SerializeField] public  TextMeshProUGUI tipText;
-    [SerializeField] public RectTransform tipWindow;
+ 
     public Ite item;
 
-    private float timeToWait = 0.5f;
+    private float timeToWait = 5f;
 
 
 
@@ -27,33 +25,22 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (removeButton.interactable)
         {
             //Debug.Log("Hoever!");
-            StopAllCoroutines();
-            StartCoroutine(StartTimer());
+            //StopAllCoroutines();
+            //StartCoroutine(StartTimer());
             ShowMessage();
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopAllCoroutines();
-       
+        // StopAllCoroutines();
+        tipToShow = "";
+        TipManager.OnMouseLoseFocus();
     }
     private void ShowMessage()
     {
-        tipToShow = item.name;
-        switch ((int)item.type)
-        {
-            case(int) Ite.ItemType.weapon:
-                //tipToShow += "\n" +"Damage: "+ item.attackDamage;
-                break;
-            case (int)Ite.ItemType.armor:
-                //tipToShow += "\n" + "Defend rate: " + item.defendRate;
-                break;
-            case (int)Ite.ItemType.utility:
-                //tipToShow += "\n" +  item.utilityUsage;
-                break;
-        }
-
+       
+        TipManager.OnMouseHover(item, Input.mousePosition);
 
         
     }
