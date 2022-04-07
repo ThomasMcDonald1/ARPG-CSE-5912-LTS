@@ -81,7 +81,7 @@ namespace ARPG.Combat
             GetComponent<Animator>().ResetTrigger("AttackMainHandTrigger");
 
             GetComponent<Animator>().ResetTrigger("AttackOffHandTrigger");
-            if (InTargetRange()) 
+            if (InTargetRange())
             {
                 Vector3 realDirection = transform.forward;
                 Vector3 direction = AttackTarget.position -transform.position;
@@ -168,7 +168,7 @@ namespace ARPG.Combat
 
                 agent.isStopped = false;
                 agent.SetDestination(AttackTarget.position);
-            
+
         }
 
         public void StopRun()
@@ -178,7 +178,7 @@ namespace ARPG.Combat
 
         public virtual bool InTargetRange()
         {
-            return Vector3.Distance(this.transform.position, AttackTarget.position) < Range;
+            return Vector3.Distance(transform.position, AttackTarget.position) < Range;
         }
         public bool InStopRange()
         {
