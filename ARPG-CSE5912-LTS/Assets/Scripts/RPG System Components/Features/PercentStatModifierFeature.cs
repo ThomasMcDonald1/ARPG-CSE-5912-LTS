@@ -14,12 +14,12 @@ public class PercentStatModifierFeature : Feature
             return Target.GetComponent<Stats>();
         }
     }
-
     protected override void OnActivate()
     {
         //Debug.Log("Multiplying " + type + "by " + percentAmount + " percent");
         stats[type] = Mathf.RoundToInt(stats[type] * percentAmount * 0.01f);
     }
+
 
     protected override void OnDeactivate()
     {

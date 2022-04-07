@@ -19,6 +19,8 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
+            UpdateAnimator();
+            //base.Update();
 
             if (transform.parent.parent.GetComponent<Animator>().GetBool("Dead") == false)
             {
@@ -60,7 +62,7 @@ namespace ARPG.Combat
             GetComponent<Animator>().SetBool("Dead", false);
             stats[StatTypes.HP] = stats[StatTypes.MaxHP];
         }
-        public override void SeePlayer()
+        protected override void SeePlayer()
         {
             Vector3 realDirection = transform.forward;
             Vector3 direction = AttackTarget.position - transform.position;

@@ -7,6 +7,7 @@ public class Quest
 {
     [SerializeField] private string title;
     [SerializeField] private string description;
+    [SerializeField] private int questExp;
 
     //Quest can have many type of goals, there can be mulltiple goals of the same type
     [SerializeField] private KillingGoal[] killingGoals;
@@ -36,6 +37,17 @@ public class Quest
         set
         {
             description = value;
+        }
+    }
+    public int QuestExp
+    {
+        get
+        {
+            return questExp;
+        }
+        set
+        {
+            questExp = value;
         }
     }
     public KillingGoal[] KillingGoals

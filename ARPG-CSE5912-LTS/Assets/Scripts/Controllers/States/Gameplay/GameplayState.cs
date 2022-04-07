@@ -322,7 +322,7 @@ public class GameplayState : BaseGameplayState
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
                 contextMenuPanel.PopulateContextMenu(actionButton);
             }
-            if(potionButton != null)
+            if (potionButton != null)
             {
                 utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
                 utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
@@ -335,7 +335,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
-        //figure out if the raycast results contain an item or ability
+        //figure out if the raycast results contain an ability
         foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
@@ -346,11 +346,12 @@ public class GameplayState : BaseGameplayState
                 Ability ability = actionButton.abilityAssigned;
                 if (ability != null)
                 {
-                    Debug.Log("Ability is: " + ability.name);
+                    //Debug.Log("Ability hovered over: " + ability.name);
                     //TODO: Display ability tooltip
 
                 }
             }
+
         }
     }
 
