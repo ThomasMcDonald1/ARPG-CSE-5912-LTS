@@ -123,7 +123,9 @@ public class GameplayState : BaseGameplayState
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
         if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
+        {
             PauseGame();
+        }
     }
 
     protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
@@ -410,3 +412,4 @@ public class GameplayState : BaseGameplayState
         }
     }
 }
+

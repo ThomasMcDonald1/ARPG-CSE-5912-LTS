@@ -19,6 +19,17 @@ namespace ARPG.Combat
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;
+
+            if (abilitiesKnown != null)
+            {
+                //Debug.Log(abilitiesKnown.Count);
+                for (int i = 0; i < abilitiesKnown.Count; i++)
+                {
+                    EnemyAbility enemyability = new EnemyAbility();
+                    enemyability.abilityAssigned = abilitiesKnown[i];
+                    EnemyAttackTypeList.Add(enemyability);
+                }
+            }
         }
 
         public override string GetClassTypeName()
