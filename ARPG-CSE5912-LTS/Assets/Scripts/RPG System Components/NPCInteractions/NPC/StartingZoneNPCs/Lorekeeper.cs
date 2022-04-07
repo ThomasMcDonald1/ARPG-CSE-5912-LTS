@@ -10,26 +10,31 @@ public class Lorekeeper : NPC
     [SerializeField] public Shop shop;
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public UI_Sale saleUI;
+    [SerializeField] Porter porter;
 
 
     public List<TextAsset> DialogueJSON;
+
     private int currentStory;
+    public int CurrentStory { get { return currentStory; } }
+
     GameObject child;
     private void OnEnable()
     {
         QuestGiver.QuestCompleteEvent += OnQuestComplete;
-   
+        InteractionManager.EndOfStoryEvent += NextStory;
 
     }
     private void OnDisable()
     {
         QuestGiver.QuestCompleteEvent -= OnQuestComplete;
+        InteractionManager.EndOfStoryEvent -= NextStory;
     }
-    private void OnQuestComplete(object sender, InfoEventArgs<Quest> e)
+    private void OnQuestComplete(object sender, EventArgs e)
     {
-        NextStory();
+        currentStory++;
     }
-    
+
     private void Start()
     {
         Player.InteractNPC += Interact;
@@ -67,11 +72,22 @@ public class Lorekeeper : NPC
         }
     }
 
-    public override void NextStory()
+    private void NextStory(object sender, EventArgs e)
     {
-        if (currentStory < DialogueJSON.Count - 1)
+        if (player.NPCTarget != this) return;
+        switch (currentStory)
         {
-            currentStory++;
+            case 0:
+                GetComponent<QuestGiver>().AddQuestToLogIfNew();
+                if (porter.currentStory == 1) { porter.currentStory = 2; }
+                currentStory++;
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                break;
         }
     }
 
@@ -79,19 +95,21 @@ public class Lorekeeper : NPC
     {
         if (Interactable())
         {
-            if (!hasNewInfo) { InteractionManager.GetInstance().EnterOptionsMenu(); }
-            else { InteractionManager.GetInstance().EnterDialogueMode(GetCurrentDialogue()); }
-            //else { SetDialogue(); }
-            shopUI.initializeShop(shop);
+            InteractionManager.GetInstance().DisableTradeButton();
+            InteractionManager.GetInstance().DisablePorterButton();
+            if (currentStory == 0)
+            {
+                InteractionManager.GetInstance().BeginDialogue();
+            }
+            else
+            {
+                InteractionManager.GetInstance().EnterOptionsMenu();
+            }
 
-            //SetMenu();
+            shopUI.initializeShop(shop);
             StartCoroutine(LookAtPlayer());
             saleUI.shop = shop;
-
-            //InteractionManager.GetInstance().StopInteraction();
-            //InteractionManager.GetInstance().DisableInteractionView();
         }
-        //shopUI.resetShop();
     }
 
 }
