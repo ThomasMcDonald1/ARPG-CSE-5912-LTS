@@ -193,7 +193,7 @@ namespace ARPG.Combat
             {
                 //Debug.Log("Attack target is: " + AttackTarget);
                 //AttackTarget.GetComponent<Stats>()[StatTypes.HP] -= stats[StatTypes.PHYATK];
-                QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>(), this);
+                //QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>(), this);
             }
         }
 
