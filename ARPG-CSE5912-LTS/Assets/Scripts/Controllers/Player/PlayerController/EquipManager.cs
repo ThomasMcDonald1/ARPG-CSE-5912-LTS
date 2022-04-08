@@ -9,6 +9,10 @@ public class EquipManager : MonoBehaviour
     public CustomCharacter character;
     public Stats playerStats;
 
+    //bool mainHand = false;
+    bool offHand = false;
+    bool twoHandSword = false;
+
     GameObject rightHand;
     GameObject leftHand;
     [SerializeField] AnimatorOverrider overrider;
@@ -69,14 +73,34 @@ public class EquipManager : MonoBehaviour
             Destroy(nu[slotIndex].GetComponent<LootLabels.DroppedGear>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.CreateLabel>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.ObjectHighlight>());
-            if (newItem.equipSlot == EquipmentSlot.OffHand)
+
+            if (newItem.equipSlot == EquipmentSlot.OffHand && newItem.name.Contains("Shield"))
             {
+                if (twoHandSword)
+                    Unequip(0);
+
                 ShieldEquipment shield = (ShieldEquipment)newItem;
                 nu[slotIndex].transform.parent = leftHand.transform;
                 nu[slotIndex].transform.localPosition = new Vector3(0, 0, 0);
                 nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                 playerStats[StatTypes.Armor] += shield.armor;
                 playerStats[StatTypes.BlockChance] += shield.blockChance;
+
+                offHand= true;
+            }
+            else if(newItem.equipSlot == EquipmentSlot.OffHand)
+            {
+                if (twoHandSword)
+                    Unequip(0);
+                WeaponEquipment weapon = (WeaponEquipment)newItem;
+                nu[slotIndex].transform.parent = leftHand.transform;
+                nu[slotIndex].transform.localPosition = new Vector3(0, 0, 0);
+                nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
+                playerStats[StatTypes.AttackRange] += (weapon.attackRange/2);
+                playerStats[StatTypes.AtkSpeed] += (weapon.attackSpeed/2);
+                playerStats[StatTypes.CritChance] += (weapon.critChance/2);
+
+                offHand = true;
             }
             else
             {
@@ -85,30 +109,36 @@ public class EquipManager : MonoBehaviour
 
                 // nu.GetComponent<LootLabels.CreateLabel>().enabled = false;
                 // nu.GetComponent<LootLabels.ObjectHighlight>().enabled = false;
-                nu[slotIndex].transform.SetParent(rightHand.transform);
-                nu[slotIndex].transform.localPosition = Vector3.zero;
-                nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                 switch (weapon.typeOfWeapon)
                 {
                     case WeaponEquipment.weaponType.twohandsword:
+                        twoHandSword = true;
+
+                        if (offHand)
+                            Unequip(1);
                         animController.ChangeToTwoHandedSword();
+                        nu[slotIndex].transform.SetParent(rightHand.transform);
+                        nu[slotIndex].transform.localPosition = Vector3.zero;
+                        nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                         //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
                         //UseHealingPotion();
                         break;
+
                     case WeaponEquipment.weaponType.righthandsword:
 
                         animController.ChangeToOnlySwordRight();
+                        nu[slotIndex].transform.SetParent(rightHand.transform);
+                        nu[slotIndex].transform.localPosition = Vector3.zero;
+                        nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                         //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
                         //UseEnergyPotion();
                         break;
-                    case WeaponEquipment.weaponType.lefthandsword:
-                        animController.ChangeToOnlySwordLeft();
-                        nu[slotIndex].transform.parent = leftHand.transform;
-                        nu[slotIndex].transform.localPosition = new Vector3(0, 0, 0);
-                        nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
-                        break;
+
                     case WeaponEquipment.weaponType.dagger:
                         animController.ChangeToOnlyDaggerRight();
+                        nu[slotIndex].transform.SetParent(rightHand.transform);
+                        nu[slotIndex].transform.localPosition = Vector3.zero;
+                        nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                         break;
                     default:
                         Debug.Log("Don't know what this weapon does");
@@ -172,12 +202,21 @@ public class EquipManager : MonoBehaviour
                         //nu.GetComponent<LootLabels.ObjectHighlight>().enabled = true;
                         Destroy(nu[slotIndex]);
                     }
-                    if (oldItem.equipSlot == EquipmentSlot.OffHand)
+                    if (oldItem.equipSlot == EquipmentSlot.OffHand && oldItem.name.Contains("Shield"))
                     {
                         ShieldEquipment shield = (ShieldEquipment)oldItem;
                         playerStats[StatTypes.BlockChance] -= shield.blockChance;
                         playerStats[StatTypes.Armor] -= shield.armor;
+                        offHand = false;
 
+                    }
+                    else if(oldItem.equipSlot == EquipmentSlot.OffHand)
+                    {
+                        WeaponEquipment weapon = (WeaponEquipment)oldItem;
+                        playerStats[StatTypes.AttackRange] -= (weapon.attackRange / 2);
+                        playerStats[StatTypes.AtkSpeed] -= (weapon.attackSpeed / 2);
+                        playerStats[StatTypes.CritChance] -= (weapon.critChance / 2);
+                        offHand = false;
                     }
                     else
                     {
@@ -186,6 +225,9 @@ public class EquipManager : MonoBehaviour
                         playerStats[StatTypes.AttackRange] -= weapon.attackRange;
                         playerStats[StatTypes.AtkSpeed] -= weapon.attackSpeed;
                         playerStats[StatTypes.CritChance] -= weapon.critChance;
+
+                        if (weapon.typeOfWeapon == WeaponEquipment.weaponType.twohandsword)
+                            twoHandSword = false;
                     }
                     break;
 
