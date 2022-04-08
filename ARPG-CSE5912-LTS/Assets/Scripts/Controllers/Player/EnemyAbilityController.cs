@@ -17,9 +17,6 @@ public class EnemyAbilityController : Enemy
         base.Update();
     }
 
-    public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedGroundTargetLocationEvent;
-    public static event EventHandler<InfoEventArgs<AbilityCast>> EnemySelectedSingleTargetEvent;
-
     [HideInInspector] public bool enemyInAOEAbilityTargetSelectionMode;
     [HideInInspector] public bool enemyInSingleTargetAbilitySelectionMode;
 
@@ -70,7 +67,7 @@ public class EnemyAbilityController : Enemy
                 if (!targetInRange)
                 {
                     Debug.Log("Character Not in range");
-                    EnemySelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                    OnSingleTargetSelected(abilityCast);
                 }
             }
 
@@ -94,7 +91,7 @@ public class EnemyAbilityController : Enemy
             if (Physics.Raycast(ray, out hit, groundLayerMask))
             {
                 abilityCast.hit = hit;
-                EnemySelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                OnGroundTargetSelected(abilityCast);
             }
             abilityCast.abilityArea.abilityAreaNeedsShown = false;
 

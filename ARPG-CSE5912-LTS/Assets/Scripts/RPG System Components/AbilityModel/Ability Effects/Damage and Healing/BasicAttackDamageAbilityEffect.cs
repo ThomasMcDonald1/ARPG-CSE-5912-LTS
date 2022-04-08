@@ -25,7 +25,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         float damageBonusMult = 1 + GetStat(abilityCast.caster, StatTypes.PhysDmgBonus) * 0.01f;
         //TODO: get damage range from the weapon instead of using this placeholder dagger
         float minWeaponDamage = 1;
-        float maxWeaponDamage = 4;
+        float maxWeaponDamage = 1;
         if (isMainHandAttack)
         {
             if (equippedWeapon.currentEquipment[0] != null)
@@ -41,6 +41,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
             minWeaponDamage += weapon.minimumDamage;
             maxWeaponDamage += weapon.maximumDamage;
         }
+
         Debug.Log("minWeaponDamage is " + minWeaponDamage);
         Debug.Log("maxWeaponDamage is " + maxWeaponDamage);
         //Choose a random number from within the minimum and maximum weapon damage range
