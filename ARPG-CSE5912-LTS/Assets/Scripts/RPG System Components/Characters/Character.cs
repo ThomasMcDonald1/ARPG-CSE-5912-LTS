@@ -46,7 +46,7 @@ public abstract class Character : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
         playerAbilityController = GetComponent<PlayerAbilityController>();
-        enemyAbilityController = GetComponent<EnemyAbilityController>();
+        basicAttackAbility = GetComponentInParent<GameplayStateController>().GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
@@ -59,10 +59,6 @@ public abstract class Character : MonoBehaviour
     private void OnEnable()
     {
         AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
-        PlayerAbilityController.PlayerSelectedGroundTargetLocationEvent += OnGroundTargetSelected;
-        PlayerAbilityController.PlayerSelectedSingleTargetEvent += OnSingleTargetSelected;
-        EnemyAbilityController.EnemySelectedGroundTargetLocationEvent += OnGroundTargetSelected;
-        EnemyAbilityController.EnemySelectedSingleTargetEvent += OnSingleTargetSelected;
     }
     #endregion
     #region Events
@@ -72,34 +68,35 @@ public abstract class Character : MonoBehaviour
         AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
     }
 
-    void OnGroundTargetSelected(object sender, InfoEventArgs<AbilityCast> e)
+    protected void OnGroundTargetSelected(AbilityCast abilityCast)
     {
-        float distFromCaster = Vector3.Distance(e.info.hit.point, e.info.caster.transform.position);
-        float distToTravel = distFromCaster - e.info.abilityRange.range;
+        float distFromCaster = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
+        float distToTravel = distFromCaster - abilityCast.abilityRange.range;
+        Debug.Log(abilityCast.caster + " at " + abilityCast.caster.transform.position + " clicked on " + abilityCast.hit.point);
 
-        if (distFromCaster > e.info.abilityRange.range)
+        if (distFromCaster > abilityCast.abilityRange.range)
         {
             abilityQueued = true;
-            StartCoroutine(RunWithinRange(e.info, distToTravel));
+            StartCoroutine(RunWithinRange(abilityCast, distToTravel));
         }
         else
         {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
+            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
         }
     }
 
-    void OnSingleTargetSelected(object sender, InfoEventArgs<AbilityCast> e)
+    protected void OnSingleTargetSelected(AbilityCast abilityCast)
     {
-        float distFromCaster = Vector3.Distance(e.info.hit.collider.transform.position, e.info.caster.transform.position);
-        float distToTravel = distFromCaster - e.info.abilityRange.range;
-        if (distFromCaster > e.info.abilityRange.range)
+        float distFromCaster = Vector3.Distance(abilityCast.hit.collider.transform.position, abilityCast.caster.transform.position);
+        float distToTravel = distFromCaster - abilityCast.abilityRange.range;
+        if (distFromCaster > abilityCast.abilityRange.range)
         {
             abilityQueued = true;
-            StartCoroutine(RunWithinRangeCharacter(e.info, distToTravel, e.info.hit.collider.GetComponent<Character>()));
+            StartCoroutine(RunWithinRangeCharacter(abilityCast, distToTravel, abilityCast.hit.collider.GetComponent<Character>()));
         }
         else
         {
-            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
+            AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
         }
     }
     #endregion
@@ -124,6 +121,7 @@ public abstract class Character : MonoBehaviour
                     gameplayStateController.aoeReticleCylinder.SetActive(false);
                     playerAbilityController.playerInSingleTargetAbilitySelectionMode = false;
                     playerAbilityController.playerInAOEAbilityTargetSelectionMode = false;
+                    //Debug.Log(this + " is casting " + abilityCast.ability + "!");
                     playerAbilityController.PlayerQueueAbilityCastSelectionRequired(abilityCast);
                 }
                 else
@@ -136,19 +134,11 @@ public abstract class Character : MonoBehaviour
                 //TODO: Indicate to the player they're pressing a button that can't be used somehow (subtle sound? flash the ActionButton red?)
             }
         }
-        else if (this is Enemy)
+        else
         {
-            //need a enemy check mana too..
-            if (abilityCast.abilityRequiresCursorSelection)
-            {
-                Enemy enemy = (Enemy)this;
-                enemy.StopAllCoroutines();
-                enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
-            }
-            else
-            {
-                CastAbilityWithoutSelection(abilityCast);
-            }
+            Enemy enemy = (Enemy)this;
+            enemy.StopAllCoroutines();
+            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
             //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
             //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
@@ -159,7 +149,7 @@ public abstract class Character : MonoBehaviour
 
     public void QueueBasicAttack(Ability abilityToCast, Character target, Character caster)
     {
-        Debug.Log("target is " + target);
+        //Debug.Log("target is " + target);
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = caster;
         abilityCast.basicAttackTarget = target;
@@ -224,7 +214,7 @@ public abstract class Character : MonoBehaviour
     #region Enumerators
     public IEnumerator RunWithinRange(AbilityCast abilityCast, float distToTravel)
     {
-        //Debug.Log("Running to within range of point.");
+        Debug.Log("Running to within range of point.");
         Vector3 dir = (abilityCast.hit.point - abilityCast.caster.transform.position).normalized;
         Vector3 endPoint = abilityCast.caster.transform.position + (dir * (distToTravel + 0.1f));
 
@@ -243,7 +233,7 @@ public abstract class Character : MonoBehaviour
 
     public IEnumerator RunWithinRangeCharacter(AbilityCast abilityCast, float distToTravel, Character target)
     {
-        //Debug.Log("Running within range of character");
+        Debug.Log("Running within range of character");
         Vector3 dir = (target.transform.position - abilityCast.caster.transform.position).normalized;
         Vector3 endPoint = abilityCast.caster.transform.position + (dir * (distToTravel + 0.1f));
         while (abilityQueued)

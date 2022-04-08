@@ -174,7 +174,7 @@ namespace LootLabels {
             switch (itemRarity)
             {
                 case Rarity.Poor:
-                    statAmount = 0.7;
+                    statAmount = 0.5;
                     break;
                 case Rarity.Normal:
                     statAmount = 1;

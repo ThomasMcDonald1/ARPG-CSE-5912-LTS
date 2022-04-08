@@ -43,48 +43,51 @@ public class Inventory : MonoBehaviour
                 Debug.Log("Not enough room.");
                 return;
             }
-            if (item.stackable)
+            else
             {
-                // Debug.Log("get in stackable if statement");
-                foreach (Ite inventoryItem in list)
+                if (item.stackable)
                 {
-                   
-                    //Debug.Log(item.type + "has: " + items.Count);
-                    if (inventoryItem.name.Equals(item.name) && amount.ContainsKey(item.name))
+                    // Debug.Log("get in stackable if statement");
+                    foreach (Ite inventoryItem in list)
                     {
-                        //Debug.Log("Room:  " + items.Count);
+
+                        //Debug.Log(item.type + "has: " + items.Count);
+                        if (inventoryItem.name.Equals(item.name) && amount.ContainsKey(item.name))
+                        {
+                            //Debug.Log("Room:  " + items.Count);
 
 
-                        int num = (int)amount[item.name] + 1;
-                        amount[item.name] = num;
-                        //Debug.Log(item.type + "has: " + inventoryItem.amount);
+                            int num = (int)amount[item.name] + 1;
+                            amount[item.name] = num;
+                            //Debug.Log(item.type + "has: " + inventoryItem.amount);
 
-                       // iteInInventory = true;
-                       
+                            // iteInInventory = true;
+
+
+                        }
+
 
                     }
-
-                    
                 }
-            }
-            if (!item.stackable)
-            {
-                list.Add(item);
-               // Debug.Log("the unstackable Item is " + item.name);
+                if (!item.stackable)
+                {
+                    list.Add(item);
+                    // Debug.Log("the unstackable Item is " + item.name);
 
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke();
+                    if (onItemChangedCallback != null)
+                        onItemChangedCallback.Invoke();
 
-            }
-            else if (item.stackable && !amount.ContainsKey(item.name))
-            {
-                // item.amount += 1;
-                //int num = (int)amount[item] + 1;
-                amount.Add(item.name, 1);
-                list.Add(item);
+                }
+                else if (item.stackable && !amount.ContainsKey(item.name))
+                {
+                    // item.amount += 1;
+                    //int num = (int)amount[item] + 1;
+                    amount.Add(item.name, 1);
+                    list.Add(item);
 
-                if (onItemChangedCallback != null)
-                    onItemChangedCallback.Invoke();
+                    if (onItemChangedCallback != null)
+                        onItemChangedCallback.Invoke();
+                }
             }
         }
     }
