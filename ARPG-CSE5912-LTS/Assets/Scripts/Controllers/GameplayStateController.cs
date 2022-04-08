@@ -66,8 +66,6 @@ public class GameplayStateController : StateMachine
     // Camera Stuff
     public GameplayCameraZoom CameraZoom;
 
-    //TODO: Maybe a keybinds button, if we have time to add
-
     private void Awake()
     {
         DontDestroyOnLoad(this);
