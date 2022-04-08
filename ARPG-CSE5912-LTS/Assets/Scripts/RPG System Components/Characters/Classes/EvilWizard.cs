@@ -74,7 +74,6 @@ namespace ARPG.Combat
         {
             //Print the time of when the function is first called.
             Debug.Log("Started Coroutine at timestamp : " + Time.time);
-
             yield return new WaitForSeconds(3f);
             FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = true;
             //After we have waited 5 seconds print the time again.
@@ -84,16 +83,14 @@ namespace ARPG.Combat
         {
             if (GetComponent<Animator>().GetBool("Summon"))
             {
+                //Not ideal, find more suitable animation in the future?
                 if(attackCounter == 200)
                 {
                     Debug.Log("damaged!");
                     AudioManager.instance.Play("Force");
-                    float playerSpeed = FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed;
+                    //Temp solution, mayber later have stunned state for player?
                     FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = false;
                     StartCoroutine(Remobilize());
-
-
-                    //FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed = playerSpeed;
                     attackCounter = 0;
                 }
                 else
@@ -102,7 +99,6 @@ namespace ARPG.Combat
                 }
             }
             UpdateAnimator();
-            //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
