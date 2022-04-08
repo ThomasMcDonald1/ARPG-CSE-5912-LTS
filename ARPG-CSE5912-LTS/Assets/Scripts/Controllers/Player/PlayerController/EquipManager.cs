@@ -12,6 +12,7 @@ public class EquipManager : MonoBehaviour
     //bool mainHand = false;
     bool offHand = false;
     bool twoHandSword = false;
+    bool mainHand = false;
 
     GameObject rightHand;
     GameObject leftHand;
@@ -100,6 +101,36 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.AttackRange] += weapon.attackRange;
                 playerStats[StatTypes.AtkSpeed] += weapon.attackSpeed;
                 playerStats[StatTypes.CritChance] += weapon.critChance;
+                switch (weapon.typeOfWeapon)
+                {
+                    case WeaponEquipment.weaponType.dagger:
+
+                        if (currentEquipment[0] != null)
+                        {
+                            if (currentEquipment[0].name.Contains("Dagger"))
+                            {
+                                animController.ChangeToDualDaggers();
+                            }
+                            else if (currentEquipment[0].name.Contains("Sword"))
+                            {
+                                animController.ChangeToSwordLeftDaggerRight();
+                            }
+                        }
+                        break;
+                    case WeaponEquipment.weaponType.righthandsword:
+                        if (currentEquipment[0] != null)
+                        {
+                            if (currentEquipment[0].name.Contains("Dagger"))
+                            {
+                                animController.ChangeToDaggerLeftSwordRight();
+                            }
+                            else if (currentEquipment[0].name.Contains("Sword"))
+                            {
+                                animController.ChangeToDualSwords();
+                            }
+                        }
+                        break;
+                }
 
                 offHand = true;
             }
@@ -131,6 +162,18 @@ public class EquipManager : MonoBehaviour
                         nu[slotIndex].transform.SetParent(rightHand.transform);
                         nu[slotIndex].transform.localPosition = Vector3.zero;
                         nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        mainHand = true;
+                        if(currentEquipment[1] != null)
+                        {
+                            if (currentEquipment[1].name.Contains("Dagger"))
+                            {
+                                animController.ChangeToDaggerLeftSwordRight();
+                            }
+                            else if(currentEquipment[1].name.Contains("Sword"))
+                            {
+                                animController.ChangeToDualSwords();
+                            }
+                        }
                         //playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>();
                         //UseEnergyPotion();
                         break;
@@ -140,6 +183,18 @@ public class EquipManager : MonoBehaviour
                         nu[slotIndex].transform.SetParent(rightHand.transform);
                         nu[slotIndex].transform.localPosition = Vector3.zero;
                         nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+                        if (currentEquipment[1] != null)
+                        {
+                            if (currentEquipment[1].name.Contains("Dagger"))
+                            {
+                                animController.ChangeToDualDaggers();
+                            }
+                            else if (currentEquipment[1].name.Contains("Sword"))
+                            {
+                                animController.ChangeToSwordLeftDaggerRight();
+                            }
+                        }
                         break;
                     default:
                         Debug.Log("Don't know what this weapon does");
@@ -228,7 +283,14 @@ public class EquipManager : MonoBehaviour
                         playerStats[StatTypes.CritChance] -= weapon.critChance;
 
                         if (weapon.typeOfWeapon == WeaponEquipment.weaponType.twohandsword)
+                        {
                             twoHandSword = false;
+                        }
+                        else
+                        {
+                            mainHand = false;
+                        }
+
                     }
                     break;
 
