@@ -73,6 +73,7 @@ public class EquipManager : MonoBehaviour
             Destroy(nu[slotIndex].GetComponent<LootLabels.DroppedGear>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.CreateLabel>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.ObjectHighlight>());
+            nu[slotIndex].transform.localScale = new Vector3(1, 1, 1);
 
             if (newItem.equipSlot == EquipmentSlot.OffHand && newItem.name.Contains("Shield"))
             {
