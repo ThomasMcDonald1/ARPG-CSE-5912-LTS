@@ -5,11 +5,13 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine.UI;
 using System;
+using ARPG.Movement;
 
 
 public class InteractionManager : MonoBehaviour
 {
     [Header("Dialogue UI")]
+
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI DisplayDialogueName;
     [SerializeField] private TextMeshProUGUI DisplayOptionsName;
@@ -225,9 +227,9 @@ public class InteractionManager : MonoBehaviour
 
     public void StopInteraction()
     {
-        TradeButton.SetActive(true);
         player.NPCTarget = null;
-        worldNames.SetActive(true);
+        TradeButton.SetActive(true);
+        if (player.GetComponent<PlayerController>().DungeonNum == 0) { worldNames.SetActive(true); } 
         continueDialogueButton.SetActive(false);
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);
@@ -235,11 +237,5 @@ public class InteractionManager : MonoBehaviour
         travelMenu.SetActive(false);
         shopUI.resetShop();
     }
-
-    public void EnterRuinsOfYeager()
-    {
-        LoadingStateController.Instance.LoadScene("Dungeon1");
-    }
-
 }
 
