@@ -84,7 +84,7 @@ namespace ARPG.Combat
             if (GetComponent<Animator>().GetBool("Summon"))
             {
                 //Not ideal, find more suitable animation in the future?
-                if(attackCounter == 200)
+                if(attackCounter == 300)
                 {
                     Debug.Log("damaged!");
                     AudioManager.instance.Play("Force");
