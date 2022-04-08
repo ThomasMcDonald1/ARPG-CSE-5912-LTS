@@ -66,40 +66,24 @@ public class CharacterPanelState : BaseGameplayState
             //Image itemImg = go.GetComponent<Image>()
             //Button xButton = invButton;
           
-
             if (invButton != null&&invButton.CompareTag("invSlotButton"))
             {
 
                 InventorySlot invSlot = invButton.GetComponentInParent<InventorySlot>();
                 if (invSlot!=null && invSlot.item != null)
                 {
-                    Debug.Log("Item hovered over: " + invSlot.item.name);
-                    TipManager.instance.ShowTip(invSlot.item.name);
-
+                    //Debug.Log("Item hovered over: " + invSlot.item.name);
+                    TipManager.instance.ShowInventoryTooltip(invSlot.item);
                 }
                 else 
                 {
-                    TipManager.instance.HideTip();
-
+                    TipManager.instance.HideWindow();
                 }
-
-
-
             }
             else if(invButton != null && !invButton.CompareTag("invSlotButton"))
             {
-                TipManager.instance.HideTip();
-            }
-           
-           
-
-
-
-
-
-
-
-
+                TipManager.instance.HideWindow();
+            }          
         }
     }
 }

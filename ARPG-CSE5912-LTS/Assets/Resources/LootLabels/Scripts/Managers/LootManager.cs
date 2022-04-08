@@ -102,7 +102,6 @@ namespace LootLabels
         IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
-            Debug.Log("amount is " + i);
 
             while (i != 0)
             {
@@ -167,7 +166,7 @@ namespace LootLabels
                     {
                         Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
                         Debug.Log("item is " + item);
-                        //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        // Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         /*droppedItem.GetComponent<ItemPickup>().item =*/
@@ -180,12 +179,13 @@ namespace LootLabels
                         //}                        
                         //else
                         if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
-                        {
+                        { 
                             Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
+                            
                             foreach (GameObject featureGO in prefix.FeaturesGOs) {
                                 Feature feature = featureGO.GetComponent<Feature>();
                                 Type typeFeature = feature.GetType();
@@ -200,7 +200,6 @@ namespace LootLabels
                                     PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
                                     percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
                                 }
-
                             }
                             foreach (GameObject featureGO in suffix.FeaturesGOs)
                             {
@@ -221,7 +220,8 @@ namespace LootLabels
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
-
+                        item.name = gear.ItemName;
+                        item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
                         //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
@@ -312,7 +312,6 @@ namespace LootLabels
 
             }
             return stat;
-
         }
 
         private void RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
@@ -366,7 +365,7 @@ namespace LootLabels
                 armor.Evasion = (int)(armor.Evasion * multiplier);
                 armor.Armor = (int)(armor.Armor * multiplier);
                 item = armor;
-            }
+            }           
         }
     }
 }
