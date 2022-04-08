@@ -59,7 +59,6 @@ public class TipManager : MonoBehaviour
    public void ShowInventoryTooltip(Ite item)
     {
         ShowText();
-
         foreach (GameObject go in itemInfoSlotTexts)
         {
             go.GetComponent<TextMeshProUGUI>().text = default;
