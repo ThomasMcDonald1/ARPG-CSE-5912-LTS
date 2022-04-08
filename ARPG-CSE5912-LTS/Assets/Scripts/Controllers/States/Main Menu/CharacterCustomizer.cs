@@ -4,7 +4,7 @@ using UnityEngine;
 using BattleDrakeStudios.ModularCharacters;
 
 public enum SelectionDirection { Forward, Backward }
-public enum BodyPartNames { Hair, Eyes, Skin, Eyebrows, FaceMark, FacialHair}
+public enum BodyPartNames { Hair, Eyes, Skin, Eyebrows, FaceMark, FacialHair }
 
 public class CharacterCustomizer
 {
@@ -122,7 +122,7 @@ public class CharacterCustomizer
         facialHair = new BodyPart(-1, 17, -1, ModularBodyPart.FacialHair, colors, "_Color_Hair");
         ActivateBodyPart(facialHair);
 
-        colors = new Color[] { (ColorConverter(162, 100, 195, 225)), (ColorConverter(231, 42, 0, 225)), (ColorConverter(3, 87, 13, 225)), (ColorConverter(229, 229, 229, 225))};
+        colors = new Color[] { (ColorConverter(162, 100, 195, 225)), (ColorConverter(231, 42, 0, 225)), (ColorConverter(3, 87, 13, 225)), (ColorConverter(229, 229, 229, 225)) };
 
         faceMark = new BodyPart(0, 22, 0, ModularBodyPart.Head, colors, "_Color_BodyArt");
         ActivateBodyPart(faceMark);
@@ -136,7 +136,7 @@ public class CharacterCustomizer
 
     private Color ColorConverter(float r, float g, float b, float o)
     {
-        return new Color(r / 255.0f, g / 255.0f, b / 255.0f, o/1f);
+        return new Color(r / 255.0f, g / 255.0f, b / 255.0f, o / 1f);
     }
 
     private void ActivateBodyPart(BodyPart bp)
@@ -155,7 +155,7 @@ public class CharacterCustomizer
     private void UpdateBodyPartColor(BodyPart bp)
     {
         if (bp.IDvalue >= 0)
-        { 
+        {
             character.SetPartColor(bp.PartType, bp.IDvalue, bp.ColorProperty, bp.PartColor);
         }
     }
@@ -167,7 +167,7 @@ public class CharacterCustomizer
 
     public Color GetPartColor(BodyPartNames bp)
     {
-        switch(bp)
+        switch (bp)
         {
             case BodyPartNames.Eyebrows:
                 return eyebrow.PartColor;
@@ -200,7 +200,7 @@ public class CharacterCustomizer
                 return 0;
         }
     }
-    
+
     public void ResetParts()
     {
         hair.Reset();
@@ -259,6 +259,7 @@ public class CharacterCustomizer
 
         ActivateBodyPart(faceMark);
         UpdateNonBodyPartColor(skin);
+        UpdateNonBodyPartColor(eyes);
     }
 
     public void SetFacialHairStyle(SelectionDirection d)
@@ -319,9 +320,25 @@ public class CharacterCustomizer
         else { return true; }
     }
 
+    public List<int> GetDefaultOutfitIds()
+    {
+        var idList = new List<int>();
+
+        //this is based on default outfit we have been using this entire time - change it if you want
+        //body part order: backAttach, shoulderAttach, armUpper, elbowAttach, armLower, hands, hipsAttach, hips, kneeAttach, legs
+        idList.Add(5);
+        idList.Add(20);
+        idList.Add(12);
+        idList.Add(4);
+        idList.Add(11);
+        idList.Add(14);
+        idList.Add(4);
+        idList.Add(19);
+        idList.Add(7);
+        idList.Add(16);
+
+        return idList;
+    }
+
 
 }
-
-
-
-

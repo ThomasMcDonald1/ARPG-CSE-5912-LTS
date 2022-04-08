@@ -13,5 +13,4 @@ public class Shop : ScriptableObject
         Utility,
 
     }
-
 }

@@ -102,7 +102,6 @@ namespace LootLabels
         IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
             int i = amount;
-            Debug.Log("amount is " + i);
 
             while (i != 0)
             {
@@ -122,7 +121,7 @@ namespace LootLabels
             switch (lootType)
             {
                 case LootTypes.Currency:
-                    ChooseCurrency(lootOrigin,type);
+                    ChooseCurrency(lootOrigin, type);
                     break;
                 case LootTypes.Items:
                     ChooseItemType(lootOrigin, type);
@@ -165,29 +164,32 @@ namespace LootLabels
                     
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
-                        Ite item = droppedItem.GetComponent<ItemPickup>().item;
-                        //Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
+                        Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                        Debug.Log("item is " + item);
+                        // Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        droppedItem.GetComponent<ItemPickup>().item = RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-                       // Equipment equipment = (Equipment)item;
-                        
+                        /*droppedItem.GetComponent<ItemPickup>().item =*/
+                        //RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        // Equipment equipment = (Equipment)item;
+
                         //if (item.type == Ite.ItemType.utility){
                         //    Potion potion = (Potion)item;
                         //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         //}                        
                         //else
-                        if(droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
-                        {
+                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
+                        { 
                             Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
-                            foreach(GameObject featureGO in prefix.FeaturesGOs){
+                            foreach (GameObject featureGO in prefix.FeaturesGOs)
+                            {
                                 Feature feature = featureGO.GetComponent<Feature>();
                                 Type typeFeature = feature.GetType();
-                                if(typeFeature == typeof(FlatStatModifierFeature))
+                                if (typeFeature == typeof(FlatStatModifierFeature))
                                 {
                                     FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
 
@@ -198,7 +200,6 @@ namespace LootLabels
                                     PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
                                     percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
                                 }
-
                             }
                             foreach (GameObject featureGO in suffix.FeaturesGOs)
                             {
@@ -219,7 +220,8 @@ namespace LootLabels
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
-
+                        item.name = gear.ItemName;
+                        item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
                         //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
                     break;
@@ -278,73 +280,62 @@ namespace LootLabels
 
             }
             return stat;
-
         }
-        private void RollStatsForItemsLevel(Rarity itemRarity, Ite item)
+
+        private void RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
         {
-           // double multiplier = LootGenerator.RollAmountOfStats(itemRarity);
             //Ite ite = Instantiate(item);
-            //if (string.Equals("Health Potion", item.name))
-            //{
-            //    Potion potion = (Potion)item;
-            //    Debug.Log("potion health before change is" + potion.health);
-            //    potion.health = (int)(potion.health * multiplier);
-            //    string name = itemRarity.ToString() + " " + potion.name;
-            //    potion.name = name;
-            //    Debug.Log("health potion health amount is " + potion.health);
-            //    Debug.Log("potion.name is " + potion.name);
-            //}
-            //else if (string.Equals("Mano Potion", item.name))
-            //{
-            //    Potion potion = (Potion)item;
-            //    Debug.Log("potion health before change is" + potion.health);
-            //    potion.mana = (int)(potion.mana * multiplier);
-            //    string name = itemRarity.ToString() + " " + potion.name;
-            //    potion.name = name;
-            //    Debug.Log("health potion health amount is " + potion.health);
-            //    Debug.Log("potion.name is " + potion.name);
-            //}
-            //else if (string.Equals("Knight Sword", item.name))
-            //{
-            //    WeaponEquipment weapon = (WeaponEquipment)item;
-            //}
-        }
-
-        private Ite RollStatsForItems(Rarity itemRarity, Ite item, GearTypes gearType)
-        {
-            Ite ite = Instantiate(item);
-            double multiplier = LootGenerator.RollAmountOfStats(itemRarity, ite, gearType);
+            double multiplier = LootGenerator.RollAmountOfStats(itemRarity, item, gearType);
             if (string.Equals("Health Potion", item.name))
             {
-                Potion potion = (Potion)ite;
+                Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.health = (int)(potion.health * multiplier);
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
                 Debug.Log("potion.name is " + potion.name);
-                return potion;
+                item = potion;
             }
             else if(string.Equals("Mano Potion", item.name))
             {
-                Potion potion = (Potion)ite;
+                Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.mana = (int)(potion.mana * multiplier);
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
                 Debug.Log("potion.name is " + potion.name);
-                return potion;
+                item = potion;
             }
-            //else if(item.type == Ite.ItemType.weapon)
-            //{
-            //    WeaponEquipment weapon = (WeaponEquipment)ite;
-            //}
-            //else
-            //{
-            //    ArmorEquipment armor = (ArmorEquipment)ite;
-            //}
-            return ite;              
+            else if (item.type == Ite.ItemType.weapon)
+            {
+                Equipment equip = (Equipment)item;
+                if (equip.equipSlot == EquipmentSlot.OffHand)
+                {
+                    ShieldEquipment shield = (ShieldEquipment)item;
+                    shield.armor = (int)(shield.armor * multiplier);
+                    shield.armor = (int)(shield.blockChance * multiplier);
+                    item = shield;
+                }
+                else
+                {
+                    WeaponEquipment weapon = (WeaponEquipment)item;
+                    weapon.attackRange = (int)(weapon.attackRange * multiplier);
+                    weapon.minimumDamage = (int)(weapon.minimumDamage * multiplier);
+                    weapon.maximumDamage = (int)(weapon.maximumDamage * multiplier);
+                    weapon.attackSpeed = (int)(weapon.attackSpeed * multiplier);
+                    weapon.critChance = (int)(weapon.critChance * multiplier);
+                    item = weapon;
+                }
+            }
+            else
+            {
+                ArmorEquipment armor = (ArmorEquipment)item;
+                armor.Evasion = (int)(armor.Evasion * multiplier);
+                armor.Armor = (int)(armor.Armor * multiplier);
+                item = armor;
+            }           
         }
     }
 }

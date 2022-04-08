@@ -45,6 +45,7 @@ namespace LootLabels {
                 //    return modelPath + "Lance";
                 case GearTypes.Helm:
                     Debug.Log("armorTypeCount is " + armorTypeCount);
+                    Debug.Log("random index is " + randomIndex);
                     switch (randomIndex)
                     {
                         case 0:
@@ -73,15 +74,17 @@ namespace LootLabels {
                             return modelPath + "Armor";
                         case 2:
                             return modelPath + "HeavyArmor";
-
-                    }
-                    switch (itemRarity)
-                    {
-                        //case Rarity.Legendary:
-                        //    return modelPath + "legendaryDagger";
                         default:
                             return modelPath + "Armor";
+
                     }
+                    //switch (itemRarity)
+                    //{
+                    //    //case Rarity.Legendary:
+                    //    //    return modelPath + "legendaryDagger";
+                    //    default:
+                    //        return modelPath + "Armor";
+                    //}
                 case GearTypes.Boots:
                     switch (randomIndex)
                     {
@@ -90,7 +93,7 @@ namespace LootLabels {
                         case 1:
                             return modelPath + "Boots";
                         case 2:
-                            return modelPath + "HeavyBoots";
+                            return modelPath + "Heavy Boots";
                         default:
                             return modelPath + "Boots";
 
@@ -130,6 +133,14 @@ namespace LootLabels {
                             return modelPath + "legendaryShield";
                         default:
                             return modelPath + "Shield";
+                    }
+                case GearTypes.TwoHandedSword:
+                    switch (itemRarity)
+                    {
+                        case Rarity.Legendary:
+                            return modelPath + "Legendary LongSword";
+                        default:
+                            return modelPath + "LongSword";
                     }
                 default:
                     Debug.Log("Case not implemented");

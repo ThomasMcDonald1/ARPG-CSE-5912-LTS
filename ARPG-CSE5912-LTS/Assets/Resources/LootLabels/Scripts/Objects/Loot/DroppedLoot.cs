@@ -51,15 +51,15 @@ namespace LootLabels {
         /// Loot objects by walking over it
         /// </summary>
         /// <param name="other"></param>
-        void OnTriggerEnter(Collider other) {
-            if (LootOnCollision) {
-                //change tag to the name of your player tag
-                if (other.tag == "Player") {
-                    if (GetComponent<EventHandler>().OnMouseDown != null) {
-                        GetComponent<EventHandler>().OnMouseDown();
-                    }
-                }
-            }
-        }
+        //void OnTriggerEnter(Collider other) {
+        //    if (LootOnCollision) {
+        //        //change tag to the name of your player tag
+        //        if (other.tag == "Player") {
+        //            if (GetComponent<EventHandler>().OnMouseDown != null) {
+        //                GetComponent<EventHandler>().OnMouseDown();
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

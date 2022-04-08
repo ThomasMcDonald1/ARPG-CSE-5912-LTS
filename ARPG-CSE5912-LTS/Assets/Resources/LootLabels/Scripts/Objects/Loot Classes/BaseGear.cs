@@ -25,6 +25,8 @@
             ItemRarity = rarity;
             if (gearType == GearTypes.TwoHandedSword)
                 ItemName = "Two-Handed Sword";
+            else if (gearType == GearTypes.HealthPotion)
+                ItemName = "Health Potion";
             else
                 ItemName = GearType.ToString();
             ModelName = modelName;

@@ -28,6 +28,7 @@ public class EquipmentManager : MonoBehaviour {
         foreach (var part in itemToEquip.modularArmor.armorParts) {
             if (part.partID > -1) {
                 Debug.Log("part.body Type is " + part.bodyType);
+                characterManager.DeactivatePart(part.bodyType);
                 characterManager.ActivatePart(part.bodyType, part.partID);
                 if (part.bodyType.Equals(ModularBodyPart.Helmet))
                 {
@@ -61,12 +62,76 @@ public class EquipmentManager : MonoBehaviour {
                     //characterManager.SetPartColor(part.bodyType, character.hairId, "_Color_Hair", character.hairColor);
 
                 }
+                Debug.Log("part.bodyType is " + part.bodyType);
+                switch (part.bodyType)
+                {
+                    case (ModularBodyPart.BackAttachment):
+                        characterManager.ActivatePart(part.bodyType, character.backAttach);
+                        break;
+                    case (ModularBodyPart.ShoulderAttachmentLeft):
+                        characterManager.ActivatePart(part.bodyType, character.shoulderAttach);
+                        break;
+                    case (ModularBodyPart.ShoulderAttachmentRight):
+                        characterManager.ActivatePart(part.bodyType, character.shoulderAttach);
+                        break;
+                    case (ModularBodyPart.ArmUpperLeft):
+                        characterManager.ActivatePart(part.bodyType, character.armUpper);
+                        break;
+                    case (ModularBodyPart.ArmUpperRight):
+                        characterManager.ActivatePart(part.bodyType, character.armUpper);
+                        break;
+                    case (ModularBodyPart.ElbowAttachmentLeft):
+                        characterManager.ActivatePart(part.bodyType, character.elbowAttach);
+                        break;
+                    case (ModularBodyPart.ElbowAttachmentRight):
+                        characterManager.ActivatePart(part.bodyType, character.elbowAttach);
+                        break;
+                    case (ModularBodyPart.ArmLowerLeft):
+                        characterManager.ActivatePart(part.bodyType, character.armLower);
+                        break;
+                    case (ModularBodyPart.ArmLowerRight):
+                        characterManager.ActivatePart(part.bodyType, character.armLower);
+                        break;
+                    case (ModularBodyPart.HandLeft):
+                        characterManager.ActivatePart(part.bodyType, character.hands);
+                        break;
+                    case (ModularBodyPart.HandRight):
+                        characterManager.ActivatePart(part.bodyType, character.hands);
+                        break;
+                    case (ModularBodyPart.HipsAttachment):
+                        characterManager.ActivatePart(part.bodyType, character.hipsAttach);
+                        break;
+                    case (ModularBodyPart.Hips):
+                        characterManager.ActivatePart(part.bodyType, character.hips);
+                        break;
+                    case (ModularBodyPart.KneeAttachmentLeft):
+                        characterManager.ActivatePart(part.bodyType, character.kneeAttach);
+                        break;
+                    case (ModularBodyPart.KneeAttachmentRight):
+                        characterManager.ActivatePart(part.bodyType, character.kneeAttach);
+                        break;
+                    case (ModularBodyPart.LegLeft):
+                        characterManager.ActivatePart(part.bodyType, character.legs);
+                        break;
+                    case (ModularBodyPart.LegRight):
+                        characterManager.ActivatePart(part.bodyType, character.legs);
+                        break;
+                    case (ModularBodyPart.Torso):
+                        Debug.Log("I am in torso and torso id is " + character.torso);
+                        characterManager.ActivatePart(part.bodyType, character.torso);
+                        break;
+                    default:
+                        return;
+
+                }
 
 
             }
             else
             {
                 characterManager.DeactivatePart(part.bodyType);
+                
+                //characterManager.ActivatePart(part.bodyType, character.;
             }
         }
     }

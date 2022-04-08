@@ -20,7 +20,11 @@ namespace LootLabels {
         }
         private void OnTriggerEnter(Collider other)
         {
-            playerMoney.addMoney(currency.CurrencyValue);
+            if (other.tag == "Player")
+            {
+                playerMoney.addMoney(currency.CurrencyValue);
+            }
+            Destroy(this.gameObject);
         }
         /// <summary>
         /// Creates the label!!
