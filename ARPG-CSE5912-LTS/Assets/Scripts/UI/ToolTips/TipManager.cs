@@ -50,21 +50,26 @@ public class TipManager : MonoBehaviour
         suffixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot11, itemInfoSlot12, itemInfoSlot13, itemInfoSlot14, itemInfoSlot15 };
     }
    
-
     // Start is called before the first frame update
     void Start()
     {
         HideWindow();
-        ShowText();
     }
 
    public void ShowInventoryTooltip(Ite item)
     {
+        ShowText();
+
+        foreach (GameObject go in itemInfoSlotTexts)
+        {
+            go.GetComponent<TextMeshProUGUI>().text = default;
+        }
         itemNameText.text = item.name;
         itemNameText.color = item.itemNameColor;
-        if (item is WeaponEquipment weapon)
+        if (item is WeaponEquipment)
         {
-            itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
+            WeaponEquipment weapon = (WeaponEquipment)item;
+            //itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
             itemInfoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
             itemInfoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
             itemInfoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
@@ -91,18 +96,24 @@ public class TipManager : MonoBehaviour
         {
             itemInfoSlot5.text = "Required Level: " + equipment.levelRequiredToEquip.ToString();
 
-            for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
+            if (equipment.prefix != null)
             {
-                FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
-                if (feature != null)
-                    prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
+                {
+                    FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
+                    if (feature != null)
+                        prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                }
             }
 
-            for (int i = 0; i < equipment.suffix.FeaturesGOs.Count; i++)
+            if (equipment.suffix != null)
             {
-                FlatStatModifierFeature feature = equipment.suffix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
-                if (feature != null)
-                    suffixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                for (int i = 0; i < equipment.suffix.FeaturesGOs.Count; i++)
+                {
+                    FlatStatModifierFeature feature = equipment.suffix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
+                    if (feature != null)
+                        suffixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                }
             }
         }
 
@@ -129,7 +140,7 @@ public class TipManager : MonoBehaviour
     {
         foreach(GameObject go in itemInfoSlotTexts)
         {
-            if(go.GetComponent<TextMeshProUGUI>().text == "New Text")
+            if(go.GetComponent<TextMeshProUGUI>().text == default)
             {
                 go.SetActive(false);
             }
