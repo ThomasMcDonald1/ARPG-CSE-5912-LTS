@@ -15,7 +15,17 @@ public class AbilityCooldown : MonoBehaviour
 
     private void Awake()
     {
-        actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        if (character is Player)
+        {
+            actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        }
+        else
+        {
+            if (character is EnemyKnight)
+            {
+                actionBar = GetComponentInParent<EnemyKnight>().GetComponentInParent<GameplayStateController>().gameObject.AddComponent<ActionBar>() as ActionBar;
+            }
+        }
             //add more for more enemy
     }
 
