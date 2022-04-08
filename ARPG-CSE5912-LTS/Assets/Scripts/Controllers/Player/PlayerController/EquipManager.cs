@@ -97,9 +97,9 @@ public class EquipManager : MonoBehaviour
                 nu[slotIndex].transform.parent = leftHand.transform;
                 nu[slotIndex].transform.localPosition = new Vector3(0, 0, 0);
                 nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
-                playerStats[StatTypes.AttackRange] += (weapon.attackRange/2);
-                playerStats[StatTypes.AtkSpeed] += (weapon.attackSpeed/2);
-                playerStats[StatTypes.CritChance] += (weapon.critChance/2);
+                playerStats[StatTypes.AttackRange] += weapon.attackRange;
+                playerStats[StatTypes.AtkSpeed] += weapon.attackSpeed;
+                playerStats[StatTypes.CritChance] += weapon.critChance;
 
                 offHand = true;
             }
@@ -214,9 +214,9 @@ public class EquipManager : MonoBehaviour
                     else if(oldItem.equipSlot == EquipmentSlot.OffHand)
                     {
                         WeaponEquipment weapon = (WeaponEquipment)oldItem;
-                        playerStats[StatTypes.AttackRange] -= (weapon.attackRange / 2);
-                        playerStats[StatTypes.AtkSpeed] -= (weapon.attackSpeed / 2);
-                        playerStats[StatTypes.CritChance] -= (weapon.critChance / 2);
+                        playerStats[StatTypes.AttackRange] -= weapon.attackRange;
+                        playerStats[StatTypes.AtkSpeed] -= weapon.attackSpeed;
+                        playerStats[StatTypes.CritChance] -= weapon.critChance;
                         offHand = false;
                     }
                     else
