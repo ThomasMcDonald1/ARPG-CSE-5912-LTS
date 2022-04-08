@@ -77,12 +77,12 @@ public class CharacterPanelState : BaseGameplayState
                 }
                 else 
                 {
-                    TipManager.instance.HideTip();
+                    TipManager.instance.HideWindow();
                 }
             }
             else if(invButton != null && !invButton.CompareTag("invSlotButton"))
             {
-                TipManager.instance.HideTip();
+                TipManager.instance.HideWindow();
             }          
         }
     }

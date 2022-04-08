@@ -10,7 +10,7 @@ public class Equipment : Ite
     //public Stats playerStat;
 
     //All equipment has the following:
-    // public int levelRequiredToEquip;
+    public int levelRequiredToEquip;
     // public StatTypes statRequiredToEquip;
     // public int statAmountRequired;
     // public int attackRange;

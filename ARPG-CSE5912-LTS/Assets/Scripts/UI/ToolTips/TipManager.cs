@@ -7,25 +7,37 @@ using UnityEngine.InputSystem;
 
 public class TipManager : MonoBehaviour
 {
+    //Name of item
     [SerializeField] TextMeshProUGUI itemNameText;
+
+    //Base stats of item
     [SerializeField] TextMeshProUGUI itemInfoSlot1;
     [SerializeField] TextMeshProUGUI itemInfoSlot2;
     [SerializeField] TextMeshProUGUI itemInfoSlot3;
     [SerializeField] TextMeshProUGUI itemInfoSlot4;
+
+    //Level req
     [SerializeField] TextMeshProUGUI itemInfoSlot5;
+
+    //Prefix features
     [SerializeField] TextMeshProUGUI itemInfoSlot6;
     [SerializeField] TextMeshProUGUI itemInfoSlot7;
     [SerializeField] TextMeshProUGUI itemInfoSlot8;
     [SerializeField] TextMeshProUGUI itemInfoSlot9;
     [SerializeField] TextMeshProUGUI itemInfoSlot10;
+
+    //Suffix features
     [SerializeField] TextMeshProUGUI itemInfoSlot11;
     [SerializeField] TextMeshProUGUI itemInfoSlot12;
     [SerializeField] TextMeshProUGUI itemInfoSlot13;
     [SerializeField] TextMeshProUGUI itemInfoSlot14;
+    [SerializeField] TextMeshProUGUI itemInfoSlot15;
 
+    //All of them in a list for turning on / off easily
     [SerializeField] List<GameObject> itemInfoSlotTexts;
 
     public RectTransform tipWindow;
+
     List<TextMeshProUGUI> prefixItemInfoList;
     List<TextMeshProUGUI> suffixItemInfoList;
 
@@ -34,50 +46,51 @@ public class TipManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        prefixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot5, itemInfoSlot6, itemInfoSlot7, itemInfoSlot8, itemInfoSlot9 };
-        suffixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot10, itemInfoSlot11, itemInfoSlot12, itemInfoSlot13, itemInfoSlot14 };
-        Debug.Log(prefixItemInfoList.Count);
-        Debug.Log(suffixItemInfoList.Count);
+        prefixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot6, itemInfoSlot7, itemInfoSlot8, itemInfoSlot9, itemInfoSlot10 };
+        suffixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot11, itemInfoSlot12, itemInfoSlot13, itemInfoSlot14, itemInfoSlot15 };
     }
    
 
     // Start is called before the first frame update
     void Start()
     {
-        HideTip();
+        HideWindow();
         ShowText();
     }
 
    public void ShowInventoryTooltip(Ite item)
     {
-        Debug.Log("Item name: " + item.name);
         itemNameText.text = item.name;
         itemNameText.color = item.itemNameColor;
         if (item is WeaponEquipment weapon)
         {
-            itemInfoSlot1.text = "Attack Range: " + weapon.attackRange.ToString();
+            itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
             itemInfoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
-            itemInfoSlot3.text = weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString() + " Physical Damage";
+            itemInfoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
             itemInfoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
-            itemInfoSlot10.text = "Required Level: " + weapon.levelRequiredToEquip.ToString();
         }
         else if (item is LightArmorEquipment lightArmor)
         {
+            itemInfoSlot1.text = "Evasion: " + lightArmor.evasion.ToString();
         }
         else if (item is MediumArmorEquipment mediumArmor)
         {
+            itemInfoSlot1.text = "Armor: " + mediumArmor.armor.ToString();
+            itemInfoSlot2.text = "Evasion: " + mediumArmor.evasion.ToString();
         }
         else if (item is HeavyArmorEquipment heavyArmor)
         {
+            itemInfoSlot1.text = "Armor: " + heavyArmor.armor.ToString();
         }
         else if (item is ShieldEquipment shieldEquipment)
         {
-        }
-        else if (item is JewelryEquipment jewelryEquipment)
-        {
+            itemInfoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
+            itemInfoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
         }
         if (item is Equipment equipment)
         {
+            itemInfoSlot5.text = "Required Level: " + equipment.levelRequiredToEquip.ToString();
+
             for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
             {
                 FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
@@ -95,16 +108,20 @@ public class TipManager : MonoBehaviour
 
         AdjustSize();
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        if (mousePos.x <= Screen.width / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y);
+        if (mousePos.x <= Screen.width / 2 && mousePos.y >= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+        else if (mousePos.x > Screen.width / 2 && mousePos.y >= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+        else if (mousePos.x <= Screen.width / 2 && mousePos.y <= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
         else
-            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y);
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
 
         tipWindow.gameObject.SetActive(true);    
     }
-    public void HideTip()
+
+    public void HideWindow()
     {
-        itemNameText.text = default;
         tipWindow.gameObject.SetActive(false);
     }
 
