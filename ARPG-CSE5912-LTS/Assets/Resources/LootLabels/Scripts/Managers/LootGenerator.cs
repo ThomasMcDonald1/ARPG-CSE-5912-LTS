@@ -174,10 +174,10 @@ namespace LootLabels {
             switch (itemRarity)
             {
                 case Rarity.Poor:
-                    statAmount = 0.5;
+                    statAmount = -2;
                     break;
                 case Rarity.Normal:
-                    statAmount = 1;
+                    statAmount = 0;
                     break;
                 case Rarity.Rare:
                     statAmount = 2;
@@ -186,7 +186,7 @@ namespace LootLabels {
                     statAmount = 4;
                     break;
                 case Rarity.Legendary:
-                    statAmount = 1;
+                    statAmount = 0;
                     break;
                 //case Rarity.Set:
                 //    statAmount = 6;

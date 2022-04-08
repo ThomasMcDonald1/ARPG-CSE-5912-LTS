@@ -35,14 +35,11 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
                 maxWeaponDamage = weapon.maximumDamage;
             }
         }
-        else
+        else if (equippedWeapon.currentEquipment[1] != null)
         {
-            if (equippedWeapon.currentEquipment[1] != null)
-            {
-                WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[1];
-                minWeaponDamage = weapon.minimumDamage;
-                maxWeaponDamage = weapon.maximumDamage;
-            }
+            WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[1];
+            minWeaponDamage += weapon.minimumDamage;
+            maxWeaponDamage += weapon.maximumDamage;
         }
 
         Debug.Log("minWeaponDamage is " + minWeaponDamage);
