@@ -46,6 +46,7 @@ public abstract class Character : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
         playerAbilityController = GetComponent<PlayerAbilityController>();
+        enemyAbilityController = GetComponent<EnemyAbilityController>();
         basicAttackAbility = GetComponentInParent<GameplayStateController>().GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;

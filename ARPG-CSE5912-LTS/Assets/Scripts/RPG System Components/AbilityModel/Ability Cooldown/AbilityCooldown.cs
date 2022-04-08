@@ -5,7 +5,6 @@ using ARPG.Combat;
 
 public class AbilityCooldown : MonoBehaviour
 {
-    Character character;
     public float abilityCooldown;
     [HideInInspector] public float reducedCooldown;
     ActionBar actionBar;
@@ -15,18 +14,11 @@ public class AbilityCooldown : MonoBehaviour
 
     private void Awake()
     {
-        if (character is Player)
-        {
-            actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
-        }
-        else
-        {
-            if (character is EnemyKnight)
-            {
-                actionBar = GetComponentInParent<EnemyKnight>().GetComponentInParent<GameplayStateController>().gameObject.AddComponent<ActionBar>() as ActionBar;
-            }
-        }
-            //add more for more enemy
+
+        actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+
+        //actionBar = GetComponentInParent<EnemyKnight>().GetComponentInParent<GameplayStateController>().gameObject.AddComponent<ActionBar>() as ActionBar;
+
     }
 
     private void OnEnable()
