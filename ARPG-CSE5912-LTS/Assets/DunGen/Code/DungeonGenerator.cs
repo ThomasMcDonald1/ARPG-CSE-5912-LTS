@@ -213,7 +213,7 @@ namespace DunGen
 				}
 				ChosenSeed = savedDungeon.seed;
 				Debug.Log("Custom seed: " + ChosenSeed);
-			}				
+			}
 			else
             {
 				ChosenSeed = 1882383591; //DEFAULT
@@ -262,7 +262,7 @@ namespace DunGen
 					string errorText =	"Failed to generate the dungeon " + MaxAttemptCount + " times.\n" +
 										"This could indicate a problem with the way the tiles are set up. Try to make sure most rooms have more than one doorway and that all doorways are easily accessible.\n" +
 										"Here are a list of all reasons a tile placement had to be retried:";
-					
+
 					foreach (var pair in tilePlacementResultCounters)
 						if (pair.Value > 0)
 							errorText += "\n" + pair.Key + " (x" + pair.Value + ")";
@@ -1107,6 +1107,8 @@ namespace DunGen
             {
 				if (!enemy.CompareTag("Player"))
                 {
+					Enum.TryParse(enemy.name, out DefaultStatReader.CharacterIndex index);
+					DefaultStatReader.Instance.InitializeStats(index, enemy.gameObject);
 					var enemyStats = enemy.gameObject.GetComponent<Stats>();
 					if (enemyStats != null)
 					{
@@ -1126,7 +1128,7 @@ namespace DunGen
 						}
 						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
 					}
-				}                
+				}
             }
         }
 

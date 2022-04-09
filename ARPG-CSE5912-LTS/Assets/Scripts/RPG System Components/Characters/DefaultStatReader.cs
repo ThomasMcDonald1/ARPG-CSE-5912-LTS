@@ -10,7 +10,11 @@ public class DefaultStatReader : MonoBehaviour
 {
     public static DefaultStatReader Instance;
     public enum CharacterIndex {
-        Player
+        Player,
+        EnemyKnight,
+        EliteWarrior,
+        Kilixis,
+        SageOfSixPaths
     }
     public TextAsset defaultStats;
     public IEnumerable<string> statNames;
@@ -100,6 +104,19 @@ public class DefaultStatReader : MonoBehaviour
     {
         string objToInitialize = characterStatsList.result[(int)index].name;
         GameObject obj = GameObject.Find(objToInitialize);
+        Stats objStats = obj.GetComponent<Stats>();
+        foreach (string stat in statNames)
+        {
+            Enum.TryParse(stat, out StatTypes statName);
+            StatList statList = characterStatsList.result[(int)index].stats;
+            int statValue = (int)statList.GetType().GetField(stat).GetValue(statList);
+            objStats[statName] = statValue;
+            // Debug.Log($"{statName} : {statValue}");
+        }
+    }
+    public void InitializeStats(CharacterIndex index, GameObject obj)
+    {
+        string objToInitialize = characterStatsList.result[(int)index].name;
         Stats objStats = obj.GetComponent<Stats>();
         foreach (string stat in statNames)
         {
