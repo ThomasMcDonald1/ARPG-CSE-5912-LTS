@@ -1126,6 +1126,8 @@ namespace DunGen
 						}
 						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
 					}
+					enemy.AttackTarget = playerStats.gameObject.transform;
+					enemy.gameplayStateController = playerStats.gameObject.GetComponentInParent<GameplayStateController>();
 				}                
             }
         }
