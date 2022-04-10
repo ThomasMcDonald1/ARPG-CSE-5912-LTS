@@ -161,7 +161,7 @@ namespace LootLabels
 
                     GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     droppedItem.GetComponent<DroppedGear>().gear = gear;
-                    
+
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
                         Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
@@ -170,7 +170,7 @@ namespace LootLabels
                         //if (potion != null)
                         //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         /*droppedItem.GetComponent<ItemPickup>().item =*/
-                        //RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        RollStatsForItems(gear.ItemRarity, item, gear.GearType);
                         // Equipment equipment = (Equipment)item;
 
                         //if (item.type == Ite.ItemType.utility){
@@ -185,15 +185,15 @@ namespace LootLabels
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
-                            foreach (GameObject featureGO in prefix.FeaturesGOs)
-                            {
+                            
+                            foreach (GameObject featureGO in prefix.FeaturesGOs) {
                                 Feature feature = featureGO.GetComponent<Feature>();
                                 Type typeFeature = feature.GetType();
                                 if (typeFeature == typeof(FlatStatModifierFeature))
                                 {
                                     FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
 
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
+                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity, flatStat.type);
                                 }
                                 else
                                 {
@@ -208,7 +208,7 @@ namespace LootLabels
                                 if (typeFeature == typeof(FlatStatModifierFeature))
                                 {
                                     FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity);
+                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity, flatStat.type);
                                 }
                                 else
                                 {
@@ -231,28 +231,60 @@ namespace LootLabels
             }
         }
 
-        private int RollStatsForFeatures(Rarity ItemRarity)
+        private int RollStatsForFeatures(Rarity ItemRarity, StatTypes type)
         {
             int stat = 1;
-            switch (ItemRarity)
+            if (type == StatTypes.PercentArmorBonus || type == StatTypes.CritChance || type == StatTypes.CritDamage || type == StatTypes.PercentArmorPen
+                || type == StatTypes.PercentMagicPen || type == StatTypes.RunSpeed || type == StatTypes.ExpGainMod || type == StatTypes.PhysDmgBonus
+                || type == StatTypes.MagDmgBonus || type == StatTypes.FireDmgBonus || type == StatTypes.ColdDmgBonus || type == StatTypes.LightningDmgBonus
+                || type == StatTypes.PoisonDmgBonus || type == StatTypes.Lifesteal || type == StatTypes.CastSpeed || type == StatTypes.CooldownReduction
+                || type == StatTypes.CostReduction || type == StatTypes.BlockChance || type == StatTypes.Evasion || type == StatTypes.PercentAllResistBonus
+                || type == StatTypes.PercentFireResistBonus || type == StatTypes.PercentColdResistBonus || type == StatTypes.PercentLightningResistBonus
+                || type == StatTypes.PercentPoisonResistBonus)
             {
-                case Rarity.Poor:
-                    stat = UnityEngine.Random.Range(1, 5);
-                    break;
-                case Rarity.Normal:
-                    stat = UnityEngine.Random.Range(6, 11);
-                    break;
-                case Rarity.Rare:
-                    stat = UnityEngine.Random.Range(13, 18);
-                    break;
-                case Rarity.Epic:
-                    stat = UnityEngine.Random.Range(21, 26);
-                    break;
-                case Rarity.Legendary:
-                    stat = UnityEngine.Random.Range(28, 33);
-                    break;
+                switch (ItemRarity)
+                {
+                    case Rarity.Poor:
+                        stat = 0;
+                        break;
+                    case Rarity.Normal:
+                        stat = UnityEngine.Random.Range(0, 3);
+                        break;
+                    case Rarity.Rare:
+                        stat = UnityEngine.Random.Range(3, 5);
+                        break;
+                    case Rarity.Epic:
+                        stat = UnityEngine.Random.Range(5, 8);
+                        break;
+                    case Rarity.Legendary:
+                        stat = UnityEngine.Random.Range(8, 11);
+                        break;
 
+                }
             }
+            else
+            {
+                switch (ItemRarity)
+                {
+                    case Rarity.Poor:
+                        stat = 0;
+                        break;
+                    case Rarity.Normal:
+                        stat = UnityEngine.Random.Range(1, 5);
+                        break;
+                    case Rarity.Rare:
+                        stat = UnityEngine.Random.Range(6, 11);
+                        break;
+                    case Rarity.Epic:
+                        stat = UnityEngine.Random.Range(13, 18);
+                        break;
+                    case Rarity.Legendary:
+                        stat = UnityEngine.Random.Range(21, 26);
+                        break;
+
+                }
+            }
+
             return stat;
 
         }
@@ -290,22 +322,20 @@ namespace LootLabels
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.health = (int)(potion.health * multiplier);
+                potion.health = (int)(potion.health + (25 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
                 Debug.Log("potion.name is " + potion.name);
                 item = potion;
             }
-            else if(string.Equals("Mano Potion", item.name))
+            else if(string.Equals("Mana Potion", item.name))
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.mana = (int)(potion.mana * multiplier);
+                potion.mana = (int)(potion.mana + (25 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
-                Debug.Log("health potion health amount is " + potion.health);
-                Debug.Log("potion.name is " + potion.name);
                 item = potion;
             }
             else if (item.type == Ite.ItemType.weapon)
@@ -314,18 +344,18 @@ namespace LootLabels
                 if (equip.equipSlot == EquipmentSlot.OffHand)
                 {
                     ShieldEquipment shield = (ShieldEquipment)item;
-                    shield.armor = (int)(shield.armor * multiplier);
-                    shield.armor = (int)(shield.blockChance * multiplier);
+                    shield.armor = (int)(shield.armor + multiplier);
+                    shield.blockChance = (int)(shield.blockChance + multiplier);
                     item = shield;
                 }
                 else
                 {
                     WeaponEquipment weapon = (WeaponEquipment)item;
-                    weapon.attackRange = (int)(weapon.attackRange * multiplier);
-                    weapon.minimumDamage = (int)(weapon.minimumDamage * multiplier);
-                    weapon.maximumDamage = (int)(weapon.maximumDamage * multiplier);
-                    weapon.attackSpeed = (int)(weapon.attackSpeed * multiplier);
-                    weapon.critChance = (int)(weapon.critChance * multiplier);
+                    weapon.attackRange = (int)(weapon.attackRange + multiplier);
+                    weapon.minimumDamage = (int)(weapon.minimumDamage + multiplier);
+                    weapon.maximumDamage = (int)(weapon.maximumDamage + multiplier);
+                    weapon.attackSpeed = (int)(weapon.attackSpeed + multiplier);
+                    weapon.critChance = (int)(weapon.critChance + multiplier);
                     item = weapon;
                 }
             }

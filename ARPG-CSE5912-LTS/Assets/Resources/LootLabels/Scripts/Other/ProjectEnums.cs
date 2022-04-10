@@ -35,6 +35,7 @@
         Boots,
         Jewelry,
         HealthPotion,
+        ManaPotion,
     }
 
     //types of currency
