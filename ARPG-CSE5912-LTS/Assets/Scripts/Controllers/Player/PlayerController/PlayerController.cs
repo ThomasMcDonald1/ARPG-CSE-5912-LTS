@@ -4,6 +4,7 @@ using ARPG.Movement;
 using ARPG.Combat;
 using System.Collections;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 /* 
  * 
@@ -13,10 +14,12 @@ using System.Threading.Tasks;
  */
 
 
-    public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
     {
+    public int DungeonNum;
 
-        public string ClassTypeName
+
+    public string ClassTypeName
         { get { return classTypeName; } }
 
         public string WeaponTypeName
@@ -90,28 +93,16 @@ using System.Threading.Tasks;
 
         private void Start()
         {
-            /* 
-                * classTypeName and weaponTypeName are default for now. We need to:
-                *          1.] Find another way to change the class type based on a choice in character selection from the main menu]
-                *          2.] Also need to find a way to change weaponTypeName based on what the player has equipped
-                */
+            DungeonNum = 0;
             classTypeName = "Knight";
             weaponTypeName = "Unarmed";
-
-            /*foreach (Transform child in transform)
-            {
-                if (child.gameObject.name == classTypeName)
-                {
-                    ClassType = child.gameObject;
-                }
-            }*/
-
-            //playerClass = AttachClassScript();
         }
 
         private void Update()
         {
             UpdateAnimator();
+
+            
         }
 
         private void UpdateAnimator()

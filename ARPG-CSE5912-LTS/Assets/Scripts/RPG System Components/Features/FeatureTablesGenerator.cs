@@ -59,7 +59,7 @@ public class FeatureTablesGenerator : MonoBehaviour
         prefixTables.rarePrefixTable.Add(sages);
         PrefixSuffix fieryEnchanters = new PrefixSuffix("Fiery Enchanter's ", rarePrefixFeaturesLists.fieryEnchanters, weaponsReqList);
         prefixTables.rarePrefixTable.Add(fieryEnchanters);
-        PrefixSuffix icyEnchanters = new PrefixSuffix("IcyEnchanter's ", rarePrefixFeaturesLists.icyEnchanters, weaponsReqList);
+        PrefixSuffix icyEnchanters = new PrefixSuffix("Icy Enchanter's ", rarePrefixFeaturesLists.icyEnchanters, weaponsReqList);
         prefixTables.rarePrefixTable.Add(icyEnchanters);
         PrefixSuffix thunderingEnchanters = new PrefixSuffix("Thundering Enchanter's ", rarePrefixFeaturesLists.thunderingEnchanters, weaponsReqList);
         prefixTables.rarePrefixTable.Add(thunderingEnchanters);

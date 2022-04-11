@@ -22,16 +22,6 @@ MonoBehaviour:
   cost: 0
   equipSlot: 0
   equipment: {fileID: 0}
-  levelRequiredToEquip: 0
-  statRequiredToEquip: 0
-  statAmountRequired: 0
-  attackRange: 0
-  damage: 7
-  attackSpeedMod: 3
-  critChanceBonus: 4
-  defendRate: 0
-  defense: 0
-  evasion: 0
   prefix:
     Name: 'Corrosive Enchanter''s '
     FeaturesGOs:
@@ -42,4 +32,9 @@ MonoBehaviour:
     FeaturesGOs:
     - {fileID: 0}
     GearTypeRequirements: 0000000002000000010000000400000006000000050000000300000007000000
+  attackRange: 1
+  minimumDamage: 2
+  maximumDamage: 5
+  attackSpeed: 3
+  critChance: 10
   typeOfWeapon: 5
