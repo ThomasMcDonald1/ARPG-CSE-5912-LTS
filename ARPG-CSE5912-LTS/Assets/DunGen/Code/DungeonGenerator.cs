@@ -1107,8 +1107,7 @@ namespace DunGen
             {
 				if (!enemy.CompareTag("Player"))
                 {
-					Enum.TryParse(enemy.name, out DefaultStatReader.CharacterIndex index);
-					DefaultStatReader.Instance.InitializeStats(index, enemy.gameObject);
+					enemy.AttackTarget = GameObject.FindObjectOfType<Player>().transform;
 					var enemyStats = enemy.gameObject.GetComponent<Stats>();
 					if (enemyStats != null)
 					{
@@ -1128,6 +1127,9 @@ namespace DunGen
 						}
 						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
 					}
+					// scale enemy stats
+					Enum.TryParse(enemy.name, out DefaultStatReader.CharacterIndex index);
+					DefaultStatReader.Instance.ScaleEnemyStats(index, enemy.gameObject);
 				}
             }
         }

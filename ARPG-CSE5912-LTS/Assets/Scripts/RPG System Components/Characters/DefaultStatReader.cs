@@ -14,7 +14,8 @@ public class DefaultStatReader : MonoBehaviour
         EnemyKnight,
         EliteWarrior,
         Kilixis,
-        SageOfSixPaths
+        SageOfSixPaths,
+        Stout
     }
     public TextAsset defaultStats;
     public IEnumerable<string> statNames;
@@ -125,6 +126,21 @@ public class DefaultStatReader : MonoBehaviour
             int statValue = (int)statList.GetType().GetField(stat).GetValue(statList);
             objStats[statName] = statValue;
             // Debug.Log($"{statName} : {statValue}");
+        }
+    }
+    public void ScaleEnemyStats(CharacterIndex index, GameObject obj)
+    {
+        // Debug.Log(obj.name);
+        Stats objStats = obj.GetComponent<Stats>();
+        double currentLevel = objStats[StatTypes.LVL];
+        foreach (string stat in statNames)
+        {
+            if (stat == "LVL") continue;
+            Enum.TryParse(stat, out StatTypes statName);
+            StatList statList = characterStatsList.result[(int)index].stats;
+            int startingStat = (int)statList.GetType().GetField(stat).GetValue(statList);
+            objStats[statName] = (int)(startingStat * Math.Pow(1.1, currentLevel-1));
+            // Debug.Log($"{statName} : {(int)(startingStat * Math.Pow(1.1, currentLevel-1))}");
         }
     }
 }
