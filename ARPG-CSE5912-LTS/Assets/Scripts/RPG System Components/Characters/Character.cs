@@ -47,7 +47,8 @@ public abstract class Character : MonoBehaviour
         stats = GetComponent<Stats>();
         playerAbilityController = GetComponent<PlayerAbilityController>();
         enemyAbilityController = GetComponent<EnemyAbilityController>();
-        basicAttackAbility = GetComponentInParent<GameplayStateController>().GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
+        gameplayStateController = GameObject.FindObjectOfType<GameplayStateController>();
+        basicAttackAbility = gameplayStateController.GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
