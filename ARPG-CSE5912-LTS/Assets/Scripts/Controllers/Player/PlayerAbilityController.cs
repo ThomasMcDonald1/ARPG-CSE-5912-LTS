@@ -8,9 +8,6 @@ using System;
 
 public class PlayerAbilityController : Player
 {
-    public static event EventHandler<InfoEventArgs<AbilityCast>> PlayerSelectedGroundTargetLocationEvent;
-    public static event EventHandler<InfoEventArgs<AbilityCast>> PlayerSelectedSingleTargetEvent;
-
     Coroutine aoeAbilitySelectionMode;
     Coroutine singleTargetSelectionMode;
     [HideInInspector] public bool playerInAOEAbilityTargetSelectionMode;
@@ -85,7 +82,7 @@ public class PlayerAbilityController : Player
                     if (!targetInRange)
                     {
                         Debug.Log("Not in range");
-                        PlayerSelectedSingleTargetEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                        OnSingleTargetSelected(abilityCast);
                     }
                 }
             }
@@ -97,7 +94,7 @@ public class PlayerAbilityController : Player
     private IEnumerator WaitForPlayerClickAOE(AbilityCast abilityCast)
     {
         bool playerHasNotClicked = true;
-
+        Debug.Log("Wait for player to click AOE");
         while (playerHasNotClicked)
         {
             if (abilityCast.abilityArea != null)
@@ -116,7 +113,8 @@ public class PlayerAbilityController : Player
                     if (Physics.Raycast(ray, out hit, groundLayerMask))
                     {
                         abilityCast.hit = hit;
-                        PlayerSelectedGroundTargetLocationEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                        Debug.Log("Player selected a ground target location");
+                        OnGroundTargetSelected(abilityCast);
                     }
                     abilityCast.abilityArea.abilityAreaNeedsShown = false;
                     gameplayStateController.aoeReticleCylinder.SetActive(false);

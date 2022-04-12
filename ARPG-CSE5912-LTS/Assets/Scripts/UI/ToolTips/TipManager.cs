@@ -59,7 +59,6 @@ public class TipManager : MonoBehaviour
    public void ShowInventoryTooltip(Ite item)
     {
         ShowText();
-
         foreach (GameObject go in itemInfoSlotTexts)
         {
             go.GetComponent<TextMeshProUGUI>().text = default;
@@ -102,7 +101,10 @@ public class TipManager : MonoBehaviour
                 {
                     FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
                     if (feature != null)
+                    {
                         prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                        prefixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                    }
                 }
             }
 
@@ -112,7 +114,10 @@ public class TipManager : MonoBehaviour
                 {
                     FlatStatModifierFeature feature = equipment.suffix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
                     if (feature != null)
+                    {
                         suffixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                        suffixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                    }
                 }
             }
         }
