@@ -29,11 +29,12 @@ public class AbilityCooldown : MonoBehaviour
 
     void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (e.info.caster is Player)
+        if (e.info.caster is Player && GetComponent<Ability>() == e.info.ability)
         {
+            //Debug.Log("Cooling down player abilities");
             CooldownAbilityOnActionButtons(e.info);
         }
-        else
+        else if (GetComponent<Ability>() == e.info.ability)
         {
             CooldownAbilityOnEnemyList(e.info);
         }
@@ -50,6 +51,7 @@ public class AbilityCooldown : MonoBehaviour
         {
             if (actionButton.abilityAssigned == abilityCast.ability)
             {
+                Debug.Log("Cooling down " + actionButton.abilityAssigned + " with cooldown " + reducedCooldown);
                 actionButton.cooldownTimer = reducedCooldown;
                 actionButton.cooldownText.gameObject.SetActive(true);
                 if (cooldownRoutine == null)
@@ -65,7 +67,7 @@ public class AbilityCooldown : MonoBehaviour
         {
             if (enemyAbility.abilityAssigned == abilityCast.ability)
             {
-                enemyAbility.cooldownTimer = abilityCooldown;
+                enemyAbility.cooldownTimer = reducedCooldown;
                 if (enemyCooldownRoutine == null)
                     enemyCooldownRoutine = StartCoroutine(EnemyCooldownAbility(enemyAbility));
             }

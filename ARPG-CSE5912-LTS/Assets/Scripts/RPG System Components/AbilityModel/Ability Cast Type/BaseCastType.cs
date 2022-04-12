@@ -45,6 +45,7 @@ public abstract class BaseCastType : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
+        //Debug.Log("Ability is ready to be cast event received");
         e.info.castType.WaitCastTime(e.info);
     }
 }

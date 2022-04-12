@@ -73,7 +73,7 @@ public abstract class Character : MonoBehaviour
     {
         float distFromCaster = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
         float distToTravel = distFromCaster - abilityCast.abilityRange.range;
-        Debug.Log(abilityCast.caster + " at " + abilityCast.caster.transform.position + " clicked on " + abilityCast.hit.point);
+        //Debug.Log(abilityCast.caster + " at " + abilityCast.caster.transform.position + " clicked on " + abilityCast.hit.point);
 
         if (distFromCaster > abilityCast.abilityRange.range)
         {
@@ -82,6 +82,7 @@ public abstract class Character : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Ground target selected. Firing ability ready to be cast event");
             AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
         }
     }
@@ -105,6 +106,7 @@ public abstract class Character : MonoBehaviour
     //Put any code here that should be shared functionality across every type of character
     public void QueueAbilityCast(Ability abilityToCast)
     {
+        //Debug.Log("Queueing ability cast");
         //charactersInRange.Clear();
         AbilityCast abilityCast = new AbilityCast(abilityToCast);
         abilityCast.caster = this;
@@ -171,15 +173,17 @@ public abstract class Character : MonoBehaviour
         return false;
     }
 
-    public void DeductCastingCost(AbilityCast abilityCast)
+    protected void DeductCastingCost(AbilityCast abilityCast)
     {
+        Debug.Log("Deducting casting cost");
         abilityCast.abilityCost.DeductResourceFromCaster(abilityCast.caster);
     }
 
-    public void GetColliders(AbilityCast abilityCast)
+    protected void GetColliders(AbilityCast abilityCast)
     {
         if (this == abilityCast.caster)
         {
+            Debug.Log("Getting colliders");
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
             ApplyAbilityEffects(charactersCollided, abilityCast);
         }

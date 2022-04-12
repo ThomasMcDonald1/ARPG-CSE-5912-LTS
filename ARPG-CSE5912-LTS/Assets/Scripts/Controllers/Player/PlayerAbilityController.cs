@@ -47,6 +47,7 @@ public class PlayerAbilityController : Player
 
     public void PlayerQueueAbilityCastSelectionRequired(AbilityCast abilityCast)
     {
+        //Debug.Log("Ability cast selection is required from player");
         cursorChanger.ChangeCursorToSelectionGraphic();
 
         if (abilityCast.requiresCharacterUnderCursor)
@@ -94,7 +95,7 @@ public class PlayerAbilityController : Player
     private IEnumerator WaitForPlayerClickAOE(AbilityCast abilityCast)
     {
         bool playerHasNotClicked = true;
-        Debug.Log("Wait for player to click AOE");
+        //Debug.Log("Wait for player to click AOE");
         while (playerHasNotClicked)
         {
             if (abilityCast.abilityArea != null)
@@ -113,7 +114,7 @@ public class PlayerAbilityController : Player
                     if (Physics.Raycast(ray, out hit, groundLayerMask))
                     {
                         abilityCast.hit = hit;
-                        Debug.Log("Player selected a ground target location");
+                        //Debug.Log("Player selected a ground target location");
                         OnGroundTargetSelected(abilityCast);
                     }
                     abilityCast.abilityArea.abilityAreaNeedsShown = false;
