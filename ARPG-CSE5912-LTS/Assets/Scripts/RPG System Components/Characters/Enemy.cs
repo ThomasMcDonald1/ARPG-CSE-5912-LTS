@@ -170,7 +170,7 @@ namespace ARPG.Combat
         protected void Patrol()
         {
 
-            if (agent.enabled == false)
+            if (agent.enabled == true)
             {
                 agent.isStopped = false;
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
