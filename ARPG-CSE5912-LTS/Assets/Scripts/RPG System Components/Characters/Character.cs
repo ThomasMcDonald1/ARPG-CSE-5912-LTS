@@ -226,12 +226,16 @@ public abstract class Character : MonoBehaviour
 
         while (abilityQueued)
         {
-            abilityCast.caster.agent.destination = endPoint;
+            if (abilityCast.caster.agent.enabled == true)
+            {
+                abilityCast.caster.agent.destination = endPoint;
+            }
             float distFromPlayer = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
                 AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
             }
+
 
             yield return null;
         }

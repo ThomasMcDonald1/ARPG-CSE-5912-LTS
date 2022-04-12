@@ -153,7 +153,7 @@ namespace ARPG.Combat
                     }
                     if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
-                        StopRun();
+                            StopRun();                      
                     }
                 }
                 else
@@ -170,11 +170,13 @@ namespace ARPG.Combat
         protected void Patrol()
         {
 
-
-            agent.isStopped = false;
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            if (agent.enabled == false)
             {
-                agent.SetDestination(RandomNavmeshDestination(5f));
+                agent.isStopped = false;
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                {
+                    agent.SetDestination(RandomNavmeshDestination(5f));
+                }
             }
         }
         public Vector3 RandomNavmeshDestination(float radius)
@@ -192,15 +194,20 @@ namespace ARPG.Combat
 
         public virtual  void RunToPlayer()
         {
-
+            if (agent.enabled == true)
+            {
                 agent.isStopped = false;
                 agent.SetDestination(AttackTarget.position);
+            }
             
         }
 
         public void StopRun()
         {
-            agent.isStopped = true;
+            if (agent.enabled == true)
+            {
+                agent.isStopped = true;
+            }
         }
 
         public virtual bool InTargetRange()
