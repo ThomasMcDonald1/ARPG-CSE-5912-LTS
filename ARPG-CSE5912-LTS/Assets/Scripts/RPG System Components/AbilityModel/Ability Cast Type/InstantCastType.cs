@@ -29,7 +29,8 @@ public class InstantCastType : BaseCastType
 
     protected override void CompleteCast(AbilityCast abilityCast)
     {
-       AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+        Debug.Log("Cast was completed from Instant Cast Type");
+        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     protected override void InstantiateSpellcastVFX(AbilityCast abilityCast)
