@@ -44,16 +44,35 @@ namespace LootLabels {
                 //case GearTypes.Lance:
                 //    return modelPath + "Lance";
                 case GearTypes.Helm:
+                    randomIndex = Random.Range(0, armorTypeCount);
                     Debug.Log("armorTypeCount is " + armorTypeCount);
                     Debug.Log("random index is " + randomIndex);
                     switch (randomIndex)
                     {
                         case 0:
-                            return modelPath + "LightHelm";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary LightHelm";
+                                default:
+                                    return modelPath + "LightHelm";
+                            }
                         case 1:
-                            return modelPath + "Helm";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary Helm";
+                                default:
+                                    return modelPath + "Helm";
+                            }
                         case 2:
-                            return modelPath + "HeavyHelm";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary HeavyHelm";
+                                default:
+                                    return modelPath + "HeavyHelm";
+                            }
                         default:
                             return modelPath + "Helm";
 
@@ -66,14 +85,33 @@ namespace LootLabels {
                     //        return modelPath + "Helm";
                     //}
                 case GearTypes.Armor:
+                    randomIndex = Random.Range(0, armorTypeCount);
                     switch (randomIndex)
                     {
                         case 0:
-                            return modelPath + "LightArmor";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary LightArmor";
+                                default:
+                                    return modelPath + "LightArmor";
+                            }
                         case 1:
-                            return modelPath + "Armor";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary Armor";
+                                default:
+                                    return modelPath + "Armor";
+                            }
                         case 2:
-                            return modelPath + "HeavyArmor";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary HeavyArmor";
+                                default:
+                                    return modelPath + "HeavyArmor";
+                            }
                         default:
                             return modelPath + "Armor";
 
@@ -86,14 +124,33 @@ namespace LootLabels {
                     //        return modelPath + "Armor";
                     //}
                 case GearTypes.Boots:
+                    randomIndex = Random.Range(0, armorTypeCount);
                     switch (randomIndex)
                     {
                         case 0:
-                            return modelPath + "LightBoots";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary LightBoots";
+                                default:
+                                    return modelPath + "LightBoots";
+                            }
                         case 1:
-                            return modelPath + "Boots";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary Boots";
+                                default:
+                                    return modelPath + "Boots";
+                            }
                         case 2:
-                            return modelPath + "Heavy Boots";
+                            switch (itemRarity)
+                            {
+                                case Rarity.Legendary:
+                                    return modelPath + "Legendary Heavy Boots";
+                                default:
+                                    return modelPath + "HeavyBoots";
+                            }
                         default:
                             return modelPath + "Boots";
 
@@ -144,6 +201,8 @@ namespace LootLabels {
                         default:
                             return modelPath + "LongSword";
                     }
+                case GearTypes.Jewelry:
+                    return modelPath + "Jewelry";
                 default:
                     Debug.Log("Case not implemented");
                     switch (itemRarity)
