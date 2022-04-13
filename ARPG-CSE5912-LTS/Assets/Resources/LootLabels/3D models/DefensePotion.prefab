@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1891390126468666, guid: d4368066c6a114efe9bcb98e6cb1486d, type: 3}
       propertyPath: m_Name
-      value: GPVFX_POTION E
+      value: DefensePotion
       objectReference: {fileID: 0}
     - target: {fileID: 4396443974737560, guid: d4368066c6a114efe9bcb98e6cb1486d, type: 3}
       propertyPath: m_RootOrder
@@ -57,3 +57,104 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4368066c6a114efe9bcb98e6cb1486d, type: 3}
+--- !u!1 &3970010484058751414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1891390126468666, guid: d4368066c6a114efe9bcb98e6cb1486d, type: 3}
+  m_PrefabInstance: {fileID: 3971884281444741004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &-7395542490284557311
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4998332184430196043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f377c8f5de66e5c4b9834f91fa5f0ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnteredTrigger: 0
+  item: {fileID: 11400000, guid: 2af4864f5d753d74cb83b37bdea014af, type: 2}
+--- !u!114 &-4543646730246480477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ecc55e63ab3214cb09dd34cb8c08ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LootOnCollision: 0
+  Premade: 0
+  gearType: 10
+  gearRarity: 0
+  gear:
+    ItemName: 
+    ModelName: 
+    IconName: 
+    ItemType: 0
+    ItemRarity: 0
+    GearType: 0
+--- !u!114 &126838237733545390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee50ca543e960c4aa0927c9e2f4b299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelHeight: 25
+  objectToFollow: {fileID: 3970010484058751414}
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  stack: 1
+  autoHide: 0
+  clampToScreen: 0
+  disableOnClick: 0
+--- !u!114 &4873507175500092810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184487e0de42b3498946a9d44f537d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighlightThis: 0
+  outline: {fileID: 0}
+  mouseoverColor: {r: 1, g: 0.81960785, b: 0.3529412, a: 1}
+--- !u!114 &4874377412404180396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970010484058751414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04fd91d683c1ce4468bd735701876328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

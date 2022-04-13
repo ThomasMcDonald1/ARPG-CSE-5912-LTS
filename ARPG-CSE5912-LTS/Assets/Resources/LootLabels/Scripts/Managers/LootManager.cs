@@ -322,7 +322,7 @@ namespace LootLabels
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.health = (int)(potion.health + (25 * multiplier));
+                potion.health = (int)(potion.health + (250 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
@@ -333,7 +333,16 @@ namespace LootLabels
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.mana = (int)(potion.mana + (25 * multiplier));
+                potion.mana = (int)(potion.mana + (250 * multiplier));
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                item = potion;
+            }
+            else if (string.Equals("Potion of Steel", item.name))
+            {
+                Potion potion = (Potion)item;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.defense = (int)(potion.defense + (2 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 item = potion;
@@ -362,8 +371,11 @@ namespace LootLabels
             else
             {
                 ArmorEquipment armor = (ArmorEquipment)item;
-                armor.Evasion = (int)(armor.Evasion * multiplier);
-                armor.Armor = (int)(armor.Armor * multiplier);
+                if(itemRarity != Rarity.Legendary)
+                {
+                    armor.Evasion = (int)(armor.Evasion * multiplier);
+                    armor.Armor = (int)(armor.Armor * multiplier);
+                }
                 item = armor;
             }           
         }
