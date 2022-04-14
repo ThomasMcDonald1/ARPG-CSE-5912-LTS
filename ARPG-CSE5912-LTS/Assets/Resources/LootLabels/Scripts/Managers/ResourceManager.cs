@@ -149,7 +149,7 @@ namespace LootLabels {
                                 case Rarity.Legendary:
                                     return modelPath + "Legendary Heavy Boots";
                                 default:
-                                    return modelPath + "HeavyBoots";
+                                    return modelPath + "Heavy Boots";
                             }
                         default:
                             return modelPath + "Boots";
