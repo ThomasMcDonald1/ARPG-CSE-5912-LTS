@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4392409844465401732}
   - component: {fileID: 436956357680431258}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 2339632134219211046}
   - component: {fileID: 3496927792597751101}
   - component: {fileID: 515879769175592887}
-  - component: {fileID: 8357081047367707629}
-  m_Layer: 0
+  - component: {fileID: 2281086482010985601}
+  m_Layer: 7
   m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8357081047367707629
+--- !u!114 &2281086482010985601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,12 +167,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6114950549895360909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58e4f200336ec114faa0cceb6ebc0160, type: 3}
+  m_Script: {fileID: 11500000, guid: e9979c711f7f40a44b5b1a599364d954, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  worldMap: {fileID: 0}
-  yourButton: {fileID: 0}
+  player: {fileID: 6188932292207278773, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
+  smooth: 0
+  yVelocity: 0
 --- !u!1 &8900726353807941176
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,11 +275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1874459012656072804, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2571993876244758984, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3195360365130283639, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
       propertyPath: m_RootOrder
@@ -331,12 +331,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8302306269932764026, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
+--- !u!1 &8513509422178372317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1874459012656072804, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
+  m_PrefabInstance: {fileID: 7792746042625557177}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4646965422765439182 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3195360365130283639, guid: 2f94a42ff7157d048b1ec65645d81601, type: 3}
   m_PrefabInstance: {fileID: 7792746042625557177}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &3521215820630188939
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8513509422178372317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 3.7660744
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.8830372, z: 0}

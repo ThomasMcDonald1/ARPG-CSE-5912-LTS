@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
                         player.NPCTarget = null; 
                     }
                     NPC npcTarget = e.info.transform.GetComponent<NPC>();
+                    Debug.Log(npcTarget);
                     player.NPCTarget = npcTarget;
                     StartCoroutine(player.GoToNPC());
                     break;
