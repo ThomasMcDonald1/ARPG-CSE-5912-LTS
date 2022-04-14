@@ -12,18 +12,22 @@ public class Rotate_self : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        #if UNITY_EDITOR
         this.x = UnityEditor.TransformUtils.GetInspectorRotation(this.transform).x;
         this.y = UnityEditor.TransformUtils.GetInspectorRotation(this.transform).y;
         this.z = UnityEditor.TransformUtils.GetInspectorRotation(this.transform).z;
+        #endif
     }
 
     float num = 0;
     // Update is called once per frame
     void Update()
     {
+        #if UNITY_EDITOR
         num += Time.deltaTime * 20;
         if (num > 360)
             num = 0;
         this.transform.rotation = Quaternion.Euler(num, UnityEditor.TransformUtils.GetInspectorRotation(this.transform).y, UnityEditor.TransformUtils.GetInspectorRotation(this.transform).z);
+        #endif
     }
 }

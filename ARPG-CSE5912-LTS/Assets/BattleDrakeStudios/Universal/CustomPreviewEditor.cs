@@ -2,9 +2,11 @@
 using UnityEditor;
 using System;
 
-namespace BattleDrakeStudios.Utilities {
-
-    public class CustomPreviewEditor : Editor {
+namespace BattleDrakeStudios.Utilities 
+{
+    #if UNITY_EDITOR
+    public class CustomPreviewEditor : Editor 
+    {
         private PreviewRenderUtility _previewUtil;
 
         private Vector2 _rotationDrag;
@@ -214,4 +216,5 @@ namespace BattleDrakeStudios.Utilities {
                 _previewUtil.Cleanup();
         }
     }
+    #endif
 }
