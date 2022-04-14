@@ -36,6 +36,7 @@
         Jewelry,
         HealthPotion,
         ManaPotion,
+        DefensePotion,
     }
 
     //types of currency
