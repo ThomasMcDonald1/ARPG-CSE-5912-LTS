@@ -6,22 +6,15 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 public class Waypoint : MonoBehaviour
 {
-    public Player player;
-    public GameObject worldMap;
-	public Button yourButton;
-    void OnTriggerEnter(Collider col)
+    private GameObject player;
+
+    private void Awake()
     {
-        if (col.CompareTag("Player"))
-        {
-            worldMap.SetActive(true);
-            // transform.GetChild(0).gameObject.SetActive(true);
-            // yourButton.gameObject.SetActive(true);
-            SceneWaypointLocations.Instance.waypointLocations.Add(SceneManager.GetActiveScene().name, transform.position);
-            Debug.Log(SceneWaypointLocations.Instance.waypointLocations.Count);
-        }
+        player = GameObject.FindWithTag("Player");
     }
-    void OnTriggerExit(Collider col)
+
+    public void EnableWaypointUI()
     {
-        worldMap.SetActive(false);
+
     }
 }

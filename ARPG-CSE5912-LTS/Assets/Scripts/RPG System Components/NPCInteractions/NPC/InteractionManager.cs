@@ -27,8 +27,16 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject TradeButton;
     [SerializeField] private GameObject PorterButton;
 
+    [SerializeField] private GameObject waypointMenu;
+
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
+
+    [SerializeField] Porter porter;
+    [SerializeField] Lorekeeper lorekeeper;
+    [SerializeField] GeneralStore generalStore;
+    [SerializeField] Blacksmith blacksmith;
+
 
     public Transform ShopSlots;
     ShopSlot[] shopSlots;
@@ -198,6 +206,33 @@ public class InteractionManager : MonoBehaviour
         dialogueBox.SetActive(false);
     }
 
+    public void EnterWaypointMenu()
+    {
+        waypointMenu.SetActive(true);
+        travelMenu.SetActive(false);
+        tradeMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
+    }
+
+    public void EnterTown()
+    {
+        player.GetComponent<PlayerController>().DungeonNum = 0;
+        InteractionManager.GetInstance().StopInteraction();
+        LoadingStateController.Instance.LoadScene("GameScene");
+
+        player.agent.enabled = false;
+
+        lorekeeper.gameObject.SetActive(true);
+        generalStore.gameObject.SetActive(true);
+        blacksmith.gameObject.SetActive(true);
+        porter.gameObject.SetActive(true);
+        StopInteraction();
+        player.transform.position = GameObject.Find("TownSpawnLocation").transform.position;
+        player.agent.enabled = true;
+    }
+
     // For NPCs who will not trade
     public void DisableTradeButton()
     {
@@ -235,6 +270,7 @@ public class InteractionManager : MonoBehaviour
         dialogueBox.SetActive(false);
         tradeMenu.SetActive(false);
         travelMenu.SetActive(false);
+        waypointMenu.SetActive(false);
         shopUI.resetShop();
     }
 }

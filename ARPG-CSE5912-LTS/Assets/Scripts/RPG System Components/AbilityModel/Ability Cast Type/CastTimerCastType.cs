@@ -22,6 +22,7 @@ public class CastTimerCastType : BaseCastType
     {
         if (castingRoutine == null)
         {
+            //Debug.Log("Waiting cast time from CastTimerCastType");
             AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
             castingRoutine = StartCoroutine(CastTimeCoroutine(abilityCast));
         }
@@ -36,7 +37,7 @@ public class CastTimerCastType : BaseCastType
     }
     protected override void CompleteCast(AbilityCast abilityCast)
     {
-        Debug.Log("Completing cast");
+        //Debug.Log("Completing cast from CastTimerCastType");
         AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
