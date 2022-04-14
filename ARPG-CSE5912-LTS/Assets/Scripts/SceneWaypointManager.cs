@@ -12,7 +12,7 @@ public class SceneWaypointManager : MonoBehaviour
     public Button[] buttons;
     public Dictionary<Button, string> WaypointToSceneName;
     public SceneWaypointLocations sceneWaypointLocations;
-    public GameObject worldMap;
+    //public GameObject worldMap;
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -26,13 +26,25 @@ public class SceneWaypointManager : MonoBehaviour
             return;
         }
         WaypointToSceneName = new Dictionary<Button, string>();
-        WaypointToSceneName.Add(buttons[0], "SceneTeleport1");
-        WaypointToSceneName.Add(buttons[1], "SceneTeleport2");
+        WaypointToSceneName.Add(buttons[0], "Dungeon1");
+        WaypointToSceneName.Add(buttons[1], "Dungeon2");
+        WaypointToSceneName.Add(buttons[2], "Dungeon3");
+
+
         foreach (var btn in buttons)
         {
             btn.onClick.AddListener(delegate { SwitchScene(btn); });
         }
     }
+    void SwitchScene(Button btn)
+    {
+        string sceneToLoad = WaypointToSceneName[btn];
+        Debug.Log("Loading scene " + sceneToLoad);
+        //worldMap.SetActive(false);
+        LoadingStateController.Instance.LoadScene(sceneToLoad);
+    }
+
+    /*
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -41,18 +53,13 @@ public class SceneWaypointManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    void SwitchScene(Button btn)
-    {
-        string sceneToLoad = WaypointToSceneName[btn];
-        Debug.Log("Loading scene " + sceneToLoad);
-        worldMap.SetActive(false);
-        LoadingStateController.Instance.LoadScene(sceneToLoad);
-    }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    */
+
+    /*void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(sceneWaypointLocations.waypointLocations[scene.name]);
         player.GetComponent<NavMeshAgent>().Warp(sceneWaypointLocations.waypointLocations[scene.name]);
         Debug.Log("player position "  + player.transform.position);
-    }
+    }*/
 }

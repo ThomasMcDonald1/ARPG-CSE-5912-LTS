@@ -27,10 +27,8 @@ public class SpawnPlayer : MonoBehaviour
 	
 	private void OnDungeonGenerationStatusChanged(DungeonGenerator generator, GenerationStatus status)
 	{
-		Debug.Log("BEING CALLED?!");
 
 		GameObject player = GameObject.FindWithTag("Player");
-		Debug.Log(player.GetComponent<PlayerController>().DungeonNum);
 
 		if (status == GenerationStatus.Complete)
 		{

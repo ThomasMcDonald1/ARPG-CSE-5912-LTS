@@ -220,13 +220,17 @@ public class InteractionManager : MonoBehaviour
     {
         player.GetComponent<PlayerController>().DungeonNum = 0;
         InteractionManager.GetInstance().StopInteraction();
-
         LoadingStateController.Instance.LoadScene("GameScene");
+
+        player.agent.enabled = false;
+
         lorekeeper.gameObject.SetActive(true);
         generalStore.gameObject.SetActive(true);
         blacksmith.gameObject.SetActive(true);
         porter.gameObject.SetActive(true);
         StopInteraction();
+        player.transform.position = GameObject.Find("TownSpawnLocation").transform.position;
+        player.agent.enabled = true;
     }
 
     // For NPCs who will not trade
