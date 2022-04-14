@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileSets:
   - {fileID: 11400000, guid: 42ebf441089642d699174e674b8356b1, type: 2}
-  BranchCapTileSets: []
+  BranchCapTileSets:
+  - {fileID: 11400000, guid: 750493d0980447a4aeaabda2cf3e4fbe, type: 2}
   BranchCapType: 1
   BranchingDepth:
-    Min: 2
-    Max: 3
+    Min: 4
+    Max: 6
   BranchCount:
-    Min: 2
-    Max: 4
+    Min: 4
+    Max: 5
   StraightenChance: 0
+  Unique: 0
