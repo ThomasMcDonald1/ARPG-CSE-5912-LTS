@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilityParser
 {
+#if UNITY_EDITOR
     [MenuItem("AbilityParsing/ParseAbility")]
     public static void GetAbilityFilePath()
     {
@@ -329,4 +330,5 @@ public class AbilityParser
         Debug.Log("Json successfully parsed to " + path);
         return prefab;
     }
+#endif
 }
