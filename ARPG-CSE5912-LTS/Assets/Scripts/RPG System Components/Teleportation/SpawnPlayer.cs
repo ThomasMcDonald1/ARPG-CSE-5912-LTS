@@ -27,19 +27,14 @@ public class SpawnPlayer : MonoBehaviour
 	
 	private void OnDungeonGenerationStatusChanged(DungeonGenerator generator, GenerationStatus status)
 	{
-		Debug.Log("BEING CALLED?!");
 
 		GameObject player = GameObject.FindWithTag("Player");
-		Debug.Log(player.GetComponent<PlayerController>().DungeonNum);
 
 		if (status == GenerationStatus.Complete)
 		{
-			Debug.Log("Generation completed?!");
-			Debug.Log(player.GetComponent<PlayerController>().DungeonNum);
 			switch (player.GetComponent<PlayerController>().DungeonNum)
             {
 				case 1:
-					Debug.Log("Okay...");
 					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = false;
 					player.transform.position = dungeon1.startLocation;
 					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = true;

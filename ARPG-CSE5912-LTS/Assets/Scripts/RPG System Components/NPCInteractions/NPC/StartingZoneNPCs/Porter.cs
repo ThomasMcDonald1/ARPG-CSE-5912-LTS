@@ -77,7 +77,6 @@ public class Porter : NPC
         {
             if (currentStory >= 2)
             {
-                Debug.Log(currentStory);
                 InteractionManager.GetInstance().EnablePorterButton();
             }
             InteractionManager.GetInstance().DisableTradeButton();
