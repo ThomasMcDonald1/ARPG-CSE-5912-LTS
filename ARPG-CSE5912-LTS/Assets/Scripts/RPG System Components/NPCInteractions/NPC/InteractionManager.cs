@@ -173,6 +173,7 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterOptionsMenu()
     {
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
@@ -182,6 +183,7 @@ public class InteractionManager : MonoBehaviour
 
     public void DisableInteractionView()
     {
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         dialogueBox.SetActive(false);
         optionsMenu.SetActive(false);
@@ -190,20 +192,22 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
-        tradeMenu.SetActive(true);
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+        tradeMenu.SetActive(true);
     }
 
     public void EnterTravelMenu()
     {
-        travelMenu.SetActive(true);
+        waypointMenu.SetActive(false);
         tradeMenu.SetActive(false);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
+        travelMenu.SetActive(true);
     }
 
     public void EnterWaypointMenu()
@@ -219,18 +223,19 @@ public class InteractionManager : MonoBehaviour
     public void EnterTown()
     {
         player.GetComponent<PlayerController>().DungeonNum = 0;
-        InteractionManager.GetInstance().StopInteraction();
-        LoadingStateController.Instance.LoadScene("GameScene");
+        //optionsMenu.SetActive(true);
 
-        player.agent.enabled = false;
-
+        LoadingStateController.Instance.LoadScene("NoControllerDuplicate");
         lorekeeper.gameObject.SetActive(true);
         generalStore.gameObject.SetActive(true);
         blacksmith.gameObject.SetActive(true);
         porter.gameObject.SetActive(true);
-        StopInteraction();
+
+        player.agent.enabled = false;
         player.transform.position = GameObject.Find("TownSpawnLocation").transform.position;
         player.agent.enabled = true;
+
+        StopInteraction();
     }
 
     // For NPCs who will not trade
@@ -264,7 +269,9 @@ public class InteractionManager : MonoBehaviour
     {
         player.NPCTarget = null;
         TradeButton.SetActive(true);
-        if (player.GetComponent<PlayerController>().DungeonNum == 0) { worldNames.SetActive(true); } 
+        if (player.GetComponent<PlayerController>().DungeonNum == 0) 
+        { worldNames.SetActive(true); } 
+        else { worldNames.SetActive(false); }
         continueDialogueButton.SetActive(false);
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);

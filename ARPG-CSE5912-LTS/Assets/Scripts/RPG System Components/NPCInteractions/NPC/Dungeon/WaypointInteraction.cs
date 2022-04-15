@@ -5,26 +5,20 @@ using UnityEngine;
 
 public class WaypointInteraction : NPC
 {
-    private void Start()
-    {
-        Player.InteractNPC += Interact;
-    }
-
-
     private void OnEnable()
     {
-        InteractionManager.EndOfStoryEvent += NextStory;
-
-
+        //InteractionManager.EndOfStoryEvent += NextStory;
+        Player.InteractNPC += Interact;
     }
     private void OnDisable()
     {
-        InteractionManager.EndOfStoryEvent -= NextStory;
+        //InteractionManager.EndOfStoryEvent -= NextStory;
+        Player.InteractNPC -= Interact;
     }
 
     private void NextStory(object sender, EventArgs e)
     {
-        if (player.NPCTarget != this) return;
+        //if (player.NPCTarget != this) return;
     }
     public override IEnumerator LookAtPlayer()
     {

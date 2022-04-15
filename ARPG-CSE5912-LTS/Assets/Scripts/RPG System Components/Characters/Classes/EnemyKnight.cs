@@ -9,9 +9,12 @@ namespace ARPG.Combat
 {
     public class EnemyKnight : EnemyController
     {
+
+        private GameObject player;
         protected override void Start()
         {
             base.Start();
+            player = GameObject.FindGameObjectWithTag("Player");
             Range = 5f;
             BodyRange = 1.5f;
             SightRange = 90f;
@@ -45,7 +48,10 @@ namespace ARPG.Combat
 
         protected override void Update()
         {
-            base.Update();
+            if (Vector3.Distance(transform.position, player.transform.position) <= 18)
+            {
+                base.Update();
+            }
         }
     }
 
