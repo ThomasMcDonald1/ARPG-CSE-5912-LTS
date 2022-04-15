@@ -148,7 +148,9 @@ namespace ARPG.Combat
             agent.isStopped = false;
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                agent.SetDestination(RandomNavmeshDestination(5f));
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(RandomNavmeshDestination(5f), path);
+                agent.path = path;
             }
         }
         public Vector3 RandomNavmeshDestination(float radius)
@@ -166,10 +168,10 @@ namespace ARPG.Combat
 
         public virtual  void RunToPlayer()
         {
-
-                agent.isStopped = false;
-                agent.SetDestination(AttackTarget.position);
-            
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(AttackTarget.position, path);
+            agent.isStopped = false;
+            agent.path = path;
         }
 
         public void StopRun()
