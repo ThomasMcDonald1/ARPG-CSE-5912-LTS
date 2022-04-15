@@ -25,6 +25,7 @@ namespace ARPG.Combat
         public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
         public virtual float cooldownTimer { get; set; }
 
+        protected GameObject player;
 
         private void Awake()
         {
@@ -34,6 +35,7 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
+            player = GameObject.FindGameObjectWithTag("Player");
             TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
             Debug.Log("name" + transform.GetChild(0).name);
             Debug.Log("level" + stats[StatTypes.LVL].ToString());
@@ -45,7 +47,7 @@ namespace ARPG.Combat
         protected override void Update()
         {
 
-            //Debug.Log(abilitiesKnown);
+           //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
             if (GetComponent<Animator>().GetBool("Dead") == false)
@@ -66,8 +68,7 @@ namespace ARPG.Combat
                 {
                     SeePlayer();
                 }
-            }
-
+            }         
         }
 
         public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
