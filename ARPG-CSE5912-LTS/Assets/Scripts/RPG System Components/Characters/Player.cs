@@ -139,6 +139,9 @@ public class Player : Character
             movementHandler.MoveToTarget(AttackTarget.transform.position);
             yield return null;
         }
+
+        agent.ResetPath();
+
         if (AttackTarget != null)
         {
             movementHandler.Cancel();
@@ -206,7 +209,6 @@ public class Player : Character
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.AttackRange];
-
     }
 
     public bool InInteractNPCRange()
