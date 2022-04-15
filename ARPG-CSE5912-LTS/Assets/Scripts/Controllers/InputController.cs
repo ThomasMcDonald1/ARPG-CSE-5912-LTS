@@ -105,20 +105,24 @@ public class InputController : MonoBehaviour
     private void Update()
     {
         FindCanvas();
-        if (EventSystem.current.IsPointerOverGameObject() && Mouse.current.rightButton.wasReleasedThisFrame)
+
+        if (EventSystem.current != null)
         {
-            List<RaycastResult> results = GetUIElementsClicked();
-            UIElementRightClickedEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
-        }
-        if (gameplayStateController.CurrentState is CharacterPanelState && EventSystem.current.IsPointerOverGameObject())
-        {
-            List<RaycastResult> results = GetUIElementsHoveredInventory();
-            UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
-        }
-        else if (gameplayStateController.CurrentState is GameplayState && EventSystem.current.IsPointerOverGameObject())
-        {
-            List<RaycastResult> results = GetUIElementsClicked();
-            UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+            if (EventSystem.current.IsPointerOverGameObject() && Mouse.current.rightButton.wasReleasedThisFrame)
+            {
+                List<RaycastResult> results = GetUIElementsClicked();
+                UIElementRightClickedEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+            }
+            if (gameplayStateController.CurrentState is CharacterPanelState && EventSystem.current.IsPointerOverGameObject())
+            {
+                List<RaycastResult> results = GetUIElementsHoveredInventory();
+                UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+            }
+            else if (gameplayStateController.CurrentState is GameplayState && EventSystem.current.IsPointerOverGameObject())
+            {
+                List<RaycastResult> results = GetUIElementsClicked();
+                UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
+            }
         }
     }
 

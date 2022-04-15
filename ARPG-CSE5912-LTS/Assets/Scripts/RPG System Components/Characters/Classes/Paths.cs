@@ -30,16 +30,16 @@ namespace ARPG.Combat
                     {
                         //If sage dies, it will dies for real
                         Dead();
-                        GetComponent<Animator>().SetBool("Dead", true);
+                        animator.SetBool("Dead", true);
                         //get rid of enemy canvas
-                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+                        transform.GetChild(2).gameObject.SetActive(false);
 
                     }
                 }
                 else
                 {
                     //this is to prevent the path from moving if it is temporaraly dead
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    if (animator.GetBool("Dead") == false)
                     {
                         SeePlayer();
                     }
@@ -49,7 +49,7 @@ namespace ARPG.Combat
             //if it died but sage is alive, it will revive, temporary death
             if (stats[StatTypes.HP] <= 0)
             {
-                GetComponent<Animator>().SetBool("Dead", true);
+                animator.SetBool("Dead", true);
                 StartCoroutine(Revive());
             }
         }
@@ -59,7 +59,7 @@ namespace ARPG.Combat
             //yield on a new YieldInstruction that waits for 5 seconds.
             yield return new WaitForSeconds(5);
 
-            GetComponent<Animator>().SetBool("Dead", false);
+            animator.SetBool("Dead", false);
             stats[StatTypes.HP] = stats[StatTypes.MaxHP];
         }
         protected override void SeePlayer()
@@ -88,14 +88,14 @@ namespace ARPG.Combat
                 else if (angle < SightRange && InStopRange())
                 {
                     StopRun();
-                    if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+                    if (animator.GetBool("AttackingMainHand"))
                     {
-                        GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                        animator.SetTrigger("AttackMainHandTrigger");
                         //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                     }
                     else
                     {
-                        GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                        animator.SetTrigger("AttackOffHandTrigger");
                         //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                     }
                     if (AttackTarget.GetComponent<Stats>()[StatTypes.HP] <= 0) //When player is dead, stop hit.

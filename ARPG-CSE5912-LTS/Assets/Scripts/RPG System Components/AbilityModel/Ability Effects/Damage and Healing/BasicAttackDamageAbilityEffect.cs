@@ -28,14 +28,14 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         float maxWeaponDamage = 1;
         if (isMainHandAttack)
         {
-            if (equippedWeapon.currentEquipment[0] != null)
+            if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
             {
                 WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
                 minWeaponDamage = weapon.minimumDamage;
                 maxWeaponDamage = weapon.maximumDamage;
             }
         }
-        else if (equippedWeapon.currentEquipment[1] != null)
+        else if (equippedWeapon != null && equippedWeapon.currentEquipment[1] != null)
         {
             WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[1];
             minWeaponDamage += weapon.minimumDamage;
