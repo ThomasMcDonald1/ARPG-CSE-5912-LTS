@@ -19,6 +19,7 @@ namespace ARPG.Combat
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;
+            timeChecker = cooldownTimer;
 
             if (abilitiesKnown != null)
             {

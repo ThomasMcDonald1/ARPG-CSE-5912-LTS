@@ -15,6 +15,8 @@ namespace ARPG.Combat
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
 
+        Coroutine coolRoutine;
+
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
         public virtual float SightRange { get; set; }
@@ -24,6 +26,8 @@ namespace ARPG.Combat
 
         public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
         public virtual float cooldownTimer { get; set; }
+        public virtual float timeChecker { get; set; }
+        public bool enemyAbilityOnCool = false;
 
 
         private void Awake()
@@ -115,22 +119,22 @@ namespace ARPG.Combat
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    if (true)
+                    Debug.Log(timeChecker);
+                    if (!enemyAbilityOnCool)
                     { //here is for check mana
-                        Debug.Log(EnemyAttackTypeList);
+                        
                         if (EnemyAttackTypeList != null)
                         {
-                            Debug.Log("I got there1");
+                            //Debug.Log("I got there1");
                             for (int i = 0; i < EnemyAttackTypeList.Count; i++)
                             {
-                                Debug.Log("I got there2");
+                                //Debug.Log("I got there2");
 
                                 if (EnemyAttackTypeList[i].abilityOnCooldown == false)
-                                {
-                                    Debug.Log("I got there3");
-                                    Debug.Log(EnemyAttackTypeList[i].abilityAssigned);
-                                    Debug.Log(EnemyAttackTypeList[i].cooldownTimer);
+                                {                                    
                                     QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                                    if (coolRoutine == null)
+                                        coolRoutine = StartCoroutine(CoolDown());
                                     //ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
                                     break;
                                 }
@@ -255,6 +259,18 @@ namespace ARPG.Combat
         {
             yield return new WaitForSeconds(seconds);
             Destroy(gameObject);
+        }
+        IEnumerator CoolDown()
+        {
+            enemyAbilityOnCool = true;
+            timeChecker = cooldownTimer;
+            while (timeChecker > 0)
+            {
+                timeChecker -= Time.deltaTime;
+                yield return null;
+            }
+            enemyAbilityOnCool = false;
+            coolRoutine = null;
         }
         public void ProduceItem()
         {
