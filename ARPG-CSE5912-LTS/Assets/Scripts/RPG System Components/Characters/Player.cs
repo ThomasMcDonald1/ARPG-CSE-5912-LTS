@@ -29,13 +29,15 @@ public class Player : Character
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
     Animator animator;
-
+    AudioManager audioManager;
+    MovementHandler movementHandler;
 
     void Awake()
     {
         //Debug.Log(stats);
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
+        movementHandler = GetComponent<MovementHandler>();
         // inventory = new Inventory();
         // uiInventory.SetInventory(inventory);
         // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
@@ -48,8 +50,8 @@ public class Player : Character
         //GeneralClass = GameObject.Find("Class");
 
         //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
-        GetComponent<Animator>().SetBool("StopAttack", true);
-        GetComponent<Animator>().SetBool("Dead", false);
+        animator.SetBool("StopAttack", true);
+        animator.SetBool("Dead", false);
 
     }
 
@@ -62,7 +64,7 @@ public class Player : Character
         animator.SetFloat("AttackSpeed", attackSpeed);
         agent.speed = baseRunSpeed * (1 + stats[StatTypes.RunSpeed] * 0.01f);
 
-        playerVelocity = GetComponent<NavMeshAgent>().velocity;
+        playerVelocity = agent.velocity;
         if (playerVelocity.magnitude > 0)
         {
             isMoving = true;
@@ -73,19 +75,19 @@ public class Player : Character
         }
         if (isMoving && !soundPlaying)
         {
-            FindObjectOfType<AudioManager>().Play("Footsteps");
+            audioManager.Play("Footsteps");
             soundPlaying = true;
         }
         else if (!isMoving)
         {
-            FindObjectOfType<AudioManager>().Stop("Footsteps");
+            audioManager.Stop("Footsteps");
             soundPlaying = false;
         }
 
         //Combat
         if (stats[StatTypes.HP] <= 0)
         {
-            GetComponent<Animator>().SetBool("Dead", true);
+            animator.SetBool("Dead", true);
         }
 
         // Enemy target, always try to look at
@@ -103,7 +105,7 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
-            GetComponent<Animator>().SetBool("StopAttack", false);
+            animator.SetBool("StopAttack", false);
             if (!InCombatTargetRange())
             {
                 StartCoroutine(MoveToEnemy());
@@ -111,18 +113,18 @@ public class Player : Character
             else if (InCombatTargetRange())
             {
                 //GetComponent<Animator>().SetBool("StopAttack", false);
-                GetComponent<MovementHandler>().Cancel();
+                movementHandler.Cancel();
 
-                if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+                if (animator.GetBool("AttackingMainHand"))
                 {
 
-                    GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                    animator.SetTrigger("AttackMainHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
                 else
                 {
 
-                    GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                    animator.SetTrigger("AttackOffHandTrigger");
                     //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                 }
             }
@@ -133,22 +135,25 @@ public class Player : Character
     {
         while (AttackTarget != null && !InCombatTargetRange())
         {
-            this.GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-            this.GetComponent<MovementHandler>().MoveToTarget(AttackTarget.transform.position);
+            movementHandler.NavMeshAgent.isStopped = false;
+            movementHandler.MoveToTarget(AttackTarget.transform.position);
             yield return null;
         }
+
+        agent.ResetPath();
+
         if (AttackTarget != null)
         {
-            GetComponent<MovementHandler>().Cancel();
+            movementHandler.Cancel();
 
-            if (GetComponent<Animator>().GetBool("AttackingMainHand"))
+            if (animator.GetBool("AttackingMainHand"))
             {
-                GetComponent<Animator>().SetTrigger("AttackMainHandTrigger");
+                animator.SetTrigger("AttackMainHandTrigger");
                 //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
             }
             else
             {
-                GetComponent<Animator>().SetTrigger("AttackOffHandTrigger");
+                animator.SetTrigger("AttackOffHandTrigger");
                 //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
             }
         }
@@ -158,8 +163,8 @@ public class Player : Character
     {
         while (NPCTarget != null && !InInteractNPCRange())
         {
-            GetComponent<MovementHandler>().NavMeshAgent.isStopped = false;
-            GetComponent<MovementHandler>().MoveToTarget(NPCTarget.transform.position);
+            movementHandler.NavMeshAgent.isStopped = false;
+            movementHandler.MoveToTarget(NPCTarget.transform.position);
             yield return null;
         }
         InteractNPC?.Invoke(this, EventArgs.Empty);
@@ -170,7 +175,7 @@ public class Player : Character
     {
         float time = 0.0f;
         float speed = 1.0f;
-        GetComponent<MovementHandler>().Cancel();
+        movementHandler.Cancel();
 
         while (NPCTarget != null && time < 1.0f)
         {
@@ -191,7 +196,7 @@ public class Player : Character
     public void AttackCancel()
     {
         AttackTarget = null;
-        GetComponent<Animator>().SetBool("StopAttack", true);
+        animator.SetBool("StopAttack", true);
     }
 
     public void DialogueCancel()
@@ -204,7 +209,6 @@ public class Player : Character
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.AttackRange];
-
     }
 
     public bool InInteractNPCRange()
@@ -226,19 +230,19 @@ public class Player : Character
             //Debug.Log("AttackTarget: " + AttackTarget.name);
             QueueBasicAttack(basicAttackAbility, AttackTarget.GetComponent<Character>(), this);
         }
-        GetComponent<Animator>().SetBool("StopAttack", true);
+        animator.SetBool("StopAttack", true);
     }
 
     // From animation event
     public void EndMainHandAttack()
     {
-        if (GetComponent<Animator>().GetBool("CanDualWield")) { GetComponent<Animator>().SetBool("AttackingMainHand", false); }
+        if (animator.GetBool("CanDualWield")) { animator.SetBool("AttackingMainHand", false); }
     }
 
     // From animation event
     public void EndOffHandAttack()
     {
-        GetComponent<Animator>().SetBool("AttackingMainHand", true);
+        animator.SetBool("AttackingMainHand", true);
     }
     
 

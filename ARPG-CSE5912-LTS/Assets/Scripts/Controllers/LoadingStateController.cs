@@ -48,6 +48,7 @@ public class LoadingStateController : StateMachine
         await Task.Delay(2000);
 
         Destroy(tempAudioListener);
+        InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
     }
     public async void LoadScene(string sceneName)
@@ -65,6 +66,7 @@ public class LoadingStateController : StateMachine
         await Task.Delay(2000);
 
         Destroy(tempAudioListener);
+        InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
     }
     public IEnumerator GetSceneLoadProgress()

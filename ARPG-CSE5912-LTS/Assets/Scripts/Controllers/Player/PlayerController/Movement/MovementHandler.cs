@@ -27,7 +27,9 @@ namespace ARPG.Movement
             if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
             {
                 PlayerBeganMovingEvent?.Invoke(this, new InfoEventArgs<int>(0));
-                agent.destination = target;
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(target, path);
+                agent.path = path;
                 playerAbilityController.abilityQueued = false;
                 agent.isStopped = false;
             }
