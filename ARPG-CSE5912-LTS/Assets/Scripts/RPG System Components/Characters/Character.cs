@@ -43,11 +43,11 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
+        basicAttackAbility = GameObject.FindGameObjectWithTag("BasicAttack").GetComponent<Ability>();
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
         playerAbilityController = GetComponent<PlayerAbilityController>();
         gameplayStateController = GameObject.FindObjectOfType<GameplayStateController>();
-        basicAttackAbility = gameplayStateController.GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;
     }

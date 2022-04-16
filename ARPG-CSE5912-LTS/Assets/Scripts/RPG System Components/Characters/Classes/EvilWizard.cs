@@ -38,14 +38,14 @@ namespace ARPG.Combat
 
                 if (angle < SightRange && !InStopRange())
                 {
-                    GetComponent<Animator>().SetBool("Summon", false);
+                    animator.SetBool("Summon", false);
 
                     RunToPlayer();
 
                 }
                 else if (angle < SightRange && InStopRange())
                 {
-                    GetComponent<Animator>().SetBool("Summon", true);
+                    animator.SetBool("Summon", true);
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
@@ -58,14 +58,14 @@ namespace ARPG.Combat
                 }
                 else
                 {
-                    GetComponent<Animator>().SetBool("Summon", false);
+                    animator.SetBool("Summon", false);
 
                     Patrol();
                 }
             }
             else
             {
-                GetComponent<Animator>().SetBool("Summon", false);
+                animator.SetBool("Summon", false);
 
                 Patrol();
             }
@@ -76,7 +76,7 @@ namespace ARPG.Combat
             Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
             yield return new WaitForSeconds(3f);
-            FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<NavMeshAgent>().enabled = true;
             //After we have waited 5 seconds print the time again.
             Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         }
@@ -88,8 +88,8 @@ namespace ARPG.Combat
                 {
                     Debug.Log("damaged!");
                     AudioManager.instance.Play("Force");
-                    float playerSpeed = FindObjectOfType<Player>().GetComponent<NavMeshAgent>().speed;
-                    FindObjectOfType<Player>().GetComponent<NavMeshAgent>().enabled = false;
+                    float playerSpeed = player.GetComponent<NavMeshAgent>().speed;
+                    player.GetComponent<NavMeshAgent>().enabled = false;
                     StartCoroutine(Remobilize());
 
 
@@ -105,16 +105,16 @@ namespace ARPG.Combat
             //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
-            if (GetComponent<Animator>().GetBool("Dead") == false)
+            if (animator.GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
                 {
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    if (animator.GetBool("Dead") == false)
                     {
                         Dead();
-                        GetComponent<Animator>().SetBool("Dead", true);
+                        animator.SetBool("Dead", true);
                         //get rid of enemy canvas
-                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+                        transform.GetChild(2).gameObject.SetActive(false);
 
                     }
                 }
