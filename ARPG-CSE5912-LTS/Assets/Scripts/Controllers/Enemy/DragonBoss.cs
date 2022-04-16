@@ -5,7 +5,7 @@ using ARPG.Combat;
 using UnityEngine.AI;
 using System;
 
-public class DragonBoss : Enemy
+public class DragonBoss : EnemyAbilityController
 {
     [SerializeField] float chaseDistance = 15.0f;
     [SerializeField] float longRange = 10.0f;
@@ -20,16 +20,11 @@ public class DragonBoss : Enemy
 
     private int CurrentPatrolVertexIndex = 0;
 
-    //private void Awake()
-    //{
-    //    stats = GetComponent<Stats>();
-    //}
-
     protected override void Start()
     {
         base.Start();
-        stats[StatTypes.MaxHP] = 500;
-        stats[StatTypes.HP] = 500;
+        stats[StatTypes.MaxHP] = 1500;
+        stats[StatTypes.HP] = 1500;
         stats[StatTypes.LVL] = 10;
         stats[StatTypes.MonsterType] = 3;
 
@@ -47,6 +42,7 @@ public class DragonBoss : Enemy
 
     new private void Update()
     {
+        Debug.Log(stats[StatTypes.HP]);
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0)
         {
@@ -74,13 +70,14 @@ public class DragonBoss : Enemy
             if (animator.GetBool("AnimationEnded") && !InMeleeRange())
             {
                 agent.isStopped = false;
-                agent.destination = PlayerTarget.position;
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(player.transform.position, path);
+                agent.path = path;
             }
 
             if (InMeleeRange())
             {
                 agent.isStopped = true;
-                agent.destination = transform.position;
                 animator.SetTrigger("Attack1");
             }
         }
@@ -130,7 +127,9 @@ public class DragonBoss : Enemy
             //print("For index: " + CurrentPatrolVertexIndex + " " + AtPatrolVertex());
 
         }
-        agent.destination = PatrolToPosition;
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(PatrolToPosition, path);
+        agent.path = path;
     }
 
     private void SetNextVertexIndex()
@@ -168,7 +167,7 @@ public class DragonBoss : Enemy
     // Animation Event
     void HitPlayer()
     {
-        print("Damaged player");
+        QueueBasicAttack(basicAttackAbility, player.GetComponent<Character>(), this);
     }
 
     // Animation Event
