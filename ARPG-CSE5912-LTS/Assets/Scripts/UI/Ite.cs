@@ -26,7 +26,7 @@ public class Ite : ScriptableObject
 	{
 		// Use the item
 		// Something may happen
-		Debug.Log("using " + name);
+		//Debug.Log("using " + name);
 	}
 	public enum ItemType
 	{
