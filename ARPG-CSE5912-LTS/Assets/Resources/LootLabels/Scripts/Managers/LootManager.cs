@@ -220,6 +220,10 @@ namespace LootLabels
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
                         }
+                        else
+                        {
+                            gear.ItemName = gear.ItemRarity + " " + gear.ItemName;
+                        }
                         item.name = gear.ItemName;
                         item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
                         //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
