@@ -109,6 +109,12 @@ namespace LootLabels
                 yield return new WaitForSeconds(.2f);
                 GenerateLoot(lootOrigin, type);
             }
+            int random = UnityEngine.Random.Range(0, 3);
+            for (int j = 0; j < random; j++)
+            {
+                yield return new WaitForSeconds(.2f);
+                GenerateHealthPotions(lootOrigin, type);
+            }
             GameObject lootdrop = GameObject.Find("LootDrops");
         }
 
@@ -143,7 +149,29 @@ namespace LootLabels
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
         }
+        void GenerateHealthPotions(Transform lootOrigin, LootType type)
+        {
+            BaseCurrency currency = LootGenerator.CreateCurrency(type);
 
+            GameObject droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+
+            Rarity itemRarity = LootGenerator.SelectRandomRarity(type);
+            GearTypes gearType = GearTypes.HealthPotion;
+            string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
+            string iconName = ResourceManager.singleton.GetIconName(gearType);
+
+            BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
+            Debug.Log("creategear is making " + itemRarity + " " + modelName);
+            if (droppedItem.GetComponent<ItemPickup>() != null)
+            {
+                Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                gear.ItemName = gear.ItemRarity + " " + gear.ItemName;
+                item.name = gear.ItemName;
+                item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
+            }
+            droppedItem.GetComponent<DroppedGear>().gear = gear;
+        }
         /// <summary>
         /// Choses a item type to drop and creates it
         /// </summary>
