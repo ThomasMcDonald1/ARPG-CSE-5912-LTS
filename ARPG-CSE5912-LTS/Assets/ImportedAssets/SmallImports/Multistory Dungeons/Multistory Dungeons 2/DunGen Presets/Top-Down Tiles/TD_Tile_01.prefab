@@ -30438,7 +30438,8 @@ GameObject:
   - component: {fileID: 6465779085099266366}
   - component: {fileID: 6465779085097972478}
   - component: {fileID: 6439291543029783330}
-  m_Layer: 6
+  - component: {fileID: 2665198110725104565}
+  m_Layer: 2
   m_Name: Damaged_Column_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30521,6 +30522,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2196503, y: 3.0296154, z: 1.2196388}
   m_Center: {x: 0, y: 1.5123417, z: 0}
+--- !u!208 &2665198110725104565
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465779085096004844}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.61, y: 1.5150001, z: 0.61}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.5120001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6465779085108066683
 GameObject:
   m_ObjectHideFlags: 0
@@ -33680,7 +33697,7 @@ MonoBehaviour:
   socketGroup_obsolete: 0
   doorPrefabs_obsolete: []
   blockerPrefabs_obsolete: []
-  socket: {fileID: 0}
+  socket: {fileID: 5664937750317925630, guid: 9b74bf93592e7444c961a932b5971cb9, type: 2}
   doorPrefabInstance: {fileID: 0}
   doorComponent: {fileID: 0}
   tile: {fileID: 0}
@@ -34649,7 +34666,8 @@ GameObject:
   - component: {fileID: 6465779086275314259}
   - component: {fileID: 6465779086274255891}
   - component: {fileID: 6436301457511859363}
-  m_Layer: 6
+  - component: {fileID: 8919021088827180153}
+  m_Layer: 2
   m_Name: Damaged_Column_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34732,6 +34750,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2196198, y: 5.982497, z: 1.2196388}
   m_Center: {x: 0, y: 2.988783, z: 0}
+--- !u!208 &8919021088827180153
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465779086276414207}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.61, y: 2.9910002, z: 0.61}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.989, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6465779086288823580
 GameObject:
   m_ObjectHideFlags: 0
