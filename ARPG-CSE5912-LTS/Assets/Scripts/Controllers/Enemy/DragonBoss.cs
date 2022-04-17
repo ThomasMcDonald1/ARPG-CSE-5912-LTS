@@ -173,7 +173,7 @@ public class DragonBoss : EnemyAbilityController
     void DieAnimationEnded()
     {
         HealthBar.SetActive(false);
-        base.RaiseEnemyKillExpEvent(this, stats[StatTypes.LVL], stats[StatTypes.MonsterType]);
+        base.RaiseEnemyKillExpEvent(this, stats[StatTypes.LVL], stats[StatTypes.MonsterType], transform.GetChild(0).name);
     }
 
     // Gizmos for sight range (purple) and melee range (red)

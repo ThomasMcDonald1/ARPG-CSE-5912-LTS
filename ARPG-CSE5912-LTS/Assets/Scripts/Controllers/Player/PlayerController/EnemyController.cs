@@ -6,6 +6,15 @@ namespace ARPG.Core
 {
     public abstract class EnemyController : EnemyAbilityController
     {
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+        }
         public EnemyTarget target;
         //private string classTypeName;
         private string weaponTypeName;

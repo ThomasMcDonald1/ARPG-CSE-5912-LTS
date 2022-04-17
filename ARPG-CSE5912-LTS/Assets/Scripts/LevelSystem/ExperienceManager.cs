@@ -6,8 +6,8 @@ using System;
 
 public class ExperienceManager : MonoBehaviour
 {
-    public static event EventHandler<InfoEventArgs<(int, int)>> ExpWillBeGivenEvent;
-    public static event EventHandler<InfoEventArgs<(int, int)>> ExpHasBeenGivenEvent;
+    public static event EventHandler<InfoEventArgs<(int, int,string)>> ExpWillBeGivenEvent;
+    public static event EventHandler<InfoEventArgs<(int, int,string)>> ExpHasBeenGivenEvent;
 
     public static event EventHandler<InfoEventArgs<(int, int)>> SavedExpEvent;
     public static event EventHandler<InfoEventArgs<(int, int)>> GetBackExpEvent;
@@ -28,11 +28,11 @@ public class ExperienceManager : MonoBehaviour
         GameoverState.GetBackExpEvent -= OnGetBackExp;
         GameoverState.EmptyExpEvent -= OnEmptyExp;
     }
-    public void OnEnemyExpKill(object sender, InfoEventArgs<(int, int)> e)
+    public void OnEnemyExpKill(object sender, InfoEventArgs<(int, int,string)> e)
     {
         Debug.Log("enemy killed");
-        ExpWillBeGivenEvent?.Invoke(this, new InfoEventArgs<(int, int)>(e.info));
-        ExpHasBeenGivenEvent?.Invoke(this, new InfoEventArgs<(int, int)>(e.info));
+        ExpWillBeGivenEvent?.Invoke(this, new InfoEventArgs<(int, int, string)>(e.info));
+        ExpHasBeenGivenEvent?.Invoke(this, new InfoEventArgs<(int, int,string)>(e.info));
     }
     public void OnSavedExp(object sender, InfoEventArgs<(int, int)> e)
     {
