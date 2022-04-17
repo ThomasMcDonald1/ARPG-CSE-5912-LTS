@@ -52,7 +52,7 @@ namespace ARPG.Core
             weaponTypeName = "Unarmed";
             target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
             AttackTarget = target.transform;
-            Debug.Log("Attack target is: " + AttackTarget.name);
+            //Debug.Log("Attack target is: " + AttackTarget.name);
         }
 
         protected override void Update()

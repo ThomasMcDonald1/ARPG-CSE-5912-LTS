@@ -14085,6 +14085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  potions: []
   baseStats: 0000000000000000000000000000000000000000000000000000000000000000
   growthStats:
   - 0
@@ -22349,6 +22350,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1879580860}
   - component: {fileID: 1879580859}
+  - component: {fileID: 1879580861}
+  - component: {fileID: 1879580862}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Untagged
@@ -22397,7 +22400,7 @@ MonoBehaviour:
     DisallowOverhangs: 0
     savedDungeon: {fileID: 0}
     Root: {fileID: 0}
-    DungeonFlow: {fileID: 11400000, guid: 6f89661be3e264047981474804dbebe1, type: 2}
+    DungeonFlow: {fileID: 11400000, guid: ed5875b4c711427db5c7db13c38553c9, type: 2}
     fileVersion: 1
   GenerateOnStart: 1
   Root: {fileID: 2138072661}
@@ -22416,6 +22419,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1879580861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879580858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76f356143a516846a54607aa83a9ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  BakeMode: 3
+  AddNavMeshLinksBetweenRooms: 1
+  NavMeshAgentTypes:
+  - AgentTypeID: 0
+    AreaTypeID: 0
+    DisableLinkWhenDoorIsClosed: 1
+  NavMeshLinkDistanceFromDoorway: 2.5
+  AutoGenerateFullRebakeSurfaces: 1
+  FullRebakeTargets: []
+--- !u!114 &1879580862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879580858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcba5008fd9480469ecda2e84b1ab66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeon1: {fileID: 11400000, guid: 299fb285623e31146be76747c5e8c336, type: 2}
+  dungeon2: {fileID: 11400000, guid: 5d6f44800e7fb6e49a867f6ade13d0fe, type: 2}
+  dungeon3: {fileID: 11400000, guid: d886038415347d841bc96d9cb6907662, type: 2}
 --- !u!1 &1902767201
 GameObject:
   m_ObjectHideFlags: 0
@@ -27139,10 +27179,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138072661}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 193.47, y: 3.89, z: 204.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}

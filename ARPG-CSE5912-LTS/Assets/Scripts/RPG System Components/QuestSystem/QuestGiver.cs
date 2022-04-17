@@ -31,6 +31,12 @@ public class QuestGiver : MonoBehaviour
             return quests;
         }
     }
+
+    public static void RaiseQuestCompleteEvent()
+    {       
+        QuestCompleteEvent?.Invoke(null, EventArgs.Empty);
+    }
+
     void Awake()
     {
         questIndex = 0;
@@ -71,7 +77,6 @@ public class QuestGiver : MonoBehaviour
     {
         if (quests[questIndex].IsComplete && QuestLog.QuestLogInstance.HasQuest(quests[questIndex]))
         {
-            QuestCompleteEvent?.Invoke(this, EventArgs.Empty);
             iconRenderer.sprite = questionIconSprite;
             if (questIndex < quests.Length - 1)
             {
