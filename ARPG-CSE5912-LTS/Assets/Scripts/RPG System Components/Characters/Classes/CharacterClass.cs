@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class CharacterClass : MonoBehaviour
 {
     public string description;
+    public List<Ite> potions = new List<Ite>();
 
     public static readonly StatTypes[] baseStatTypes = new StatTypes[]
     {
@@ -23,6 +24,13 @@ public abstract class CharacterClass : MonoBehaviour
 
     Stats stats;
 
+    public void Start()
+    {
+        for(int i = 0; i < potions.Count; i++)
+        {
+            Inventory.instance.Add(potions[i], Inventory.instance.utilItems);
+        }
+    }
     public void LoadBaseStats()
     {
         for (int i = 0; i < baseStatTypes.Length; i++)
