@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3992097992229741043}
   - component: {fileID: 3992097992229741038}
   - component: {fileID: 7453156541019992017}
+  - component: {fileID: 2048730147444159047}
+  - component: {fileID: -5222994043024878445}
   m_Layer: 8
   m_Name: Stout
   m_TagString: Untagged
@@ -167,6 +169,40 @@ MonoBehaviour:
   vertexThreshold: 5
   HealthBar: {fileID: 3992097992944052237}
   patrolPath: {fileID: 0}
+--- !u!114 &2048730147444159047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992097992229741036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee50ca543e960c4aa0927c9e2f4b299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelHeight: 25
+  objectToFollow: {fileID: 0}
+  rarityColor: {r: 1, g: 1, b: 1, a: 1}
+  stack: 0
+  autoHide: 0
+  clampToScreen: 0
+  disableOnClick: 0
+--- !u!114 &-5222994043024878445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3992097992229741036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184487e0de42b3498946a9d44f537d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HighlightThis: 0
+  outline: {fileID: 0}
+  mouseoverColor: {r: 1, g: 0.81960785, b: 0.3529412, a: 1}
 --- !u!1 &3992097992737164048
 GameObject:
   m_ObjectHideFlags: 0

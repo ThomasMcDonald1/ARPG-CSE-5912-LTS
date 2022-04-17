@@ -18,12 +18,14 @@ public class Lorekeeper : NPC
     private int currentStory;
     public int CurrentStory { get { return currentStory; } }
 
+    public bool TEST = false;
+
     GameObject child;
+
     private void OnEnable()
-    {
+    {       
         QuestGiver.QuestCompleteEvent += OnQuestComplete;
         InteractionManager.EndOfStoryEvent += NextStory;
-
     }
     private void OnDisable()
     {
@@ -32,6 +34,7 @@ public class Lorekeeper : NPC
     }
     private void OnQuestComplete(object sender, EventArgs e)
     {
+        GetComponent<QuestGiver>().UpdateQuestIcon();
         currentStory++;
     }
 
@@ -81,10 +84,22 @@ public class Lorekeeper : NPC
                 GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 if (porter.currentStory == 1) { porter.currentStory = 2; }
                 currentStory++;
+                GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
             case 1:
                 break;
             case 2:
+                GetComponent<QuestGiver>().AddQuestToLogIfNew();
+                currentStory++;
+                GetComponent<QuestGiver>().UpdateQuestIcon();
+                break;
+            case 3:
+                break;
+            case 4:
+                InteractionManager.GetInstance().EnableTombOfMortemier();
+                GetComponent<QuestGiver>().AddQuestToLogIfNew();
+                currentStory++;
+                GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
             default:
                 break;
@@ -110,6 +125,11 @@ public class Lorekeeper : NPC
             StartCoroutine(LookAtPlayer());
             saleUI.shop = shop;
         }
+    }
+
+    private void Update()
+    {
+        Debug.Log(currentStory);
     }
 
 }

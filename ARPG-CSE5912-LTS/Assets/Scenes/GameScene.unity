@@ -33225,6 +33225,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2053538675}
     - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: questIcon
+      value: 
+      objectReference: {fileID: 1686441732}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
       propertyPath: tradeMenu
       value: 
       objectReference: {fileID: 980384193}
@@ -33273,6 +33277,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 99777970212330340}
     - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: lorekeeperModel
+      value: 
+      objectReference: {fileID: 4459455853585396661}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
       propertyPath: playerMoneyText
       value: 
       objectReference: {fileID: 1125163332}
@@ -33285,9 +33293,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7588577244208109339}
     - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: TombOfMordierButton
+      value: 
+      objectReference: {fileID: 2740543159865828837}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: lorekeeperQuestIcon
+      value: 
+      objectReference: {fileID: 1686441732}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: TombOfMortemierButton
+      value: 
+      objectReference: {fileID: 2740543159865828837}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
       propertyPath: continueDialogueButton
       value: 
       objectReference: {fileID: 7588577245319100041}
+    - target: {fileID: 8742032102730912011, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
+      propertyPath: ForsakenCathedralButton
+      value: 
+      objectReference: {fileID: 2740543159865828838}
     - target: {fileID: 8742032102730912020, guid: 5fc5c12d11a38ed448ee9906df1b66d6, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -77770,6 +77794,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a56addcf77537374f8394fe55a5c236f, type: 3}
+--- !u!1 &1686441732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4459455854330879247, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+  m_PrefabInstance: {fileID: 4459455853585396660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1686479530 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0a72a43956b348140a19ebdfa6044bbc, type: 3}
@@ -95178,7 +95207,8 @@ PrefabInstance:
       propertyPath: shopUI
       value: 
       objectReference: {fileID: 932420988}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 454023907707954948, guid: b2a315154cec32248bf85537efe44058, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b2a315154cec32248bf85537efe44058, type: 3}
 --- !u!23 &557761564327143807
 MeshRenderer:
@@ -98629,7 +98659,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1697223038843366719, guid: eae40be82242c194d8929f310e5565f3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eae40be82242c194d8929f310e5565f3, type: 3}
 --- !u!136 &1799209124019277289
 CapsuleCollider:
@@ -99432,6 +99463,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 376710721}
+    - target: {fileID: 7032923403417840703, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnterRuinsOfMortemier
+      objectReference: {fileID: 0}
     - target: {fileID: 7045353171196911305, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
       propertyPath: m_Name
       value: Tomb of Mortemier
@@ -99522,6 +99557,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
+--- !u!1 &2740543159865828837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7045353171196911305, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
+  m_PrefabInstance: {fileID: 2740543159865828836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2740543159865828838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3635638692261923967, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
+  m_PrefabInstance: {fileID: 2740543159865828836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &3529475363677243482
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99675,6 +99720,43 @@ PrefabInstance:
       propertyPath: testLog
       value: 
       objectReference: {fileID: 869642150334026465}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[0].title
+      value: Kill Ruin Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].title
+      value: Kill Stout the Bonecrusher
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[0].questExp
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].questExp
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[0].description
+      value: Kill one knight from the Ruins of Yeager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].description
+      value: Stout the big blue dragon has taken over the ruins. Kill him and obtain
+        his key for the next dungeon.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].killingGoals.Array.data[0].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].killingGoals.Array.data[0].currentAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801050, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: quests.Array.data[1].killingGoals.Array.data[0].requiredAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4459455852928801052, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
       propertyPath: player
       value: 
@@ -99691,8 +99773,34 @@ PrefabInstance:
       propertyPath: shopUI
       value: 
       objectReference: {fileID: 932420988}
-    m_RemovedComponents: []
+    - target: {fileID: 4459455852928801052, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: DialogueJSON.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459455852928801052, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: DialogueJSON.Array.data[2]
+      value: 
+      objectReference: {fileID: 4900000, guid: 5a6d60f067eeba64ea1a2a07d91fad2d, type: 3}
+    - target: {fileID: 4459455852928801052, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: DialogueJSON.Array.data[3]
+      value: 
+      objectReference: {fileID: 4900000, guid: ba43e54ebf342f649b7beab453a07984, type: 3}
+    - target: {fileID: 4459455852928801052, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: DialogueJSON.Array.data[4]
+      value: 
+      objectReference: {fileID: 4900000, guid: 7aa36af98fb665a49ac083bbfad370e6, type: 3}
+    - target: {fileID: 4459455854330879247, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4459455852928801054, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+--- !u!1 &4459455853585396661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4460334689509661428, guid: 062cde77c3c3879459f2a82f0793d488, type: 3}
+  m_PrefabInstance: {fileID: 4459455853585396660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5851445629098973064
 RectTransform:
   m_ObjectHideFlags: 0
@@ -100055,7 +100163,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5851445629098973067}
   m_HandleRect: {fileID: 5851445629098973064}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -100460,6 +100568,14 @@ PrefabInstance:
       propertyPath: generalStore
       value: 
       objectReference: {fileID: 964898986}
+    - target: {fileID: 6609636375911160436, guid: 63fe70701483e2d47b602baa7bded206, type: 3}
+      propertyPath: lorekeeperModel
+      value: 
+      objectReference: {fileID: 4459455853585396661}
+    - target: {fileID: 6609636375911160436, guid: 63fe70701483e2d47b602baa7bded206, type: 3}
+      propertyPath: lorekeeperQuestIcon
+      value: 
+      objectReference: {fileID: 1686441732}
     - target: {fileID: 6609636375911160437, guid: 63fe70701483e2d47b602baa7bded206, type: 3}
       propertyPath: player
       value: 

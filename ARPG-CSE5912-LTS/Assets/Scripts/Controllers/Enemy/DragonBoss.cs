@@ -23,8 +23,8 @@ public class DragonBoss : EnemyAbilityController
     protected override void Start()
     {
         base.Start();
-        stats[StatTypes.MaxHP] = 1500;
-        stats[StatTypes.HP] = 1500;
+        stats[StatTypes.MaxHP] = 10;
+        stats[StatTypes.HP] = 10;
         stats[StatTypes.LVL] = 10;
         stats[StatTypes.MonsterType] = 3;
 
@@ -42,7 +42,6 @@ public class DragonBoss : EnemyAbilityController
 
     new private void Update()
     {
-        Debug.Log(stats[StatTypes.HP]);
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0)
         {

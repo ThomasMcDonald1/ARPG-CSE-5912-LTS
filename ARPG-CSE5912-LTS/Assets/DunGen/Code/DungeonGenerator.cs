@@ -1125,7 +1125,7 @@ namespace DunGen
 								break;
 
 						}
-						Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
+						//Debug.Log("Enemy " + enemy.name + " is now level " + enemyStats.GetValue(StatTypes.LVL));
 					}
 					// scale enemy stats
 					Enum.TryParse(enemy.name, out DefaultStatReader.CharacterIndex index);

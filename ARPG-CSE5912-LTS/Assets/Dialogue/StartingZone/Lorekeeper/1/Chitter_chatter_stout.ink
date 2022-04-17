@@ -1,0 +1,13 @@
+That big blue dragon has caused so many problems in our town...
+
+First he came by and ate all our food...
+
+Then he decided to eat all the elders...
+
+And THEN he stole all our treasure!
+
+What a monster...
+
+Please, get rid of him. He blocks the way to the tomb of Mortemier.
+
+I suspect that tomb is the source of all this corruption.

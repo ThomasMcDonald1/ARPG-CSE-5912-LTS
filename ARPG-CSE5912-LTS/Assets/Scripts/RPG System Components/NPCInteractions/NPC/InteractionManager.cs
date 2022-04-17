@@ -6,7 +6,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using System;
 using ARPG.Movement;
-
+using UnityEngine.AI;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -23,6 +23,10 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] private GameObject travelMenu;
 
+    [SerializeField] private GameObject TombOfMortemierButton;
+    [SerializeField] private GameObject ForsakenCathedralButton;
+
+
     [SerializeField] private GameObject tradeMenu;
     [SerializeField] private GameObject TradeButton;
     [SerializeField] private GameObject PorterButton;
@@ -33,7 +37,14 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI playerMoneyText;
 
     [SerializeField] Porter porter;
+
+    // We still need lorekeeper to be active in the scene to update quests... But we need to disable collider, otherwise player may accidentally click, which would be weird
     [SerializeField] Lorekeeper lorekeeper;
+    // We also don't want the lorekeeper's model to be active when switching to dungeon scenes...
+    [SerializeField] GameObject lorekeeperModel;
+    // Turn his quest icon back on when re-entering town
+    [SerializeField] GameObject lorekeeperQuestIcon;
+
     [SerializeField] GeneralStore generalStore;
     [SerializeField] Blacksmith blacksmith;
 
@@ -104,6 +115,16 @@ public class InteractionManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EnableTombOfMortemier()
+    {
+        TombOfMortemierButton.SetActive(true);
+    }
+
+    public void EnableForsakenCathedralButton()
+    {
+        ForsakenCathedralButton.SetActive(true);
     }
 
     public void EnablePorterButton()
@@ -226,10 +247,17 @@ public class InteractionManager : MonoBehaviour
         //optionsMenu.SetActive(true);
 
         LoadingStateController.Instance.LoadScene("NoControllerDuplicate");
-        lorekeeper.gameObject.SetActive(true);
+
         generalStore.gameObject.SetActive(true);
         blacksmith.gameObject.SetActive(true);
         porter.gameObject.SetActive(true);
+
+        //lorekeeper.GetComponent<NavMeshAgent>().enabled = false;
+        lorekeeper.GetComponent<Collider>().enabled = true;
+        lorekeeperModel.SetActive(true);
+        lorekeeperQuestIcon.SetActive(true);
+        //lorekeeper.GetComponent<NavMeshAgent>().enabled = true;
+
 
         player.agent.enabled = false;
         player.transform.position = GameObject.Find("TownSpawnLocation").transform.position;

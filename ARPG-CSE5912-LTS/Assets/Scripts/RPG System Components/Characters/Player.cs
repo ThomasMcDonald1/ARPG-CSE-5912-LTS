@@ -164,7 +164,7 @@ public class Player : Character
         while (NPCTarget != null && !InInteractNPCRange())
         {
             movementHandler.NavMeshAgent.isStopped = false;
-            movementHandler.MoveToTarget(NPCTarget.transform.position);
+            movementHandler.MoveToTarget(NPCTarget.GetComponent<Collider>().ClosestPointOnBounds(NPCTarget.transform.position));
             yield return null;
         }
         InteractNPC?.Invoke(this, EventArgs.Empty);
