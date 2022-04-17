@@ -32,7 +32,7 @@ public class QuestLog : MonoBehaviour
     private List<QuestScript> questScripts = new List<QuestScript>();
     private List<Quest> quests = new List<Quest>();
 
-    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int)> e)
+    private void OnEnemyKilled(object sender, InfoEventArgs<(int, int,string)> e)
     {
         //Loops through everykilling goal of every quest in the quest log, and updates info such as kill count
         foreach (Quest quest in quests)
@@ -41,7 +41,7 @@ public class QuestLog : MonoBehaviour
             foreach (KillingGoal killingGoal in quest.KillingGoals)
             {
 
-                killingGoal.UpdateKillCount(e.info.Item2);
+                killingGoal.UpdateKillCount(e.info.Item3);
             }
             if (quest.IsComplete && !quest.HasBeenCompleted())
             {
@@ -118,7 +118,7 @@ public class QuestLog : MonoBehaviour
             //Quest can have multiple killing goals
             foreach (QuestGoal questGoal in quest.KillingGoals)
             {
-                progress += questGoal.Type + ": " + questGoal.CurrentAmount + "/" + questGoal.RequiredAmount + "\n";
+                progress += questGoal.ClassName + ": " + questGoal.CurrentAmount + "/" + questGoal.RequiredAmount + "\n";
             }
             //string.Format for title, description, and progress
             questDescription.text = string.Format("<b>{0}</b>\n<size=15>{1}</size>\n\nProgress:\n<size=15>{2}</size>", quest.Title, quest.Description, progress);
