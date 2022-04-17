@@ -7,12 +7,12 @@ namespace ARPG.Combat
 {
     public class Bandit : EnemyController
     {
-        private void OnEnable()
+        protected override void OnEnable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageRun;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageRun;
         }

@@ -8,6 +8,12 @@ using System;
 
 public class EnemyAbilityController : Enemy
 {
+
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
     protected override void Start()
     {
         base.Start();
@@ -22,8 +28,9 @@ public class EnemyAbilityController : Enemy
 
     int groundLayerMask = 1 << 6;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCast;
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }

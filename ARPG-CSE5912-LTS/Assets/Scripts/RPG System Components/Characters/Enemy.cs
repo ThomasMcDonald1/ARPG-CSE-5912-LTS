@@ -11,12 +11,12 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageReact;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageReact;
         }
@@ -25,14 +25,9 @@ namespace ARPG.Combat
 
             if (animator.GetBool("Dead") == false)
             {
-                //Debug.Log("damaged!!!!");
-                //look away from the player
+                //look to player
                 transform.rotation = Quaternion.LookRotation(FindObjectOfType<Player>().transform.position);
 
-                //point away from player
-                Vector3 runTo = transform.position + transform.forward * 10;
-                // And get it to head towards the found NavMesh position
-                agent.SetDestination(runTo);
             }
         }
         protected Animator animator;
