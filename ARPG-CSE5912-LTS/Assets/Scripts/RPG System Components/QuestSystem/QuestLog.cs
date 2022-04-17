@@ -13,6 +13,10 @@ public class QuestLog : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;//for making window invisible
     [SerializeField] private GameplayStateController gameplayStateController;//entering exiting states? temp solution?
 
+    [SerializeField] private Lorekeeper lorekeepr;
+
+    
+
 
     private void OnEnable()
     {
@@ -38,6 +42,11 @@ public class QuestLog : MonoBehaviour
             {
 
                 killingGoal.UpdateKillCount(e.info.Item2);
+            }
+            if (quest.IsComplete && !quest.HasBeenCompleted())
+            {
+                QuestGiver.RaiseQuestCompleteEvent();
+                quest.SetCompletedQuest();
             }
         }
     }

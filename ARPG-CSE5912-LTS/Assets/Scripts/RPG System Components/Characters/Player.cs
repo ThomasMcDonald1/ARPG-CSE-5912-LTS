@@ -164,7 +164,7 @@ public class Player : Character
         while (NPCTarget != null && !InInteractNPCRange())
         {
             movementHandler.NavMeshAgent.isStopped = false;
-            movementHandler.MoveToTarget(NPCTarget.transform.position);
+            movementHandler.MoveToTarget(NPCTarget.GetComponent<Collider>().ClosestPointOnBounds(NPCTarget.transform.position));
             yield return null;
         }
         InteractNPC?.Invoke(this, EventArgs.Empty);
@@ -206,9 +206,11 @@ public class Player : Character
 
     public bool InCombatTargetRange()
     {
+       
+
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
-        return Vector3.Distance(this.transform.position, AttackTarget.position) < stats[StatTypes.AttackRange];
+        return Vector3.Distance(transform.position, AttackTarget.GetComponent<Collider>().ClosestPoint(transform.position)) < stats[StatTypes.AttackRange];
     }
 
     public bool InInteractNPCRange()

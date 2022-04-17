@@ -16,6 +16,13 @@ public class Quest
 
     public QuestScript QuestScriptReference { get; set; }//scipt that controls this quest
     public QuestGiver QuestGiverReference { get; set; }//needs to know what questgiver it came from
+
+    private bool hasBeenCompleted;
+
+    private void Start()
+    {
+        hasBeenCompleted = false;
+    }
    
     public string Title
     {
@@ -76,6 +83,18 @@ public class Quest
             return true;
         }
     }
+
+    public bool HasBeenCompleted()
+    {
+        return hasBeenCompleted;
+    }
+
+    public void SetCompletedQuest()
+    {
+        hasBeenCompleted = true;
+    }
+
+
 
 
 

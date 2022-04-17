@@ -40,10 +40,14 @@ public class SpawnPlayer : MonoBehaviour
 					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = true;
 					break;
 				case 2:
+					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = false;
 					player.transform.position = dungeon2.startLocation;
+					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = true;
 					break;
 				case 3:
+					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = false;
 					player.transform.position = dungeon3.startLocation;
+					player.GetComponent<MovementHandler>().NavMeshAgent.enabled = true;
 					break;
 				default:
 					// ???

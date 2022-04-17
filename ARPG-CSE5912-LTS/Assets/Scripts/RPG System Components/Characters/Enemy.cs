@@ -35,8 +35,8 @@ namespace ARPG.Combat
         {
             base.Start();
             TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
-            Debug.Log("name" + transform.GetChild(0).name);
-            Debug.Log("level" + stats[StatTypes.LVL].ToString());
+            //Debug.Log("name" + transform.GetChild(0).name);
+            //Debug.Log("level" + stats[StatTypes.LVL].ToString());
 
             enemyUIText.text = transform.GetChild(0).name + " LV " + stats[StatTypes.LVL].ToString();
             //Debug.Log("enemy is" + gameObject.name);
