@@ -29,7 +29,15 @@ public class EquipmentManager : MonoBehaviour {
             if (part.partID > -1) {
                 Debug.Log("part.body Type is " + part.bodyType);
                 characterManager.DeactivatePart(part.bodyType);
+
+                if (part.bodyType.Equals(ModularBodyPart.Torso))
+                {
+                    characterManager.DeactivatePart(ModularBodyPart.BackAttachment);
+                    characterManager.DeactivatePart(ModularBodyPart.ShoulderAttachmentLeft);
+                    characterManager.DeactivatePart(ModularBodyPart.ShoulderAttachmentRight);
+                }
                 characterManager.ActivatePart(part.bodyType, part.partID);
+
                 if (part.bodyType.Equals(ModularBodyPart.Helmet))
                 {
                    characterManager.DeactivatePart(ModularBodyPart.Hair);
