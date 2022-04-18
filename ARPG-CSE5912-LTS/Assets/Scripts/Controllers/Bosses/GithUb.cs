@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Kilixis : EnemyAbilityController
+public class GithUb : EnemyAbilityController
 {
     [SerializeField] float chaseDistance = 15.0f;
     [SerializeField] float meleeRange = 5.0f;
@@ -21,10 +21,6 @@ public class Kilixis : EnemyAbilityController
     private int CurrentPatrolVertexIndex = 0;
     private int AttackCycle = 0;
 
-    private void Awake()
-    {
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -34,7 +30,7 @@ public class Kilixis : EnemyAbilityController
         stats[StatTypes.AtkSpeed] = 1;
         stats[StatTypes.MaxHP] = 500;
         stats[StatTypes.HP] = 500;
-        stats[StatTypes.LVL] = 10;
+        stats[StatTypes.LVL] = 30;
         stats[StatTypes.MonsterType] = 3;
 
         playerObj = GameObject.FindWithTag("Player");
@@ -52,6 +48,7 @@ public class Kilixis : EnemyAbilityController
 
     protected override void Update()
     {
+        Debug.Log(AttackCycle);
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
@@ -94,13 +91,13 @@ public class Kilixis : EnemyAbilityController
                         GetComponent<Animator>().SetTrigger("Attack1");
                         break;
                     case 1:
-                        GetComponent<Animator>().SetTrigger("Attack2");
+                        GetComponent<Animator>().SetTrigger("Attack3");
                         break;
                     case 2:
                         GetComponent<Animator>().SetTrigger("Attack3");
                         break;
                     default:
-                        GetComponent<Animator>().SetTrigger("Attack1");
+                        GetComponent<Animator>().SetTrigger("Attack3");
                         break;
                 }
             }
