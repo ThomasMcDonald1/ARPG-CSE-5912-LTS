@@ -48,7 +48,6 @@ public class GithUb : EnemyAbilityController
 
     protected override void Update()
     {
-        Debug.Log(AttackCycle);
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
