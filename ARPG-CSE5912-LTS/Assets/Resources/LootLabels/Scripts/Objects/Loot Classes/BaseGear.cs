@@ -27,6 +27,12 @@
                 ItemName = "Two-Handed Sword";
             else if (gearType == GearTypes.HealthPotion)
                 ItemName = "Health Potion";
+            else if (gearType == GearTypes.ManaPotion)
+                ItemName = "Mana Potion";
+            else if (gearType == GearTypes.DefensePotion)
+                ItemName = "Defense Potion";
+            else if (gearType == GearTypes.SpeedPotion)
+                ItemName = "Speed Potion";
             else
                 ItemName = GearType.ToString();
             ModelName = modelName;

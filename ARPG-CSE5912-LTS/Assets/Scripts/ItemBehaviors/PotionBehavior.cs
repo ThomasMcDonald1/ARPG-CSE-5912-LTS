@@ -6,7 +6,10 @@ public class PotionBehavior : MonoBehaviour
 {
     public static PotionBehavior instance;
     public bool isDefenseActive;
+    public bool isSpeedActive;
     public float defenseDuration;
+    public float speedDuration;
+    public int speed;
     public int defense;
     void Start()
     {
@@ -23,6 +26,17 @@ public class PotionBehavior : MonoBehaviour
                 Debug.Log("After the potion wore off defense is now " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor]);
                 isDefenseActive = false;
                 defense = 0;
+            }
+        }
+        if(Time.time > speedDuration)
+        {
+            if (isSpeedActive)
+            {
+                int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed];
+                GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed] = playerStat - speed;
+                Debug.Log("After the potion wore off defense is now " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed]);
+                isSpeedActive = false;
+                speed = 0;
             }
         }
     }

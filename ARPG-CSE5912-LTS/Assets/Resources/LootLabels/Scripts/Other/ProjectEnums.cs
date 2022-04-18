@@ -37,6 +37,7 @@
         HealthPotion,
         ManaPotion,
         DefensePotion,
+        SpeedPotion,
     }
 
     //types of currency
