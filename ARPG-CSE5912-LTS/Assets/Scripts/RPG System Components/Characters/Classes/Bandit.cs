@@ -7,12 +7,12 @@ namespace ARPG.Combat
 {
     public class Bandit : EnemyController
     {
-        private void OnEnable()
+        protected override void OnEnable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageRun;
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageRun;
         }
@@ -20,7 +20,7 @@ namespace ARPG.Combat
         {
             if (e.info.Item1 == this)
             {
-                if (GetComponent<Animator>().GetBool("Dead") == false)
+                if (animator.GetBool("Dead") == false)
                 {
                     //Debug.Log("damaged!!!!");
                     //look away from the player
@@ -57,16 +57,16 @@ namespace ARPG.Combat
             //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
-            if (GetComponent<Animator>().GetBool("Dead") == false)
+            if (animator.GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
                 {
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    if (animator.GetBool("Dead") == false)
                     {
                         Dead();
-                        GetComponent<Animator>().SetBool("Dead", true);
+                        animator.SetBool("Dead", true);
                         //get rid of enemy canvas
-                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+                        transform.GetChild(2).gameObject.SetActive(false);
 
                     }
                 }

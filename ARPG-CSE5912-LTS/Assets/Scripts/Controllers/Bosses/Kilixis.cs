@@ -78,13 +78,17 @@ public class Kilixis : EnemyAbilityController
             if (GetComponent<Animator>().GetBool("AnimationEnded") && !InMeleeRange())
             {
                 navAgent.isStopped = false;
-                navAgent.destination = PlayerTarget.position;
+                //navAgent.destination = PlayerTarget.position;
+
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(player.transform.position, path);
+                agent.path = path;
             }
 
             if (InMeleeRange())
             {
                 navAgent.isStopped = true;
-                navAgent.destination = transform.position;
+                agent.path = null;
                 switch (AttackCycle)
                 {
                     case 0:
@@ -141,16 +145,15 @@ public class Kilixis : EnemyAbilityController
     {
         if (patrolPath != null)
         {
-            //print("For index: " + CurrentPatrolVertexIndex + " " + AtPatrolVertex());
             if (AtPatrolVertex())
             {
                 SetNextVertexIndex();
                 PatrolToPosition = patrolPath.GetVertex(CurrentPatrolVertexIndex);
             }
-            //print("For index: " + CurrentPatrolVertexIndex + " " + AtPatrolVertex());
-
         }
-        navAgent.SetDestination(PatrolToPosition);
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(PatrolToPosition, path);
+        agent.path = path;
     }
 
     private void SetNextVertexIndex()
@@ -195,7 +198,7 @@ public class Kilixis : EnemyAbilityController
     void DieAnimationEnded()
     {
         HealthBar.SetActive(false);
-        base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType]);
+        base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType], transform.GetChild(0).name);
         PlayerTarget = null;
         GetComponent<CapsuleCollider>().enabled = false;
     }

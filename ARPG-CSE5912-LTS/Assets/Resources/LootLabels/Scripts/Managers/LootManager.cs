@@ -109,6 +109,12 @@ namespace LootLabels
                 yield return new WaitForSeconds(.2f);
                 GenerateLoot(lootOrigin, type);
             }
+            int random = UnityEngine.Random.Range(0, 3);
+            for (int j = 0; j < random; j++)
+            {
+                yield return new WaitForSeconds(.2f);
+                GenerateHealthPotions(lootOrigin, type);
+            }
             GameObject lootdrop = GameObject.Find("LootDrops");
         }
 
@@ -143,7 +149,29 @@ namespace LootLabels
             GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
         }
+        void GenerateHealthPotions(Transform lootOrigin, LootType type)
+        {
+            BaseCurrency currency = LootGenerator.CreateCurrency(type);
 
+            GameObject droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+
+            Rarity itemRarity = LootGenerator.SelectRandomRarity(type);
+            GearTypes gearType = GearTypes.HealthPotion;
+            string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
+            string iconName = ResourceManager.singleton.GetIconName(gearType);
+
+            BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
+            Debug.Log("creategear is making " + itemRarity + " " + modelName);
+            if (droppedItem.GetComponent<ItemPickup>() != null)
+            {
+                Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                gear.ItemName = gear.ItemRarity + " " + gear.ItemName;
+                item.name = gear.ItemName;
+                item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
+            }
+            droppedItem.GetComponent<DroppedGear>().gear = gear;
+        }
         /// <summary>
         /// Choses a item type to drop and creates it
         /// </summary>
@@ -219,6 +247,10 @@ namespace LootLabels
                             }
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
+                        }
+                        else
+                        {
+                            gear.ItemName = gear.ItemRarity + " " + gear.ItemName;
                         }
                         item.name = gear.ItemName;
                         item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
@@ -322,7 +354,7 @@ namespace LootLabels
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.health = (int)(potion.health + (25 * multiplier));
+                potion.health = (int)(potion.health + (250 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
@@ -333,7 +365,16 @@ namespace LootLabels
             {
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
-                potion.mana = (int)(potion.mana + (25 * multiplier));
+                potion.mana = (int)(potion.mana + (250 * multiplier));
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                item = potion;
+            }
+            else if (string.Equals("Potion of Steel", item.name))
+            {
+                Potion potion = (Potion)item;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.defense = (int)(potion.defense + (2 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 item = potion;
@@ -362,8 +403,11 @@ namespace LootLabels
             else
             {
                 ArmorEquipment armor = (ArmorEquipment)item;
-                armor.Evasion = (int)(armor.Evasion * multiplier);
-                armor.Armor = (int)(armor.Armor * multiplier);
+                if(itemRarity != Rarity.Legendary)
+                {
+                    armor.Evasion = (int)(armor.Evasion * multiplier);
+                    armor.Armor = (int)(armor.Armor * multiplier);
+                }
                 item = armor;
             }           
         }

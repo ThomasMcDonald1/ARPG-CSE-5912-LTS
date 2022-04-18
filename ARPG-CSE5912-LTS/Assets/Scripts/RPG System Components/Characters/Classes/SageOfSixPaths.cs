@@ -38,16 +38,16 @@ namespace ARPG.Combat
                 }
             }
 
-            if (GetComponent<Animator>().GetBool("Dead") == false)
+            if (animator.GetBool("Dead") == false)
             {
                 if (stats[StatTypes.HP] <= 0)
                 {
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    if (animator.GetBool("Dead") == false)
                     {
                         Dead();
-                        GetComponent<Animator>().SetBool("Dead", true);
+                        animator.SetBool("Dead", true);
                         //get rid of enemy canvas
-                        GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+                        transform.GetChild(2).gameObject.SetActive(false);
                     }
                 }
             }

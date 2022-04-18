@@ -10,6 +10,7 @@ public class Potion : Ite
         health,
         mana,
         teleport,
+        defense,
     }
     ;
 
@@ -19,10 +20,6 @@ public class Potion : Ite
     public int speed;
 
     public potionType typeOfPotion;
-   public void Update()
-    {
-        Debug.Log("I'm still here");
-    }
     public override void Use()
     {
         //Debug.Log("Use potion!");
@@ -35,17 +32,45 @@ public class Potion : Ite
             case (int)potionType.mana:
                 UseEnergyPotion();
                 break;
+            case (int)potionType.defense:
+                PotionBehavior.instance.defenseDuration = Time.time + 10;
+                PotionBehavior.instance.isDefenseActive = true;
+                int defensePoints = defense - PotionBehavior.instance.defense;
+                PotionBehavior.instance.defense = defense;
+                UseDefensePotion(defensePoints);
+               // IEnumerator defenseFunc = ApplyDefense(120);
+               //PotionBehavior.instance.isDefenseActive = true;
+                break;
             default:
                 Debug.Log("Don't know what this potion does");
                 break;
         }
     }
 
+    //IEnumerator ApplyDefense( float seconds)
+    //{
+    //    Debug.Log("Say something.");
+    //    int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor];
+    //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor] = playerStat + defense;
+    //    yield return new WaitForSeconds(seconds);
+    //    GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor] = playerStat - defense;
+    //    PotionBehavior.instance.isDefenseActive = false;
+
+
+    //    Debug.Log("Say something again 2.5 seconds later.");
+    //}
+    public void UseDefensePotion(int defensePoints)
+    {
+        int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor];
+        Debug.Log("armor is " + playerStat);
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor] = playerStat + defensePoints;
+        Debug.Log("new armor after using potion is " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor]);
+    }
     public void UseHealingPotion()
     {
        // Debug.Log("ADD HEALTH!!");
         int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.HP];
-        playerStat += 1000;
+        playerStat += health;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxHP]);
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.HP] = playerStat;
     }
@@ -55,7 +80,7 @@ public class Potion : Ite
 
         int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana];
 
-        playerStat += 100;
+        playerStat += mana;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana]);
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana] = playerStat;
     }

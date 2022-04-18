@@ -100,9 +100,10 @@ public class MainMenuRootState : BaseMenuState
         if (selectedSlot != null)
         {
             Debug.Log("Start Button Clicked!");
+            FindObjectOfType<AudioManager>().Play("MenuClick");
+            mainMenuController.characterCreationCamera.enabled = false;
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
             LoadingStateController.Instance.InitalizeGameScene();
-            FindObjectOfType<AudioManager>().Play("MenuClick");
         }
         else
         {

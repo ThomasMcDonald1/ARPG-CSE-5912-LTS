@@ -309,6 +309,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnUIElementRightClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
+        Debug.Log("UI element right clicked.");
         //figure out if the results contain an action button
         foreach (RaycastResult result in e.info)
         {

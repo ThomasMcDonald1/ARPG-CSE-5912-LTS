@@ -57,7 +57,10 @@ namespace ARPG.Combat
 
         protected override void Update()
         {
-            base.Update();
+            if (Vector3.Distance(transform.position, player.transform.position) <= 18)
+            {
+                base.Update();
+            }
         }
     }
 

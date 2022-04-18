@@ -6,7 +6,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using System;
 using ARPG.Movement;
-
+using UnityEngine.AI;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -23,12 +23,31 @@ public class InteractionManager : MonoBehaviour
 
     [SerializeField] private GameObject travelMenu;
 
+    [SerializeField] private GameObject TombOfMortemierButton;
+    [SerializeField] private GameObject ForsakenCathedralButton;
+
+
     [SerializeField] private GameObject tradeMenu;
     [SerializeField] private GameObject TradeButton;
     [SerializeField] private GameObject PorterButton;
 
+    [SerializeField] private GameObject waypointMenu;
+
     [SerializeField] public UI_shop shopUI;
     [SerializeField] public TextMeshProUGUI playerMoneyText;
+
+    [SerializeField] Porter porter;
+
+    // We still need lorekeeper to be active in the scene to update quests... But we need to disable collider, otherwise player may accidentally click, which would be weird
+    [SerializeField] Lorekeeper lorekeeper;
+    // We also don't want the lorekeeper's model to be active when switching to dungeon scenes...
+    [SerializeField] GameObject lorekeeperModel;
+    // Turn his quest icon back on when re-entering town
+    [SerializeField] GameObject lorekeeperQuestIcon;
+
+    [SerializeField] GeneralStore generalStore;
+    [SerializeField] Blacksmith blacksmith;
+
 
     public Transform ShopSlots;
     ShopSlot[] shopSlots;
@@ -98,6 +117,16 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
+    public void EnableTombOfMortemier()
+    {
+        TombOfMortemierButton.SetActive(true);
+    }
+
+    public void EnableForsakenCathedralButton()
+    {
+        ForsakenCathedralButton.SetActive(true);
+    }
+
     public void EnablePorterButton()
     {
         PorterButton.SetActive(true);
@@ -165,6 +194,7 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterOptionsMenu()
     {
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
@@ -174,6 +204,7 @@ public class InteractionManager : MonoBehaviour
 
     public void DisableInteractionView()
     {
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         dialogueBox.SetActive(false);
         optionsMenu.SetActive(false);
@@ -182,20 +213,57 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterTradeMenu()
     {
-        tradeMenu.SetActive(true);
+        waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
+        tradeMenu.SetActive(true);
+    }
+
+    public void EnterTravelMenu()
+    {
+        waypointMenu.SetActive(false);
+        tradeMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        worldNames.SetActive(false);
+        dialogueBox.SetActive(false);
+        travelMenu.SetActive(true);
+    }
+
+    public void EnterWaypointMenu()
+    {
+        waypointMenu.SetActive(true);
+        travelMenu.SetActive(false);
+        tradeMenu.SetActive(false);
         optionsMenu.SetActive(false);
         worldNames.SetActive(false);
         dialogueBox.SetActive(false);
     }
 
-    public void EnterTravelMenu()
+    public void EnterTown()
     {
-        travelMenu.SetActive(true);
-        tradeMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        worldNames.SetActive(false);
-        dialogueBox.SetActive(false);
+        player.GetComponent<PlayerController>().DungeonNum = 0;
+        //optionsMenu.SetActive(true);
+
+        LoadingStateController.Instance.LoadScene("NoControllerDuplicate");
+
+        generalStore.gameObject.SetActive(true);
+        blacksmith.gameObject.SetActive(true);
+        porter.gameObject.SetActive(true);
+
+        //lorekeeper.GetComponent<NavMeshAgent>().enabled = false;
+        lorekeeper.GetComponent<Collider>().enabled = true;
+        lorekeeperModel.SetActive(true);
+        lorekeeperQuestIcon.SetActive(true);
+        //lorekeeper.GetComponent<NavMeshAgent>().enabled = true;
+
+
+        player.agent.enabled = false;
+        player.transform.position = GameObject.Find("TownSpawnLocation").transform.position;
+        player.agent.enabled = true;
+
+        StopInteraction();
     }
 
     // For NPCs who will not trade
@@ -229,12 +297,15 @@ public class InteractionManager : MonoBehaviour
     {
         player.NPCTarget = null;
         TradeButton.SetActive(true);
-        if (player.GetComponent<PlayerController>().DungeonNum == 0) { worldNames.SetActive(true); } 
+        if (player.GetComponent<PlayerController>().DungeonNum == 0) 
+        { worldNames.SetActive(true); } 
+        else { worldNames.SetActive(false); }
         continueDialogueButton.SetActive(false);
         optionsMenu.SetActive(false);
         dialogueBox.SetActive(false);
         tradeMenu.SetActive(false);
         travelMenu.SetActive(false);
+        waypointMenu.SetActive(false);
         shopUI.resetShop();
     }
 }
