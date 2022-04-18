@@ -185,7 +185,7 @@ namespace ARPG.Combat
             return finalPosition;
         }
 
-        public virtual  void RunToPlayer()
+        public virtual void RunToPlayer()
         {
             NavMeshPath path = new NavMeshPath();
             agent.CalculatePath(AttackTarget.position, path);
