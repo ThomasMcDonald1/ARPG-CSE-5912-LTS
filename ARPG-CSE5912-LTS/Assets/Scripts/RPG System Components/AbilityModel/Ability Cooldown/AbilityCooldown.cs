@@ -15,7 +15,8 @@ public class AbilityCooldown : MonoBehaviour
     private void Awake()
     {
 
-        actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        //actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        actionBar = FindObjectOfType<GameplayStateController>().GetComponentInChildren<ActionBar>();
 
         //actionBar = GetComponentInParent<EnemyKnight>().GetComponentInParent<GameplayStateController>().gameObject.AddComponent<ActionBar>() as ActionBar;
 

@@ -19,6 +19,10 @@ public abstract class BaseCastType : MonoBehaviour
     private void Awake()
     {
         gameplayStateController = GetComponentInParent<GameplayStateController>();
+        if (gameplayStateController == null)
+        {
+            gameplayStateController = FindObjectOfType<GameplayStateController>();
+        }
         castingBar = gameplayStateController.castingBar;
         castingBar.castBarCanvas.SetActive(false);
     }
