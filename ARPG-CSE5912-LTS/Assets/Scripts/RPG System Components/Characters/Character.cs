@@ -175,7 +175,7 @@ public abstract class Character : MonoBehaviour
 
     protected void DeductCastingCost(AbilityCast abilityCast)
     {
-        Debug.Log("Deducting casting cost");
+        //Debug.Log("Deducting casting cost");
         abilityCast.abilityCost.DeductResourceFromCaster(abilityCast.caster);
     }
 
@@ -183,7 +183,7 @@ public abstract class Character : MonoBehaviour
     {
         if (this == abilityCast.caster)
         {
-            Debug.Log("Getting colliders");
+            //Debug.Log("Getting colliders");
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
             ApplyAbilityEffects(charactersCollided, abilityCast);
         }

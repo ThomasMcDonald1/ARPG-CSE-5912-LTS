@@ -42,13 +42,13 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
             maxWeaponDamage += weapon.maximumDamage;
         }
 
-        Debug.Log("minWeaponDamage is " + minWeaponDamage);
-        Debug.Log("maxWeaponDamage is " + maxWeaponDamage);
+        //Debug.Log("minWeaponDamage is " + minWeaponDamage);
+        //Debug.Log("maxWeaponDamage is " + maxWeaponDamage);
         //Choose a random number from within the minimum and maximum weapon damage range
         float chosenWeaponDamage = UnityEngine.Random.Range(minWeaponDamage, maxWeaponDamage);
         //Calculate initial base damage from the above
         float baseDamage = (chosenWeaponDamage * attack / 10 + attack) * damageBonusMult;
-        Debug.Log("Base damage: " + baseDamage);
+        //Debug.Log("Base damage: " + baseDamage);
         //Calculate the enemy's defense pre-penetration
         float enemyDefense = abilityCast.abilityPower.GetBaseDefense(target, effectElement);
         enemyDefense *= (1 + abilityCast.abilityPower.GetPercentDefense(target, effectElement));
@@ -74,7 +74,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //round damage to an integer and clamp
         int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
-        Debug.Log("Final damage: " + finalCalculatedDamage);
+        //Debug.Log("Final damage: " + finalCalculatedDamage);
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);

@@ -6,6 +6,15 @@ namespace ARPG.Core
 {
     public abstract class EnemyController : EnemyAbilityController
     {
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+        }
         public EnemyTarget target;
         //private string classTypeName;
         private string weaponTypeName;
@@ -52,7 +61,7 @@ namespace ARPG.Core
             weaponTypeName = "Unarmed";
             target = FindObjectOfType<Player>().GetComponent<EnemyTarget>();
             AttackTarget = target.transform;
-            Debug.Log("Attack target is: " + AttackTarget.name);
+            //Debug.Log("Attack target is: " + AttackTarget.name);
         }
 
         protected override void Update()

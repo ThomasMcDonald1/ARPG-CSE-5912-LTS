@@ -914,6 +914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77579117}
   - component: {fileID: 77579116}
+  - component: {fileID: 77579118}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Untagged
@@ -981,6 +982,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &77579118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77579115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcba5008fd9480469ecda2e84b1ab66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeon1: {fileID: 11400000, guid: 299fb285623e31146be76747c5e8c336, type: 2}
+  dungeon2: {fileID: 11400000, guid: 5d6f44800e7fb6e49a867f6ade13d0fe, type: 2}
+  dungeon3: {fileID: 11400000, guid: d886038415347d841bc96d9cb6907662, type: 2}
 --- !u!1 &81958928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2688,6 +2704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  potions: []
   baseStats: 0000000000000000000000000000000000000000000000000000000000000000
   growthStats:
   - 0

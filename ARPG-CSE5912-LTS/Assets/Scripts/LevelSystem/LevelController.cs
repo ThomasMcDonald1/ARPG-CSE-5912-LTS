@@ -96,11 +96,12 @@ public class LevelController : MonoBehaviour
         ExperienceManager.EmptyExpEvent -= OnEmptyExpEvent;
     }
 
-    public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int)> e)
+    public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int,string)> e)
     {
         //TODO: If exp will be given, but the player has some kind of equipment that will increase the amount of exp rewarded,
         //then apply the modification here
-        (int monsterLevel, int monsterType) = e.info;
+        int monsterLevel = e.info.Item1;
+        int monsterType = e.info.Item2;
         //Now just set the monsterType for the multiple data.
 
         int lvl = stats[StatTypes.LVL];
@@ -150,7 +151,7 @@ public class LevelController : MonoBehaviour
         Debug.Log("setexp");
     }
 
-    public void OnExpHasBeenGiven(object sender, InfoEventArgs<(int, int)> e)
+    public void OnExpHasBeenGiven(object sender, InfoEventArgs<(int, int,string)> e)
     {
 
         stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);

@@ -198,7 +198,7 @@ public class InsectBoss : Enemy
     void DieAnimationEnded()
     {
         HealthBar.SetActive(false);
-        base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType]);
+        base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType], transform.GetChild(0).name);
     }
 
     // Gizmos for sight range (purple) and melee range (red)

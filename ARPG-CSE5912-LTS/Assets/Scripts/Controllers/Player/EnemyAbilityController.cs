@@ -8,6 +8,12 @@ using System;
 
 public class EnemyAbilityController : Enemy
 {
+
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
     protected override void Start()
     {
         base.Start();
@@ -22,8 +28,9 @@ public class EnemyAbilityController : Enemy
 
     int groundLayerMask = 1 << 6;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnCompletedCast;
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }
@@ -33,7 +40,7 @@ public class EnemyAbilityController : Enemy
     {
         if (e.info.caster == this)
         {
-            Debug.Log("Enemy Cast was completed");
+            //Debug.Log("Enemy Cast was completed");
             DeductCastingCost(e.info);
             GetColliders(e.info);
         }

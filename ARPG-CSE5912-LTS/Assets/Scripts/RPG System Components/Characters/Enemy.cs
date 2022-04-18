@@ -11,6 +11,25 @@ namespace ARPG.Combat
 {
     public abstract class Enemy : Character
     {
+        protected virtual void OnEnable()
+        {
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageReact;
+        }
+
+        protected virtual void OnDisable()
+        {
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageReact;
+        }
+        public void OnDamageReact(object sender, InfoEventArgs<(Character, int, bool)> e)
+        {
+
+            if (animator.GetBool("Dead") == false)
+            {
+                //look to player
+                transform.rotation = Quaternion.LookRotation(FindObjectOfType<Player>().transform.position);
+
+            }
+        }
         protected Animator animator;
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
@@ -20,7 +39,7 @@ namespace ARPG.Combat
         public virtual float SightRange { get; set; }
         protected virtual float Speed { get; set; }
 
-        public static event EventHandler<InfoEventArgs<(int, int)>> EnemyKillExpEvent;
+        public static event EventHandler<InfoEventArgs<(int, int,string)>> EnemyKillExpEvent;
 
         public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
         public virtual float cooldownTimer { get; set; }
@@ -35,8 +54,8 @@ namespace ARPG.Combat
         {
             base.Start();
             TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
-            Debug.Log("name" + transform.GetChild(0).name);
-            Debug.Log("level" + stats[StatTypes.LVL].ToString());
+            //Debug.Log("name" + transform.GetChild(0).name);
+            //Debug.Log("level" + stats[StatTypes.LVL].ToString());
 
             enemyUIText.text = transform.GetChild(0).name + " LV " + stats[StatTypes.LVL].ToString();
             //Debug.Log("enemy is" + gameObject.name);
@@ -71,9 +90,9 @@ namespace ARPG.Combat
             }         
         }
 
-        public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
+        public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType, string className) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
         {
-            EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int)>((monsterLevel, monsterType)));
+            EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int,string)>((monsterLevel, monsterType,className)));
         }
 
         protected virtual  void SeePlayer()
@@ -166,7 +185,7 @@ namespace ARPG.Combat
             return finalPosition;
         }
 
-        public virtual  void RunToPlayer()
+        public virtual void RunToPlayer()
         {
             NavMeshPath path = new NavMeshPath();
             agent.CalculatePath(AttackTarget.position, path);
@@ -216,7 +235,7 @@ namespace ARPG.Combat
 
         public void Dead()
         {
-            EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType])));
+            EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int,string)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType],transform.GetChild(0).name)));
             StartCoroutine(Die(10));
             LootManager.singleton.DropLoot(lootSource, transform, lootType);
         }

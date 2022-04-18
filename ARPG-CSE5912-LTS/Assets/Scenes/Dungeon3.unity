@@ -14085,6 +14085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: 
+  potions: []
   baseStats: 0000000000000000000000000000000000000000000000000000000000000000
   growthStats:
   - 0
@@ -22350,6 +22351,7 @@ GameObject:
   - component: {fileID: 1879580860}
   - component: {fileID: 1879580859}
   - component: {fileID: 1879580861}
+  - component: {fileID: 1879580862}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Untagged
@@ -22439,6 +22441,21 @@ MonoBehaviour:
   NavMeshLinkDistanceFromDoorway: 2.5
   AutoGenerateFullRebakeSurfaces: 1
   FullRebakeTargets: []
+--- !u!114 &1879580862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879580858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbcba5008fd9480469ecda2e84b1ab66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeon1: {fileID: 11400000, guid: 299fb285623e31146be76747c5e8c336, type: 2}
+  dungeon2: {fileID: 11400000, guid: 5d6f44800e7fb6e49a867f6ade13d0fe, type: 2}
+  dungeon3: {fileID: 11400000, guid: d886038415347d841bc96d9cb6907662, type: 2}
 --- !u!1 &1902767201
 GameObject:
   m_ObjectHideFlags: 0
