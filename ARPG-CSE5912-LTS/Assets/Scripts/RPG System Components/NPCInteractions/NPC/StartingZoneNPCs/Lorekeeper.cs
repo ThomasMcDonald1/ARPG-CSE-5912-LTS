@@ -126,10 +126,4 @@ public class Lorekeeper : NPC
             saleUI.shop = shop;
         }
     }
-
-    private void Update()
-    {
-        Debug.Log(currentStory);
-    }
-
 }

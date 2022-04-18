@@ -40,6 +40,11 @@ public class DragonBoss : EnemyAbilityController
         }
     }
 
+    public string GetClassTypeName()
+    {
+        return "DragonBoss";
+    }
+
     new private void Update()
     {
         UpdateAnimator();
