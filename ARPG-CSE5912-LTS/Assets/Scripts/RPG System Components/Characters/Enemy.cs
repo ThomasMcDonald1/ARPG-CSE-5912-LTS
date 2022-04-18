@@ -130,7 +130,7 @@ namespace ARPG.Combat
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     Debug.Log(timeChecker);
                     if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
-                    { 
+                    {
                         if (EnemyAttackTypeList != null)
                         {
                             //Debug.Log("I got there1");
@@ -139,7 +139,7 @@ namespace ARPG.Combat
                                 //Debug.Log("I got there2");
 
                                 if (EnemyAttackTypeList[i].abilityOnCooldown == false)
-                                {                                    
+                                {
                                     QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
                                     if (coolRoutine == null)
                                         coolRoutine = StartCoroutine(CoolDown());
@@ -149,19 +149,17 @@ namespace ARPG.Combat
 
                         }
                     }
+                    else if (animator.GetBool("AttackingMainHand"))
+                    {
+                        animator.SetTrigger("AttackMainHandTrigger");
+                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                    }
                     else
                     {
-                        if (animator.GetBool("AttackingMainHand"))
-                        {
-                            animator.SetTrigger("AttackMainHandTrigger");
-                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
-                        }
-                        else
-                        {
-                            animator.SetTrigger("AttackOffHandTrigger");
-                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
-                        }
+                        animator.SetTrigger("AttackOffHandTrigger");
+                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                     }
+                    
                     if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
                             StopRun();                      
