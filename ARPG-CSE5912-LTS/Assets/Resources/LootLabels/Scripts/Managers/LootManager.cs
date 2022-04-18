@@ -152,7 +152,7 @@ namespace LootLabels
         }
         void GenerateHealthPotions(Transform lootOrigin, LootType type)
         {
-            int randomPotion = UnityEngine.Random.Range(0, 4);
+            int randomPotion = UnityEngine.Random.Range(0, 5);
             GameObject droppedItem;
             Rarity itemRarity;
             GearTypes gearType;
