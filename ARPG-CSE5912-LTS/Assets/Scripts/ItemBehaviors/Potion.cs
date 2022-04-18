@@ -11,6 +11,7 @@ public class Potion : Ite
         mana,
         teleport,
         defense,
+        speed,
     }
     ;
 
@@ -33,13 +34,22 @@ public class Potion : Ite
                 UseEnergyPotion();
                 break;
             case (int)potionType.defense:
-                PotionBehavior.instance.defenseDuration = Time.time + 10;
+                PotionBehavior.instance.defenseDuration = Time.time + 60;
                 PotionBehavior.instance.isDefenseActive = true;
                 int defensePoints = defense - PotionBehavior.instance.defense;
                 PotionBehavior.instance.defense = defense;
                 UseDefensePotion(defensePoints);
                // IEnumerator defenseFunc = ApplyDefense(120);
                //PotionBehavior.instance.isDefenseActive = true;
+                break;
+            case (int)potionType.speed:
+                PotionBehavior.instance.speedDuration = Time.time + 60;
+                PotionBehavior.instance.isSpeedActive = true;
+                int speedPoints = speed - PotionBehavior.instance.speed;
+                PotionBehavior.instance.speed = speed;
+                UseDefensePotion(speedPoints);
+                // IEnumerator defenseFunc = ApplyDefense(120);
+                //PotionBehavior.instance.isDefenseActive = true;
                 break;
             default:
                 Debug.Log("Don't know what this potion does");
@@ -67,6 +77,14 @@ public class Potion : Ite
         Debug.Log("armor is " + playerStat);
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor] = playerStat + defensePoints;
         Debug.Log("new armor after using potion is " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor]);
+    }
+
+    public void UseSpeedPotion(int speedPoints)
+    {
+        int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed];
+        Debug.Log("speed is " + playerStat);
+        GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed] = playerStat + speedPoints;
+        Debug.Log("new speed after using potion is " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed]);
     }
     public void UseHealingPotion()
     {

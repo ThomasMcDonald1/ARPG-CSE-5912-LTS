@@ -179,6 +179,8 @@ namespace LootLabels {
                     return modelPath + "ManaPotion";
                 case GearTypes.DefensePotion:
                     return modelPath + "DefensePotion";
+                case GearTypes.SpeedPotion:
+                    return modelPath + "SpeedPotion";
                 case GearTypes.Sword:
                     switch (itemRarity)
                     {
