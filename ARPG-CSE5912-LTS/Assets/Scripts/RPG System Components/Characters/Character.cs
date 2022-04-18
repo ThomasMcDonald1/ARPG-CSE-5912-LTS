@@ -140,9 +140,13 @@ public abstract class Character : MonoBehaviour
         }
         else
         {
-            Enemy enemy = (Enemy)this;
-            enemy.StopAllCoroutines();
-            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+            if (abilityCanBePerformed)
+            {
+                Enemy enemy = (Enemy)this;
+                enemy.StopAllCoroutines();
+                enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            }
             //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
             //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
@@ -176,15 +180,15 @@ public abstract class Character : MonoBehaviour
 
     protected void DeductCastingCost(AbilityCast abilityCast)
     {
-        Debug.Log("Deducting casting cost");
+        //Debug.Log("Deducting casting cost");
         abilityCast.abilityCost.DeductResourceFromCaster(abilityCast.caster);
     }
 
-    protected void GetColliders(AbilityCast abilityCast)
+    protected void GetColliders(AbilityCast abilityCast, Ability ability)
     {
-        if (this == abilityCast.caster)
+        if (this == abilityCast.caster && ability == abilityCast.ability)
         {
-            Debug.Log("Getting colliders");
+            Debug.Log("Getting colliders" + this + abilityCast.caster);
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
             ApplyAbilityEffects(charactersCollided, abilityCast);
         }
@@ -203,7 +207,8 @@ public abstract class Character : MonoBehaviour
                 AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
                 if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
                 {
-                    //Debug.Log("Applying ability effects to " + targets[i].name);
+                    Debug.Log(specialTargeter);
+                    Debug.Log("Applying ability effects to " + targets[i].name);
                     effect.Apply(targets[i], abilityCast);
                 }
             }

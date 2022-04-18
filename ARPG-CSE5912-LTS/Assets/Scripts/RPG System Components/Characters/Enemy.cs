@@ -16,6 +16,7 @@ namespace ARPG.Combat
         [SerializeField] LootType lootType;
 
         Coroutine coolRoutine;
+        Coroutine regen;
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
@@ -49,7 +50,8 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
-
+            if (regen == null)
+                regen = StartCoroutine(RegenEnergy());
             //Debug.Log(abilitiesKnown);
             float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
             animator.SetFloat("AttackSpeed", attackSpeed);
@@ -94,23 +96,7 @@ namespace ARPG.Combat
 
                 if (angle < SightRange && !InStopRange())
                 {
-                    RunToPlayer();
-                    /*
-                    if (EnemyAttackTypeList != null)
-                    {
-                        if (AttackTarget != null)
-                        {
-                            for (int i = 0; i++; i < EnemyAttackTypeList.Count)
-                            {
-                                if (EnemyAttackTypeList[i].cooldownTimer == 0)
-                                {
-                                    ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    */
+                    RunToPlayer();                  
 
                 }
                 else if (angle < SightRange && InStopRange())
@@ -120,9 +106,8 @@ namespace ARPG.Combat
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     Debug.Log(timeChecker);
-                    if (!enemyAbilityOnCool)
-                    { //here is for check mana
-                        
+                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
+                    { 
                         if (EnemyAttackTypeList != null)
                         {
                             //Debug.Log("I got there1");
@@ -135,7 +120,6 @@ namespace ARPG.Combat
                                     QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
                                     if (coolRoutine == null)
                                         coolRoutine = StartCoroutine(CoolDown());
-                                    //ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
                                     break;
                                 }
                             }
@@ -287,27 +271,15 @@ namespace ARPG.Combat
             return lootSource;
         }
 
-        private void ChooseAttackType(Ability AttackType)
+        private IEnumerator RegenEnergy()
         {
-
-            /*
-            switch (AttackType)
+            //yield return new WaitForSeconds(1);
+            while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
             {
-                case 0:
-                    //ability list 0
-                    break;
-                case 1:
-                    //ability list 1
-                    break;
-                case 2:
-                    //basic attack, last choice
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    break;
-                default:
-                    break;
-
+                stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
+                yield return new WaitForSeconds(3f);
             }
-            */
+            regen = null;
         }
     }
     //public void Cancel()

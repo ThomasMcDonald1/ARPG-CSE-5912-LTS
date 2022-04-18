@@ -369,7 +369,7 @@ public class GameplayState : BaseGameplayState
         lockedActions = false;
     }
 
-    private void OnAbilityWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
+    private void OnAbilityWasCompleted(object sender, InfoEventArgs<(AbilityCast,Ability)> e)
     {
         //Debug.Log("Actions unlocked");
         lockedActions = false;

@@ -29,13 +29,13 @@ public class EnemyAbilityController : Enemy
     }
 
 
-    void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
+    void OnCompletedCast(object sender, InfoEventArgs<(AbilityCast, Ability)> e)
     {
-        if (e.info.caster == this)
+        if (e.info.Item1.caster == this && e.info.Item2 == e.info.Item1.ability)
         {
             Debug.Log("Enemy Cast was completed");
-            DeductCastingCost(e.info);
-            GetColliders(e.info);
+            DeductCastingCost(e.info.Item1);
+            GetColliders(e.info.Item1, e.info.Item2);
         }
     }
 

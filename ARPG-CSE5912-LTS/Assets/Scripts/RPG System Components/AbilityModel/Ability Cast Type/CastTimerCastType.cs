@@ -11,7 +11,7 @@ public class CastTimerCastType : BaseCastType
     GameObject castingVFXInstance;
     public static event EventHandler<InfoEventArgs<Ability>> AbilityBeganBeingCastEvent;
     public static event EventHandler<InfoEventArgs<int>> AbilityCastWasCancelledEvent;
-    public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityCastTimeWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<(AbilityCast, Ability)>> AbilityCastTimeWasCompletedEvent;
 
     public override Type GetCastType()
     {
@@ -35,10 +35,10 @@ public class CastTimerCastType : BaseCastType
         castingVFXInstance.SetActive(true);
         vfxRoutine = StartCoroutine(WaitCastVFXTime(abilityCast, castingVFXInstance));
     }
-    protected override void CompleteCast(AbilityCast abilityCast)
+    protected override void CompleteCast(AbilityCast abilityCast, Ability ability)
     {
         //Debug.Log("Completing cast from CastTimerCastType");
-        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<(AbilityCast,Ability)>((abilityCast, ability)));
     }
 
     public override void StopCasting()
@@ -82,7 +82,7 @@ public class CastTimerCastType : BaseCastType
             yield return null;
         }
         castingBar.castBarCanvas.SetActive(false);
-        CompleteCast(abilityCast);
+        CompleteCast(abilityCast, GetComponent<Ability>());
     }
 
     private IEnumerator WaitCastVFXTime(AbilityCast abilityCast, GameObject instance)
