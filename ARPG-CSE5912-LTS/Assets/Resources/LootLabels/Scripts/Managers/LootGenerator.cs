@@ -79,7 +79,7 @@ namespace LootLabels {
         public GearTypes SelectRandomGearType() {
             int gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
             Debug.Log("gearTypeCount is " + gearTypeCount);
-            int randomIndex = Random.Range(0, gearTypeCount);
+            int randomIndex = Random.Range(0, 8);
 
             return (GearTypes)randomIndex;
         }

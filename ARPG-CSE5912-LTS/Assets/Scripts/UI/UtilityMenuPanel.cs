@@ -30,12 +30,12 @@ public class UtilityMenuPanel : MonoBehaviour
     public void PopulateUtilityMenu(PotionButton button)
     {
         //Debug.Log("Hi!!");
-        ClearUtilityMenu();
+       ClearUtilityMenu();
         utilities= Inventory.instance.utilItems;
         foreach (Ite item in utilities)
         {
-            //Debug.Log("Potions that are excited: " + itemNamesExited);
-            if (!checkInTheButtons(item)){ 
+           // Debug.Log("Potions that are Exited: " + itemNamesExited);
+            if (!CheckInTheButtons(item)){ 
                 Sprite iconToSet = item.icon;
                 string nameToSet = item.name;
                 GameObject menuEntryObj = Instantiate(utilityMenuEntryPrefab);
@@ -52,7 +52,7 @@ public class UtilityMenuPanel : MonoBehaviour
             }
         }
     }
-    public bool checkInTheButtons(Ite itemname)
+    public bool CheckInTheButtons(Ite itemname)
     {
        
         foreach (Ite item in itemNamesExited)
@@ -65,11 +65,16 @@ public class UtilityMenuPanel : MonoBehaviour
         }
         return false;
     }
-        private void ClearUtilityMenu()
+
+    private void ClearUtilityMenu()
     {
         foreach (Transform child in utilityMenuEntriesObj.transform)
         {
             Destroy(child.gameObject);
         }
+    }
+    public void CloseUtilityMenu()
+    {
+        utilityMenuPanelCanvas.SetActive(false);
     }
 }

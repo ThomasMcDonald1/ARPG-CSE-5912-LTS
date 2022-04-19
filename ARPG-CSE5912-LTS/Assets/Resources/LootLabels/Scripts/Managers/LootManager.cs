@@ -112,6 +112,7 @@ namespace LootLabels
             int random = UnityEngine.Random.Range(0, 3);
             for (int j = 0; j < random; j++)
             {
+                Debug.Log("generating health potions");
                 yield return new WaitForSeconds(.2f);
                 GenerateHealthPotions(lootOrigin, type);
             }
@@ -151,17 +152,41 @@ namespace LootLabels
         }
         void GenerateHealthPotions(Transform lootOrigin, LootType type)
         {
-            BaseCurrency currency = LootGenerator.CreateCurrency(type);
+            int randomPotion = UnityEngine.Random.Range(0, 5);
+            GameObject droppedItem;
+            Rarity itemRarity;
+            GearTypes gearType;
+            Debug.Log("randPotion is " + randomPotion);
+            switch (randomPotion)
+            {
+               case 1:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.DefensePotion;
+                    break;
+                case 2:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/ManaPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.ManaPotion;
+                    break;
+               case 3:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/SpeedPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.SpeedPotion;
+                    break;
+                default:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.HealthPotion;
+                    break;
 
-            GameObject droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+            }
 
-            Rarity itemRarity = LootGenerator.SelectRandomRarity(type);
-            GearTypes gearType = GearTypes.HealthPotion;
             string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 
             BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
-            Debug.Log("creategear is making " + itemRarity + " " + modelName);
+            Debug.Log("creategear is making " + itemRarity + iconName);
             if (droppedItem.GetComponent<ItemPickup>() != null)
             {
                 Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
@@ -375,6 +400,15 @@ namespace LootLabels
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.defense = (int)(potion.defense + (2 * multiplier));
+                string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                item = potion;
+            }
+            else if (string.Equals("Potion of Speed", item.name))
+            {
+                Potion potion = (Potion)item;
+                Debug.Log("potion health before change is" + potion.health);
+                potion.speed = (int)(potion.speed + (2 * multiplier));
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 item = potion;
