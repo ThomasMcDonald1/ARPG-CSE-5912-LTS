@@ -25,9 +25,10 @@ namespace ARPG.Combat
 
             if (animator.GetBool("Dead") == false)
             {
-                //look to player
-                transform.rotation = Quaternion.LookRotation(FindObjectOfType<Player>().transform.position);
-
+                Vector3 playerPoint = FindObjectOfType<Player>().transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(playerPoint - transform.position);
+                float turnSpeed = 2; 
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
             }
         }
         protected Animator animator;
