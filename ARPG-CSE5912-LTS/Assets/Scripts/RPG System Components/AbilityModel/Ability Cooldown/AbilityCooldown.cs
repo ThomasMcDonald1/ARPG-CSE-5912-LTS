@@ -28,16 +28,17 @@ public class AbilityCooldown : MonoBehaviour
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCastWasCompleted;
     }
 
-    void OnCastWasCompleted(object sender, InfoEventArgs<(AbilityCast, Ability)> e)
+    void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (e.info.Item1.caster is Player && GetComponent<Ability>() == e.info.Item1.ability)
+
+        if (this != null && e.info.caster is Player && GetComponent<Ability>() == e.info.ability)
         {
             //Debug.Log("Cooling down player abilities");
-            CooldownAbilityOnActionButtons(e.info.Item1);
+            CooldownAbilityOnActionButtons(e.info);
         }
-        else if (GetComponent<Ability>() == e.info.Item1.ability)
+        else if (this != null && GetComponent<Ability>() == e.info.ability)
         {
-            CooldownAbilityOnEnemyList(e.info.Item1);
+            CooldownAbilityOnEnemyList(e.info);
         }
     }
 

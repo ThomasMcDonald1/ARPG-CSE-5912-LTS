@@ -11,7 +11,7 @@ public class CastTimerCastType : BaseCastType
     GameObject castingVFXInstance;
     public static event EventHandler<InfoEventArgs<Ability>> AbilityBeganBeingCastEvent;
     public static event EventHandler<InfoEventArgs<int>> AbilityCastWasCancelledEvent;
-    public static event EventHandler<InfoEventArgs<(AbilityCast, Ability)>> AbilityCastTimeWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityCastTimeWasCompletedEvent;
 
     public override Type GetCastType()
     {
@@ -35,10 +35,10 @@ public class CastTimerCastType : BaseCastType
         castingVFXInstance.SetActive(true);
         vfxRoutine = StartCoroutine(WaitCastVFXTime(abilityCast, castingVFXInstance));
     }
-    protected override void CompleteCast(AbilityCast abilityCast, Ability ability)
+    protected override void CompleteCast(AbilityCast abilityCast)
     {
         //Debug.Log("Completing cast from CastTimerCastType");
-        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<(AbilityCast,Ability)>((abilityCast, ability)));
+        AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     public override void StopCasting()
@@ -47,7 +47,9 @@ public class CastTimerCastType : BaseCastType
         if (castingRoutine != null)
         {
             StopCoroutine(castingRoutine);
+
             castingBar.castBarCanvas.SetActive(false);
+
             castingRoutine = null;
         }
         if (vfxRoutine != null)
@@ -70,19 +72,23 @@ public class CastTimerCastType : BaseCastType
         float displayTime = abilityCast.castType.reducedCastTime;
         float rate = 1.0f / abilityCast.castType.reducedCastTime;
         float progress = 0.0f;
-        castingBar.castingBarSlider.value = 0f;
+        if (abilityCast.caster is Player)
+            castingBar.castingBarSlider.value = 0f;
         while (progress < 1.0f)
         {
-            castingBar.castTimeText.text = displayTime.ToString("0.00");
-            castingBar.castingBarSlider.value = Mathf.Lerp(0, 1, progress);
-
+            if (abilityCast.caster is Player)
+            {
+                castingBar.castTimeText.text = displayTime.ToString("0.00");
+                castingBar.castingBarSlider.value = Mathf.Lerp(0, 1, progress);
+            }
             displayTime -= rate * Time.deltaTime;
             progress += rate * Time.deltaTime;
 
             yield return null;
         }
-        castingBar.castBarCanvas.SetActive(false);
-        CompleteCast(abilityCast, GetComponent<Ability>());
+        if (abilityCast.caster is Player)
+            castingBar.castBarCanvas.SetActive(false);
+        CompleteCast(abilityCast);
     }
 
     private IEnumerator WaitCastVFXTime(AbilityCast abilityCast, GameObject instance)

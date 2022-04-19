@@ -6,7 +6,7 @@ using UnityEngine;
 public class InstantCastType : BaseCastType
 {
     Coroutine instantCastRoutine;
-    public static event EventHandler<InfoEventArgs<(AbilityCast, Ability)>> AbilityInstantCastWasCompletedEvent;
+    public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
     
     public override Type GetCastType()
     {
@@ -26,10 +26,10 @@ public class InstantCastType : BaseCastType
        
     }
 
-    protected override void CompleteCast(AbilityCast abilityCast, Ability ability)
+    protected override void CompleteCast(AbilityCast abilityCast)
     {
         Debug.Log("Cast was completed from Instant Cast Type");
-        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<(AbilityCast, Ability)>((abilityCast, ability)));
+        AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     protected override void InstantiateSpellcastVFX(AbilityCast abilityCast)
@@ -40,7 +40,7 @@ public class InstantCastType : BaseCastType
     private IEnumerator InstantCastCoroutine(AbilityCast abilityCast)
     {
         yield return new WaitForEndOfFrame();
-        CompleteCast(abilityCast, GetComponent<Ability>());
+        CompleteCast(abilityCast);
         instantCastRoutine = null;
     }
 }

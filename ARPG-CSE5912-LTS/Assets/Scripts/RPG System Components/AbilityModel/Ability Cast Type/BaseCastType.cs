@@ -14,7 +14,7 @@ public abstract class BaseCastType : MonoBehaviour
     public abstract void WaitCastTime(AbilityCast abilityCast);
     protected abstract void InstantiateSpellcastVFX(AbilityCast abilityCast);
     public abstract void StopCasting();
-    protected abstract void CompleteCast(AbilityCast abilityCast, Ability ability);
+    protected abstract void CompleteCast(AbilityCast abilityCast);
     public abstract Type GetCastType();
     private void Awake()
     {

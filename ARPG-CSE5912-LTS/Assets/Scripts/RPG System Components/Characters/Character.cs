@@ -184,11 +184,11 @@ public abstract class Character : MonoBehaviour
         abilityCast.abilityCost.DeductResourceFromCaster(abilityCast.caster);
     }
 
-    protected void GetColliders(AbilityCast abilityCast, Ability ability)
+    protected void GetColliders(AbilityCast abilityCast)
     {
-        if (this == abilityCast.caster && ability == abilityCast.ability)
+        if (this == abilityCast.caster)
         {
-            Debug.Log("Getting colliders" + this + abilityCast.caster);
+            Debug.Log("Getting colliders");
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
             ApplyAbilityEffects(charactersCollided, abilityCast);
         }
