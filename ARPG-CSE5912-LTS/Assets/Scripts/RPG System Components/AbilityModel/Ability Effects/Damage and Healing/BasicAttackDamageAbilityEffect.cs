@@ -28,8 +28,11 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         float maxWeaponDamage = 1;
         if (isMainHandAttack)
         {
+            Debug.Log("equippedweapon is" + equippedWeapon);
+            Debug.Log("currentEquipment[0] is " + equippedWeapon.currentEquipment[0]);
             if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
             {
+                Debug.Log(" I am in the weapon damage assignments");
                 WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
                 minWeaponDamage = weapon.minimumDamage;
                 maxWeaponDamage = weapon.maximumDamage;
@@ -74,7 +77,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //round damage to an integer and clamp
         int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
-        //Debug.Log("Final damage: " + finalCalculatedDamage);
+        Debug.Log("Final damage: " + finalCalculatedDamage);
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
