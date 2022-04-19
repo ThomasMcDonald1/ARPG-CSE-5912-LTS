@@ -9,9 +9,9 @@ public class Potion : Ite
     {
         health,
         mana,
-        teleport,
         defense,
         speed,
+        teleport,
     }
     ;
 
@@ -50,6 +50,9 @@ public class Potion : Ite
                 UseDefensePotion(speedPoints);
                 // IEnumerator defenseFunc = ApplyDefense(120);
                 //PotionBehavior.instance.isDefenseActive = true;
+                break;
+            case (int)potionType.teleport:
+                UseTeleportPotion();
                 break;
             default:
                 Debug.Log("Don't know what this potion does");
@@ -103,5 +106,10 @@ public class Potion : Ite
         playerStat += mana;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana]);
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana] = playerStat;
+    }
+    public void UseTeleportPotion()
+    {
+            Transform pTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            var x = Instantiate(Resources.Load("Portals/Archway") as GameObject, pTransform);
     }
 }
