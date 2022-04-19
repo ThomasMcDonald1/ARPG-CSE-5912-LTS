@@ -17407,7 +17407,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.14308174, b: 0.3679245, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -44813,7 +44813,7 @@ MonoBehaviour:
   characterPanelCanvasObj: {fileID: 1532520792}
   inventoryCanvasObj: {fileID: 1935881260}
   gameoverCanvasObj: {fileID: 480261978}
-  npcInterfaceObj: {fileID: 0}
+  npcInterfaceObj: {fileID: 2740543159865828839}
   pauseMenuCanvas: {fileID: 0}
   gameplayUICanvas: {fileID: 0}
   optionsMenuCanvas: {fileID: 0}
@@ -44839,7 +44839,7 @@ MonoBehaviour:
   aoeReticleCylinder: {fileID: 1506955650}
   castingBar: {fileID: 1969795962}
   playerModel: {fileID: 620282745}
-  customCharacter: {fileID: 11400000, guid: 02dc2d2045924e0458af9beb44cf06b6, type: 2}
+  customCharacter: {fileID: 11400000, guid: 7313c35cb5d1a324a85ba2071c1533b1, type: 2}
   yesRespawnButtonObj: {fileID: 1198005362}
   noRespawnButtonObj: {fileID: 2113807901}
   passiveTreeUI: {fileID: 1023717770}
@@ -45438,8 +45438,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -46399,7 +46399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -82694,6 +82694,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1682709044871684106, guid: c00cf2cb19e3566448fba7ad7b169f97, type: 3}
+      propertyPath: m_TagString
+      value: PotionSlot
+      objectReference: {fileID: 0}
     - target: {fileID: 4798498753837240380, guid: c00cf2cb19e3566448fba7ad7b169f97, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -97918,6 +97922,11 @@ GameObject:
 --- !u!1 &2740543159865828838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3635638692261923967, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
+  m_PrefabInstance: {fileID: 2740543159865828836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2740543159865828839 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5717416173861733295, guid: 554736dcbb2229b41a2eb0366a205fb3, type: 3}
   m_PrefabInstance: {fileID: 2740543159865828836}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &3529475363677243482
