@@ -28,8 +28,6 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         float maxWeaponDamage = 1;
         if (isMainHandAttack)
         {
-            Debug.Log("equippedweapon is" + equippedWeapon);
-            Debug.Log("currentEquipment[0] is " + equippedWeapon.currentEquipment[0]);
             if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
             {
                 Debug.Log(" I am in the weapon damage assignments");
