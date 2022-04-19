@@ -22,9 +22,10 @@ namespace ARPG.Combat
         }
         public void OnDamageReact(object sender, InfoEventArgs<(Character, int, bool)> e)
         {
-
-            if (animator.GetBool("Dead") == false)
+           
+            if (e.info.Item1 is Enemy && animator != null && animator.GetBool("Dead") == false)
             {
+               
                 //look to player
                 transform.rotation = Quaternion.LookRotation(FindObjectOfType<Player>().transform.position);
 
