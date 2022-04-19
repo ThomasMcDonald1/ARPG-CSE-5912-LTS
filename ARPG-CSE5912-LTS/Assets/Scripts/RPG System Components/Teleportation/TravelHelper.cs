@@ -45,4 +45,20 @@ public class TravelHelper : MonoBehaviour
         blacksmith.gameObject.SetActive(false);
         porter.gameObject.SetActive(false);
     }
+
+    public void EnterForsakenCathedral()
+    {
+        player.GetComponent<PlayerController>().DungeonNum = 3;
+        InteractionManager.GetInstance().StopInteraction();
+
+        LoadingStateController.Instance.LoadScene("Dungeon3");
+
+        loreKeeper.GetComponent<Collider>().enabled = false;
+        lorekeeperModel.SetActive(false);
+        lorekeeperQuestIcon.SetActive(false);
+
+        generalStore.gameObject.SetActive(false);
+        blacksmith.gameObject.SetActive(false);
+        porter.gameObject.SetActive(false);
+    }
 }
