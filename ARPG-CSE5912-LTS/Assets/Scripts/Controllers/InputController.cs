@@ -123,6 +123,11 @@ public class InputController : MonoBehaviour
                 List<RaycastResult> results = GetUIElementsClicked();
                 UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
             }
+            else
+            {
+                if (TipManager.instance != null)
+                    TipManager.instance.HideWindow();
+            }
         }
     }
 

@@ -110,13 +110,13 @@ public class LevelController : MonoBehaviour
         switch (monsterType)
         {
             case 1: //normal
-                typeConstant = 5;
+                typeConstant = 50;
                 break;
             case 2: //elite
-                typeConstant = 10;
+                typeConstant = 100;
                 break;
             case 3: //boss
-                typeConstant = 50;
+                typeConstant = 500;
                 break;
             default:
                 Debug.Log("Need to set up monster type for enemy");
@@ -153,9 +153,10 @@ public class LevelController : MonoBehaviour
 
     public void OnExpHasBeenGiven(object sender, InfoEventArgs<(int, int,string)> e)
     {
-
+        int pastLVL = (int)stats[StatTypes.LVL];
         stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
-       
+        int currectLVL = (int)stats[StatTypes.LVL];
+        stats[StatTypes.SkillPoints] += (currectLVL - pastLVL);
     }
 
     public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
