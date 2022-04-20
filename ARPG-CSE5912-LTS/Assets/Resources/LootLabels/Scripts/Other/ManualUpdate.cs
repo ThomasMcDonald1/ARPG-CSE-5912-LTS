@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LootLabels {
     public class ManualUpdate : MonoBehaviour {
@@ -9,7 +10,23 @@ namespace LootLabels {
         /// we update the position of the labels manually in order from top to bottom in the hierarchy
         /// </summary>
         FollowParent[] labelFollowList = new FollowParent[0];
-        
+        public GameObject lootdrops;
+        void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            foreach (Transform child in lootdrops.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
         private void LateUpdate() {
             manualUpdate();
         }
