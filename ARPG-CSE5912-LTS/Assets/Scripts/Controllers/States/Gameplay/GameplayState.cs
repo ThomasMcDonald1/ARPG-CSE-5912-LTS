@@ -73,6 +73,7 @@ public class GameplayState : BaseGameplayState
 
     void OnExitToMenuClicked()
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         FindObjectOfType<AudioManager>().Play("MenuClick");
@@ -85,18 +86,22 @@ public class GameplayState : BaseGameplayState
 
     void OnPauseMenuClicked()
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         PauseGame();
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnCharaPanelClicked()
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         OpenCharacterPanel();
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         //updated to include enemylayer as well
         if (agent.enabled && !playerAbilityController.playerInAOEAbilityTargetSelectionMode)
         {
@@ -122,6 +127,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
             PauseGame();
     }
@@ -148,26 +155,32 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnPotion1Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
 
     }
 
     protected override void OnPotion2Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
 
     }
 
     protected override void OnPotion3Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
 
     }
 
     protected override void OnPotion4Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
 
     }
 
     protected override void OnActionBar1Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton1);
         if (abilityInSlot != null && !actionBar.actionButton1.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -178,6 +191,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar2Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton2);
         if (abilityInSlot != null && !actionBar.actionButton2.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -188,6 +203,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar3Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton3);
         if (abilityInSlot != null && !actionBar.actionButton3.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -198,6 +215,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar4Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton4);
         if (abilityInSlot != null && !actionBar.actionButton4.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -208,6 +227,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar5Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton5);
         if (abilityInSlot != null && !actionBar.actionButton5.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -218,6 +239,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar6Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton6);
         if (abilityInSlot != null && !actionBar.actionButton6.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -228,6 +251,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar7Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton7);
         if (abilityInSlot != null && !actionBar.actionButton7.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -238,6 +263,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar8Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton8);
         if (abilityInSlot != null && !actionBar.actionButton8.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -248,6 +275,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar9Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton9);
         if (abilityInSlot != null && !actionBar.actionButton9.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -258,6 +287,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar10Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton10);
         if (abilityInSlot != null && !actionBar.actionButton10.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -268,6 +299,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar11Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton11);
         if (abilityInSlot != null && !actionBar.actionButton11.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -278,6 +311,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnActionBar12Pressed(object sender, InfoEventArgs<int> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         Ability abilityInSlot = actionBar.GetAbilityOnActionButton(actionBar.actionButton12);
         if (abilityInSlot != null && !actionBar.actionButton12.abilityInSlotOnCooldown && !lockedActions)
         {
@@ -288,6 +323,8 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnUIElementLeftClicked(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+
         //figure out if the results contain an action button
         foreach (RaycastResult result in e.info)
         {
