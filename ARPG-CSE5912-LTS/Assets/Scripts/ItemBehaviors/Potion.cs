@@ -36,6 +36,12 @@ public class Potion : Ite
             case (int)potionType.defense:
                 PotionBehavior.instance.defenseDuration = Time.time + 60;
                 PotionBehavior.instance.isDefenseActive = true;
+
+                //PotionBehavior.instance.defenseParticle.Stop();
+                var main = PotionBehavior.instance.defenseParticle.main;
+                main.duration = PotionBehavior.instance.defenseDuration;
+                PotionBehavior.instance.defenseParticle.Play();
+
                 int defensePoints = defense - PotionBehavior.instance.defense;
                 PotionBehavior.instance.defense = defense;
                 UseDefensePotion(defensePoints);
