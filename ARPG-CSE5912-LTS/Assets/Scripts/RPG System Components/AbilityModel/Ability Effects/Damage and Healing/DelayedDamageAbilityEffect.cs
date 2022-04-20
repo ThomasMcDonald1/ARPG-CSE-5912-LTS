@@ -19,7 +19,7 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
 
     private void OnDelayedDamageReady(object sender, InfoEventArgs<(AbilityCast, Character)> e)
     {
-        if (GetComponentInParent<Ability>() == e.info.Item1.ability)
+        if (this!=null && GetComponentInParent<Ability>() == e.info.Item1.ability)
         {
             if (effectVFXObj != null)
                 InstantiateEffectVFX(e.info.Item1, e.info.Item2);
