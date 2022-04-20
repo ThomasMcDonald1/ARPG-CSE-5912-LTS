@@ -51,15 +51,16 @@ public class DragonBoss : EnemyAbilityController
         if (stats[StatTypes.HP] <= 0)
         {
             animator.SetBool("Dead", true);
+            agent.isStopped = true;
             //get rid of enemy canvas
             PlayerTarget = null;
         }
 
-        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
+        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
             MakeHostile();
         }
-        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)
+        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] > 0)
         {
             MakeNonHostile();
         }
@@ -87,7 +88,7 @@ public class DragonBoss : EnemyAbilityController
         }
         else 
         {
-            if (animator.GetBool("AnimationEnded") && stats[StatTypes.HP] >= 0)
+            if (animator.GetBool("AnimationEnded") && stats[StatTypes.HP] > 0)
             {
                 PatrolBehavior();
             }

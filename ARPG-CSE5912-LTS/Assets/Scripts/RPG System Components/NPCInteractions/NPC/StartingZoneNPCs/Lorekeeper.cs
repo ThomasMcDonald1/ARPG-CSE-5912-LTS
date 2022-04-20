@@ -96,8 +96,6 @@ public class Lorekeeper : NPC
             case 3:
                 break;
             case 4:
-                InteractionManager.GetInstance().EnableTombOfMortemier();
-                GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
@@ -108,6 +106,8 @@ public class Lorekeeper : NPC
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
             case 6:
+                //GetComponent<QuestGiver>().AddQuestToLogIfNew();
+                //currentStory++;
                 break;
             case 7:
                 break;
@@ -136,5 +136,10 @@ public class Lorekeeper : NPC
             StartCoroutine(LookAtPlayer());
             saleUI.shop = shop;
         }
+    }
+
+    public void Update()
+    {
+        Debug.Log(currentStory);
     }
 }
