@@ -15,18 +15,32 @@ public class PopUp : MonoBehaviour
         popUpText = transform.GetComponent<TextMeshProUGUI>();
     }
 
-    public void Setup(int Amount, bool isCrit, string popType)
+    public void Setup(int Amount, bool isCrit, string popType, bool isBasic)
     {
         
         switch (popType)
         {
             case "damage":
                 popUpText.text = Amount.ToString();
-                popUpText.color = new Color(0.9f, 0.2f, 0f, 1f); //red
+                if (isBasic)
+                {
+                    popUpText.color = new Color(1f, 1f, 1f, 1f); //white
+                }
+                else
+                {
+                    popUpText.color = new Color(0.9f, 0.2f, 0f, 1f); //red
+                }
                 popUpText.fontSize = 200;
                 if (isCrit)
                 {
-                    popUpText.color = new Color(1f, 0.6f, 0f, 1f); //orange
+                    if (isBasic)
+                    {
+                        popUpText.color = new Color(1f, 1f, 1f, 1f); //white
+                    }
+                    else
+                    {
+                        popUpText.color = new Color(1f, 0.6f, 0f, 1f); //orange
+                    }
                     popUpText.fontSize = 300;
                 }
                 break;
