@@ -15,8 +15,8 @@ public class AbilityCooldown : MonoBehaviour
 
     private void Awake()
     {
-        actionBar = GetComponentInParent<Player>().GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
-            //add more for more enemy
+        actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
+            //add more for more enemy <---probably not necessary?
     }
 
     private void OnEnable()
