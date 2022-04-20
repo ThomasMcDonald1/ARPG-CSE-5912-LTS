@@ -150,15 +150,18 @@ namespace ARPG.Combat
 
                         }
                     }
-                    else if (animator.GetBool("AttackingMainHand"))
-                    {
-                        animator.SetTrigger("AttackMainHandTrigger");
-                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
-                    }
                     else
                     {
-                        animator.SetTrigger("AttackOffHandTrigger");
-                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        if (animator.GetBool("AttackingMainHand"))
+                        {
+                            animator.SetTrigger("AttackMainHandTrigger");
+                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        }
+                        else
+                        {
+                            animator.SetTrigger("AttackOffHandTrigger");
+                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        }
                     }
                     
                     if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
@@ -182,9 +185,13 @@ namespace ARPG.Combat
 
             if (agent.enabled == true)
             {
-                NavMeshPath path = new NavMeshPath();
-                agent.CalculatePath(RandomNavmeshDestination(5f), path);
-                agent.path = path;
+                agent.isStopped = false;
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                {
+                    NavMeshPath path = new NavMeshPath();
+                    agent.CalculatePath(RandomNavmeshDestination(5f), path);
+                    agent.path = path;
+                }
             }
         }
         public Vector3 RandomNavmeshDestination(float radius)
