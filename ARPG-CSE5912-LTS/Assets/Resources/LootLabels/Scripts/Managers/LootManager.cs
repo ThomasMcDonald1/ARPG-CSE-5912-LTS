@@ -175,7 +175,7 @@ namespace LootLabels
                     gearType = GearTypes.SpeedPotion;
                     break;
                 default:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     itemRarity = LootGenerator.SelectRandomRarity(type);
                     gearType = GearTypes.HealthPotion;
                     break;

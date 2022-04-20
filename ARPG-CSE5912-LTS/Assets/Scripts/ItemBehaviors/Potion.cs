@@ -55,8 +55,6 @@ public class Potion : Ite
                 Debug.Log("Don't know what this potion does");
                 break;
         }
-        Inventory.instance.Remove(this);
-
     }
 
     //IEnumerator ApplyDefense( float seconds)
