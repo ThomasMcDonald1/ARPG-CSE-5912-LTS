@@ -61,7 +61,7 @@ public class AbilityCooldown : MonoBehaviour
     public void CooldownAbilityOnEnemyList(AbilityCast abilityCast)
     {
         Enemy enemyCaster = (Enemy)abilityCast.caster;
-        if (enemyCaster.EnemyAttackTypeList.Count > 0)
+        if (enemyCaster != null && enemyCaster.EnemyAttackTypeList != null && enemyCaster.EnemyAttackTypeList.Count > 0)
         {
             foreach (EnemyAbility enemyAbility in enemyCaster.EnemyAttackTypeList)
             {
