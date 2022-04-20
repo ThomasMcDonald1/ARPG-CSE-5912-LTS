@@ -336,6 +336,7 @@ public class CharacterCustomizer
         idList.Add(19);
         idList.Add(7);
         idList.Add(16);
+        idList.Add(20);
 
         return idList;
     }

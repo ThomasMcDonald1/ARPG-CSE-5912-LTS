@@ -22,13 +22,14 @@ namespace ARPG.Combat
         }
         public void OnDamageReact(object sender, InfoEventArgs<(Character, int, bool)> e)
         {
-
-            if (animator.GetBool("Dead") == false)
+           
+            if (e.info.Item1 is Enemy && animator != null && animator.GetBool("Dead") == false)
             {
                 Vector3 playerPoint = FindObjectOfType<Player>().transform.position;
                 Quaternion targetRotation = Quaternion.LookRotation(playerPoint - transform.position);
                 float turnSpeed = 2; 
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+
             }
         }
         protected Animator animator;
