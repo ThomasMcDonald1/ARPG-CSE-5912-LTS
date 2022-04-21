@@ -236,7 +236,7 @@ namespace LootLabels
                         //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
                         //}
                         //else
-                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
+                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility && gear.ItemRarity != Rarity.Poor && gear.ItemRarity != Rarity.Normal)
                         {
                             Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);

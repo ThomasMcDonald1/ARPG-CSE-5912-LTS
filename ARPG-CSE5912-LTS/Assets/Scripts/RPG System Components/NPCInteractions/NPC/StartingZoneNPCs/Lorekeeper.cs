@@ -147,6 +147,6 @@ public class Lorekeeper : NPC
 
     public void Update()
     {
-        Debug.Log(currentStory);
+        //Debug.Log(currentStory);
     }
 }
