@@ -14,7 +14,8 @@ public class PassiveSkills
     private List<PassiveNode> passiveNodesReadyForUnlock;
     private List<PassiveNode> unlockedNodes;
     private GameObject passiveSkillsGameObject;
-    public PassiveSkills(Player player, Connections[] connections, GameObject passiveSkills)
+    private GameObject skillNotification;
+    public PassiveSkills(Player player, Connections[] connections, GameObject passiveSkills, GameObject skillNotification)
     {
         this.player = player;
         this.connections = connections;
@@ -24,6 +25,7 @@ public class PassiveSkills
         passiveNodesReadyForUnlock = new List<PassiveNode>();
         unlockedNodes = new List<PassiveNode>();
         passiveSkillsGameObject = passiveSkills;
+        this.skillNotification = skillNotification;
     }
     public void UnlockPassives()
     {
@@ -33,7 +35,6 @@ public class PassiveSkills
             var values = node.StatValues;
             for (int i = 0; i < stats.Length; i++)
             {
-                // playerStats[StatTypes.SKILLPOINTS] -= 1;
                 playerStats[stats[i]] += values[i];
                 node.Unlocked = true;
                 Debug.Log($"Added {values[i]} to {stats[i]}");
@@ -41,18 +42,23 @@ public class PassiveSkills
         }
         unlockedNodes.AddRange(passiveNodesReadyForUnlock);
         passiveNodesReadyForUnlock.Clear();
+        if (playerStats[StatTypes.SkillPoints] < 1)
+        {
+            skillNotification.SetActive(false);
+        }
     }
     public void PassivesReadyForUnlock(string name, Transform background)
     {
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         if (!Unlockable(passiveNode) || passiveNode.Unlocked) return;
         passiveNode.Unlocked = true;
+        playerStats[StatTypes.SkillPoints] -= 1;
         passiveNodesReadyForUnlock.Add(passiveNode);
         UpdateVisual(background);
     }
     private bool Unlockable(PassiveNode node)
     {
-        // if (playerStats[StatTypes.SKILLPINTS] < 1) return false;
+        if (playerStats[StatTypes.SkillPoints] < 1) return false;
         if (node.Unlockable == true) return true;
         if (node.Prerequisites.Length == 0) return true;
         foreach (var prereq in node.Prerequisites)
@@ -75,7 +81,7 @@ public class PassiveSkills
         foreach (var node in passiveNodesReadyForUnlock)
         {
             node.Unlocked = false;
-            Debug.Log(passiveSkillsGameObject.name);
+            playerStats[StatTypes.SkillPoints] += 1;
             Transform nodeObject = passiveSkillsGameObject.transform.Find(node.Name);
             Transform background = nodeObject.Find("Background");
             background.GetComponent<Image>().color = new Color(0.6415094f, 0.6076183f, 0.6076183f, 1);

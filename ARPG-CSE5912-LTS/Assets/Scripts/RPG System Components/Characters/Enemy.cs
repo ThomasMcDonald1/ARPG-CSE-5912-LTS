@@ -164,14 +164,15 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
-
-
-            agent.isStopped = false;
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            if (agent.enabled)
             {
-                NavMeshPath path = new NavMeshPath();
-                agent.CalculatePath(RandomNavmeshDestination(5f), path);
-                agent.path = path;
+                agent.isStopped = false;
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                {
+                    NavMeshPath path = new NavMeshPath();
+                    agent.CalculatePath(RandomNavmeshDestination(5f), path);
+                    agent.path = path;
+                }
             }
         }
         public Vector3 RandomNavmeshDestination(float radius)

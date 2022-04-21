@@ -62,7 +62,7 @@ public class GameplayStateController : StateMachine
     public GameObject passiveTreeUI;
     public GameObject confirmPassiveTreeButton;
     public GameObject closePassiveTreeButton;
-
+    public GameObject skillNotificationButtonObj;
     // Camera Stuff
     public GameplayCameraZoom CameraZoom;
 
