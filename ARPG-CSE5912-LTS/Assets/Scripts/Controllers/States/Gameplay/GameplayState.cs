@@ -386,9 +386,7 @@ public class GameplayState : BaseGameplayState
             ActionButton actionButton = go.GetComponent<ActionButton>();
             PotionButton potionButton = go.GetComponentInChildren<PotionButton>();
             //Debug.Log("Gameobject name: "+go.name);
-            if (actionButton != null && actionButton != actionBar.actionButtonLeft && contextMenuPanel.contextMenuPanelCanvas.activeSelf)
-                contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
-            else if (actionButton != null && actionButton != actionBar.actionButtonLeft)
+            if (actionButton != null && actionButton != actionBar.actionButtonLeft)
             {
                 Debug.Log("Action Button clicked on: " + actionButton.name);
                 utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
@@ -397,16 +395,13 @@ public class GameplayState : BaseGameplayState
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(true);
                 contextMenuPanel.PopulateContextMenu(actionButton);
             }
-            if (potionButton != null && utilityMenuPanel.utilityMenuPanelCanvas.activeSelf)
-                utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
-            else if (potionButton != null)
+            if (potionButton != null)
             {
                 contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
                 utilityMenuPanel.transform.position = Mouse.current.position.ReadValue();
                 utilityMenuPanel.transform.position = new Vector3(utilityMenuPanel.transform.position.x, 400, utilityMenuPanel.transform.position.z);
                 utilityMenuPanel.utilityMenuPanelCanvas.SetActive(true);
                 utilityMenuPanel.PopulateUtilityMenu(potionButton);
-
             }
         }
     }
