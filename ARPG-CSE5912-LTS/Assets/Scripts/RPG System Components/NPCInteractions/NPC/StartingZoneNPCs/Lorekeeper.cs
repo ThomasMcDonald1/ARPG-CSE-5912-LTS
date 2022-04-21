@@ -118,6 +118,8 @@ public class Lorekeeper : NPC
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
+            case 10:
+                break;
             default:
                 break;
         }
