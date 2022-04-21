@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ARPG.Combat;
 
-public class EnemyAbility : MonoBehaviour
+public class EnemyAbility
 {
     public Ability abilityAssigned;
     Enemy enemy;

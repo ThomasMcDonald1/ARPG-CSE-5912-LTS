@@ -134,8 +134,9 @@ public class GameplayState : BaseGameplayState
             utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
             contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         }
-        else if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode)
+        else if (!playerAbilityController.playerInAOEAbilityTargetSelectionMode && !playerAbilityController.playerInSingleTargetAbilitySelectionMode) { 
             PauseGame();
+        }
     }
 
     protected override void OnSecondaryClickPressed(object sender, InfoEventArgs<int> e)
@@ -501,3 +502,4 @@ public class GameplayState : BaseGameplayState
         }
     }
 }
+

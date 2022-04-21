@@ -43,11 +43,12 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Start()
     {
-        basicAttackAbility = GameObject.FindGameObjectWithTag("BasicAttack").GetComponent<Ability>();
         agent = GetComponent<NavMeshAgent>();
         stats = GetComponent<Stats>();
         playerAbilityController = GetComponent<PlayerAbilityController>();
+        enemyAbilityController = GetComponent<EnemyAbilityController>();
         gameplayStateController = GameObject.FindObjectOfType<GameplayStateController>();
+        basicAttackAbility = gameplayStateController.GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;
     }
@@ -139,9 +140,13 @@ public abstract class Character : MonoBehaviour
         }
         else
         {
-            Enemy enemy = (Enemy)this;
-            enemy.StopAllCoroutines();
-            enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            bool abilityCanBePerformed = abilityCast.abilityCost.CheckCharacterHasResourceCostForCastingAbility(this);
+            if (abilityCanBePerformed)
+            {
+                Enemy enemy = (Enemy)this;
+                enemy.StopAllCoroutines();
+                enemyAbilityController.EnemyQueueAbilityCastSelectionRequired(abilityCast);
+            }
             //enemy.EnemyCastAbilitySelectionRequired(abilityToCast, requiresCharacter);
 
             //if it's an enemy, do AI stuff to select the target of the ability. Do all of this from within the enemy class:
@@ -183,7 +188,7 @@ public abstract class Character : MonoBehaviour
     {
         if (this == abilityCast.caster)
         {
-            //Debug.Log("Getting colliders");
+            Debug.Log("Getting colliders");
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
             ApplyAbilityEffects(charactersCollided, abilityCast);
         }
@@ -202,7 +207,8 @@ public abstract class Character : MonoBehaviour
                 AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
                 if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
                 {
-                    //Debug.Log("Applying ability effects to " + targets[i].name);
+                    Debug.Log(specialTargeter);
+                    Debug.Log("Applying ability effects to " + targets[i].name);
                     effect.Apply(targets[i], abilityCast);
                 }
             }
@@ -225,12 +231,16 @@ public abstract class Character : MonoBehaviour
 
         while (abilityQueued)
         {
-            abilityCast.caster.agent.destination = endPoint;
+            if (abilityCast.caster.agent.enabled == true)
+            {
+                abilityCast.caster.agent.destination = endPoint;
+            }
             float distFromPlayer = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
                 AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
             }
+
 
             yield return null;
         }

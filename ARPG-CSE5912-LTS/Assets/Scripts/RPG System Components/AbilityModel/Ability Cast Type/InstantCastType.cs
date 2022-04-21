@@ -7,8 +7,7 @@ public class InstantCastType : BaseCastType
 {
     Coroutine instantCastRoutine;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityInstantCastWasCompletedEvent;
-    public static event EventHandler<InfoEventArgs<AbilityCast>> EnemyAbilityInstantCastWasCompletedEvent;
-
+    
     public override Type GetCastType()
     {
         return typeof(InstantCastType);
@@ -29,7 +28,7 @@ public class InstantCastType : BaseCastType
 
     protected override void CompleteCast(AbilityCast abilityCast)
     {
-        //Debug.Log("Cast was completed from Instant Cast Type");
+        Debug.Log("Cast was completed from Instant Cast Type");
         AbilityInstantCastWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
