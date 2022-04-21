@@ -52,6 +52,9 @@ public class MainMenuController : StateMachine
     public GameObject nameFieldObj, nameErrorObj;
     public CustomCharacter charaScriptableObj;
 
+    //dungeon game objects - to reset upon new play
+    public SaveDungeon dungeon1, dungeon2, dungeon3;
+
     private void Awake()
     {
         mainMenuCanvas = mainMenuCanvasObj.GetComponent<Canvas>();

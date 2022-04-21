@@ -83,6 +83,7 @@ public class CharacterCreationState : BaseMenuState
             mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
             selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];
             Debug.Log("Slot " + selectedSlot.slotNumber + " should have data: " + selectedSlot.containsData);
+            GenerateNewDungeons();
             LoadingStateController.Instance.InitalizeGameScene();
         }
         else
@@ -91,6 +92,13 @@ public class CharacterCreationState : BaseMenuState
             nameError.SetActive(true);
         }
         PlayAudio();
+    }
+
+    void GenerateNewDungeons()
+    {
+        mainMenuController.dungeon1.generated = false;
+        mainMenuController.dungeon2.generated = false;
+        mainMenuController.dungeon3.generated = false;
     }
 
     int FindEmptySlot()
