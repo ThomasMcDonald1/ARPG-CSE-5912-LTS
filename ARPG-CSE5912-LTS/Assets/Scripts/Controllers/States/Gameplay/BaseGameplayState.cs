@@ -27,6 +27,7 @@ public class BaseGameplayState : State
     public Button changeToInventoryMenu;
     public Button confirmPassiveTreeButton;
     public Button closePassiveTreeButton;
+    public Button skillNotificationButton;
 
     public AudioMixer audioMixer;
     public Button backFromOptionsToMainButton;
@@ -47,6 +48,7 @@ public class BaseGameplayState : State
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
         exitInventoryButton = gameplayStateController.exitInventoryMenuObj.GetComponent<Button>();
         changeToInventoryMenu = gameplayStateController.openInventoryMenuObj.GetComponent<Button>();
+        skillNotificationButton = gameplayStateController.skillNotificationButtonObj.GetComponent<Button>();
 
         resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
         fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
@@ -244,8 +246,8 @@ public class BaseGameplayState : State
 
     }
 
-    protected virtual void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e) 
-    { 
+    protected virtual void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
+    {
 
     }
 }

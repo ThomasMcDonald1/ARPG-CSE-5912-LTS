@@ -55,6 +55,7 @@ public class GameplayState : BaseGameplayState
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
         passiveTreeUI = gameplayStateController.passiveTreeUI;
         passiveTreeUI.SetActive(false);
+        skillNotificationButton.onClick.AddListener(() => SkillNotificationButtonPressed());
     }
 
     public override void Exit()
@@ -479,6 +480,10 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.ChangeState<GameoverState>();
     }
     protected override void OnOpenPassiveTreePressed(object sender, InfoEventArgs<int> e)
+    {
+        gameplayStateController.ChangeState<PassiveTreeState>();
+    }
+    void SkillNotificationButtonPressed()
     {
         gameplayStateController.ChangeState<PassiveTreeState>();
     }
