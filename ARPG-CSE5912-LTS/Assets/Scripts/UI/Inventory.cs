@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     public List<Ite> armorItems = new List<Ite>();
     public List<Ite> utilItems = new List<Ite>();
     public Ite healthPotion;
-    public Ite poorSword;
+    public Ite Sword;
     public PotionButton[] potionButtons;
 
     private GameObject player;
@@ -34,6 +34,8 @@ public class Inventory : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         potionSlots = GameObject.FindGameObjectWithTag("PotionSlot");
         potionButtons = potionSlots.GetComponentsInChildren<PotionButton>();
+        weaponItems.Add(Sword);
+
         utilItems.Add(healthPotion);
         amount.Add(healthPotion.name, 3);
     }
