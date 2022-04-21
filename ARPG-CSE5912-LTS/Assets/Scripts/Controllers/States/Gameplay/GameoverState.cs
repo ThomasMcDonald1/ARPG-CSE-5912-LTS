@@ -49,7 +49,7 @@ public class GameoverState : BaseGameplayState
 
     void OnYesButtonClicked()
     {
-        agent.isStopped = true;
+        //agent.isStopped = true;
         int deductedExp = CalculateExpLoss(stats);
         Tombstone.Instance.HoldTempExpLoss(deductedExp);
         stats[StatTypes.EXP] -= deductedExp;
