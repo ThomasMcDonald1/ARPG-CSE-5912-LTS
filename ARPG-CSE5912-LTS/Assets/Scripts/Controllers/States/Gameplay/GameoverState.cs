@@ -38,6 +38,7 @@ public class GameoverState : BaseGameplayState
         interactionManager = GetComponentInChildren<InteractionManager>();
         yesRespawnButton.onClick.AddListener(() => OnYesButtonClicked());
         noRespawnButton.onClick.AddListener(() => OnNoButtonClicked());
+        agent.isStopped = true;
     }
 
     public override void Exit()
@@ -49,13 +50,13 @@ public class GameoverState : BaseGameplayState
 
     void OnYesButtonClicked()
     {
-        agent.isStopped = true;
         int deductedExp = CalculateExpLoss(stats);
         Tombstone.Instance.HoldTempExpLoss(deductedExp);
         stats[StatTypes.EXP] -= deductedExp;
         Tombstone.Instance.RememberPlayerDeathPosition(playerTransform.position);
         Tombstone.Instance.RememberDungeonNumOfPlayerDeath(playerController.DungeonNum); //Should I remember this or something else?
         interactionManager.EnterTown();
+        agent.isStopped = false;
         //playerTransform.position = new Vector3(0f, 1.5f, 0f);//could add some other position later(like savepoint??)
         stats[StatTypes.HP] = stats[StatTypes.MaxHP];
         animator.SetBool("Dead", false);

@@ -342,6 +342,7 @@ public class InputController : MonoBehaviour
     {
         yield return null;
     }
+
     private void OnOpenPassiveTree(InputAction.CallbackContext context)
     {
         OpenPassiveTreeEvent?.Invoke(this, new InfoEventArgs<int>(27));
