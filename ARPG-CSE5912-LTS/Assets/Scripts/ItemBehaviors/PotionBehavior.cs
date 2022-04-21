@@ -11,9 +11,11 @@ public class PotionBehavior : MonoBehaviour
     public float speedDuration;
     public int speed;
     public int defense;
+    public ParticleSystem defenseParticle;
     void Start()
     {
         PotionBehavior.instance = this;
+        defenseParticle.Stop();
     }
     public void Update()
     {
@@ -26,6 +28,7 @@ public class PotionBehavior : MonoBehaviour
                 Debug.Log("After the potion wore off defense is now " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Armor]);
                 isDefenseActive = false;
                 defense = 0;
+                defenseParticle.Stop();
             }
         }
         if(Time.time > speedDuration)
