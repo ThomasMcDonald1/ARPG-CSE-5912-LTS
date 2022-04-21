@@ -1137,11 +1137,14 @@ namespace DunGen
 
 		void SpawnTombstone()
         {
-			//int dungeonNum = Tombstone.Instance.GetDungeonNumOfPlayerDeath();
-			//if (dungeonNum )
-   //         {
-
-   //         }
+			Debug.Log("Tombstone Placement Check");
+			var tombstone = GameObject.FindObjectOfType<Tombstone>();
+			if (tombstone == null) return;
+			if (tombstone.GetDungeonNumOfPlayerDeath() == savedDungeon.dungeonNum)
+            {
+				//place a tombstone
+				tombstone.PlaceTombstone();
+            }
         }
 
 		protected void ProcessProps(Tile tile, GameObject root)

@@ -57,4 +57,11 @@ public class Tombstone : MonoBehaviour
     {
         return playerDeathPos;
     }
+
+    public void PlaceTombstone()
+    {
+        Debug.Log("Placing Tombstone");
+        tombstoneModel.SetActive(true);
+        tombstoneModel.transform.position = GetPlayerDeathPosition();
+    }
 }
