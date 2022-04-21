@@ -46,27 +46,20 @@ public class InsectBoss : Enemy
 
     new private void Update()
     {
-        /*Debug.Log(GetComponent<NavMeshAgent>().pathPending);
-        NavMesh.CalculatePath(transform.position, PatrolToPosition, NavMesh.AllAreas, path);
-        for (int i = 0; i < path.corners.Length - 1; i++)
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);*/
-        if (PlayerTarget != null)
-        {
-
-        }
         UpdateAnimator();
         if (GetComponent<Stats>()[StatTypes.HP] <= 0)
         {
             GetComponent<Animator>().SetBool("Dead", true);
             //get rid of enemy canvas
             PlayerTarget = null;
+            agent.isStopped = true;
         }
 
-        if (InSightRadius() && PlayerTarget == null && GetComponent<Stats>()[StatTypes.HP] >= 0)
+        if (InSightRadius() && PlayerTarget == null && GetComponent<Stats>()[StatTypes.HP] > 0)
         {
             MakeHostile();
         }
-        else if (!InSightRadius() && PlayerTarget != null && GetComponent<Stats>()[StatTypes.HP] >= 0)
+        else if (!InSightRadius() && PlayerTarget != null && GetComponent<Stats>()[StatTypes.HP] > 0)
         {
             MakeNonHostile();
         }
@@ -108,7 +101,7 @@ public class InsectBoss : Enemy
         }
         else
         {
-            if (GetComponent<Animator>().GetBool("AnimationEnded") && GetComponent<Stats>()[StatTypes.HP] >= 0)
+            if (GetComponent<Animator>().GetBool("AnimationEnded") && GetComponent<Stats>()[StatTypes.HP] > 0)
             {
                 PatrolBehavior();
             }

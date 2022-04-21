@@ -9,20 +9,21 @@ namespace ARPG.Combat
     {
         protected override void OnEnable()
         {
-            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnDamageRun;
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent += OnLowHealthRun;
         }
 
         protected override void OnDisable()
         {
-            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnDamageRun;
+            BasicAttackDamageAbilityEffect.BasicAttackDamageReceivedEvent -= OnLowHealthRun;
         }
-        public void OnDamageRun(object sender, InfoEventArgs<(Character,int, bool)> e)
+        public void OnLowHealthRun(object sender, InfoEventArgs<(Character,int, bool)> e)
         {
             if (e.info.Item1 == this)
             {
-                if (animator.GetBool("Dead") == false)
+                float healthPercent = stats[StatTypes.HP] / (float)stats[StatTypes.MaxHP];
+                if (animator.GetBool("Dead") == false && healthPercent < 0.1f)
                 {
-                    //Debug.Log("damaged!!!!");
+                    //Debug.Log("percent" + healthPercent);
                     //look away from the player
                     transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
 
@@ -37,7 +38,7 @@ namespace ARPG.Combat
         {
             base.Start();
             Range = 5f;
-            BodyRange = 1;
+            BodyRange = 1.4f;
             SightRange = 90f;
             Speed = 3f;
             agent.speed = Speed;

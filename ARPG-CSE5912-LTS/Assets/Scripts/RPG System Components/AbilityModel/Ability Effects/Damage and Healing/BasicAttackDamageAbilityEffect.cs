@@ -7,7 +7,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
 {
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackDamageReceivedEvent;
     public static event EventHandler<InfoEventArgs<(Character, int, bool)>> BasicAttackHealingReceivedEvent;
-    public static event EventHandler<InfoEventArgs<(Character, int)>> ThornsDamageReceivedEvent;
+    public static event EventHandler<InfoEventArgs<(Character, int, bool)>> ThornsDamageReceivedEvent;
     public EquipManager equippedWeapon;
     protected override int OnApply(Character target, AbilityCast abilityCast)
     {
@@ -26,22 +26,25 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //TODO: get damage range from the weapon instead of using this placeholder dagger
         float minWeaponDamage = 1;
         float maxWeaponDamage = 1;
-        if (isMainHandAttack)
+        if (abilityCast.caster is Player)
         {
-            if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
+            if (isMainHandAttack)
             {
-                WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
-                minWeaponDamage = weapon.minimumDamage;
-                maxWeaponDamage = weapon.maximumDamage;
+                if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
+                {
+                    Debug.Log(" I am in the weapon damage assignments");
+                    WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
+                    minWeaponDamage = weapon.minimumDamage;
+                    maxWeaponDamage = weapon.maximumDamage;
+                }
+            }
+            else if (equippedWeapon != null && equippedWeapon.currentEquipment[1] != null)
+            {
+                WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[1];
+                minWeaponDamage += weapon.minimumDamage;
+                maxWeaponDamage += weapon.maximumDamage;
             }
         }
-        else if (equippedWeapon != null && equippedWeapon.currentEquipment[1] != null)
-        {
-            WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[1];
-            minWeaponDamage += weapon.minimumDamage;
-            maxWeaponDamage += weapon.maximumDamage;
-        }
-
         //Debug.Log("minWeaponDamage is " + minWeaponDamage);
         //Debug.Log("maxWeaponDamage is " + maxWeaponDamage);
         //Choose a random number from within the minimum and maximum weapon damage range
@@ -74,7 +77,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //round damage to an integer and clamp
         int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
-        //Debug.Log("Final damage: " + finalCalculatedDamage);
+        Debug.Log("Final damage: " + finalCalculatedDamage);
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
@@ -100,7 +103,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         {
             abilityCast.caster.stats[StatTypes.HP] -= damageReflect;
             abilityCast.caster.stats[StatTypes.HP] = Mathf.Clamp(abilityCast.caster.stats[StatTypes.HP], 0, abilityCast.caster.stats[StatTypes.MaxHP]);
-            ThornsDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int)>((abilityCast.caster, damageReflect)));
+            ThornsDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((abilityCast.caster, damageReflect, false)));
         }
 
         return finalCalculatedDamage;

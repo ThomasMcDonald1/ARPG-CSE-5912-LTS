@@ -8,33 +8,33 @@ using UnityEngine.InputSystem;
 public class TipManager : MonoBehaviour
 {
     //Name of item
-    [SerializeField] TextMeshProUGUI itemNameText;
+    [SerializeField] TextMeshProUGUI nameText;
 
     //Base stats of item
-    [SerializeField] TextMeshProUGUI itemInfoSlot1;
-    [SerializeField] TextMeshProUGUI itemInfoSlot2;
-    [SerializeField] TextMeshProUGUI itemInfoSlot3;
-    [SerializeField] TextMeshProUGUI itemInfoSlot4;
+    [SerializeField] TextMeshProUGUI infoSlot1;
+    [SerializeField] TextMeshProUGUI infoSlot2;
+    [SerializeField] TextMeshProUGUI infoSlot3;
+    [SerializeField] TextMeshProUGUI infoSlot4;
 
     //Level req
-    [SerializeField] TextMeshProUGUI itemInfoSlot5;
+    [SerializeField] TextMeshProUGUI infoSlot5;
 
     //Prefix features
-    [SerializeField] TextMeshProUGUI itemInfoSlot6;
-    [SerializeField] TextMeshProUGUI itemInfoSlot7;
-    [SerializeField] TextMeshProUGUI itemInfoSlot8;
-    [SerializeField] TextMeshProUGUI itemInfoSlot9;
-    [SerializeField] TextMeshProUGUI itemInfoSlot10;
+    [SerializeField] TextMeshProUGUI infoSlot6;
+    [SerializeField] TextMeshProUGUI infoSlot7;
+    [SerializeField] TextMeshProUGUI infoSlot8;
+    [SerializeField] TextMeshProUGUI infoSlot9;
+    [SerializeField] TextMeshProUGUI infoSlot10;
 
     //Suffix features
-    [SerializeField] TextMeshProUGUI itemInfoSlot11;
-    [SerializeField] TextMeshProUGUI itemInfoSlot12;
-    [SerializeField] TextMeshProUGUI itemInfoSlot13;
-    [SerializeField] TextMeshProUGUI itemInfoSlot14;
-    [SerializeField] TextMeshProUGUI itemInfoSlot15;
+    [SerializeField] TextMeshProUGUI infoSlot11;
+    [SerializeField] TextMeshProUGUI infoSlot12;
+    [SerializeField] TextMeshProUGUI infoSlot13;
+    [SerializeField] TextMeshProUGUI infoSlot14;
+    [SerializeField] TextMeshProUGUI infoSlot15;
 
     //All of them in a list for turning on / off easily
-    [SerializeField] List<GameObject> itemInfoSlotTexts;
+    [SerializeField] List<GameObject> infoSlotTexts;
 
     public RectTransform tipWindow;
 
@@ -42,12 +42,13 @@ public class TipManager : MonoBehaviour
     List<TextMeshProUGUI> suffixItemInfoList;
 
     public static TipManager instance;
-
+    Stats playerStats;
     void Awake()
     {
         instance = this;
-        prefixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot6, itemInfoSlot7, itemInfoSlot8, itemInfoSlot9, itemInfoSlot10 };
-        suffixItemInfoList = new List<TextMeshProUGUI> { itemInfoSlot11, itemInfoSlot12, itemInfoSlot13, itemInfoSlot14, itemInfoSlot15 };
+        prefixItemInfoList = new List<TextMeshProUGUI> { infoSlot6, infoSlot7, infoSlot8, infoSlot9, infoSlot10 };
+        suffixItemInfoList = new List<TextMeshProUGUI> { infoSlot11, infoSlot12, infoSlot13, infoSlot14, infoSlot15 };
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<Stats>();
     }
    
     // Start is called before the first frame update
@@ -59,41 +60,41 @@ public class TipManager : MonoBehaviour
    public void ShowInventoryTooltip(Ite item)
     {
         ShowText();
-        foreach (GameObject go in itemInfoSlotTexts)
+        foreach (GameObject go in infoSlotTexts)
         {
             go.GetComponent<TextMeshProUGUI>().text = default;
         }
-        itemNameText.text = item.name;
-        itemNameText.color = item.itemNameColor;
+        nameText.text = item.name;
+        nameText.color = item.itemNameColor;
         if (item is WeaponEquipment)
         {
             WeaponEquipment weapon = (WeaponEquipment)item;
             //itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
-            itemInfoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
-            itemInfoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
-            itemInfoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
+            infoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
+            infoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
+            infoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
         }
         else if (item is LightArmorEquipment lightArmor)
         {
-            itemInfoSlot1.text = "Evasion: " + lightArmor.evasion.ToString();
+            infoSlot1.text = "Evasion: " + lightArmor.evasion.ToString();
         }
         else if (item is MediumArmorEquipment mediumArmor)
         {
-            itemInfoSlot1.text = "Armor: " + mediumArmor.armor.ToString();
-            itemInfoSlot2.text = "Evasion: " + mediumArmor.evasion.ToString();
+            infoSlot1.text = "Armor: " + mediumArmor.armor.ToString();
+            infoSlot2.text = "Evasion: " + mediumArmor.evasion.ToString();
         }
         else if (item is HeavyArmorEquipment heavyArmor)
         {
-            itemInfoSlot1.text = "Armor: " + heavyArmor.armor.ToString();
+            infoSlot1.text = "Armor: " + heavyArmor.armor.ToString();
         }
         else if (item is ShieldEquipment shieldEquipment)
         {
-            itemInfoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
-            itemInfoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
+            infoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
+            infoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
         }
         if (item is Equipment equipment)
         {
-            itemInfoSlot5.text = "Required Level: " + equipment.levelRequiredToEquip.ToString();
+            infoSlot5.text = "Required Level: " + equipment.levelRequiredToEquip.ToString();
 
             if (equipment.prefix != null)
             {
@@ -123,17 +124,42 @@ public class TipManager : MonoBehaviour
         }
 
         AdjustSize();
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        if (mousePos.x <= Screen.width / 2 && mousePos.y >= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
-        else if (mousePos.x > Screen.width / 2 && mousePos.y >= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
-        else if (mousePos.x <= Screen.width / 2 && mousePos.y <= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
-        else
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
-
+        AdjustTipWindowPosition();
         tipWindow.gameObject.SetActive(true);    
+    }
+
+    public void ShowAbilityTooltip(Ability ability)
+    {
+        ShowText();
+        foreach (GameObject go in infoSlotTexts)
+        {
+            go.GetComponent<TextMeshProUGUI>().text = default;
+        }
+        nameText.text = ability.name;
+        nameText.color = Color.cyan;
+        infoSlot1.text = ability.description;
+        infoSlot1.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+        if (ability.GetComponentInChildren<BasicAttackDamageAbilityEffect>() == null)
+        {
+            infoSlot2.text = "Cost: " + ability.GetComponent<BaseAbilityCost>().cost.ToString();
+            float playerCDR = playerStats[StatTypes.CooldownReduction];
+            float abilityCD = ability.GetComponent<AbilityCooldown>().abilityCooldown;
+            float reducedCDForTooltip = abilityCD - (abilityCD * playerCDR * 0.01f);
+            infoSlot3.text = "Cooldown: " + reducedCDForTooltip;
+            BaseCastType castType = ability.GetComponent<BaseCastType>();
+            if (castType is CastTimerCastType)
+            {
+                float playerCastTimeReduction = playerStats[StatTypes.CastSpeed];
+                float abilityCastTime = ability.GetComponent<CastTimerCastType>().castTime;
+                float reducedCastTime = abilityCastTime - (abilityCastTime * playerCastTimeReduction * 0.01f);
+                infoSlot4.text = "Cast Time: " + reducedCastTime.ToString();
+            }
+            else
+                infoSlot4.text = "Cast Time: Instant";
+        }
+        AdjustSize();
+        AdjustTipWindowPosition();
+        tipWindow.gameObject.SetActive(true);
     }
 
     public void HideWindow()
@@ -143,7 +169,7 @@ public class TipManager : MonoBehaviour
 
     private void AdjustSize()
     {
-        foreach(GameObject go in itemInfoSlotTexts)
+        foreach(GameObject go in infoSlotTexts)
         {
             if(go.GetComponent<TextMeshProUGUI>().text == default)
             {
@@ -154,9 +180,22 @@ public class TipManager : MonoBehaviour
 
     private void ShowText()
     {
-        foreach (GameObject go in itemInfoSlotTexts)
+        foreach (GameObject go in infoSlotTexts)
         {
             go.SetActive(true);
         }
+    }
+
+    private void AdjustTipWindowPosition()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        if (mousePos.x <= Screen.width / 2 && mousePos.y >= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+        else if (mousePos.x > Screen.width / 2 && mousePos.y >= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+        else if (mousePos.x <= Screen.width / 2 && mousePos.y <= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+        else
+            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
     }
 }

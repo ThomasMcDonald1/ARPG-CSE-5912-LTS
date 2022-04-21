@@ -70,18 +70,22 @@ public class CastTimerCastType : BaseCastType
         float displayTime = abilityCast.castType.reducedCastTime;
         float rate = 1.0f / abilityCast.castType.reducedCastTime;
         float progress = 0.0f;
-        castingBar.castingBarSlider.value = 0f;
+        if (abilityCast.caster is Player)
+            castingBar.castingBarSlider.value = 0f;
         while (progress < 1.0f)
         {
-            castingBar.castTimeText.text = displayTime.ToString("0.00");
-            castingBar.castingBarSlider.value = Mathf.Lerp(0, 1, progress);
-
+            if (abilityCast.caster is Player)
+            {
+                castingBar.castTimeText.text = displayTime.ToString("0.00");
+                castingBar.castingBarSlider.value = Mathf.Lerp(0, 1, progress);
+            }
             displayTime -= rate * Time.deltaTime;
             progress += rate * Time.deltaTime;
 
             yield return null;
         }
-        castingBar.castBarCanvas.SetActive(false);
+        if (abilityCast.caster is Player)
+            castingBar.castBarCanvas.SetActive(false);
         CompleteCast(abilityCast);
     }
 

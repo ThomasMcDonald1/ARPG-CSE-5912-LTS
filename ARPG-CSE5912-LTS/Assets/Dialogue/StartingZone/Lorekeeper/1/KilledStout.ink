@@ -2,14 +2,10 @@ Oh, you actually did it.
 
 Wow... 
 
-Keep this between you and me...
+I will send in a party of our soldiers to go reclaim our stolen goods. 
 
-I may need to go... Investigate... To see what exactly that blue dragon has taken...
+Great work out there.
 
-Anyways, great work!
+For now I will strategize our next steps.
 
-Go ahead and enter the tomb. But be warned: It's full of dangerous enemies...
-
-... Stronger than the ruins of Yeager.
-
-Good luck!
+Speak with me again soon.

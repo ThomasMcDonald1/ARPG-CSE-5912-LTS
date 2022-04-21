@@ -15,42 +15,51 @@ public class PopUp : MonoBehaviour
         popUpText = transform.GetComponent<TextMeshProUGUI>();
     }
 
-    public void Setup(int Amount, bool isCrit, string popType)
+    public void Setup(string text, bool isCrit, Color color)
     {
-        
-        switch (popType)
-        {
-            case "damage":
-                popUpText.text = Amount.ToString();
-                popUpText.color = new Color(0.9f, 0.2f, 0f, 1f); //red
-                popUpText.fontSize = 200;
-                if (isCrit)
-                {
-                    popUpText.color = new Color(1f, 0.6f, 0f, 1f); //orange
-                    popUpText.fontSize = 300;
-                }
-                break;
-            case "healing":
-                popUpText.text = Amount.ToString();
-                popUpText.color = new Color(0.1f, 0.8f, 0.4f, 1f); //green
-                popUpText.fontSize = 200;
-                if (isCrit)
-                {
-                    popUpText.fontSize = 300;
-                }
-                break;
-            case "missing":
-                popUpText.text = "MISS";
-                popUpText.color = new Color(1f, 0.9f, 0f, 1f); //yellow
-                popUpText.fontSize = 300;
-                break;
-            default:
-                break;
-        }
-    
+        if (isCrit)
+            popUpText.fontSize = 300;
+        else
+            popUpText.fontSize = 200;
+
+        popUpText.text = text;
+        popUpText.color = color;
+
         textColor = popUpText.color;
         disappearTimer = 1f;
         disappearSpeed = 2f;
+        float x = popUpText.rectTransform.position.x;
+        float y = popUpText.rectTransform.position.y;
+        float z = popUpText.rectTransform.position.z;
+        if (color == PopTesting.fireColor)
+        {
+            x -= 1f;
+            y += Random.Range(-0.2f, 0.2f);
+            popUpText.fontSize = 150;
+        }       
+        else if (color == PopTesting.iceColor)
+        {
+            x -= 0.5f;
+            y += Random.Range(-0.2f, 0.2f);
+            popUpText.fontSize = 150;
+        }
+        else if (color == PopTesting.lightningColor)
+        {
+            x += 0.5f;
+            y += Random.Range(-0.2f, 0.2f);
+            popUpText.fontSize = 150;
+        }
+        else if (color == PopTesting.poisonColor)
+        {
+            x += 1f;
+            y += Random.Range(-0.2f, 0.2f);
+            popUpText.fontSize = 150;
+        }
+        else if (color == PopTesting.abilityDamageColor)
+        {
+            y += 1f;
+        }
+        popUpText.rectTransform.position = new Vector3(x, y, z);
     }
 
     private void Update()
