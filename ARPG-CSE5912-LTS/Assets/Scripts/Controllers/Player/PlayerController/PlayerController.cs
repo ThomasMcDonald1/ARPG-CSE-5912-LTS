@@ -60,13 +60,20 @@ public class PlayerController : MonoBehaviour
                     player.NPCTarget = npcTarget;
                     StartCoroutine(player.GoToNPC());
                     break;
-
                 case "Enemy":
                     player.DialogueCancel();
                     player.SetAttackTarget(e.info.transform.GetComponent<EnemyTarget>());
                     player.TargetEnemy();
+                    break;
+                case "Doodads":
+                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    {
+                        Debug.Log("Clicked on " + e.info.collider.name);
+                        player.AttackCancel();
+                        player.RunToDoodad(e.info.collider.gameObject);
+                        
+                    }
                 break;
-
                 default:
                     break;
             }
