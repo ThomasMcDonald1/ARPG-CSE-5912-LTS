@@ -36,6 +36,9 @@ namespace ARPG.Combat
         [SerializeField] LootSource lootSource;
         [SerializeField] LootType lootType;
 
+        Coroutine coolRoutine;
+        Coroutine regen;
+
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
         public virtual float SightRange { get; set; }
@@ -45,6 +48,10 @@ namespace ARPG.Combat
 
         public virtual List<EnemyAbility> EnemyAttackTypeList { get; set; } // a list for the order of enemy ability/basic attack
         public virtual float cooldownTimer { get; set; }
+        public virtual float timeChecker { get; set; }
+        public bool enemyAbilityOnCool = false;
+
+
         protected GameObject player;
         private void Awake()
         {
@@ -55,6 +62,7 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
+            EnemyAttackTypeList = new List<EnemyAbility>();
             TextMeshProUGUI enemyUIText = transform.GetChild(2).GetChild(3).GetComponent<TextMeshProUGUI>();
             //Debug.Log("name" + transform.GetChild(0).name);
             //Debug.Log("level" + stats[StatTypes.LVL].ToString());
@@ -65,6 +73,8 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
+            if (regen == null)
+                regen = StartCoroutine(RegenEnergy());
             if (player == null)
             {
                 player = GameObject.FindGameObjectWithTag("Player");
@@ -111,23 +121,7 @@ namespace ARPG.Combat
 
                 if (angle < SightRange && !InStopRange())
                 {
-                    RunToPlayer();
-                    /*
-                    if (EnemyAttackTypeList != null)
-                    {
-                        if (AttackTarget != null)
-                        {
-                            for (int i = 0; i++; i < EnemyAttackTypeList.Count)
-                            {
-                                if (EnemyAttackTypeList[i].cooldownTimer == 0)
-                                {
-                                    ChooseAttackType(EnemyAttackTypeList[i].abilityAssigned);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    */
+                    RunToPlayer();                  
 
                 }
                 else if (angle < SightRange && InStopRange())
@@ -136,19 +130,44 @@ namespace ARPG.Combat
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    if (animator.GetBool("AttackingMainHand"))
+                    Debug.Log(timeChecker);
+                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
                     {
-                        animator.SetTrigger("AttackMainHandTrigger");
-                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        if (EnemyAttackTypeList != null)
+                        {
+                            //Debug.Log("I got there1");
+                            for (int i = 0; i < EnemyAttackTypeList.Count; i++)
+                            {
+                                //Debug.Log("I got there2");
+
+                                if (EnemyAttackTypeList[i].abilityOnCooldown == false)
+                                {
+                                    QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                                    if (coolRoutine == null)
+                                        coolRoutine = StartCoroutine(CoolDown());
+                                    break;
+                                }
+                            }
+
+                        }
                     }
                     else
                     {
-                        animator.SetTrigger("AttackOffHandTrigger");
-                        //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        if (animator.GetBool("AttackingMainHand"))
+                        {
+                            animator.SetTrigger("AttackMainHandTrigger");
+                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        }
+                        else
+                        {
+                            animator.SetTrigger("AttackOffHandTrigger");
+                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                        }
                     }
+                    
                     if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
-                        StopRun();
+                            StopRun();                      
                     }
                 }
                 else
@@ -190,15 +209,22 @@ namespace ARPG.Combat
 
         public virtual void RunToPlayer()
         {
-            NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(AttackTarget.position, path);
-            agent.isStopped = false;
-            agent.path = path;
+            if (agent.enabled == true)
+            {
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(AttackTarget.position, path);
+                agent.isStopped = false;
+                agent.path = path;
+            }
+            
         }
 
         public void StopRun()
         {
-            agent.isStopped = true;
+            if (agent.enabled == true)
+            {
+                agent.isStopped = true;
+            }
         }
 
         public virtual bool InTargetRange()
@@ -247,6 +273,18 @@ namespace ARPG.Combat
             yield return new WaitForSeconds(seconds);
             Destroy(gameObject);
         }
+        IEnumerator CoolDown()
+        {
+            enemyAbilityOnCool = true;
+            timeChecker = cooldownTimer;
+            while (timeChecker > 0)
+            {
+                timeChecker -= Time.deltaTime;
+                yield return null;
+            }
+            enemyAbilityOnCool = false;
+            coolRoutine = null;
+        }
         public void ProduceItem()
         {
             Debug.Log("Item dropped");
@@ -262,27 +300,15 @@ namespace ARPG.Combat
             return lootSource;
         }
 
-        private void ChooseAttackType(Ability AttackType)
+        private IEnumerator RegenEnergy()
         {
-
-            /*
-            switch (AttackType)
+            //yield return new WaitForSeconds(1);
+            while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
             {
-                case 0:
-                    //ability list 0
-                    break;
-                case 1:
-                    //ability list 1
-                    break;
-                case 2:
-                    //basic attack, last choice
-                    GetComponent<Animator>().SetTrigger("AttackTrigger");
-                    break;
-                default:
-                    break;
-
+                stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
+                yield return new WaitForSeconds(3f);
             }
-            */
+            regen = null;
         }
     }
     //public void Cancel()

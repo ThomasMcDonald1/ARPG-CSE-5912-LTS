@@ -39,7 +39,7 @@ public class PlayerAbilityController : Player
     {
         if (e.info.caster == this)
         {
-            //Debug.Log("Player cast was completed");
+            Debug.Log("Player cast was completed");
             DeductCastingCost(e.info);
             GetColliders(e.info);
         }

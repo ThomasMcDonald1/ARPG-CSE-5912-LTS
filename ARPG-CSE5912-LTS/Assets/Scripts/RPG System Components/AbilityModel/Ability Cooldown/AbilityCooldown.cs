@@ -5,7 +5,6 @@ using ARPG.Combat;
 
 public class AbilityCooldown : MonoBehaviour
 {
-    Character character;
     public float abilityCooldown;
     [HideInInspector] public float reducedCooldown;
     ActionBar actionBar;
@@ -15,8 +14,8 @@ public class AbilityCooldown : MonoBehaviour
 
     private void Awake()
     {
-        actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
-            //add more for more enemy <---probably not necessary?
+        actionBar = FindObjectOfType<GameplayStateController>().GetComponentInChildren<ActionBar>();
+        //add more for more enemy <---probably not necessary?
     }
 
     private void OnEnable()
@@ -27,12 +26,13 @@ public class AbilityCooldown : MonoBehaviour
 
     void OnCastWasCompleted(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (e.info.caster is Player && GetComponent<Ability>() == e.info.ability)
+
+        if (this != null && e.info.caster is Player && GetComponent<Ability>() == e.info.ability)
         {
             //Debug.Log("Cooling down player abilities");
             CooldownAbilityOnActionButtons(e.info);
         }
-        else if (GetComponent<Ability>() == e.info.ability)
+        else if (this != null && GetComponent<Ability>() == e.info.ability)
         {
             CooldownAbilityOnEnemyList(e.info);
         }

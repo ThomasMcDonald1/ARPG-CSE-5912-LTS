@@ -103,6 +103,7 @@ public class MainMenuRootState : BaseMenuState
             FindObjectOfType<AudioManager>().Play("MenuClick");
             mainMenuController.characterCreationCamera.enabled = false;
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
+            GenerateNewDungeons();
             LoadingStateController.Instance.InitalizeGameScene();
         }
         else
@@ -110,6 +111,13 @@ public class MainMenuRootState : BaseMenuState
             Debug.Log("Error - tried to start game without selecting character");
             mainMenuController.startErrorObj.SetActive(true);
         }
+    }
+
+    void GenerateNewDungeons()
+    {
+        mainMenuController.dungeon1.generated = false;
+        mainMenuController.dungeon2.generated = false;
+        mainMenuController.dungeon3.generated = false;
     }
 
     void OnCreateCharClicked()

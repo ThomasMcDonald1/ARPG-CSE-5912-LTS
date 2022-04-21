@@ -47,7 +47,9 @@ public class CastTimerCastType : BaseCastType
         if (castingRoutine != null)
         {
             StopCoroutine(castingRoutine);
+
             castingBar.castBarCanvas.SetActive(false);
+
             castingRoutine = null;
         }
         if (vfxRoutine != null)
