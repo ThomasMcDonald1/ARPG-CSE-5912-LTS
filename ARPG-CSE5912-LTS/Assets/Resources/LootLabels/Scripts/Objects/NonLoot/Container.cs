@@ -25,7 +25,7 @@ namespace LootLabels {
         /// </summary>
         public override void SpawnLabel() {
             GetComponent<EventHandler>().ClearDelegates();
-            GetComponent<EventHandler>().SubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
+            //GetComponent<EventHandler>().SubscribeMouseEvents(MouseDownFunction, MouseEnterFunction, MouseExitFunction);
 
             GetComponent<CreateLabel>().SpawnLabelByColor(objectName, "LootLabels/Icons/UI_Icon_Bag1");
 
