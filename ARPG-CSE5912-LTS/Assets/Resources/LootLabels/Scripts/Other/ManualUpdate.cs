@@ -26,6 +26,10 @@ namespace LootLabels {
             {
                 Destroy(child.gameObject);
             }
+            foreach(Transform visible in transform)
+            {
+                Destroy(visible.gameObject);
+            }
         }
         private void LateUpdate() {
             manualUpdate();

@@ -205,7 +205,7 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.CritChance] += weapon.critChance;
             }
         }
-        else if (newItem.type == Ite.ItemType.armor)
+        else if (!newItem.name.Equals("Pendant"))
         {
             ArmorEquipment armor = (ArmorEquipment)newItem;
             playerStats[StatTypes.Armor] += armor.Armor;

@@ -123,6 +123,11 @@ public class InputController : MonoBehaviour
                 List<RaycastResult> results = GetUIElementsClicked();
                 UIElementHoveredEvent?.Invoke(this, new InfoEventArgs<List<RaycastResult>>(results));
             }
+            else
+            {
+                if (TipManager.instance != null)
+                    TipManager.instance.HideWindow();
+            }
         }
     }
 
@@ -337,6 +342,7 @@ public class InputController : MonoBehaviour
     {
         yield return null;
     }
+
     private void OnOpenPassiveTree(InputAction.CallbackContext context)
     {
         OpenPassiveTreeEvent?.Invoke(this, new InfoEventArgs<int>(27));

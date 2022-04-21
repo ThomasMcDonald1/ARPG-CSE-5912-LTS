@@ -14,12 +14,8 @@ public class AbilityCooldown : MonoBehaviour
 
     private void Awake()
     {
-
-        //actionBar = GetComponentInParent<GameplayStateController>().GetComponentInChildren<ActionBar>();
         actionBar = FindObjectOfType<GameplayStateController>().GetComponentInChildren<ActionBar>();
-
-        //actionBar = GetComponentInParent<EnemyKnight>().GetComponentInParent<GameplayStateController>().gameObject.AddComponent<ActionBar>() as ActionBar;
-
+        //add more for more enemy <---probably not necessary?
     }
 
     private void OnEnable()
@@ -65,13 +61,16 @@ public class AbilityCooldown : MonoBehaviour
     public void CooldownAbilityOnEnemyList(AbilityCast abilityCast)
     {
         Enemy enemyCaster = (Enemy)abilityCast.caster;
-        foreach (EnemyAbility enemyAbility in enemyCaster.EnemyAttackTypeList)
+        if (enemyCaster != null && enemyCaster.EnemyAttackTypeList != null && enemyCaster.EnemyAttackTypeList.Count > 0)
         {
-            if (enemyAbility.abilityAssigned == abilityCast.ability)
+            foreach (EnemyAbility enemyAbility in enemyCaster.EnemyAttackTypeList)
             {
-                enemyAbility.cooldownTimer = reducedCooldown;
-                if (enemyCooldownRoutine == null)
-                    enemyCooldownRoutine = StartCoroutine(EnemyCooldownAbility(enemyAbility));
+                if (enemyAbility.abilityAssigned == abilityCast.ability)
+                {
+                    enemyAbility.cooldownTimer = reducedCooldown;
+                    if (enemyCooldownRoutine == null)
+                        enemyCooldownRoutine = StartCoroutine(EnemyCooldownAbility(enemyAbility));
+                }
             }
         }
     }

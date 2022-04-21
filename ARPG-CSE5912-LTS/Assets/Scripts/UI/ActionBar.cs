@@ -20,19 +20,25 @@ public class ActionBar : MonoBehaviour
     public ActionButton actionButton12;
     public ActionButton actionButtonLeft;
     public ActionButton actionButtonRight;
-    [SerializeField] Ability defaultLeft;
+    Ability defaultLeft;
     public List<ActionButton> actionButtons;
+
+    public PotionButton potionButton1;
+    public PotionButton potionButton2;
+    public PotionButton potionButton3;
+    public PotionButton potionButton4;
 
     void Awake()
     {
         actionButtons = new List<ActionButton> { actionButton1, actionButton2, actionButton3, actionButton4, actionButton5, actionButton6, actionButton7,
         actionButton8, actionButton9, actionButton10, actionButton11, actionButton12, actionButtonLeft, actionButtonRight};
+        defaultLeft = FindObjectOfType<GameplayStateController>().GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
     }
 
-    //private void Start()
-    //{
-    //    SetDefaults();
-    //}
+    private void Start()
+    {
+        SetDefaults();
+    }
 
     void Update()
     {
@@ -45,6 +51,11 @@ public class ActionBar : MonoBehaviour
     public Ability GetAbilityOnActionButton(ActionButton actionButton)
     {
         return actionButton.abilityAssigned;
+    }
+
+    public Ite GetItemOnPotionButton(PotionButton potionButton)
+    {
+        return potionButton.item;
     }
 
     void SetDefaults()

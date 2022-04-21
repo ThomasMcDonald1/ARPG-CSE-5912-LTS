@@ -15,7 +15,10 @@ public class DefaultStatReader : MonoBehaviour
         EliteWarrior,
         Kilixis,
         SageOfSixPaths,
-        Stout
+        Stout,
+        Bandit,
+        EvilWizard,
+        GithUb
     }
     public TextAsset defaultStats;
     public IEnumerable<string> statNames;

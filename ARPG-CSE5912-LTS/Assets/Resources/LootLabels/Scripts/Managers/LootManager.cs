@@ -65,7 +65,7 @@ namespace LootLabels
             featureTablesGenerator = GetComponentInParent<GameplayStateController>().GetComponentInChildren<FeatureTablesGenerator>();
         }
 
-        //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source 
+        //Depending on the loot source calculate the amounts of loot, instantiate at the position of the loot source
         public void DropLoot(LootSource lootSource, Transform objectTransform, LootType type)
         {
             int itemAmount = LootGenerator.CalculateLootAmount(lootSource);
@@ -109,7 +109,7 @@ namespace LootLabels
                 yield return new WaitForSeconds(.2f);
                 GenerateLoot(lootOrigin, type);
             }
-            int random = UnityEngine.Random.Range(0, 3);
+            int random = UnityEngine.Random.Range(1, 3);
             for (int j = 0; j < random; j++)
             {
                 Debug.Log("generating health potions");
@@ -152,7 +152,7 @@ namespace LootLabels
         }
         void GenerateHealthPotions(Transform lootOrigin, LootType type)
         {
-            int randomPotion = UnityEngine.Random.Range(0, 5);
+            int randomPotion = UnityEngine.Random.Range(0, 6);
             GameObject droppedItem;
             Rarity itemRarity;
             GearTypes gearType;
@@ -160,19 +160,24 @@ namespace LootLabels
             switch (randomPotion)
             {
                case 1:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
-                    itemRarity = LootGenerator.SelectRandomRarity(type);
-                    gearType = GearTypes.DefensePotion;
-                    break;
-                case 2:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/ManaPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
-                    itemRarity = LootGenerator.SelectRandomRarity(type);
-                    gearType = GearTypes.ManaPotion;
-                    break;
+                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                   itemRarity = LootGenerator.SelectRandomRarity(type);
+                   gearType = GearTypes.DefensePotion;
+                   break;
+               case 2:
+                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/ManaPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                   itemRarity = LootGenerator.SelectRandomRarity(type);
+                   gearType = GearTypes.ManaPotion;
+                   break;
                case 3:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/SpeedPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/SpeedPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                   itemRarity = LootGenerator.SelectRandomRarity(type);
+                   gearType = GearTypes.SpeedPotion;
+                   break;
+               case 4:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/TeleportPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     itemRarity = LootGenerator.SelectRandomRarity(type);
-                    gearType = GearTypes.SpeedPotion;
+                    gearType = GearTypes.TeleportPotion;
                     break;
                 default:
                     droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
@@ -229,16 +234,16 @@ namespace LootLabels
                         //if (item.type == Ite.ItemType.utility){
                         //    Potion potion = (Potion)item;
                         //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        //}                        
+                        //}
                         //else
-                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility)
-                        { 
+                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility && gear.ItemRarity != Rarity.Poor && gear.ItemRarity != Rarity.Normal)
+                        {
                             Equipment equipment = (Equipment)item;
                             PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.prefix = prefix;
                             PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
                             equipment.suffix = suffix;
-                            
+
                             foreach (GameObject featureGO in prefix.FeaturesGOs) {
                                 Feature feature = featureGO.GetComponent<Feature>();
                                 Type typeFeature = feature.GetType();
@@ -380,6 +385,10 @@ namespace LootLabels
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.health = (int)(potion.health + (250 * multiplier));
+                if (itemRarity == Rarity.Legendary)
+                {
+                    potion.health = (int)(potion.health + (250 * 5));
+                }
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 Debug.Log("health potion health amount is " + potion.health);
@@ -391,6 +400,10 @@ namespace LootLabels
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.mana = (int)(potion.mana + (250 * multiplier));
+                if(itemRarity == Rarity.Legendary)
+                {
+                    potion.mana = (int)(potion.mana + (250 * 5));
+                }
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 item = potion;
@@ -400,6 +413,10 @@ namespace LootLabels
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.defense = (int)(potion.defense + (2 * multiplier));
+                if (itemRarity == Rarity.Legendary)
+                {
+                    potion.defense = (int)(potion.defense + (2*5));
+                }
                 string name = itemRarity.ToString() + " " + potion.name;
                 potion.name = name;
                 item = potion;
@@ -409,7 +426,17 @@ namespace LootLabels
                 Potion potion = (Potion)item;
                 Debug.Log("potion health before change is" + potion.health);
                 potion.speed = (int)(potion.speed + (2 * multiplier));
+                if (itemRarity == Rarity.Legendary)
+                {
+                    potion.speed = (int)(potion.speed + (2 * 5));
+                }
                 string name = itemRarity.ToString() + " " + potion.name;
+                potion.name = name;
+                item = potion;
+            }
+            else if (string.Equals("Teleport Potion", item.name))
+            {
+                Potion potion = (Potion)item;
                 potion.name = name;
                 item = potion;
             }
@@ -434,16 +461,16 @@ namespace LootLabels
                     item = weapon;
                 }
             }
-            else
+            else if(!item.name.Equals("Pendant"))
             {
                 ArmorEquipment armor = (ArmorEquipment)item;
                 if(itemRarity != Rarity.Legendary)
                 {
-                    armor.Evasion = (int)(armor.Evasion * multiplier);
-                    armor.Armor = (int)(armor.Armor * multiplier);
+                    armor.Evasion = (int)(armor.Evasion + multiplier);
+                    armor.Armor = (int)(armor.Armor + multiplier);
                 }
                 item = armor;
-            }           
+            }
         }
     }
 }

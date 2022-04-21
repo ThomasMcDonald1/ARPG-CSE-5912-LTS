@@ -18,8 +18,6 @@ public class Lorekeeper : NPC
     private int currentStory;
     public int CurrentStory { get { return currentStory; } }
 
-    public bool TEST = false;
-
     GameObject child;
 
     private void OnEnable()
@@ -34,6 +32,7 @@ public class Lorekeeper : NPC
     }
     private void OnQuestComplete(object sender, EventArgs e)
     {
+        Debug.Log("Quest completed! From Lorekeeper");
         GetComponent<QuestGiver>().UpdateQuestIcon();
         currentStory++;
     }
@@ -96,8 +95,6 @@ public class Lorekeeper : NPC
             case 3:
                 break;
             case 4:
-                InteractionManager.GetInstance().EnableTombOfMortemier();
-                GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
@@ -110,6 +107,16 @@ public class Lorekeeper : NPC
             case 6:
                 break;
             case 7:
+                GetComponent<QuestGiver>().AddQuestToLogIfNew();
+                currentStory++;
+                GetComponent<QuestGiver>().UpdateQuestIcon();
+                break;
+            case 8:
+                break;
+            case 9:
+                InteractionManager.GetInstance().EnableForsakenCathedralButton();
+                currentStory++;
+                GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
             default:
                 break;
@@ -136,5 +143,10 @@ public class Lorekeeper : NPC
             StartCoroutine(LookAtPlayer());
             saleUI.shop = shop;
         }
+    }
+
+    public void Update()
+    {
+        //Debug.Log(currentStory);
     }
 }
