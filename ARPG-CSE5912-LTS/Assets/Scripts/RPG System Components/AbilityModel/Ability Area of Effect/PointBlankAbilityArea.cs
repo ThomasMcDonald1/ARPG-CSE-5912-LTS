@@ -2,22 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ARPG.Combat;
 
 public class PointBlankAbilityArea : BaseAbilityArea
 {
     Player player;
+    Enemy enemy;
 
     private void Awake()
     {
         player = GetComponentInParent<Player>();
+        enemy = GetComponentInParent<Enemy>();
     }
 
     public override void DisplayAOEArea()
     {
-        player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
-        player.gameplayStateController.aoeReticleCylinder.transform.position = player.transform.position;
-        player.gameplayStateController.aoeReticleCylinder.SetActive(true);
-        abilityAreaNeedsShown = true;
+        if (player != null)
+        {
+            player.gameplayStateController.aoeReticleCylinder.transform.localScale = new Vector3(aoeRadius * 2, 1, aoeRadius * 2);
+            player.gameplayStateController.aoeReticleCylinder.transform.position = player.transform.position;
+            player.gameplayStateController.aoeReticleCylinder.SetActive(true);
+            abilityAreaNeedsShown = true;
+        }
     }
 
     public override List<Character> PerformAOECheckToGetColliders(AbilityCast abilityCast)

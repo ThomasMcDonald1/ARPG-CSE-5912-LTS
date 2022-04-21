@@ -45,6 +45,7 @@ public class Tombstone : MonoBehaviour
 
     public int GetDungeonNumOfPlayerDeath()
     {
+        Debug.Log("Dungeon death number: " + dungeonNumOfDeath);
         return dungeonNumOfDeath;
     }
 
@@ -62,6 +63,8 @@ public class Tombstone : MonoBehaviour
     {
         Debug.Log("Placing Tombstone");
         tombstoneModel.SetActive(true);
-        tombstoneModel.transform.position = GetPlayerDeathPosition();
+        var pos = GetPlayerDeathPosition();
+        tombstoneModel.transform.position = new Vector3(pos.x, 3.87f, pos.z);
+
     }
 }

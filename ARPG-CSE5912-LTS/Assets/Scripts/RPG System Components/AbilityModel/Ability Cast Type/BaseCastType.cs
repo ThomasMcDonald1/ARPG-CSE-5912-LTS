@@ -19,6 +19,10 @@ public abstract class BaseCastType : MonoBehaviour
     private void Awake()
     {
         gameplayStateController = GetComponentInParent<GameplayStateController>();
+        if (gameplayStateController == null)
+        {
+            gameplayStateController = FindObjectOfType<GameplayStateController>();
+        }
         castingBar = gameplayStateController.castingBar;
         castingBar.castBarCanvas.SetActive(false);
     }
@@ -31,10 +35,14 @@ public abstract class BaseCastType : MonoBehaviour
     private void OnEnable()
     {
         Character.AbilityIsReadyToBeCastEvent += OnAbilityIsReadyToBeCast;
-        MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving;
+        MovementHandler.PlayerBeganMovingEvent += OnPlayerBeganMoving; 
     }
 
     private void OnPlayerBeganMoving(object sender, InfoEventArgs<int> e)
+    {
+        StopCasting();
+    }
+    private void OnEnemyBeganMoving(object sender, InfoEventArgs<int> e)
     {
         StopCasting();
     }

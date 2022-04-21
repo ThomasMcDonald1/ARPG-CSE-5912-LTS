@@ -40,7 +40,7 @@ public class EnemyAbilityController : Enemy
     {
         if (e.info.caster == this)
         {
-            //Debug.Log("Enemy Cast was completed");
+            Debug.Log("Enemy Cast was completed");
             DeductCastingCost(e.info);
             GetColliders(e.info);
         }
