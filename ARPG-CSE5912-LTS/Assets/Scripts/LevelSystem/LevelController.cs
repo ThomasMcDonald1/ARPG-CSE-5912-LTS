@@ -82,18 +82,18 @@ public class LevelController : MonoBehaviour
     {
         ExperienceManager.ExpWillBeGivenEvent += OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent += OnExpHasBeenGiven;
-        ExperienceManager.SavedExpEvent += OnSavedExpEvent;
-        ExperienceManager.GetBackExpEvent += OnGetBackExpEvent;
-        ExperienceManager.EmptyExpEvent += OnEmptyExpEvent;
+        //ExperienceManager.SavedExpEvent += OnSavedExpEvent;
+        //ExperienceManager.GetBackExpEvent += OnGetBackExpEvent;
+        //ExperienceManager.EmptyExpEvent += OnEmptyExpEvent;
     }
 
     private void OnDisable()
     {
         ExperienceManager.ExpWillBeGivenEvent -= OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent -= OnExpHasBeenGiven;
-        ExperienceManager.SavedExpEvent -= OnSavedExpEvent;
-        ExperienceManager.GetBackExpEvent -= OnGetBackExpEvent;
-        ExperienceManager.EmptyExpEvent -= OnEmptyExpEvent;
+        //ExperienceManager.SavedExpEvent -= OnSavedExpEvent;
+        //ExperienceManager.GetBackExpEvent -= OnGetBackExpEvent;
+        //ExperienceManager.EmptyExpEvent -= OnEmptyExpEvent;
     }
 
     public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int,string)> e)
@@ -159,28 +159,28 @@ public class LevelController : MonoBehaviour
         stats[StatTypes.SkillPoints] += (currectLVL - pastLVL);
     }
 
-    public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
-    { 
-        Debug.Log("save");
-        stats[StatTypes.SavedExp] += stats[StatTypes.EXP];
-        stats.SetValue(StatTypes.EXP, 0, false);
-        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
-    }
+    //public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    //{ 
+    //    Debug.Log("save");
+    //    stats[StatTypes.SavedExp] += stats[StatTypes.EXP];
+    //    stats.SetValue(StatTypes.EXP, 0, false);
+    //    stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
+    //}
 
-    public void OnGetBackExpEvent(object sender, InfoEventArgs<(int, int)> e)
-    {
-        stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f); 
-        //I am now take away all exp and maybe will change for only this level exp.
-        stats.SetValue(StatTypes.EXP, stats[StatTypes.SavedExp], false);
-        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
-    }
+    //public void OnGetBackExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    //{
+    //    stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f); 
+    //    //I am now take away all exp and maybe will change for only this level exp.
+    //    stats.SetValue(StatTypes.EXP, stats[StatTypes.SavedExp], false);
+    //    stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
+    //}
 
-    public void OnEmptyExpEvent(object sender, InfoEventArgs<(int, int)> e)
-    {
-        stats.SetValue(StatTypes.SavedExp, 0, false);
-        stats.SetValue(StatTypes.EXP, 0, false);
-        stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
-    }
+    //public void OnEmptyExpEvent(object sender, InfoEventArgs<(int, int)> e)
+    //{
+    //    stats.SetValue(StatTypes.SavedExp, 0, false);
+    //    stats.SetValue(StatTypes.EXP, 0, false);
+    //    stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
+    //}
 
     //From the script
     public static float EaseInQuad(float start, float end, float value)
