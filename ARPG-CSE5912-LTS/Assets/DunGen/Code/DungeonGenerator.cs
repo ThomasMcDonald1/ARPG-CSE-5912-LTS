@@ -1008,6 +1008,7 @@ namespace DunGen
 				//CUSTOM MODIFICATIONS
 				BakeDungeon();
 				SetEnemyLevels();
+				SpawnTombstone();
 				//CUSTOM MODIFICATIONS - END
 
 
@@ -1132,6 +1133,15 @@ namespace DunGen
 					DefaultStatReader.Instance.ScaleEnemyStats(index, enemy.gameObject);
 				}
             }
+        }
+
+		void SpawnTombstone()
+        {
+			//int dungeonNum = Tombstone.Instance.GetDungeonNumOfPlayerDeath();
+			//if (dungeonNum )
+   //         {
+
+   //         }
         }
 
 		protected void ProcessProps(Tile tile, GameObject root)
