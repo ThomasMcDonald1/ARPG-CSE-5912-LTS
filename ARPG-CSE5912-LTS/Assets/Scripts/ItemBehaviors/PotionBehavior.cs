@@ -12,10 +12,12 @@ public class PotionBehavior : MonoBehaviour
     public int speed;
     public int defense;
     public ParticleSystem defenseParticle;
+    public ParticleSystem speedParticle;
     void Start()
     {
         PotionBehavior.instance = this;
         defenseParticle.Stop();
+        speedParticle.Stop();
     }
     public void Update()
     {
@@ -36,10 +38,12 @@ public class PotionBehavior : MonoBehaviour
             if (isSpeedActive)
             {
                 int playerStat = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed];
+                Debug.Log("runspeed is  " + playerStat);
                 GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed] = playerStat - speed;
-                Debug.Log("After the potion wore off defense is now " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed]);
+                Debug.Log("After the potion wore off speed is now " + GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.RunSpeed]);
                 isSpeedActive = false;
                 speed = 0;
+                speedParticle.Stop();
             }
         }
     }

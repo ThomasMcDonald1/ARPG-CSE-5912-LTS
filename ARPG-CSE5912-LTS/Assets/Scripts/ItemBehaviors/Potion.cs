@@ -51,9 +51,14 @@ public class Potion : Ite
             case (int)potionType.speed:
                 PotionBehavior.instance.speedDuration = Time.time + 60;
                 PotionBehavior.instance.isSpeedActive = true;
+
+                var mainSpeed = PotionBehavior.instance.speedParticle.main;
+                mainSpeed.duration = PotionBehavior.instance.speedDuration;
+                PotionBehavior.instance.speedParticle.Play();
+
                 int speedPoints = speed - PotionBehavior.instance.speed;
                 PotionBehavior.instance.speed = speed;
-                UseDefensePotion(speedPoints);
+                UseSpeedPotion(speedPoints);
                 // IEnumerator defenseFunc = ApplyDefense(120);
                 //PotionBehavior.instance.isDefenseActive = true;
                 break;
