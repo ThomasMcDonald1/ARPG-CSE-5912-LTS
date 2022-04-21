@@ -9,9 +9,10 @@ public class PassiveTreeUI : MonoBehaviour
     public PassiveSkills passiveSkills;
     public GameObject skillNodes;
     public Connections[] connections;
+    public GameObject skillNotification;
     private void Awake()
     {
-        passiveSkills = new PassiveSkills(player, connections, skillNodes);
+        passiveSkills = new PassiveSkills(player, connections, skillNodes, skillNotification);
         Debug.Log(passiveSkills == null);
         // assign each child an event listener that listens for button click
         foreach(Transform child in skillNodes.transform)

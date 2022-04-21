@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "New Potion", menuName = "Inventory/Potion")]
 public class Potion : Ite
@@ -9,9 +10,9 @@ public class Potion : Ite
     {
         health,
         mana,
-        teleport,
         defense,
         speed,
+        teleport,
     }
     ;
 
@@ -61,6 +62,9 @@ public class Potion : Ite
                 UseSpeedPotion(speedPoints);
                 // IEnumerator defenseFunc = ApplyDefense(120);
                 //PotionBehavior.instance.isDefenseActive = true;
+                break;
+            case (int)potionType.teleport:
+                UseTeleportPotion();
                 break;
             default:
                 Debug.Log("Don't know what this potion does");
@@ -112,5 +116,14 @@ public class Potion : Ite
         playerStat += mana;
         playerStat = Mathf.Clamp(playerStat, 0, GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.MaxMana]);
         GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Stats>()[StatTypes.Mana] = playerStat;
+    }
+    public void UseTeleportPotion()
+    {
+            Vector3 pPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                var x = Instantiate(Resources.Load("Portals/TownPortal") as GameObject, hit.position, Quaternion.identity);
+            }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
     public Stats stats;
+    public GameObject skillNotification;
 
     public const int minLevel = 1;
     public const int maxLevel = 99;
@@ -27,7 +28,7 @@ public class LevelController : MonoBehaviour
         stats.SetValue(StatTypes.EXP, ExperienceForLevel(level), false);
     }
 
-   
+
     public float TotalExperiencePercent
     {
         get
@@ -157,10 +158,12 @@ public class LevelController : MonoBehaviour
         stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);
         int currectLVL = (int)stats[StatTypes.LVL];
         stats[StatTypes.SkillPoints] += (currectLVL - pastLVL);
+        if (currectLVL - pastLVL > 0)
+            skillNotification.SetActive(true);
     }
 
     //public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
-    //{ 
+    //{
     //    Debug.Log("save");
     //    stats[StatTypes.SavedExp] += stats[StatTypes.EXP];
     //    stats.SetValue(StatTypes.EXP, 0, false);
@@ -169,7 +172,7 @@ public class LevelController : MonoBehaviour
 
     //public void OnGetBackExpEvent(object sender, InfoEventArgs<(int, int)> e)
     //{
-    //    stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f); 
+    //    stats[StatTypes.SavedExp] = (int)((float)stats[StatTypes.SavedExp] * 0.7f);
     //    //I am now take away all exp and maybe will change for only this level exp.
     //    stats.SetValue(StatTypes.EXP, stats[StatTypes.SavedExp], false);
     //    stats.SetValue(StatTypes.LVL, LevelForExperience(EXP), false);

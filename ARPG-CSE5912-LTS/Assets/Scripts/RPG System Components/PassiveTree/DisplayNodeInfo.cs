@@ -20,7 +20,8 @@ public class DisplayNodeInfo : MonoBehaviour
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         text = Instantiate(Resources.Load("SkillInfo") as GameObject, transform);
         text.transform.position += new Vector3(0,50,0);
-        text.GetComponent<Text>().text = passiveNode.Name;
+        string info = "Adds " + passiveNode.StatValues[0] + " to " + passiveNode.Stats[0];
+        text.GetComponent<Text>().text = info;
     }
     public void RemoveInfo()
     {
