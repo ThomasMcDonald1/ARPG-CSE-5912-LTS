@@ -23,6 +23,7 @@ public class Inventory : MonoBehaviour
     public List<Ite> armorItems = new List<Ite>();
     public List<Ite> utilItems = new List<Ite>();
     public Ite healthPotion;
+    public Ite poorSword;
     public PotionButton[] potionButtons;
 
     private GameObject player;

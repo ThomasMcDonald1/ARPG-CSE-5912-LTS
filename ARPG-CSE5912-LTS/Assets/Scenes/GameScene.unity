@@ -71631,7 +71631,6 @@ MonoBehaviour:
   defense: 0
   defenseParticle: {fileID: 1615609577}
   speedParticle: {fileID: 833075369}
-  speedlight: {fileID: 6188932293288464617}
 --- !u!1001 &1573546550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98910,6 +98909,14 @@ PrefabInstance:
       propertyPath: enrgBar
       value: 
       objectReference: {fileID: 1942799316}
+    - target: {fileID: 6188932292207278735, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
+      propertyPath: healthPotion
+      value: 
+      objectReference: {fileID: 11400000, guid: 34a4f9b1568725f4187766702fd01770, type: 2}
+    - target: {fileID: 6188932292207278735, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
+      propertyPath: utilItems.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6188932292207278771, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -99016,11 +99023,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
---- !u!108 &6188932293288464617 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 8808814553393295571, guid: 6bfb8a806c9367442a38570b1445ce0c, type: 3}
-  m_PrefabInstance: {fileID: 6188932293288464616}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6322973100268793347
 GameObject:
   m_ObjectHideFlags: 0
