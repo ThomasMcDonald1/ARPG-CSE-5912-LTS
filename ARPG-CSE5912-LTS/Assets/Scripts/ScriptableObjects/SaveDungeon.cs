@@ -14,6 +14,7 @@ public class SaveDungeon : ScriptableObject
         hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
+    public int dungeonNum = 0;
     public bool generated = false;
     public int seed = -1;
     public Vector3 waypointLocation, startLocation;
