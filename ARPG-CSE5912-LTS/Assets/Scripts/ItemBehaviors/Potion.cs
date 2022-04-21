@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "New Potion", menuName = "Inventory/Potion")]
 public class Potion : Ite
@@ -109,7 +110,11 @@ public class Potion : Ite
     }
     public void UseTeleportPotion()
     {
-            Transform pTransform = GameObject.FindGameObjectWithTag("Player").transform;
-            var x = Instantiate(Resources.Load("Portals/Archway") as GameObject, pTransform);
+            Vector3 pPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                var x = Instantiate(Resources.Load("Portals/TownPortal") as GameObject, hit.position, Quaternion.identity);
+            }
     }
 }

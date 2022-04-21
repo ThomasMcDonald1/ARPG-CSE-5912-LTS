@@ -229,19 +229,19 @@ public class PassiveSkillInfo
                 "CRIT3",
                 new StatTypes[] { StatTypes.ColdRes },
                 new int[] { 5 },
-                new string[] { "MP4", "CRIT2", "MPREGEN2", "COLDRES4", "COLDRES5" }
+                new string[] { "MP4", "CRIT2", "POISONRES2", "COLDRES4", "COLDRES5" }
             ),
             new PassiveNode(
                 "MP1",
                 new StatTypes[] { StatTypes.MaxMana },
                 new int[] { 5 },
-                new string[] { "MP2", "CDR1", "MPREGEN1" }
+                new string[] { "MP2", "CDR1", "POISONRES1" }
             ),
             new PassiveNode(
                 "MP2",
                 new StatTypes[] { StatTypes.MaxMana },
                 new int[] { 5 },
-                new string[] { "MP1", "MP3", "CDR2", "MPREGEN1" }
+                new string[] { "MP1", "MP3", "CDR2", "POISONRES1" }
             ),
             new PassiveNode(
                 "MP3",
@@ -280,16 +280,16 @@ public class PassiveSkillInfo
                 new string[] { "LIGHTNINGRES3", "LIGHTNINGRES4", "CASTSPD3", "COLDRES5", "ATKSPD4" }
             ),
             new PassiveNode(
-                "MPREGEN1",
-                new StatTypes[] { StatTypes.ManaRegen },
+                "POISONRES1",
+                new StatTypes[] { StatTypes.PoisonRes },
                 new int[] { 5 },
-                new string[] { "MP1", "MP2", "MPREGEN2" }
+                new string[] { "MP1", "MP2", "POISONRES2" }
             ),
             new PassiveNode(
-                "MPREGEN2",
-                new StatTypes[] { StatTypes.ManaRegen },
+                "POISONRES2",
+                new StatTypes[] { StatTypes.PoisonRes },
                 new int[] { 5 },
-                new string[] { "CRIT3", "MPREGEN1" }
+                new string[] { "CRIT3", "POISONRES1" }
             ),
             new PassiveNode(
                 "CDR1",
