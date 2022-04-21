@@ -65,8 +65,11 @@ public class TipManager : MonoBehaviour
         }
         itemNameText.text = item.name;
         itemNameText.color = item.itemNameColor;
+
         if (item is WeaponEquipment)
         {
+            itemNameText.color = item.itemNameColor;
+
             WeaponEquipment weapon = (WeaponEquipment)item;
             //itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
             itemInfoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
@@ -75,19 +78,26 @@ public class TipManager : MonoBehaviour
         }
         else if (item is LightArmorEquipment lightArmor)
         {
+            itemNameText.color = Color.yellow;
+
             itemInfoSlot1.text = "Evasion: " + lightArmor.evasion.ToString();
         }
         else if (item is MediumArmorEquipment mediumArmor)
         {
+            itemNameText.color = Color.white;
+
             itemInfoSlot1.text = "Armor: " + mediumArmor.armor.ToString();
             itemInfoSlot2.text = "Evasion: " + mediumArmor.evasion.ToString();
         }
         else if (item is HeavyArmorEquipment heavyArmor)
         {
+            itemNameText.color = Color.grey;
+
             itemInfoSlot1.text = "Armor: " + heavyArmor.armor.ToString();
         }
         else if (item is ShieldEquipment shieldEquipment)
         {
+
             itemInfoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
             itemInfoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
         }

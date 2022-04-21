@@ -60,7 +60,7 @@ public class CharacterPanelState : BaseGameplayState
        foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            //Debug.Log("GameObject: " + go);
+            Debug.Log("GameObject: " + go);
 
             Button invButton = go.GetComponent<Button>();
             //Image itemImg = go.GetComponent<Image>()
@@ -72,7 +72,7 @@ public class CharacterPanelState : BaseGameplayState
                 InventorySlot invSlot = invButton.GetComponentInParent<InventorySlot>();
                 if (invSlot!=null && invSlot.item != null)
                 {
-                    //Debug.Log("Item hovered over: " + invSlot.item.name);
+                    Debug.Log("Item hovered over: " + invSlot.item.name);
                     TipManager.instance.ShowInventoryTooltip(invSlot.item);
                 }
                 else 
