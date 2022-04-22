@@ -28,6 +28,7 @@ public class Player : Character
     //private GameObject GeneralClass;
     //public virtual float AttackRange { get; set; }
     private bool signalAttack;
+    bool coroutineRunningEnemyCheck;
     Animator animator;
     AudioManager audioManager;
     MovementHandler movementHandler;
@@ -52,7 +53,7 @@ public class Player : Character
         //StopAttack is true when Knight is not in attacking state, basicaly allows Knight to stop attacking when click is released
         animator.SetBool("StopAttack", true);
         animator.SetBool("Dead", false);
-
+        coroutineRunningEnemyCheck = false;
     }
 
     protected override void Update()
@@ -105,13 +106,14 @@ public class Player : Character
     {
         if (AttackTarget != null)
         {
-            animator.SetBool("StopAttack", false);
             if (!InCombatTargetRange())
             {
+                animator.SetBool("StopAttack", true);
                 StartCoroutine(MoveToEnemy());
             }
-            else if (InCombatTargetRange())
+            else if (InCombatTargetRange() && !coroutineRunningEnemyCheck)
             {
+                animator.SetBool("StopAttack", false);
                 //GetComponent<Animator>().SetBool("StopAttack", false);
                 movementHandler.Cancel();
 
@@ -135,11 +137,17 @@ public class Player : Character
     {
         while (AttackTarget != null && !InCombatTargetRange())
         {
+            animator.SetBool("StopAttack", true);
+
+            coroutineRunningEnemyCheck = true;
             movementHandler.NavMeshAgent.isStopped = false;
             movementHandler.MoveToTarget(AttackTarget.transform.position);
             yield return null;
         }
 
+        animator.SetBool("StopAttack", true);
+
+        coroutineRunningEnemyCheck = false;
         agent.ResetPath();
 
         if (AttackTarget != null)
@@ -220,8 +228,7 @@ public class Player : Character
 
     public bool InCombatTargetRange()
     {
-       
-
+        Debug.Log(stats[StatTypes.AttackRange]);
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         return Vector3.Distance(transform.position, AttackTarget.GetComponent<Collider>().ClosestPoint(transform.position)) < stats[StatTypes.AttackRange];

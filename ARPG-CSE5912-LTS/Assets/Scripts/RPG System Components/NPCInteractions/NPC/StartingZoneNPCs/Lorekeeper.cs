@@ -118,6 +118,8 @@ public class Lorekeeper : NPC
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
+            case 10:
+                break;
             default:
                 break;
         }
@@ -125,7 +127,6 @@ public class Lorekeeper : NPC
 
     protected override void Interact(object sender, EventArgs e)
     {
-        Debug.Log(currentStory);
         if (Interactable())
         {
             InteractionManager.GetInstance().DisableTradeButton();
