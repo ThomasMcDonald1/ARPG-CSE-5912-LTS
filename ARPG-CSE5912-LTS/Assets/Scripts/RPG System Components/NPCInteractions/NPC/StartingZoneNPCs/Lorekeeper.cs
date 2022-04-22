@@ -127,7 +127,6 @@ public class Lorekeeper : NPC
 
     protected override void Interact(object sender, EventArgs e)
     {
-        Debug.Log(currentStory);
         if (Interactable())
         {
             InteractionManager.GetInstance().DisableTradeButton();
