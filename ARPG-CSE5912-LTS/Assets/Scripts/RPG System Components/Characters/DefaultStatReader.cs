@@ -16,9 +16,12 @@ public class DefaultStatReader : MonoBehaviour
         Kilixis,
         SageOfSixPaths,
         Stout,
+
+        GithUb
+        Paths,
         Bandit,
         EvilWizard,
-        GithUb
+
     }
     public TextAsset defaultStats;
     public IEnumerable<string> statNames;
