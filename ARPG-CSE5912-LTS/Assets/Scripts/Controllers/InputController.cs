@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] GameObject gameplayUICanvas;
     GraphicRaycaster gameplayUIRaycaster;
-    [SerializeField] GraphicRaycaster inventoryUIRaycaster;
+    [SerializeField] GraphicRaycaster characterPanelUIRaycaster;
     [SerializeField] GameplayStateController gameplayStateController;
 
     //Events associated with input being pressed
@@ -87,18 +87,18 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (inventoryUIRaycaster == null)
+        if (characterPanelUIRaycaster == null)
         {
-            var inventoryUI = GameObject.Find("InventoryUI");
-            if (inventoryUI != null)
+            var characterPanel = GameObject.Find("CharacterPanel");
+            if (characterPanel != null)
             {
-                inventoryUIRaycaster = inventoryUI.GetComponent<GraphicRaycaster>();
+                characterPanelUIRaycaster = characterPanel.GetComponent<GraphicRaycaster>();
             }
         }
 
         if (gameplayStateController == null)
         {
-            gameplayStateController = GameObject.FindObjectOfType<GameplayStateController>();
+            gameplayStateController = FindObjectOfType<GameplayStateController>();
         }
     }
 
@@ -315,7 +315,7 @@ public class InputController : MonoBehaviour
             position = Mouse.current.position.ReadValue()
         };
         List<RaycastResult> results = new List<RaycastResult>();
-        inventoryUIRaycaster.Raycast(eventData, results);
+        characterPanelUIRaycaster.Raycast(eventData, results);
 
         return results;
     }

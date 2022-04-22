@@ -18,8 +18,8 @@ public class CharacterPanelState : BaseGameplayState
             if (s.name != "Theme") s.source.Stop();
         }
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
-        exitInventoryButton.onClick.AddListener(() => CloseInventory());
-        changeToInventoryMenu.onClick.AddListener(() => InventoryStartUp());
+        exitAbilityShopButton.onClick.AddListener(() => CloseAbilityShop());
+        changeToAbilityMenu.onClick.AddListener(() => AbilityMenuStartUp());
 
     }
 
@@ -37,14 +37,16 @@ public class CharacterPanelState : BaseGameplayState
     }
 
 
-    void InventoryStartUp()
+    void AbilityMenuStartUp()
     {
-        gameplayStateController.inventoryCanvas.enabled = true;
+        gameplayStateController.abilityCanvas.enabled = true;
         gameplayStateController.characterPanelCanvas.enabled = false;
+        AbilityShopController.instance.PopulateAbilityShop();
+
     }
-    void CloseInventory()
+    void CloseAbilityShop()
     {
-        gameplayStateController.inventoryCanvas.enabled = false;
+        gameplayStateController.abilityCanvas.enabled = false;
 
         gameplayStateController.ChangeState<GameplayState>();
 
@@ -53,6 +55,7 @@ public class CharacterPanelState : BaseGameplayState
 
 
     }
+
 
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
@@ -86,4 +89,5 @@ public class CharacterPanelState : BaseGameplayState
             }          
         }
     }
+
 }
