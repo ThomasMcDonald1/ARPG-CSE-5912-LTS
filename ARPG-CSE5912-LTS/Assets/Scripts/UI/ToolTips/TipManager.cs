@@ -66,6 +66,14 @@ public class TipManager : MonoBehaviour
         }
         nameText.text = item.name;
         nameText.color = item.itemNameColor;
+        if (nameText.alpha < 1.0f)
+        {
+            nameText.alpha = 1.0f;
+        }
+        if (nameText.color == Color.black)
+        {
+            nameText.color = Color.white;
+        }
         if (item is WeaponEquipment)
         {
             WeaponEquipment weapon = (WeaponEquipment)item;
@@ -139,6 +147,14 @@ public class TipManager : MonoBehaviour
         }
         nameText.text = ability.name;
         nameText.color = Color.cyan;
+        if (nameText.alpha < 1.0f)
+        {
+            nameText.alpha = 1.0f;
+        }
+        if (nameText.color == Color.black)
+        {
+            nameText.color = Color.white;
+        }
         infoSlot1.text = ability.description;
         infoSlot1.color = new Color(0.8f, 0.8f, 0.8f, 1f);
         if (ability.GetComponentInChildren<BasicAttackDamageAbilityEffect>() == null)
