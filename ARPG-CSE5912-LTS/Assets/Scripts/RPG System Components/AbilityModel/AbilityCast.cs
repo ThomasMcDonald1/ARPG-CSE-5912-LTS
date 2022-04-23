@@ -15,6 +15,7 @@ public class AbilityCast
     public BaseHitRate hitRateType;
     public BaseAbilityPower abilityPower;
     public BaseAbilityRange abilityRange;
+    public BaseAbilityMovement abilityMovement;
 
     public bool abilityRequiresCursorSelection = false;
     public bool requiresCharacterUnderCursor = false;
@@ -35,6 +36,7 @@ public class AbilityCast
         hitRateType = this.ability.GetComponent<BaseHitRate>();
         abilityPower = this.ability.GetComponent<BaseAbilityPower>();
         abilityRange = this.ability.GetComponent<BaseAbilityRange>();
+        abilityMovement = this.ability.GetComponent<BaseAbilityMovement>();
         if (this.ability.GetComponent<AbilityRequiresCursorSelection>() != null)
             abilityRequiresCursorSelection = true;
         if (this.ability.GetComponent<AbilityRequiresCharacterUnderCursor>() != null)

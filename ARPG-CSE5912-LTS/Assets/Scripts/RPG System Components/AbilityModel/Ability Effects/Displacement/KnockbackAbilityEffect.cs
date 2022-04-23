@@ -25,7 +25,7 @@ public class KnockbackAbilityEffect : BaseAbilityEffect
         if (rb != null && agent != null)
         {
             rb.isKinematic = false;
-            agent.enabled = false;
+            agent.isStopped = true;
             rb.velocity = destination * (5 / knockbackXZDisplacement) + velocityY;
             StartCoroutine(WaitForLanding(rb, agent));
         }
@@ -46,7 +46,7 @@ public class KnockbackAbilityEffect : BaseAbilityEffect
             }
             yield return null;
         }
-        agent.enabled = true;
+        agent.isStopped = false;
         rb.isKinematic = true;
     }
 }

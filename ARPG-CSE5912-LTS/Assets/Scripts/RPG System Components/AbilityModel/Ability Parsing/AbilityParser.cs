@@ -37,6 +37,7 @@ public class AbilityParser
         ParseAbilityCast(ability, abilityData);
         ParseAbilityCooldown(ability, abilityData);
         ParseAbilityConditionals(ability, abilityData);
+        ParseAbilityMovement(ability, abilityData);
         ParseAbilityEffects(ability, abilityData);
         CreateAbilityPrefab(abilityData.name, ability);
     }
@@ -183,6 +184,27 @@ public class AbilityParser
             ability.AddComponent<AbilityRequiresCharacterUnderCursor>();
     }
 
+    static void ParseAbilityMovement(GameObject ability, AbilityData abilityData)
+    {
+        if (abilityData.abilityMovement != null)
+        {
+            switch (abilityData.abilityMovement.ToLower())
+            {
+                case "leap":
+                    ability.AddComponent<LeapAbilityMovement>();
+                    break;
+                case "character":
+                    ability.AddComponent<ChargeCharacterAbilityMovement>();
+                    break;
+                case "ground":
+                    ability.AddComponent<ChargeGroundAbilityMovement>();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     static void ParseAbilityEffects(GameObject ability, AbilityData abilityData)
     {
         for (int i = 0; i < abilityData.effects.Length; i++)
@@ -209,17 +231,8 @@ public class AbilityParser
             case "heal":
                 effectObj.AddComponent<HealingAbilityEffect>();
                 break;
-            case "charge character":
-                effectObj.AddComponent<ChargeCharacterAbilityEffect>();
-                break;
-            case "charge ground":
-                effectObj.AddComponent<ChargeGroundAbilityEffect>();
-                break;
             case "knockback":
                 effectObj.AddComponent<KnockbackAbilityEffect>();
-                break;
-            case "leap":
-                effectObj.AddComponent<LeapAbilityEffect>();
                 break;
             case "pull":
                 effectObj.AddComponent<PullAbilityEffect>();

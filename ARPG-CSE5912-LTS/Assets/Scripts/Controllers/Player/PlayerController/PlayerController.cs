@@ -40,15 +40,18 @@ public class PlayerController : MonoBehaviour
             switch (LayerMask.LayerToName(layer))
             {
                 case "Walkable":
-                    InteractionManager.GetInstance().StopInteraction();
-                    if (GetComponent<Animator>().GetBool("Dead") == false)
+                    if (!player.abilityQueued)
                     {
-                        player.DialogueCancel();
-                        player.AttackCancel();
-                        GetComponent<MovementHandler>().MoveToTarget(e.info.point);
+                        InteractionManager.GetInstance().StopInteraction();
+                        if (GetComponent<Animator>().GetBool("Dead") == false)
+                        {
+                            player.DialogueCancel();
+                            player.AttackCancel();
+                            GetComponent<MovementHandler>().MoveToTarget(e.info.point);
+                        }
+
                     }
                     break;
-
                 case "NPC":
                     player.AttackCancel();
                     if (player.NPCTarget != null)

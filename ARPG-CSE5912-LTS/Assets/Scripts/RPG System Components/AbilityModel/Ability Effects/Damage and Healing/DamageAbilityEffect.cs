@@ -9,9 +9,6 @@ public class DamageAbilityEffect : BaseAbilityEffect
 
     protected override int OnApply(Character target, AbilityCast abilityCast)
     {
-        if (effectVFXObj != null)
-            InstantiateEffectVFX(abilityCast, target);
-
         int dmg = DealDamage(target, abilityCast);
         return dmg;
     }

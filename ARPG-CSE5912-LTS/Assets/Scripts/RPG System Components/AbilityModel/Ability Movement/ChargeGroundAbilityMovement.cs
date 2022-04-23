@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChargeGroundAbilityEffect : BaseAbilityEffect
+public class ChargeGroundAbilityMovement : BaseAbilityMovement
 {
     private const float CHARGE_SPEED = 2.5f;
-    public static event EventHandler<InfoEventArgs<(AbilityCast, Character)>> ChargeGroundDelayedDamageReadyEvent;
 
-    protected override int OnApply(Character target, AbilityCast abilityCast)
+    public override void QueueSpecialMovement(AbilityCast abilityCast, List<Character> targets)
     {
         float dist = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
         NavMeshAgent agent = abilityCast.caster.GetComponent<NavMeshAgent>();
-        agent.enabled = false;
-        StartCoroutine(ChargeToLocation(agent, abilityCast, dist, target));
-        return 0;
+        agent.isStopped = true;
+        StartCoroutine(ChargeToLocation(agent, abilityCast, dist, targets));
     }
 
-    private IEnumerator ChargeToLocation(NavMeshAgent agent, AbilityCast abilityCast, float dist, Character target)
+    private IEnumerator ChargeToLocation(NavMeshAgent agent, AbilityCast abilityCast, float dist, List<Character> targets)
     {
         abilityCast.caster.transform.LookAt(abilityCast.hit.point);
         while (Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position) > 1.25f)
@@ -26,7 +24,8 @@ public class ChargeGroundAbilityEffect : BaseAbilityEffect
             abilityCast.caster.transform.position = Vector3.MoveTowards(abilityCast.caster.transform.position, abilityCast.hit.point, dist * Time.deltaTime * CHARGE_SPEED);
             yield return null;
         }
-        ChargeGroundDelayedDamageReadyEvent?.Invoke(this, new InfoEventArgs<(AbilityCast, Character)>((abilityCast, target)));
-        agent.enabled = true;
+        agent.isStopped = false;
+        agent.destination = abilityCast.hit.point;
+        CompleteSpecialMovement(abilityCast, targets);
     }
 }
