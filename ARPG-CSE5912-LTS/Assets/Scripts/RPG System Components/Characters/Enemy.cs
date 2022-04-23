@@ -130,7 +130,7 @@ namespace ARPG.Combat
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    Debug.Log(timeChecker);
+                    //Debug.Log(timeChecker);
                     if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
                     {
                         if (EnemyAttackTypeList != null)
