@@ -64,7 +64,7 @@ public class Tombstone : MonoBehaviour
         Debug.Log("Placing Tombstone");
         tombstoneModel.SetActive(true);
         var pos = GetPlayerDeathPosition();
-        tombstoneModel.transform.position = new Vector3(pos.x, 3.87f, pos.z);
+        transform.position = new Vector3(pos.x, 3.87f, pos.z);
 
     }
 }

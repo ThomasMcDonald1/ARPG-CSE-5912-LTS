@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 public abstract class Character : MonoBehaviour
 {
     [HideInInspector] public NavMeshAgent agent;
-
     public List<Ability> abilitiesKnown;
     public List<Character> charactersInRange;
 
@@ -26,7 +25,6 @@ public abstract class Character : MonoBehaviour
     public virtual NPC NPCTarget { get; set; }
     [HideInInspector] public float NPCInteractionRange;
 
-    public static event EventHandler<InfoEventArgs<AbilityCast>> AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent;
     public static event EventHandler<InfoEventArgs<AbilityCast>> AbilityIsReadyToBeCastEvent;
     public abstract Type GetCharacterType();
     public Ability basicAttackAbility;
@@ -51,6 +49,8 @@ public abstract class Character : MonoBehaviour
         basicAttackAbility = gameplayStateController.GetComponentInChildren<BasicAttackDamageAbilityEffect>().GetComponentInParent<Ability>();
         smooth = 0.3f;
         yVelocity = 0.0f;
+        BaseAbilityMovement.SpecialMovementCompletedEvent += OnSpecialMovementCompleted;
+        CastTimerCastType.AbilityCastWasCancelledEvent += OnAbilityCastCancelled;
     }
 
     protected virtual void Update()
@@ -58,16 +58,14 @@ public abstract class Character : MonoBehaviour
         //Debug.Log(abilitiesKnown);
     }
 
-    private void OnEnable()
-    {
-        AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent += OnAgentMadeItWithinRangeWithoutCanceling;
-    }
     #endregion
     #region Events
-    void OnAgentMadeItWithinRangeWithoutCanceling(object sender, InfoEventArgs<AbilityCast> e)
+
+    void OnAgentMadeItWithinRangeWithoutCanceling(AbilityCast abilityCast)
     {
+        Debug.Log("Agent made it to within range without cancelling. Ability should cast now.");
         abilityQueued = false;
-        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(e.info));
+        AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }
 
     protected void OnGroundTargetSelected(AbilityCast abilityCast)
@@ -102,6 +100,22 @@ public abstract class Character : MonoBehaviour
             AbilityIsReadyToBeCastEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
         }
     }
+
+    private void OnSpecialMovementCompleted(object sender, InfoEventArgs<(AbilityCast, List<Character>)> e)
+    {
+        if (e.info.Item1.caster == this)
+        {
+            Debug.Log("Special movement was completed");
+            ApplyAbilityEffects(e.info.Item2, e.info.Item1);
+        }
+    }
+
+    private void OnAbilityCastCancelled(object sender, InfoEventArgs<int> e)
+    {
+        if (agent != null)
+            agent.isStopped = false;
+    }
+
     #endregion
     #region Public Functions
     //Put any code here that should be shared functionality across every type of character
@@ -178,6 +192,12 @@ public abstract class Character : MonoBehaviour
         return false;
     }
 
+    protected void PerformSpecialAbilityMovement(AbilityCast abilityCast, List<Character> targets)
+    {
+        Debug.Log("Queueing special ability movement");
+        abilityCast.abilityMovement.QueueSpecialMovement(abilityCast, targets);
+    }
+
     protected void DeductCastingCost(AbilityCast abilityCast)
     {
         //Debug.Log("Deducting casting cost");
@@ -190,7 +210,15 @@ public abstract class Character : MonoBehaviour
         {
             Debug.Log("Getting colliders");
             List<Character> charactersCollided = abilityCast.abilityArea.PerformAOECheckToGetColliders(abilityCast);
-            ApplyAbilityEffects(charactersCollided, abilityCast);
+            if (abilityCast.abilityMovement != null)
+            {
+                Debug.Log("There's special ability movement for this ability.");
+                PerformSpecialAbilityMovement(abilityCast, charactersCollided);
+            }
+            else
+            {
+                ApplyAbilityEffects(charactersCollided, abilityCast);
+            }
         }
     }
 
@@ -199,20 +227,41 @@ public abstract class Character : MonoBehaviour
         //Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
         BaseAbilityEffect[] effects = abilityCast.ability.GetComponentsInChildren<BaseAbilityEffect>();
-        for (int i = 0; i < targets.Count; i++)
+        if (targets.Count == 0)
         {
             for (int j = 0; j < effects.Length; j++)
             {
                 BaseAbilityEffect effect = effects[j];
-                AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
-                if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
+                if (effect.effectVFXObj != null)
                 {
-                    Debug.Log(specialTargeter);
-                    Debug.Log("Applying ability effects to " + targets[i].name);
-                    effect.Apply(targets[i], abilityCast);
+                    Debug.Log("Instantiating VFX");
+                    effect.InstantiateEffectVFX(abilityCast, null);
                 }
             }
         }
+        else
+        {
+            for (int i = 0; i < targets.Count; i++)
+            {
+                for (int j = 0; j < effects.Length; j++)
+                {
+                    BaseAbilityEffect effect = effects[j];
+                    if (effect.effectVFXObj != null)
+                    {
+                        Debug.Log("Instantiating VFX");
+                        effect.InstantiateEffectVFX(abilityCast, targets[i]);
+                    }
+
+                    AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
+                    if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
+                    {
+                        Debug.Log(specialTargeter);
+                        Debug.Log("Applying ability effects to " + targets[i].name);
+                        effect.Apply(targets[i], abilityCast);
+                    }
+                }
+            }
+        }   
     }
     #endregion
     #region Private Functions
@@ -238,7 +287,7 @@ public abstract class Character : MonoBehaviour
             float distFromPlayer = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                OnAgentMadeItWithinRangeWithoutCanceling(abilityCast);
             }
 
 
@@ -257,7 +306,7 @@ public abstract class Character : MonoBehaviour
             float distFromPlayer = Vector3.Distance(target.transform.position, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
-                AgentMadeItWithinRangeToPerformAbilityWithoutCancelingEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
+                OnAgentMadeItWithinRangeWithoutCanceling(abilityCast);
             }
             yield return null;
         }

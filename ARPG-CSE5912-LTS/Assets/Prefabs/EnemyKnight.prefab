@@ -882,8 +882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  abilitiesKnown:
-  - {fileID: 1071248079960811434}
+  abilitiesKnown: []
   charactersInRange: []
   gameplayStateController: {fileID: 0}
   abilityQueued: 0
@@ -891,7 +890,7 @@ MonoBehaviour:
   smooth: 0
   yVelocity: 0
   NPCInteractionRange: 0
-  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
+  basicAttackAbility: {fileID: 0}
   baseRunSpeed: 7
   lootSource: 0
   lootType: 1
@@ -5136,6 +5135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be05525325fdeb94d86bcd45c734c1e5, type: 3}
+--- !u!4 &8031612905635309546 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4221726928823142, guid: be05525325fdeb94d86bcd45c734c1e5, type: 3}
+  m_PrefabInstance: {fileID: 8032445642254812300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8028140790391425816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4878819011940244, guid: be05525325fdeb94d86bcd45c734c1e5, type: 3}
@@ -5144,11 +5148,6 @@ Transform:
 --- !u!4 &8027907974212322256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4539908547413852, guid: be05525325fdeb94d86bcd45c734c1e5, type: 3}
-  m_PrefabInstance: {fileID: 8032445642254812300}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8031612905635309546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4221726928823142, guid: be05525325fdeb94d86bcd45c734c1e5, type: 3}
   m_PrefabInstance: {fileID: 8032445642254812300}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8072820709288627715
@@ -5270,17 +5269,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
---- !u!114 &1071248079960811434 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8275773174081698646, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
-  m_PrefabInstance: {fileID: 8936449706460617980}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d00cdfd0856374dade85cf5aaf3bd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2825897054812482643 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6571666439710781615, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}

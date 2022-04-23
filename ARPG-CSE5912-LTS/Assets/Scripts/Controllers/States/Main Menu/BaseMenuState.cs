@@ -22,7 +22,7 @@ public class BaseMenuState : State
 
     // options menu buttons
     public AudioMixer audioMixer;
-    public Button backFromOptionsToMainButton;
+    public Button backFromOptionsToMainButton, confirmOptionsButton, resetOptionsButton;
     public Button fullScreenButton, noFullScreenButton;
     public TMP_Dropdown resolutionDropDown;
     public Slider musicVolumeSlider, soundEffectsVolumeSlider;
@@ -63,6 +63,8 @@ public class BaseMenuState : State
 
         //options
         backFromOptionsToMainButton = mainMenuController.backFromOptionsToMainButtonObj.GetComponent<Button>();
+        confirmOptionsButton = mainMenuController.confirmOptionsButtonObj.GetComponent<Button>();
+        resetOptionsButton = mainMenuController.resetOptionsButtonObj.GetComponent<Button>();
         resolutionDropDown = mainMenuController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
         fullScreenButton = mainMenuController.fullScreenButtonObj.GetComponent<Button>();
         noFullScreenButton = mainMenuController.noFullScreenButtonObj.GetComponent<Button>();

@@ -34,6 +34,7 @@ public class GameplayState : BaseGameplayState
 
         Debug.Log("entered GameplayState");
 
+        gameplayStateController.gameObject.SetActive(true);
         gameplayStateController.gameplayUICanvas.enabled = true;
         pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
         exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
@@ -77,13 +78,15 @@ public class GameplayState : BaseGameplayState
         contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
         Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        LoadingStateController.Instance.LoadScene("MainMenu");
+        gameplayStateController.gameObject.SetActive(false);
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnExitGameClicked()
     {
         Application.Quit();
+        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnPauseMenuClicked()

@@ -16,15 +16,15 @@ public class BaseGameplayState : State
     public Button pauseMenuButton;
     public Button resumeGameButton;
     public Button inGameOptionsButton;
-    public Button exitOptionsToPauseButton;
+    public Button exitOptionsToPauseButton, confirmOptionsButton, resetOptionsButton;
     public Button exitToMainMenuButton;
     public Button exitGameButton;
     public Button charaPanelButton;
     public Button exitPanelToGameButton;
     public Button yesRespawnButton;
     public Button noRespawnButton;
-    public Button exitInventoryButton;
-    public Button changeToInventoryMenu;
+    public Button exitAbilityShopButton;
+    public Button changeToAbilityMenu;
     public Button confirmPassiveTreeButton;
     public Button closePassiveTreeButton;
     public Button skillNotificationButton;
@@ -46,10 +46,12 @@ public class BaseGameplayState : State
         exitOptionsToPauseButton = gameplayStateController.exitOptionsToPauseButtonObj.GetComponent<Button>();
         charaPanelButton = gameplayStateController.charaPanelButtonObj.GetComponent<Button>();
         exitPanelToGameButton = gameplayStateController.exitPanelToGameButtonObj.GetComponent<Button>();
-        exitInventoryButton = gameplayStateController.exitInventoryMenuObj.GetComponent<Button>();
-        changeToInventoryMenu = gameplayStateController.openInventoryMenuObj.GetComponent<Button>();
+        exitAbilityShopButton = gameplayStateController.exitAbilityMenuObj.GetComponent<Button>();
+        changeToAbilityMenu = gameplayStateController.openAbilityMenuObj.GetComponent<Button>();
         skillNotificationButton = gameplayStateController.skillNotificationButtonObj.GetComponent<Button>();
 
+        confirmOptionsButton = gameplayStateController.confirmOptionsButtonObj.GetComponent<Button>();
+        resetOptionsButton = gameplayStateController.resetOptionsButtonObj.GetComponent<Button>();
         resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
         fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
         noFullScreenButton = gameplayStateController.noFullScreenButtonObj.GetComponent<Button>();
