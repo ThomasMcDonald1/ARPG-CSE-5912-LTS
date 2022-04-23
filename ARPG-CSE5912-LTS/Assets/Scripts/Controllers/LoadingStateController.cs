@@ -33,7 +33,7 @@ public class LoadingStateController : StateMachine
         //     StartCoroutine(LoadYourAsyncScene());
         // }
     }
-    public async void InitalizeGameScene()
+    public void InitalizeGameScene()
     {
         loadingSceneCanvasObj.SetActive(true);
 
@@ -45,16 +45,15 @@ public class LoadingStateController : StateMachine
 
         StartCoroutine(GetSceneLoadProgress());
 
-        await Task.Delay(2000);
-
         Destroy(tempAudioListener);
         InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
     }
-    public async void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         loadingSceneCanvasObj.SetActive(true);
 
+        FindObjectOfType<AudioManager>().Stop(SceneMusic(SceneManager.GetActiveScene().name));
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
         scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -63,11 +62,10 @@ public class LoadingStateController : StateMachine
 
         StartCoroutine(GetSceneLoadProgress());
 
-        await Task.Delay(2000);
-
         Destroy(tempAudioListener);
         InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
+        FindObjectOfType<AudioManager>().Play(SceneMusic(sceneName));
     }
     public IEnumerator GetSceneLoadProgress()
     {
@@ -169,6 +167,20 @@ public class LoadingStateController : StateMachine
                 Debug.Log("Initalizing Player Stats");
                 InitializePlayerStats();
             }
+        }
+    }
+    private string SceneMusic(string sceneName)
+    {
+        switch (sceneName)
+        {
+            case "Dungeon1":
+                return "Dungeon1BGM";
+            case "Dungeon2":
+                return "Dungeon2BGM";
+            case "Dungeon3":
+                return "Dungeon3BGM";
+            default:
+                return "Theme";
         }
     }
 }

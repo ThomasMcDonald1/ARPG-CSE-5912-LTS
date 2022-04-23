@@ -67,10 +67,41 @@ public class AudioManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("BGM", volume);
 
-        Sound s = Array.Find(sounds, sound => sound.name == "Theme");
-        if (s != null)
+        Sound s1 = Array.Find(sounds, sound => sound.name == "Theme");
+        Sound s2 = Array.Find(sounds, sound => sound.name == "Dungeon1BGM");
+        Sound s3 = Array.Find(sounds, sound => sound.name == "Dungeon2BGM");
+        Sound s4 = Array.Find(sounds, sound => sound.name == "Dungeon3BGM");
+        Sound s5 = Array.Find(sounds, sound => sound.name == "Boss1Music");
+        Sound s6 = Array.Find(sounds, sound => sound.name == "Boss2Music");
+        Sound s7 = Array.Find(sounds, sound => sound.name == "Boss3Music");
+
+        if (s1 != null)
         {
-            s.UpdateVolume(volume);
+            s1.UpdateVolume(volume);
+        }
+        if (s2 != null)
+        {
+            s2.UpdateVolume(volume);
+        }
+        if (s3 != null)
+        {
+            s3.UpdateVolume(volume);
+        }
+        if (s4 != null)
+        {
+            s4.UpdateVolume(volume);
+        }
+        if (s5 != null)
+        {
+            s5.UpdateVolume(volume);
+        }
+        if (s6 != null)
+        {
+            s6.UpdateVolume(volume);
+        }
+        if (s7 != null)
+        {
+            s7.UpdateVolume(volume);
         }
     }
 
