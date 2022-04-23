@@ -171,6 +171,20 @@ public class Player : Character
         StartCoroutine(LookAtNPCTarget());
     }
 
+    public IEnumerator RunToDoodad(GameObject doodad)
+    {
+        while (Vector3.Distance(transform.position, doodad.transform.position) > 2)
+        {
+            movementHandler.MoveToTarget(doodad.transform.position);
+            yield return null;
+        }
+        Tombstone tombstone = doodad.GetComponent<Tombstone>();
+        if (tombstone != null)
+        {
+            Tombstone.Instance.GiveBackLostExp();
+        }
+    }
+
     public IEnumerator LookAtNPCTarget()
     {
         float time = 0.0f;
