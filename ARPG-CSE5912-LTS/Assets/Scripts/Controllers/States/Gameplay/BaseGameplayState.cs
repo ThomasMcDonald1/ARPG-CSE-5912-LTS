@@ -16,7 +16,7 @@ public class BaseGameplayState : State
     public Button pauseMenuButton;
     public Button resumeGameButton;
     public Button inGameOptionsButton;
-    public Button exitOptionsToPauseButton;
+    public Button exitOptionsToPauseButton, confirmOptionsButton, resetOptionsButton;
     public Button exitToMainMenuButton;
     public Button exitGameButton;
     public Button charaPanelButton;
@@ -50,6 +50,8 @@ public class BaseGameplayState : State
         changeToAbilityMenu = gameplayStateController.openAbilityMenuObj.GetComponent<Button>();
         skillNotificationButton = gameplayStateController.skillNotificationButtonObj.GetComponent<Button>();
 
+        confirmOptionsButton = gameplayStateController.confirmOptionsButtonObj.GetComponent<Button>();
+        resetOptionsButton = gameplayStateController.resetOptionsButtonObj.GetComponent<Button>();
         resolutionDropDown = gameplayStateController.resolutionDropDownObj.GetComponent<TMP_Dropdown>();
         fullScreenButton = gameplayStateController.fullScreenButtonObj.GetComponent<Button>();
         noFullScreenButton = gameplayStateController.noFullScreenButtonObj.GetComponent<Button>();

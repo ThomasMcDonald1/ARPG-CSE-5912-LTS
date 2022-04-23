@@ -22,6 +22,8 @@ public class OptionsGameplayState : BaseGameplayState
         noFullScreenButton.onClick.AddListener(() => OnFullScreenDeselected());
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeAdjusted);
         soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeAdjusted);
+        confirmOptionsButton.onClick.AddListener(() => OnConfirmOptions());
+        resetOptionsButton.onClick.AddListener(() => OnResetOptions());
 
         AdjustMenuAppearance();
     }
@@ -62,13 +64,42 @@ public class OptionsGameplayState : BaseGameplayState
         soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
     }
 
+    void OnConfirmOptions()
+    {
+        PlayerPrefs.SetInt("Resolution", resolutionDropDown.value);
+        if (Screen.fullScreen)
+        {
+            PlayerPrefs.SetInt("FullScreen", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("FullScreen", 0);
+        }
+
+        PlayerPrefs.SetFloat("BGM", musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("SE", soundEffectsVolumeSlider.value);
+    }
+
+    void OnResetOptions()
+    {
+        resolutionDropDown.value = PlayerPrefs.GetInt("Resolution");
+        if (PlayerPrefs.GetInt("FullScreen")==1)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("BGM");
+        soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
+    }
+
     void OnResolutionSelected(int selection)
     {
         Screen.SetResolution(supportedRes[selection].width, supportedRes[selection].height, Screen.fullScreen);
 
         Debug.Log("Resolution option " + selection + " set");
-
-        PlayerPrefs.SetInt("Resolution", selection);
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
@@ -76,8 +107,6 @@ public class OptionsGameplayState : BaseGameplayState
     void OnFullScreenSelected()
     {
         Screen.fullScreen = true;
-
-        PlayerPrefs.SetInt("FullScreen", 1);
 
         Debug.Log("Full screen (on): " + Screen.fullScreen);
 
@@ -87,8 +116,6 @@ public class OptionsGameplayState : BaseGameplayState
     void OnFullScreenDeselected()
     {
         Screen.fullScreen = false;
-
-        PlayerPrefs.SetInt("FullScreen", 0);
 
         Debug.Log("Full screen (off): " + Screen.fullScreen);
 

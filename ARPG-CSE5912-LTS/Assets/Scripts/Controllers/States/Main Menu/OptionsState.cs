@@ -17,6 +17,8 @@ public class OptionsState : BaseMenuState
         noFullScreenButton.onClick.AddListener(() => OnFullScreenDeselected());
         musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeAdjusted);
         soundEffectsVolumeSlider.onValueChanged.AddListener(OnSoundEffectsVolumeAdjusted);
+        confirmOptionsButton.onClick.AddListener(() => OnConfirmOptions());
+        resetOptionsButton.onClick.AddListener(() => OnResetOptions());
 
         AdjustMenuAppearance();
     }
@@ -60,6 +62,37 @@ public class OptionsState : BaseMenuState
         mainMenuController.ChangeState<MainMenuRootState>();
 
         FindObjectOfType<AudioManager>().Play("MenuClick");
+    }
+
+    void OnConfirmOptions()
+    {
+        PlayerPrefs.SetInt("Resolution", resolutionDropDown.value);
+        if (Screen.fullScreen)
+        {
+            PlayerPrefs.SetInt("FullScreen", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("FullScreen", 0);
+        }
+
+        PlayerPrefs.SetFloat("BGM", musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("SE", soundEffectsVolumeSlider.value);
+    }
+
+    void OnResetOptions()
+    {
+        resolutionDropDown.value = PlayerPrefs.GetInt("Resolution");
+        if (PlayerPrefs.GetInt("FullScreen") == 1)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("BGM");
+        soundEffectsVolumeSlider.value = PlayerPrefs.GetFloat("SE");
     }
 
     void OnResolutionSelected(int selection)

@@ -65,8 +65,6 @@ public class AudioManager : MonoBehaviour
 
     public void AdjustMusicVolume(float volume)
     {
-        PlayerPrefs.SetFloat("BGM", volume);
-
         Sound s = Array.Find(sounds, sound => sound.name == "Theme");
         if (s != null)
         {
@@ -76,8 +74,6 @@ public class AudioManager : MonoBehaviour
 
     public void AdjustSoundEffectVolume(float volume)
     {
-        PlayerPrefs.SetFloat("SE", volume);
-
         Sound s1 = Array.Find(sounds, sound => sound.name == "Footsteps");
         Sound s2 = Array.Find(sounds, sound => sound.name == "MenuClick");
         Sound s3 = Array.Find(sounds, sound => sound.name == "Force");

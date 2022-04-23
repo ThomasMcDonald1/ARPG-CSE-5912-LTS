@@ -804,6 +804,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2566463094827741586, guid: 3eae4aee4117a1c41af9d10716df9a17, type: 3}
   m_PrefabInstance: {fileID: 20998177}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &20998191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1904968155054288751, guid: 3eae4aee4117a1c41af9d10716df9a17, type: 3}
+  m_PrefabInstance: {fileID: 20998177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &20998192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6613624782404413539, guid: 3eae4aee4117a1c41af9d10716df9a17, type: 3}
+  m_PrefabInstance: {fileID: 20998177}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &21348607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44913,6 +44923,8 @@ MonoBehaviour:
   exitToMainMenuButtonObj: {fileID: 20998186}
   exitGameButtonObj: {fileID: 20998185}
   exitOptionsToPauseButtonObj: {fileID: 20998184}
+  confirmOptionsButtonObj: {fileID: 20998191}
+  resetOptionsButtonObj: {fileID: 20998192}
   resolutionDropDownObj: {fileID: 20998183}
   fullScreenButtonObj: {fileID: 20998182}
   noFullScreenButtonObj: {fileID: 20998181}
@@ -70154,17 +70166,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6728595698786195621, guid: 9987959a403eec84581a86820faf0091, type: 3}
   m_PrefabInstance: {fileID: 6728595697790562813}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1532520794 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6728595698786195623, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 6728595697790562813}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1532520792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1532520796 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7327733052027441077, guid: 9987959a403eec84581a86820faf0091, type: 3}
@@ -87134,7 +87135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayUICanvas: {fileID: 1736095010}
-  characterPanelUIRaycaster: {fileID: 1532520794}
   gameplayStateController: {fileID: 947855309}
 --- !u!4 &1961293371
 Transform:
@@ -95375,7 +95375,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5851445629098973067}
   m_HandleRect: {fileID: 5851445629098973064}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

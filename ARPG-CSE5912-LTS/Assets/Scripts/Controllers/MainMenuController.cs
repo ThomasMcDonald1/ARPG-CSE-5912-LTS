@@ -32,7 +32,7 @@ public class MainMenuController : StateMachine
     public GameObject slotContainerObj;
 
     // Options menu buttons
-    public GameObject backFromOptionsToMainButtonObj;
+    public GameObject backFromOptionsToMainButtonObj, confirmOptionsButtonObj, resetOptionsButtonObj;
     public GameObject resolutionDropDownObj;
     public GameObject fullScreenButtonObj, noFullScreenButtonObj;
     public GameObject musicVolumeSliderObj, soundEffectsVolumeSliderObj;
