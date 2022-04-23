@@ -228,7 +228,7 @@ public class Player : Character
 
     public bool InCombatTargetRange()
     {
-        Debug.Log(stats[StatTypes.AttackRange]);
+        //Debug.Log(stats[StatTypes.AttackRange]);
         if (AttackTarget == null) return false;
         //return Vector3.Distance(GeneralClass.transform.position, AttackTarget.position) < AttackRange;
         return Vector3.Distance(transform.position, AttackTarget.GetComponent<Collider>().ClosestPoint(transform.position)) < stats[StatTypes.AttackRange];
