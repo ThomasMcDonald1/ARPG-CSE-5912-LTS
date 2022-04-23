@@ -52,8 +52,13 @@ public class InputController : MonoBehaviour
     private bool clickHeld;
     private bool stationaryHeld;
 
+    private int playerLayerMask;
+
     private void Awake()
     {
+        playerLayerMask = 1 << 10;
+        playerLayerMask = ~playerLayerMask;
+
         DontDestroyOnLoad(this);
         if (instance != null && instance != this)
         {
@@ -327,8 +332,9 @@ public class InputController : MonoBehaviour
             //Otherwise, cast ray to gameplay environment
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit rcHit;
+            
 
-            if (Physics.Raycast(ray, out rcHit))
+            if (Physics.Raycast(ray, out rcHit, Mathf.Infinity, playerLayerMask))
             {
                 ClickEvent?.Invoke(this, new InfoEventArgs<RaycastHit>(rcHit));
             }

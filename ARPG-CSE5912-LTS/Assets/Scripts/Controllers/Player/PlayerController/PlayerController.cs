@@ -73,8 +73,7 @@ public class PlayerController : MonoBehaviour
                     {
                         Debug.Log("Clicked on " + e.info.collider.name);
                         player.AttackCancel();
-                        player.RunToDoodad(e.info.collider.gameObject);
-                        
+                        player.RunToDoodad(e.info.collider.gameObject);                     
                     }
                 break;
                 default:
