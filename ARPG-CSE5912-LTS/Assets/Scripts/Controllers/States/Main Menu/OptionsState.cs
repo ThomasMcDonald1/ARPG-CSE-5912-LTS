@@ -10,6 +10,7 @@ public class OptionsState : BaseMenuState
         base.Enter();
         Debug.Log("entered options menu state");
         mainMenuController.optionsMenuCanvas.enabled = true;
+        GetResolutionsSupported();
         backFromOptionsToMainButton.onClick.AddListener(() => OnBackButtonClicked());
         resolutionDropDown.onValueChanged.AddListener(OnResolutionSelected);
         fullScreenButton.onClick.AddListener(() => OnFullScreenSelected());
@@ -24,6 +25,27 @@ public class OptionsState : BaseMenuState
     {
         base.Exit();
         mainMenuController.optionsMenuCanvas.enabled = false;
+    }
+
+    void GetResolutionsSupported()
+    {
+        var resolutions = mainMenuController.supportedRes;
+        int native = 0, i=0;
+        resolutionDropDown.options.Clear();
+        foreach (Resolution res in resolutions)
+        {
+            string str = "" + res.width + " x " + res.height;
+            TMPro.TMP_Dropdown.OptionData option = new TMPro.TMP_Dropdown.OptionData(str);
+            resolutionDropDown.options.Add(option);
+            if (res.Equals(Screen.currentResolution))
+            {
+                native = i;
+            }
+            i++;
+        }
+
+        //set default resolution option
+        PlayerPrefs.SetInt("Resolution", native);
     }
 
     void AdjustMenuAppearance()
@@ -42,24 +64,8 @@ public class OptionsState : BaseMenuState
 
     void OnResolutionSelected(int selection)
     {
-        switch (selection)
-        {
-            case 0:
-                Screen.SetResolution(800, 600, Screen.fullScreen);
-                break;
-            case 1:
-                Screen.SetResolution(1280, 720, Screen.fullScreen);
-                break;
-            case 2:
-                Screen.SetResolution(1600, 1900, Screen.fullScreen);
-                break;
-            case 3:
-                Screen.SetResolution(1900, 1200, Screen.fullScreen);
-                break;
-            default:
-                Screen.SetResolution(800, 600, Screen.fullScreen);
-                break;
-        }
+        Screen.SetResolution(mainMenuController.supportedRes[selection].width, mainMenuController.supportedRes[selection].height, Screen.fullScreen);
+
         Debug.Log("Resolution option " + selection + " set");
 
         PlayerPrefs.SetInt("Resolution", selection);

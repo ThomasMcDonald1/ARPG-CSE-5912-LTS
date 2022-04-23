@@ -55,6 +55,9 @@ public class MainMenuController : StateMachine
     //dungeon game objects - to reset upon new play
     public SaveDungeon dungeon1, dungeon2, dungeon3;
 
+    //screen resolutions
+    public Resolution[] supportedRes;
+
     private void Awake()
     {
         mainMenuCanvas = mainMenuCanvasObj.GetComponent<Canvas>();
@@ -67,6 +70,10 @@ public class MainMenuController : StateMachine
         createCharMenuCanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
         characterCreationCamera.enabled = false;
+
+        //get supported resolutions
+        supportedRes = Screen.resolutions;
+
         ChangeState<MainMenuRootState>();
     }
 }

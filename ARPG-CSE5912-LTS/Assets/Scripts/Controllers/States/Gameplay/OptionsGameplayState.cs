@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class OptionsGameplayState : BaseGameplayState
 {
+    private Resolution[] supportedRes;
+
     public override void Enter()
     {
         base.Enter();
         Debug.Log("Game options selected");
         Time.timeScale = 0;
+        GetResolutionsSupported();
         gameplayStateController.pauseMenuCanvas.enabled = false;
         gameplayStateController.optionsMenuCanvas.enabled = true;
         gameplayStateController.npcInterfaceObj.SetActive(false);
@@ -33,6 +36,19 @@ public class OptionsGameplayState : BaseGameplayState
         Time.timeScale = 1;
     }
 
+    void GetResolutionsSupported()
+    {
+        supportedRes = Screen.resolutions;
+        resolutionDropDown.options.Clear();
+        foreach (var res in supportedRes)
+        {
+            string str = "" + res.width + " x " + res.height;
+            Debug.Log(str);
+            TMPro.TMP_Dropdown.OptionData option = new TMPro.TMP_Dropdown.OptionData(str);
+            resolutionDropDown.options.Add(option);
+        }
+    }
+
     void OnBackToPauseClicked()
     {
         gameplayStateController.ChangeState<PauseGameState>();
@@ -48,24 +64,8 @@ public class OptionsGameplayState : BaseGameplayState
 
     void OnResolutionSelected(int selection)
     {
-        switch (selection)
-        {
-            case 0:
-                Screen.SetResolution(800, 600, Screen.fullScreen);
-                break;
-            case 1:
-                Screen.SetResolution(1280, 720, Screen.fullScreen);
-                break;
-            case 2:
-                Screen.SetResolution(1600, 1900, Screen.fullScreen);
-                break;
-            case 3:
-                Screen.SetResolution(1900, 1200, Screen.fullScreen);
-                break;
-            default:
-                Screen.SetResolution(800, 600, Screen.fullScreen);
-                break;
-        }
+        Screen.SetResolution(supportedRes[selection].width, supportedRes[selection].height, Screen.fullScreen);
+
         Debug.Log("Resolution option " + selection + " set");
 
         PlayerPrefs.SetInt("Resolution", selection);
