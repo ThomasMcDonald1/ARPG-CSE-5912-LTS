@@ -70,6 +70,16 @@ namespace ARPG.Combat
             enemyUIText.text = transform.GetChild(0).name + " LV " + stats[StatTypes.LVL].ToString();
             //Debug.Log("enemy is" + gameObject.name);
             //Debug.Log(abilitiesKnown);
+            if (abilitiesKnown != null)
+            {
+                //Debug.Log(abilitiesKnown.Count);
+                for (int i = 0; i < abilitiesKnown.Count; i++)
+                {
+                    EnemyAbility enemyability = new EnemyAbility();
+                    enemyability.abilityAssigned = abilitiesKnown[i];
+                    EnemyAttackTypeList.Add(enemyability);
+                }
+            }
         }
         protected override void Update()
         {
@@ -131,30 +141,31 @@ namespace ARPG.Combat
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     Debug.Log(timeChecker);
-                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
+                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                     {
-                        if (EnemyAttackTypeList != null)
+
+                        //Debug.Log(EnemyAttackTypeList);
+                        //Debug.Log(EnemyAttackTypeList.Count);
+                        for (int i = 0; i < EnemyAttackTypeList.Count; i++)
                         {
-                            //Debug.Log("I got there1");
-                            for (int i = 0; i < EnemyAttackTypeList.Count; i++)
+                            //Debug.Log("I got there2");
+
+                            if (EnemyAttackTypeList[i].abilityOnCooldown == false)
                             {
-                                //Debug.Log("I got there2");
-
-                                if (EnemyAttackTypeList[i].abilityOnCooldown == false)
-                                {
-                                    QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
-                                    if (coolRoutine == null)
-                                        coolRoutine = StartCoroutine(CoolDown());
-                                    break;
-                                }
+                                QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                                if (coolRoutine == null)
+                                    coolRoutine = StartCoroutine(CoolDown());
+                                break;
                             }
-
                         }
+
+
                     }
                     else
                     {
                         if (animator.GetBool("AttackingMainHand"))
                         {
+                            //Debug.Log("I got there1");
                             animator.SetTrigger("AttackMainHandTrigger");
                             //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                         }
@@ -164,6 +175,7 @@ namespace ARPG.Combat
                             //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                         }
                     }
+                    
                     
                     if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
@@ -183,7 +195,7 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
-            if (agent.enabled)
+            if (agent.enabled == true)
             {
                 agent.isStopped = false;
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
