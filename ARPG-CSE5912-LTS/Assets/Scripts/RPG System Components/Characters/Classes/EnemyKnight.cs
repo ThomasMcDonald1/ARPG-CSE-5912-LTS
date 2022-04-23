@@ -21,6 +21,7 @@ namespace ARPG.Combat
             cooldownTimer = 6;
             timeChecker = cooldownTimer;
 
+            /*
             if (abilitiesKnown != null)
             {
                 //Debug.Log(abilitiesKnown.Count);
@@ -31,6 +32,7 @@ namespace ARPG.Combat
                     EnemyAttackTypeList.Add(enemyability);
                 }
             }
+            */
         }
 
         public override string GetClassTypeName()
