@@ -25,7 +25,7 @@ public class CastingBar : MonoBehaviour
 
     void OnAbilityIsReadyToBeCast(object sender, InfoEventArgs<AbilityCast> e)
     {
-        if (e.info.castType.GetCastType() == typeof(CastTimerCastType)&& e.info.caster is Player)
+        if (e.info.castType is CastTimerCastType && e.info.caster is Player)
         {
             castBarCanvas.SetActive(true);
             abilityIcon.sprite = e.info.ability.icon;
