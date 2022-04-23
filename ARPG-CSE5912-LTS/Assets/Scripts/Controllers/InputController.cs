@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] GameObject gameplayUICanvas;
     GraphicRaycaster gameplayUIRaycaster;
-    [SerializeField] GraphicRaycaster characterPanelUIRaycaster;
+    GraphicRaycaster characterPanelUIRaycaster;
     [SerializeField] GameplayStateController gameplayStateController;
 
     //Events associated with input being pressed
@@ -87,18 +87,14 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (characterPanelUIRaycaster == null)
-        {
-            var characterPanel = GameObject.Find("CharacterPanel");
-            if (characterPanel != null)
-            {
-                characterPanelUIRaycaster = characterPanel.GetComponent<GraphicRaycaster>();
-            }
-        }
-
         if (gameplayStateController == null)
         {
             gameplayStateController = FindObjectOfType<GameplayStateController>();
+        }
+
+        if (characterPanelUIRaycaster == null)
+        {
+            characterPanelUIRaycaster = gameplayStateController.GetComponentInChildren<CharacterPanelController>().GetComponent<GraphicRaycaster>();
         }
     }
 
@@ -310,6 +306,7 @@ public class InputController : MonoBehaviour
 
     private List<RaycastResult> GetUIElementsHoveredInventory()
     {
+        FindCanvas();
         PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
             position = Mouse.current.position.ReadValue()
