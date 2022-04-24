@@ -48,6 +48,8 @@ public class GameoverState : BaseGameplayState
         base.Exit();
         gameplayStateController.gameoverCanvas.enabled = false;
         Time.timeScale = 1;
+        yesRespawnButton.onClick.RemoveAllListeners();
+        noRespawnButton.onClick.RemoveAllListeners();
     }
 
     void OnYesButtonClicked()
