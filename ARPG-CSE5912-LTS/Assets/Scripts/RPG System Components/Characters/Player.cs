@@ -111,7 +111,7 @@ public class Player : Character
                 animator.SetBool("StopAttack", true);
                 StartCoroutine(MoveToEnemy());
             }
-            else if (InCombatTargetRange() && !coroutineRunningEnemyCheck)
+            else if (InCombatTargetRange() && !coroutineRunningEnemyCheck && AttackTarget.GetComponent<Character>().stats[StatTypes.HP] > 0)
             {
                 animator.SetBool("StopAttack", false);
                 //GetComponent<Animator>().SetBool("StopAttack", false);
