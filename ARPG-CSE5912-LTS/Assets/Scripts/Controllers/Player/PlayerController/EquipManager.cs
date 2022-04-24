@@ -205,9 +205,8 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.CritChance] += weapon.critChance;
             }
         }
-        else if (!(newItem.equipSlot == EquipmentSlot.Jewelry))
+        else if (newItem is ArmorEquipment armor && !(newItem.equipSlot == EquipmentSlot.Jewelry))
         {
-            ArmorEquipment armor = (ArmorEquipment)newItem;
             playerStats[StatTypes.Armor] += armor.Armor;
             playerStats[StatTypes.Evasion] += armor.Evasion;
         }
@@ -222,6 +221,15 @@ public class EquipManager : MonoBehaviour
             {
                 Feature feature = featureGO.GetComponent<Feature>();
                 Debug.Log(feature.name);
+                feature.Activate(gameObject);
+            }
+        }
+
+        foreach (GameObject featureGO in newItem.suffix.FeaturesGOs)
+        {
+            if (featureGO != null)
+            {
+                Feature feature = featureGO.GetComponent<Feature>();
                 feature.Activate(gameObject);
             }
         }
@@ -303,6 +311,15 @@ public class EquipManager : MonoBehaviour
 
             // Dectivate the equipment's features
             foreach (GameObject featureGO in oldItem.prefix.FeaturesGOs)
+            {
+                if (featureGO != null)
+                {
+                    Feature feature = featureGO.GetComponent<Feature>();
+                    feature.Deactivate();
+                }
+            }
+
+            foreach (GameObject featureGO in oldItem.suffix.FeaturesGOs)
             {
                 if (featureGO != null)
                 {
