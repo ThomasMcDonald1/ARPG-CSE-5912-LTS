@@ -8,6 +8,7 @@ using TMPro;
 public class MainMenuRootState : BaseMenuState
 {
     private const int SLOTS_VISIBLE = 4;
+    private bool initialized = false;
 
     public override void Enter()
     {
@@ -29,6 +30,8 @@ public class MainMenuRootState : BaseMenuState
 
     void SetUpButtons()
     {
+        if (initialized) return;
+
         startGameButton.onClick.AddListener(() => OnStartGameClicked());
         createCharButton.onClick.AddListener(() => OnCreateCharClicked());
         optionsButton.onClick.AddListener(() => OnOptionsClicked());
@@ -41,6 +44,8 @@ public class MainMenuRootState : BaseMenuState
         deleteCharButton.onClick.AddListener(() => OnDeleteCharacterSelected());
         yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
         noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
+
+        initialized = true;
     }
 
     void SetSlotVisibility()
