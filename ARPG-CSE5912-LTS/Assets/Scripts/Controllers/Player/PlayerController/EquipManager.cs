@@ -205,7 +205,7 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.CritChance] += weapon.critChance;
             }
         }
-        else if (!newItem.name.Equals("Pendant"))
+        else if (!(newItem.equipSlot == EquipmentSlot.Jewelry))
         {
             ArmorEquipment armor = (ArmorEquipment)newItem;
             playerStats[StatTypes.Armor] += armor.Armor;
@@ -245,9 +245,12 @@ public class EquipManager : MonoBehaviour
                 case Ite.ItemType.armor:
                     Inventory.instance.Add(oldItem, Inventory.instance.armorItems);
                     EquipmentManager.instance.UnequipItem(oldItem.equipment, character);
-                    ArmorEquipment armor = (ArmorEquipment)oldItem;
-                    playerStats[StatTypes.Armor] -= armor.Armor;
-                    playerStats[StatTypes.Evasion] -= armor.Evasion;
+                    if (!(oldItem.equipSlot == EquipmentSlot.Jewelry))
+                    {
+                        ArmorEquipment armor = (ArmorEquipment)oldItem;
+                        playerStats[StatTypes.Armor] -= armor.Armor;
+                        playerStats[StatTypes.Evasion] -= armor.Evasion;
+                    }
                     break;
                 case Ite.ItemType.weapon:
                     Inventory.instance.Add(oldItem, Inventory.instance.weaponItems);
