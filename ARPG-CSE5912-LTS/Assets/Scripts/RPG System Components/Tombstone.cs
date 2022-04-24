@@ -10,6 +10,7 @@ public class Tombstone : MonoBehaviour
     public GameObject tombstoneModel;
     private int dungeonNumOfDeath = -1;
     private Vector3 playerDeathPos;
+    private bool expReturned = false;
 
     private void Awake()
     {
@@ -28,14 +29,20 @@ public class Tombstone : MonoBehaviour
     public void HoldTempExpLoss(int expLoss)
     {
         heldExp = expLoss;
+        expReturned = false;
     }
 
     public void GiveBackLostExp()
     {
-        playerStats[StatTypes.EXP] += heldExp;
-        heldExp = 0;
-        dungeonNumOfDeath = -1;
-        tombstoneModel.SetActive(false);
+        if (!expReturned)
+        {
+            Debug.Log("Giving back " + heldExp + " exp to the player.");
+            playerStats[StatTypes.EXP] += heldExp;
+            heldExp = 0;
+            dungeonNumOfDeath = -1;
+            tombstoneModel.SetActive(false);
+            expReturned = true;
+        }
     }
 
     public void RememberDungeonNumOfPlayerDeath(int dungeonNum)

@@ -181,8 +181,10 @@ public class Player : Character
 
     public IEnumerator RunToDoodad(GameObject doodad)
     {
+        //Debug.Log("Running to doodad.");
         while (Vector3.Distance(transform.position, doodad.transform.position) > 2)
         {
+            movementHandler.NavMeshAgent.isStopped = false;
             movementHandler.MoveToTarget(doodad.transform.position);
             yield return null;
         }

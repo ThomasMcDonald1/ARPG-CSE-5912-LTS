@@ -185,7 +185,8 @@ namespace ARPG.Combat
         {
             if (agent.enabled)
             {
-                agent.isStopped = false;
+                if (agent.isStopped)
+                    agent.isStopped = false;
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     NavMeshPath path = new NavMeshPath();

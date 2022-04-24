@@ -71,9 +71,9 @@ public class PlayerController : MonoBehaviour
                 case "Doodads":
                     if (GetComponent<Animator>().GetBool("Dead") == false)
                     {
-                        Debug.Log("Clicked on " + e.info.collider.name);
+                        //Debug.Log("Clicked on " + e.info.collider.gameObject);
                         player.AttackCancel();
-                        player.RunToDoodad(e.info.collider.gameObject);                     
+                        StartCoroutine(player.RunToDoodad(e.info.collider.gameObject));                     
                     }
                 break;
                 default:
