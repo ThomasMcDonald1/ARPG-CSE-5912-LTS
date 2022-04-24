@@ -66,10 +66,6 @@ public class Lorekeeper : NPC
 
             time += Time.deltaTime * speed;
 
-            //SetMenu();
-
-
-
             yield return null;
         }
     }
@@ -80,14 +76,17 @@ public class Lorekeeper : NPC
         switch (currentStory)
         {
             case 0:
+                // Quest to kill regualr knight
                 GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 if (porter.currentStory == 1) { porter.currentStory = 2; }
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
                 break;
             case 1:
+                // Dialogue that says you can use portal now with Perry
                 break;
             case 2:
+                // Kill Stout quest
                 GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();
