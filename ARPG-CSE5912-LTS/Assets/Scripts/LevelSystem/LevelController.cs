@@ -95,7 +95,8 @@ public class LevelController : MonoBehaviour
 
     private void OnSkillPointUsedToBuyAbility(object sender, InfoEventArgs<int> e)
     {
-        skillNotification.SetActive(false);
+        if (stats[StatTypes.SkillPoints] == 0)
+            skillNotification.SetActive(false);
     }
 
     public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int,string)> e)
