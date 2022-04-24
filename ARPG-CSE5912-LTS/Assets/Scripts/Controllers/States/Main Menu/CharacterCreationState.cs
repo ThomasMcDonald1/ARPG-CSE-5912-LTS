@@ -8,6 +8,7 @@ public class CharacterCreationState : BaseMenuState
 {
     private CharacterCustomizer characterManager;
     public CustomCharacter customCharacter;
+    private bool initialized = false;
 
     public override void Enter()
     {
@@ -26,6 +27,8 @@ public class CharacterCreationState : BaseMenuState
 
     void SetUpButtons()
     {
+        if (initialized) return;
+
         backFromCharCreateToMainButton.onClick.AddListener(() => OnBackButtonClicked());
         resetCharaButton.onClick.AddListener(() => ResetCharacter());
         confirmButton.onClick.AddListener(() => OnConfirmButtonClicked());
@@ -53,6 +56,8 @@ public class CharacterCreationState : BaseMenuState
         ChangeFacialMarkButton();
         ChangeHairButton();
         ChangeSkinButton();
+
+        initialized = true;
     }
 
     public override void Exit()

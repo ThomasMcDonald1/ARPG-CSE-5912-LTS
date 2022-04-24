@@ -461,7 +461,7 @@ namespace LootLabels
                     item = weapon;
                 }
             }
-            else if(!item.name.Equals("Pendant"))
+            else if(!(item.name.Contains("Jewelry")))
             {
                 ArmorEquipment armor = (ArmorEquipment)item;
                 if(itemRarity != Rarity.Legendary)
