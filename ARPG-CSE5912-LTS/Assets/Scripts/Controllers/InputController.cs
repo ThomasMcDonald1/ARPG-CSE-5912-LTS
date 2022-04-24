@@ -97,7 +97,7 @@ public class InputController : MonoBehaviour
             gameplayStateController = FindObjectOfType<GameplayStateController>();
         }
 
-        if (characterPanelUIRaycaster == null)
+        if (characterPanelUIRaycaster == null && gameplayStateController != null)
         {
             characterPanelUIRaycaster = gameplayStateController.GetComponentInChildren<CharacterPanelController>().GetComponent<GraphicRaycaster>();
         }
