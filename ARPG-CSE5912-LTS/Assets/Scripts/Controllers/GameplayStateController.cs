@@ -30,7 +30,7 @@ public class GameplayStateController : StateMachine
     public GameObject exitGameButtonObj;
 
     // Options menu buttons
-    public GameObject exitOptionsToPauseButtonObj;
+    public GameObject exitOptionsToPauseButtonObj, confirmOptionsButtonObj, resetOptionsButtonObj;
     public GameObject resolutionDropDownObj;
     public GameObject fullScreenButtonObj, noFullScreenButtonObj;
     public GameObject musicVolumeSliderObj, soundEffectsVolumeSliderObj;

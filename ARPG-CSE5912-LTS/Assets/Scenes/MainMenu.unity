@@ -832,6 +832,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e272a8c95f4f3747a214fc1be95026e, type: 2}
   slotContainerObj: {fileID: 797306363}
   backFromOptionsToMainButtonObj: {fileID: 1372353602}
+  confirmOptionsButtonObj: {fileID: 8321569319654943150}
+  resetOptionsButtonObj: {fileID: 8321569319654943149}
   resolutionDropDownObj: {fileID: 284681306}
   fullScreenButtonObj: {fileID: 1017907480}
   noFullScreenButtonObj: {fileID: 1343308109}
@@ -4133,17 +4135,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692652317}
   m_CullTransparentMesh: 1
---- !u!114 &730710676 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8181858855221146510, guid: 47ab12595dcda344e863e5a6e4b4ade2, type: 3}
-  m_PrefabInstance: {fileID: 971448911}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &731356367
 GameObject:
   m_ObjectHideFlags: 0
@@ -8547,7 +8538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayUICanvas: {fileID: 2061881056}
-  inventoryUIRaycaster: {fileID: 730710676}
   gameplayStateController: {fileID: 971448915}
 --- !u!4 &1115541517
 Transform:
@@ -14986,3 +14976,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49747adb2684ae04aadb9dc674d9de70, type: 3}
+--- !u!1 &8321569319654943149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8671039125617931645, guid: 49747adb2684ae04aadb9dc674d9de70, type: 3}
+  m_PrefabInstance: {fileID: 8321569319654943148}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8321569319654943150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4175442580611674737, guid: 49747adb2684ae04aadb9dc674d9de70, type: 3}
+  m_PrefabInstance: {fileID: 8321569319654943148}
+  m_PrefabAsset: {fileID: 0}
