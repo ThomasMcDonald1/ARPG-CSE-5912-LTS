@@ -28,6 +28,8 @@ public class Inventory : MonoBehaviour
 
     private GameObject player;
     private GameObject potionSlots;
+    [SerializeField] InventorySlot starterSwordInventorySlot;
+    bool starterSwordEquipped = false;
 
     private void Start()
     {
@@ -42,6 +44,15 @@ public class Inventory : MonoBehaviour
 
 
     public int space = 20;
+
+    private void Update()
+    {
+        if (starterSwordInventorySlot.item != null && !starterSwordEquipped)
+        {
+            starterSwordInventorySlot.item.Use();
+            starterSwordEquipped = true;
+        }
+    }
 
     // Add a new item if enough room
     public void Add(Ite item, List<Ite> list)

@@ -74,28 +74,34 @@ public class TipManager : MonoBehaviour
         {
             nameText.color = Color.white;
         }
-        if (item is WeaponEquipment)
+        if (item is WeaponEquipment weapon)
         {
-            WeaponEquipment weapon = (WeaponEquipment)item;
+            if (weapon.typeOfWeapon == WeaponEquipment.weaponType.twohandsword)
+                infoSlot1.text = "Two-Handed";
+            else
+                infoSlot1.text = "One-Handed";
             infoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
             infoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
             infoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
         }
-        else if (item is LightArmorEquipment lightArmor)
+        else if (item is ArmorEquipment armor)
         {
-            infoSlot1.text = "Light Armor";
-            infoSlot2.text = "Evasion: " + lightArmor.evasion.ToString();
-        }
-        else if (item is MediumArmorEquipment mediumArmor)
-        {
-            infoSlot1.text = "Medium Armor";
-            infoSlot2.text = "Armor: " + mediumArmor.armor.ToString();
-            infoSlot3.text = "Evasion: " + mediumArmor.evasion.ToString();
-        }
-        else if (item is HeavyArmorEquipment heavyArmor)
-        {
-            infoSlot1.text = "Heavy Armor";
-            infoSlot2.text = "Armor: " + heavyArmor.armor.ToString();
+            if (armor.typeOfArmor == ArmorEquipment.armorType.light)
+            {
+                infoSlot1.text = "Light Armor";
+                infoSlot2.text = "Evasion: " + armor.Evasion.ToString();
+            }
+            else if (armor.typeOfArmor == ArmorEquipment.armorType.medium)
+            {
+                infoSlot1.text = "Medium Armor";
+                infoSlot2.text = "Armor: " + armor.Armor.ToString();
+                infoSlot3.text = "Evasion: " + armor.Evasion.ToString();
+            }
+            else if (armor.typeOfArmor == ArmorEquipment.armorType.heavy)
+            {
+                infoSlot1.text = "Heavy Armor";
+                infoSlot2.text = "Armor: " + armor.Armor.ToString();
+            }
         }
         else if (item is ShieldEquipment shieldEquipment)
         {
@@ -104,8 +110,6 @@ public class TipManager : MonoBehaviour
         }
         if (item is Equipment equipment)
         {
-            infoSlot5.text = "Required Level: " + equipment.levelRequiredToEquip.ToString();
-
             if (equipment.prefix != null)
             {
                 for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
@@ -207,13 +211,9 @@ public class TipManager : MonoBehaviour
     private void AdjustTipWindowPosition()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        if (mousePos.x <= Screen.width / 2 && mousePos.y >= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
-        else if (mousePos.x > Screen.width / 2 && mousePos.y >= Screen.height / 2)
+        if (mousePos.y >= Screen.height / 2)
             tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
-        else if (mousePos.x <= Screen.width / 2 && mousePos.y <= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
-        else
-            tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+        else if (mousePos.y <= Screen.height / 2)
+            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
     }
 }
