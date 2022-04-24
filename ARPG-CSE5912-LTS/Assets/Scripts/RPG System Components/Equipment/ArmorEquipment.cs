@@ -13,6 +13,7 @@ public class ArmorEquipment : Equipment
     }
     public int Armor;
     public int Evasion;
+    public armorType typeOfArmor;
     //TODO: if Heavy armor, add Armor.
     //TODO: if Medium armor, add half Armor, half Evasion
     //TODO: if Light armor, add Evasion
