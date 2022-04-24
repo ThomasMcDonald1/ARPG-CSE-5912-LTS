@@ -22,6 +22,8 @@ public class LoadingStateController : StateMachine
     private float progressValue;
     private DefaultStatReader defaultStatReader;
 
+    private bool gameSceneEntered = false;
+
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
     void Update()
@@ -35,21 +37,30 @@ public class LoadingStateController : StateMachine
     }
     public async void InitalizeGameScene()
     {
-        loadingSceneCanvasObj.SetActive(true);
+        if (!gameSceneEntered)
+        {
+            Debug.Log("LoadingState: Initializing Game Scene");
+            loadingSceneCanvasObj.SetActive(true);
 
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
-        AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
-        scene = SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
-        scene.allowSceneActivation = false;
-        InputController.Instance.enabled = false;
+            SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
+            AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
+            gameSceneEntered = true;
+            scene = SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
+            scene.allowSceneActivation = false;
+            InputController.Instance.enabled = false;
 
-        StartCoroutine(GetSceneLoadProgress());
+            StartCoroutine(GetSceneLoadProgress());
 
-        await Task.Delay(2000);
+            await Task.Delay(2000);
 
-        Destroy(tempAudioListener);
-        InputController.Instance.enabled = true;
-        scene.allowSceneActivation = true;
+            Destroy(tempAudioListener);
+            InputController.Instance.enabled = true;
+            scene.allowSceneActivation = true;
+        }
+        else
+        {
+            LoadScene("NoControllerDuplicate");
+        }
     }
     public async void LoadScene(string sceneName)
     {
@@ -160,6 +171,7 @@ public class LoadingStateController : StateMachine
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "GameScene")
@@ -168,6 +180,17 @@ public class LoadingStateController : StateMachine
             {
                 Debug.Log("Initalizing Player Stats");
                 InitializePlayerStats();
+            }
+        }
+
+        if (scene.name == "NoControllerDuplicate")
+        {
+            var gameplayStateController = FindObjectOfType<GameplayStateController>();
+            if (gameplayStateController != null)
+            {
+                //we have to re-enter gameplay state so here I am doing something kinda sus to do so
+                gameplayStateController.ChangeState<PauseGameState>();
+                gameplayStateController.ChangeState<GameplayState>();
             }
         }
     }
