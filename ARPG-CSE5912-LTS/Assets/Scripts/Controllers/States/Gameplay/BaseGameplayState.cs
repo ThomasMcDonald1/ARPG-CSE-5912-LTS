@@ -58,8 +58,6 @@ public class BaseGameplayState : State
         musicVolumeSlider = gameplayStateController.musicVolumeSliderObj.GetComponent<Slider>();
         soundEffectsVolumeSlider = gameplayStateController.soundEffectsVolumeSliderObj.GetComponent<Slider>();
 
-
-        gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
         yesRespawnButton = gameplayStateController.yesRespawnButtonObj.GetComponent<Button>();
         noRespawnButton = gameplayStateController.noRespawnButtonObj.GetComponent<Button>();
         confirmPassiveTreeButton = gameplayStateController.confirmPassiveTreeButton.GetComponent<Button>();
