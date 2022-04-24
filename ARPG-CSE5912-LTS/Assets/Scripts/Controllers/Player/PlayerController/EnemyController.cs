@@ -66,8 +66,11 @@ namespace ARPG.Core
 
         protected override void Update()
         {
+            if (animator.GetBool("Dead") == false)
+            {
+                UpdateAnimator();
+            }
             base.Update();
-            UpdateAnimator();
         }
 
         protected void UpdateAnimator()

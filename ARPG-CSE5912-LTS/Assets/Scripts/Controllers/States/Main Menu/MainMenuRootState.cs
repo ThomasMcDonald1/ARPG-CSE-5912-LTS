@@ -8,7 +8,6 @@ using TMPro;
 public class MainMenuRootState : BaseMenuState
 {
     private const int SLOTS_VISIBLE = 4;
-    private bool initialized = false;
 
     public override void Enter()
     {
@@ -26,12 +25,11 @@ public class MainMenuRootState : BaseMenuState
 
         SetUpButtons();
         SetSlotVisibility();
+        SetGameSceneVisibility();
     }
 
     void SetUpButtons()
     {
-        if (initialized) return;
-
         startGameButton.onClick.AddListener(() => OnStartGameClicked());
         createCharButton.onClick.AddListener(() => OnCreateCharClicked());
         optionsButton.onClick.AddListener(() => OnOptionsClicked());
@@ -44,8 +42,22 @@ public class MainMenuRootState : BaseMenuState
         deleteCharButton.onClick.AddListener(() => OnDeleteCharacterSelected());
         yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
         noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
+    }
 
-        initialized = true;
+    void RemoveButtonListeners()
+    {
+        startGameButton.onClick.RemoveAllListeners();
+        createCharButton.onClick.RemoveAllListeners();
+        optionsButton.onClick.RemoveAllListeners();
+        slot1Button.onClick.RemoveAllListeners();
+        slot2Button.onClick.RemoveAllListeners();
+        slot3Button.onClick.RemoveAllListeners();
+        slot4Button.onClick.RemoveAllListeners();
+        slot5Button.onClick.RemoveAllListeners();
+        slot6Button.onClick.RemoveAllListeners();
+        deleteCharButton.onClick.RemoveAllListeners();
+        yesDeleteButton.onClick.RemoveAllListeners();
+        noDeleteButton.onClick.RemoveAllListeners();
     }
 
     void SetSlotVisibility()
@@ -92,9 +104,20 @@ public class MainMenuRootState : BaseMenuState
         }
     }
 
+    void SetGameSceneVisibility()
+    {
+        var gpControll = FindObjectOfType<GameplayStateController>();
+        if (gpControll != null)
+        {
+            gpControll.npcInterfaceObj.SetActive(false);
+            gpControll.gameplayUICanvas.enabled = false;
+        }
+    }
+
     public override void Exit()
     {
         base.Exit();
+        RemoveButtonListeners();
         mainMenuController.mainMenuCanvas.enabled = false;
         FindObjectOfType<AudioManager>().Play("MenuClick");
     }
