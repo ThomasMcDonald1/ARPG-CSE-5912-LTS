@@ -44,6 +44,17 @@ namespace ARPG.Combat
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;
+            timeChecker = cooldownTimer;
+            if (abilitiesKnown != null)
+            {
+                //Debug.Log(abilitiesKnown.Count);
+                for (int i = 0; i < abilitiesKnown.Count; i++)
+                {
+                    EnemyAbility enemyability = new EnemyAbility();
+                    enemyability.abilityAssigned = abilitiesKnown[i];
+                    EnemyAttackTypeList.Add(enemyability);
+                }
+            }
         }
 
         public override string GetClassTypeName()
@@ -54,27 +65,9 @@ namespace ARPG.Combat
 
         protected override void Update()
         {
-            UpdateAnimator();
-            //Debug.Log(abilitiesKnown);
-            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
-            animator.SetFloat("AttackSpeed", attackSpeed);
-            if (animator.GetBool("Dead") == false)
+            if (Vector3.Distance(transform.position, player.transform.position) <= 18)
             {
-                if (stats[StatTypes.HP] <= 0)
-                {
-                    if (animator.GetBool("Dead") == false)
-                    {
-                        Dead();
-                        animator.SetBool("Dead", true);
-                        //get rid of enemy canvas
-                        transform.GetChild(2).gameObject.SetActive(false);
-
-                    }
-                }
-                else
-                {
-                    SeePlayer();
-                }
+                base.Update();
             }
         }
     }

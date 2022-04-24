@@ -131,7 +131,7 @@ namespace ARPG.Combat
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
                     Debug.Log(timeChecker);
-                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
+                    if (abilitiesKnown != null && !enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
                     {
                         if (EnemyAttackTypeList != null)
                         {
@@ -153,22 +153,25 @@ namespace ARPG.Combat
                     }
                     else
                     {
-                        if (animator.GetBool("AttackingMainHand"))
+                        if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                         {
-                            animator.SetTrigger("AttackMainHandTrigger");
-                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                            StopRun();
                         }
                         else
                         {
-                            animator.SetTrigger("AttackOffHandTrigger");
-                            //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                            if (animator.GetBool("AttackingMainHand"))
+                            {
+                                animator.SetTrigger("AttackMainHandTrigger");
+                                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                            }
+                            else
+                            {
+                                animator.SetTrigger("AttackOffHandTrigger");
+                                //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
+                            }
                         }
                     }
                     
-                    if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
-                    {
-                            StopRun();                      
-                    }
                 }
                 else
                 {
