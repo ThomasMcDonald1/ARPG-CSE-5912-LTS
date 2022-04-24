@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 public class PauseGameState : BaseGameplayState
 {
@@ -60,6 +61,7 @@ public class PauseGameState : BaseGameplayState
 
     void OnExitToMenuClicked()
     {
+        SetPlayerSpawn();
         gameplayStateController.ChangeState<GameplayState>();
         gameplayStateController.gameplayUICanvas.enabled = false;
 
@@ -70,6 +72,18 @@ public class PauseGameState : BaseGameplayState
         Time.timeScale = 1;
         LoadingStateController.Instance.LoadScene("MainMenu");
         FindObjectOfType<AudioManager>().Play("MenuClick");
+    }
+
+    void SetPlayerSpawn()
+    {
+        GameObject player = gameplayStateController.GetComponentInChildren<PlayerController>().gameObject;
+        if (player != null)
+        {
+            Debug.Log("Reset Player Location in Game");
+            player.GetComponent<NavMeshAgent>().enabled = false;
+            player.transform.position = new Vector3(198.5f, 9.6f, 206.32f);
+            player.GetComponent<NavMeshAgent>().enabled = true;
+        }
     }
 
     void OnExitGameClicked()
