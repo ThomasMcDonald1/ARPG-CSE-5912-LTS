@@ -61,6 +61,8 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.npcInterfaceObj.SetActive(true);
 
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
+
+        GetComponentInChildren<InteractionManager>().ReactivateNPCS();
     }
 
     void AddButtonListeners()
