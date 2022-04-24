@@ -267,7 +267,7 @@ public class Player : Character
     {
         animator.SetBool("AttackingMainHand", true);
     }
-    
+
 
     public void ProduceItem()
     {

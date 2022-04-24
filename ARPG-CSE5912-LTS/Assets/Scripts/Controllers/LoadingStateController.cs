@@ -24,6 +24,7 @@ public class LoadingStateController : StateMachine
 
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
+    private AudioManager audioManager;
     void Update()
     {
         // if (loadScene == true)
@@ -53,7 +54,8 @@ public class LoadingStateController : StateMachine
     {
         loadingSceneCanvasObj.SetActive(true);
 
-        FindObjectOfType<AudioManager>().Stop(SceneMusic(SceneManager.GetActiveScene().name));
+        audioManager.Stop(SceneMusic(SceneManager.GetActiveScene().name));
+        Debug.Log(SceneMusic(SceneManager.GetActiveScene().name) + " asduinn");
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
         scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -65,7 +67,7 @@ public class LoadingStateController : StateMachine
         Destroy(tempAudioListener);
         InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
-        FindObjectOfType<AudioManager>().Play(SceneMusic(sceneName));
+        audioManager.Play(SceneMusic(sceneName));
     }
     public IEnumerator GetSceneLoadProgress()
     {
@@ -127,6 +129,7 @@ public class LoadingStateController : StateMachine
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         DontDestroyOnLoad(this);
         if (Instance == null)
         {

@@ -8,6 +8,10 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
 
     public static AudioManager instance;
+    void Update()
+    {
+        Debug.Log((Array.Find(sounds, sound => sound.name == "Footsteps").source == null) + "asdfailsudhf");
+    }
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -29,7 +33,6 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
-
         AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
@@ -49,6 +52,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound: " + name + " not found");
             return;
         }
+        Debug.Log((s.source == null) + "asdcabxcvcbcbb");
         s.StartSound();
     }
 
