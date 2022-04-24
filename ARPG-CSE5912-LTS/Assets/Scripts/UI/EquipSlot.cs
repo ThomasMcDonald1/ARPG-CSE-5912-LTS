@@ -7,7 +7,7 @@ using TMPro;
 public class EquipSlot : MonoBehaviour
 {
     public Image icon;
-    Ite item;
+    public Ite item;
     public void AddItem(Ite newItem)
     {
         item = newItem;

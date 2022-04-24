@@ -86,7 +86,12 @@ public class CharacterPanelState : BaseGameplayState
             else if(invButton != null && !invButton.CompareTag("invSlotButton"))
             {
                 TipManager.instance.HideWindow();
-            }          
+            }
+            EquipSlot equipSlot = go.GetComponent<EquipSlot>();
+            if (equipSlot != null)
+            {
+                TipManager.instance.ShowInventoryTooltip(equipSlot.item);
+            }
         }
     }
 
