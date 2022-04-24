@@ -35,6 +35,9 @@ public class AbilityData
     public bool abilityRequiresCursorSelection;
     public bool abilityRequiresCharacterUnderCursor;
 
+    //Movement
+    public string abilityMovement;
+
     //Ability Effects
     public AbilityEffectData[] effects;
 }

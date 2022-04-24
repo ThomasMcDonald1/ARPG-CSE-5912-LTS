@@ -6,9 +6,6 @@ public class DelayedDamageAbilityEffect : DamageAbilityEffect
 {
     private void OnEnable()
     {
-        ChargeCharacterAbilityEffect.ChargeCharacterDelayedDamageReadyEvent += OnDelayedDamageReady;
-        ChargeGroundAbilityEffect.ChargeGroundDelayedDamageReadyEvent += OnDelayedDamageReady;
-        LeapAbilityEffect.LeapDelayedDamageReadyEvent += OnDelayedDamageReady;
         PullAbilityEffect.PullDelayedDamageReadyEvent += OnDelayedDamageReady;
     }
 

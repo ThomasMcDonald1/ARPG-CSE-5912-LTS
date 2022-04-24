@@ -13,7 +13,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] GameObject gameplayUICanvas;
     GraphicRaycaster gameplayUIRaycaster;
-    [SerializeField] GraphicRaycaster characterPanelUIRaycaster;
+    GraphicRaycaster characterPanelUIRaycaster;
     [SerializeField] GameplayStateController gameplayStateController;
 
     //Events associated with input being pressed
@@ -52,8 +52,13 @@ public class InputController : MonoBehaviour
     private bool clickHeld;
     private bool stationaryHeld;
 
+    private int playerLayerMask;
+
     private void Awake()
     {
+        playerLayerMask = 1 << 10;
+        playerLayerMask = ~playerLayerMask;
+
         DontDestroyOnLoad(this);
         if (instance != null && instance != this)
         {
@@ -87,18 +92,14 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (characterPanelUIRaycaster == null)
-        {
-            var characterPanel = GameObject.Find("CharacterPanel");
-            if (characterPanel != null)
-            {
-                characterPanelUIRaycaster = characterPanel.GetComponent<GraphicRaycaster>();
-            }
-        }
-
         if (gameplayStateController == null)
         {
             gameplayStateController = FindObjectOfType<GameplayStateController>();
+        }
+
+        if (characterPanelUIRaycaster == null)
+        {
+            characterPanelUIRaycaster = gameplayStateController.GetComponentInChildren<CharacterPanelController>().GetComponent<GraphicRaycaster>();
         }
     }
 
@@ -310,6 +311,7 @@ public class InputController : MonoBehaviour
 
     private List<RaycastResult> GetUIElementsHoveredInventory()
     {
+        FindCanvas();
         PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
             position = Mouse.current.position.ReadValue()
@@ -327,8 +329,9 @@ public class InputController : MonoBehaviour
             //Otherwise, cast ray to gameplay environment
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit rcHit;
+            
 
-            if (Physics.Raycast(ray, out rcHit))
+            if (Physics.Raycast(ray, out rcHit, Mathf.Infinity, playerLayerMask))
             {
                 ClickEvent?.Invoke(this, new InfoEventArgs<RaycastHit>(rcHit));
             }

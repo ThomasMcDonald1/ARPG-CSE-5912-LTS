@@ -4,22 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LeapAbilityEffect : BaseAbilityEffect
+public class LeapAbilityMovement : BaseAbilityMovement
 {
     private const float LEAP_HEIGHT = 3f;
     private const int BEZ_NUM_POINTS = 25;
-    public static event EventHandler<InfoEventArgs<(AbilityCast, Character)>> LeapDelayedDamageReadyEvent;
 
-    protected override int OnApply(Character target, AbilityCast abilityCast)
+    public override void QueueSpecialMovement(AbilityCast abilityCast, List<Character> targets)
     {
         NavMeshAgent agent = abilityCast.caster.GetComponent<NavMeshAgent>();
-        agent.enabled = false;
-        StartCoroutine(LeapToLocation(agent, abilityCast, target));
-        return 0;
+        agent.isStopped = true;
+        StartCoroutine(LeapToLocation(agent, abilityCast, targets));
     }
 
-    private IEnumerator LeapToLocation(NavMeshAgent agent, AbilityCast abilityCast, Character target)
+    private IEnumerator LeapToLocation(NavMeshAgent agent, AbilityCast abilityCast, List<Character> targets)
     {
+        Debug.Log("Leaping to location selected");
         abilityCast.caster.transform.LookAt(abilityCast.hit.point);
         Vector3 start = abilityCast.caster.transform.position;
         Vector3 end = abilityCast.hit.point;
@@ -35,7 +34,8 @@ public class LeapAbilityEffect : BaseAbilityEffect
             currentPoint++;
             yield return null;
         }
-        agent.enabled = true;
-        LeapDelayedDamageReadyEvent?.Invoke(this, new InfoEventArgs<(AbilityCast, Character)>((abilityCast, target)));
+        agent.isStopped = false;
+        agent.destination = end;
+        CompleteSpecialMovement(abilityCast, targets);
     }
 }

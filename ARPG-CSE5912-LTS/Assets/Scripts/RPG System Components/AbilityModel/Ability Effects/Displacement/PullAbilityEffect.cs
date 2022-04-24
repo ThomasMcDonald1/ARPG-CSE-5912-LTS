@@ -27,7 +27,7 @@ public class PullAbilityEffect : BaseAbilityEffect
         if (rb != null && agent != null)
         {
             rb.isKinematic = false;
-            agent.enabled = false;
+            agent.isStopped = true;
             rb.velocity = displacement + velocityY;
             StartCoroutine(WaitForLanding(rb, agent, abilityCast, target));
         }
@@ -47,7 +47,7 @@ public class PullAbilityEffect : BaseAbilityEffect
             }
             yield return null;
         }
-        agent.enabled = true;
+        agent.isStopped = false;
         rb.isKinematic = true;
         PullDelayedDamageReadyEvent?.Invoke(this, new InfoEventArgs<(AbilityCast, Character)>((abilityCast, target)));
     }

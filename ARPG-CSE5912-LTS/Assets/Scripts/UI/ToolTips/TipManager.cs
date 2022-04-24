@@ -66,26 +66,36 @@ public class TipManager : MonoBehaviour
         }
         nameText.text = item.name;
         nameText.color = item.itemNameColor;
+        if (nameText.alpha < 1.0f)
+        {
+            nameText.alpha = 1.0f;
+        }
+        if (nameText.color == Color.black)
+        {
+            nameText.color = Color.white;
+        }
         if (item is WeaponEquipment)
         {
             WeaponEquipment weapon = (WeaponEquipment)item;
-            //itemInfoSlot1.text = weapon.typeOfWeapon.ToString(); // this will display properly once we change the weapon types
             infoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
             infoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
             infoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
         }
         else if (item is LightArmorEquipment lightArmor)
         {
-            infoSlot1.text = "Evasion: " + lightArmor.evasion.ToString();
+            infoSlot1.text = "Light Armor";
+            infoSlot2.text = "Evasion: " + lightArmor.evasion.ToString();
         }
         else if (item is MediumArmorEquipment mediumArmor)
         {
-            infoSlot1.text = "Armor: " + mediumArmor.armor.ToString();
-            infoSlot2.text = "Evasion: " + mediumArmor.evasion.ToString();
+            infoSlot1.text = "Medium Armor";
+            infoSlot2.text = "Armor: " + mediumArmor.armor.ToString();
+            infoSlot3.text = "Evasion: " + mediumArmor.evasion.ToString();
         }
         else if (item is HeavyArmorEquipment heavyArmor)
         {
-            infoSlot1.text = "Armor: " + heavyArmor.armor.ToString();
+            infoSlot1.text = "Heavy Armor";
+            infoSlot2.text = "Armor: " + heavyArmor.armor.ToString();
         }
         else if (item is ShieldEquipment shieldEquipment)
         {
@@ -137,6 +147,14 @@ public class TipManager : MonoBehaviour
         }
         nameText.text = ability.name;
         nameText.color = Color.cyan;
+        if (nameText.alpha < 1.0f)
+        {
+            nameText.alpha = 1.0f;
+        }
+        if (nameText.color == Color.black)
+        {
+            nameText.color = Color.white;
+        }
         infoSlot1.text = ability.description;
         infoSlot1.color = new Color(0.8f, 0.8f, 0.8f, 1f);
         if (ability.GetComponentInChildren<BasicAttackDamageAbilityEffect>() == null)
