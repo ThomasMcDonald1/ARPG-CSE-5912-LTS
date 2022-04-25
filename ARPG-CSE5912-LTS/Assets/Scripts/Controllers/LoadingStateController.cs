@@ -65,6 +65,8 @@ public class LoadingStateController : StateMachine
     {
         loadingSceneCanvasObj.SetActive(true);
 
+        audioManager.Stop(audioManager.currentBGM);
+        audioManager.Stop(audioManager.currentBossMusic);
         audioManager.Stop(SceneMusic(SceneManager.GetSceneAt(1).name));
         // Debug.Log(SceneMusic(SceneManager.GetActiveScene().name) + " asduinn");
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
