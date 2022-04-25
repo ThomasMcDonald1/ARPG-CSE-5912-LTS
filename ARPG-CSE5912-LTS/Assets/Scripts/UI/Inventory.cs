@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     public Ite healthPotion;
     public Ite Sword;
     public PotionButton[] potionButtons;
+    
 
     private GameObject player;
     private GameObject potionSlots;
