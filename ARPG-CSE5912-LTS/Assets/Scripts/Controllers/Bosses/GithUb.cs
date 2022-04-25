@@ -22,6 +22,8 @@ public class GithUb : EnemyAbilityController
     private int AttackCycle = 0;
     public AudioManager audioManager;
     private bool fadeOutMusic = true;
+    private bool startMusic = false;
+    [SerializeField] float musicTransitionRadius = 40.0f;
     protected override void Start()
     {
         base.Start();
@@ -62,9 +64,16 @@ public class GithUb : EnemyAbilityController
             PlayerTarget = null;
         }
 
+        if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
+        {
+            if (!startMusic)
+            {
+                startMusic = true;
+                audioManager.FadeOut("Dungeon3BGM", "Boss3BGM");
+            }
+        }
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
         {
-            audioManager.FadeOut("Dungeon3BGM", "Boss3BGM");
             MakeHostile();
         }
         else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)
@@ -122,6 +131,10 @@ public class GithUb : EnemyAbilityController
     private bool InSightRadius()
     {
         return Vector3.Distance(playerObj.transform.position, transform.position) < chaseDistance;
+    }
+    private bool InMusicTransitionRadius()
+    {
+        return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
     }
 
     private bool InMeleeRange()

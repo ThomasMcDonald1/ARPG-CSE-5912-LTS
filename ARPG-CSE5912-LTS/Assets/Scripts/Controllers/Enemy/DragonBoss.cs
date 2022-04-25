@@ -21,6 +21,8 @@ public class DragonBoss : EnemyAbilityController
     private int CurrentPatrolVertexIndex = 0;
     public AudioManager audioManager;
     private bool fadeOutMusic = true;
+    private bool startMusic = false;
+    [SerializeField] float musicTransitionRadius = 45.0f;
     protected override void Start()
     {
         base.Start();
@@ -63,9 +65,16 @@ public class DragonBoss : EnemyAbilityController
             PlayerTarget = null;
         }
 
+        if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
+        {
+            if (!startMusic)
+            {
+                startMusic = true;
+                audioManager.FadeOut("Dungeon1BGM", "Boss1BGM");
+            }
+        }
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
-            audioManager.FadeOut("Dungeon1BGM", "Boss1BGM");
             MakeHostile();
         }
         else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] > 0)
@@ -104,6 +113,10 @@ public class DragonBoss : EnemyAbilityController
 
     }
 
+    private bool InMusicTransitionRadius()
+    {
+        return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
+    }
     private bool InSightRadius()
     {
         return Vector3.Distance(player.transform.position, transform.position) < chaseDistance;
