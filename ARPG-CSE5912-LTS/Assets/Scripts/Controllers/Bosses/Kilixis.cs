@@ -225,6 +225,7 @@ public class Kilixis : EnemyAbilityController
         base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType], transform.GetChild(0).name);
         PlayerTarget = null;
         GetComponent<CapsuleCollider>().enabled = false;
+        Destroy(this);
     }
 
     // Gizmos for sight range (purple) and melee range (red)

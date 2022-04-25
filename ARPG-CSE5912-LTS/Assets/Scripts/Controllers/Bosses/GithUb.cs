@@ -30,8 +30,8 @@ public class GithUb : EnemyAbilityController
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = 3.5f;
         stats[StatTypes.AtkSpeed] = 1;
-        stats[StatTypes.MaxHP] = 500;
-        stats[StatTypes.HP] = 500;
+        stats[StatTypes.MaxHP] = 10;
+        stats[StatTypes.HP] = 10;
         stats[StatTypes.LVL] = 30;
         stats[StatTypes.MonsterType] = 3;
 
@@ -46,6 +46,10 @@ public class GithUb : EnemyAbilityController
             PatrolToPosition = transform.position;
         }
         audioManager = FindObjectOfType<AudioManager>();
+
+        GetComponent<Animator>().updateMode = AnimatorUpdateMode.AnimatePhysics;
+        GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
+
     }
 
     public string GetClassTypeName()
@@ -63,6 +67,7 @@ public class GithUb : EnemyAbilityController
                 audioManager.FadeOut("Boss3BGM", "Dungeon3BGM");
                 fadeOutMusic = false;
             }
+            patrolPath = null;
             animator.SetBool("Dead", true);
             agent.isStopped = true;
             PlayerTarget = null;
@@ -125,7 +130,7 @@ public class GithUb : EnemyAbilityController
         }
         else
         {
-            if (GetComponent<Animator>().GetBool("AnimationEnded") && stats[StatTypes.HP] >= 0)
+            if (GetComponent<Animator>().GetBool("AnimationEnded") && stats[StatTypes.HP] > 0)
             {
                 PatrolBehavior();
             }
@@ -223,6 +228,7 @@ public class GithUb : EnemyAbilityController
         base.RaiseEnemyKillExpEvent(this, GetComponent<Stats>()[StatTypes.LVL], GetComponent<Stats>()[StatTypes.MonsterType], transform.GetChild(0).name);
         PlayerTarget = null;
         GetComponent<CapsuleCollider>().enabled = false;
+        Destroy(this);
     }
 
     // Gizmos for sight range (purple) and melee range (red)
