@@ -26,6 +26,7 @@ public class Potion : Ite
     {
         //Debug.Log("Use potion!");
         base.Use();
+        Inventory.instance.Remove(this);
         switch ((int)typeOfPotion)
         {
             case (int)potionType.health:
