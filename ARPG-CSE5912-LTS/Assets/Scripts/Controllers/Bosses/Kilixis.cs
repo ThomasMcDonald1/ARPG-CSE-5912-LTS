@@ -22,6 +22,8 @@ public class Kilixis : EnemyAbilityController
     private int AttackCycle = 0;
     public AudioManager audioManager;
     private bool fadeOutMusic = true;
+    private bool startMusic = false;
+    [SerializeField] float musicTransitionRadius = 40.0f;
 
     private void Awake()
     {
@@ -65,6 +67,14 @@ public class Kilixis : EnemyAbilityController
             }
             GetComponent<Animator>().SetBool("Dead", true);
             PlayerTarget = null;
+        }
+        if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
+        {
+            if (!startMusic)
+            {
+                startMusic = true;
+                audioManager.FadeOut("Dungeon2BGM", "Boss2BGM");
+            }
         }
 
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
@@ -124,6 +134,10 @@ public class Kilixis : EnemyAbilityController
 
     }
 
+    private bool InMusicTransitionRadius()
+    {
+        return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
+    }
     private bool InSightRadius()
     {
         return Vector3.Distance(playerObj.transform.position, transform.position) < chaseDistance;
