@@ -52,6 +52,13 @@ namespace ARPG.Combat
             return "Bandit";
         }
 
+        protected override void Update()
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) <= 18)
+            {
+                base.Update();
+            }
+        }
 
     }
 }
