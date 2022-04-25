@@ -23,7 +23,7 @@ public class GithUb : EnemyAbilityController
     public AudioManager audioManager;
     private bool fadeOutMusic = true;
     private bool startMusic = false;
-    [SerializeField] float musicTransitionRadius = 40.0f;
+    [SerializeField] float musicTransitionRadius = 30.0f;
     protected override void Start()
     {
         base.Start();

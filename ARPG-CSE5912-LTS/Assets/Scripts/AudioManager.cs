@@ -124,6 +124,9 @@ public class AudioManager : MonoBehaviour
         Sound s9 = Array.Find(sounds, sound => sound.name == "Slash");
         Sound s10 = Array.Find(sounds, sound => sound.name == "PhysicalAbility");
         Sound s11 = Array.Find(sounds, sound => sound.name == "LevelUp");
+        Sound s12 = Array.Find(sounds, sound => sound.name == "HealingAbility");
+        Sound s13 = Array.Find(sounds, sound => sound.name == "KnockbackAbility");
+        Sound s14 = Array.Find(sounds, sound => sound.name == "PullAbility");
 
         if (s1 != null)
         {
@@ -169,6 +172,18 @@ public class AudioManager : MonoBehaviour
         {
             s11.UpdateVolume(volume);
         }
+        if (s12 != null)
+        {
+            s12.UpdateVolume(volume);
+        }
+        if (s13 != null)
+        {
+            s13.UpdateVolume(volume);
+        }
+        if (s14 != null)
+        {
+            s14.UpdateVolume(volume);
+        }
 
     }
     private IEnumerator FadeOutMusic()
@@ -177,7 +192,7 @@ public class AudioManager : MonoBehaviour
         float total = s.volume;
         while (s.volume > 0)
         {
-            s.volume -= 0.3f * total * Time.deltaTime;
+            s.volume -= 0.33f * total * Time.deltaTime;
             yield return null;
         }
         s.StopSound();
