@@ -132,31 +132,31 @@ public class PassiveSkillInfo
             new PassiveNode(
                 "DODGE1",
                 new StatTypes[] { StatTypes.Evasion },
-                new int[] { 5 },
+                new int[] { 1 },
                 new string[] { "DODGE2", "LIFESTEAL1", "MOVE1" }
             ),
             new PassiveNode(
                 "DODGE2",
                 new StatTypes[] { StatTypes.Evasion },
-                new int[] { 5 },
+                new int[] { 1 },
                 new string[] { "DODGE1", "DODGE3", "LIFESTEAL2" }
             ),
             new PassiveNode(
                 "DODGE3",
                 new StatTypes[] { StatTypes.Evasion },
-                new int[] { 5 },
+                new int[] { 2 },
                 new string[] { "DODGE2", "DODGE4" }
             ),
             new PassiveNode(
                 "DODGE4",
                 new StatTypes[] { StatTypes.Evasion },
-                new int[] { 5 },
+                new int[] { 2 },
                 new string[] { "DODGE3", "ARMOR3", "FIRERES5", "LIFESTEAL3" }
             ),
             new PassiveNode(
                 "DODGE4",
                 new StatTypes[] { StatTypes.Evasion },
-                new int[] { 5 },
+                new int[] { 2 },
                 new string[] { "DODGE3", "ARMOR3", "FIRERES5", "LIFESTEAL3" }
             ),
             new PassiveNode(

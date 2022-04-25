@@ -5628,11 +5628,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lvlUIText: {fileID: 518599705}
-  lvlText: {fileID: 1984122353}
-  expText: {fileID: 1984122352}
-  nextExpText: {fileID: 1984122351}
+  lvlText: {fileID: 0}
+  expText: {fileID: 0}
+  nextExpText: {fileID: 0}
   nextExpUIText: {fileID: 711599855}
-  expSlider: {fileID: 1984122354}
+  expSlider: {fileID: 0}
   nextExpSlider: {fileID: 724330564}
   levelController: {fileID: 451406700}
 --- !u!114 &451406699
@@ -5660,6 +5660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1364659970}
+  skillNotification: {fileID: 0}
 --- !u!1 &457389571
 GameObject:
   m_ObjectHideFlags: 0
@@ -6992,8 +6993,11 @@ MonoBehaviour:
   actionButton12: {fileID: 1027447639}
   actionButtonLeft: {fileID: 1644349444}
   actionButtonRight: {fileID: 916013750}
-  defaultLeft: {fileID: 0}
   actionButtons: []
+  potionButton1: {fileID: 0}
+  potionButton2: {fileID: 0}
+  potionButton3: {fileID: 0}
+  potionButton4: {fileID: 0}
 --- !u!1 &709978421
 GameObject:
   m_ObjectHideFlags: 0
@@ -8536,68 +8540,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!1 &858473895
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 858473897}
-  - component: {fileID: 858473896}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &858473896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 858473895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b3ef825ee05fc48a9c9e0f0d62ad89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Theme
-    clip: {fileID: 8300000, guid: de3397c15143a784486969af0aa90bf6, type: 3}
-    volume: 0.1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: Footsteps
-    clip: {fileID: 8300000, guid: 67797e150e823f84cbf45c64740f152e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: MenuClick
-    clip: {fileID: 8300000, guid: 7d43d7f11f9bc654bbee0bddf6806513, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
---- !u!4 &858473897
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 858473895}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &863493994
 GameObject:
   m_ObjectHideFlags: 0
@@ -9209,7 +9151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameplayUICanvas: {fileID: 1902767201}
-  inventoryUIRaycaster: {fileID: 2033276308}
   gameplayStateController: {fileID: 1336660079}
 --- !u!4 &905625086
 Transform:
@@ -13527,7 +13468,7 @@ MonoBehaviour:
   gameplayUICanvasObj: {fileID: 1902767201}
   optionsMenuCanvasObj: {fileID: 772157718}
   characterPanelCanvasObj: {fileID: 1984122357}
-  inventoryCanvasObj: {fileID: 2033276303}
+  abilityShopCanvas: {fileID: 0}
   gameoverCanvasObj: {fileID: 101479165}
   npcInterfaceObj: {fileID: 1463503643}
   pauseMenuCanvas: {fileID: 0}
@@ -13535,7 +13476,7 @@ MonoBehaviour:
   optionsMenuCanvas: {fileID: 0}
   characterPanelCanvas: {fileID: 0}
   gameoverCanvas: {fileID: 0}
-  inventoryCanvas: {fileID: 0}
+  abilityCanvas: {fileID: 0}
   pauseMenuButtonObj: {fileID: 1614100884}
   resumeGameButtonObj: {fileID: 772157717}
   inGameOptionsButtonObj: {fileID: 772157716}
@@ -13549,8 +13490,8 @@ MonoBehaviour:
   soundEffectsVolumeSliderObj: {fileID: 772157708}
   charaPanelButtonObj: {fileID: 127784164}
   exitPanelToGameButtonObj: {fileID: 1984122356}
-  openInventoryMenuObj: {fileID: 1984122355}
-  exitInventoryMenuObj: {fileID: 2033276302}
+  openAbilityMenuObj: {fileID: 0}
+  exitAbilityMenuObj: {fileID: 0}
   aoeReticleSphere: {fileID: 770865675}
   aoeReticleCylinder: {fileID: 198036740}
   castingBar: {fileID: 566362587}
@@ -13561,6 +13502,7 @@ MonoBehaviour:
   passiveTreeUI: {fileID: 1338266463}
   confirmPassiveTreeButton: {fileID: 1338266462}
   closePassiveTreeButton: {fileID: 1338266461}
+  skillNotificationButtonObj: {fileID: 0}
   CameraZoom: {fileID: 381139066}
 --- !u!4 &1336660080
 Transform:
@@ -13996,6 +13938,8 @@ MonoBehaviour:
   weaponItems: []
   armorItems: []
   utilItems: []
+  healthPotion: {fileID: 0}
+  Sword: {fileID: 0}
   potionButtons: []
   space: 24
 --- !u!114 &1364659965
@@ -23142,7 +23086,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1973414031
 GameObject:
@@ -23444,55 +23388,6 @@ PrefabInstance:
 --- !u!4 &1984122350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6728595697218458244, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 1984122349}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1984122351 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 184622425225735996, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 1984122349}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1984122352 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7886982185972492884, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 1984122349}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1984122353 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8604360970649390469, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 1984122349}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1984122354 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7081343399687812452, guid: 9987959a403eec84581a86820faf0091, type: 3}
-  m_PrefabInstance: {fileID: 1984122349}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1984122355 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 647133531631709825, guid: 9987959a403eec84581a86820faf0091, type: 3}
   m_PrefabInstance: {fileID: 1984122349}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1984122356 stripped
@@ -26548,27 +26443,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 398bce9a957875f449d0bb53dd7300b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &2033276302 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4878005032644179409, guid: e5195d4cd757c9f42884b60d098528f2, type: 3}
-  m_PrefabInstance: {fileID: 2033276299}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2033276303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3245567006163210425, guid: e5195d4cd757c9f42884b60d098528f2, type: 3}
-  m_PrefabInstance: {fileID: 2033276299}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2033276308 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3245567006163210427, guid: e5195d4cd757c9f42884b60d098528f2, type: 3}
-  m_PrefabInstance: {fileID: 2033276299}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033276303}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2043957842

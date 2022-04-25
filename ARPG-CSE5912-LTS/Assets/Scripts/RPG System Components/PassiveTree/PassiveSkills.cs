@@ -15,7 +15,9 @@ public class PassiveSkills
     private List<PassiveNode> unlockedNodes;
     private GameObject passiveSkillsGameObject;
     private GameObject skillNotification;
-    public PassiveSkills(Player player, Connections[] connections, GameObject passiveSkills, GameObject skillNotification)
+    private Text remainingPoints;
+    private AudioManager audioManager;
+    public PassiveSkills(Player player, Connections[] connections, GameObject passiveSkills, GameObject skillNotification, Text remainingPoints, AudioManager audioManager)
     {
         this.player = player;
         this.connections = connections;
@@ -26,6 +28,8 @@ public class PassiveSkills
         unlockedNodes = new List<PassiveNode>();
         passiveSkillsGameObject = passiveSkills;
         this.skillNotification = skillNotification;
+        this.remainingPoints = remainingPoints;
+        this.audioManager = audioManager;
     }
     public void UnlockPassives()
     {
@@ -49,10 +53,12 @@ public class PassiveSkills
     }
     public void PassivesReadyForUnlock(string name, Transform background)
     {
+        audioManager.Play("MenuClick");
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         if (!Unlockable(passiveNode) || passiveNode.Unlocked) return;
         passiveNode.Unlocked = true;
         playerStats[StatTypes.SkillPoints] -= 1;
+        remainingPoints.text = playerStats[StatTypes.SkillPoints].ToString();
         passiveNodesReadyForUnlock.Add(passiveNode);
         UpdateVisual(background);
     }
@@ -90,6 +96,8 @@ public class PassiveSkills
                 c.ResetConnectionVisual(passiveTree);
             }
         }
+        passiveNodesReadyForUnlock.Clear();
+        remainingPoints.text = playerStats[StatTypes.SkillPoints].ToString();
     }
     public void FullyResetPassiveTree()
     {

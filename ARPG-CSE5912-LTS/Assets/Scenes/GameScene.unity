@@ -47480,6 +47480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 2140301923}
   skillNotification: {fileID: 887928756}
+  remainingPoints: {fileID: 1803875909}
 --- !u!1001 &1002668493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50443,74 +50444,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bdbad9857972004fa8bc74ae952bfe7, type: 3}
---- !u!1 &1085779424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1085779425}
-  - component: {fileID: 1085779426}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1085779425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085779424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1085779426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085779424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9b3ef825ee05fc48a9c9e0f0d62ad89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Theme
-    clip: {fileID: 8300000, guid: de3397c15143a784486969af0aa90bf6, type: 3}
-    volume: 0.1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: Footsteps
-    clip: {fileID: 8300000, guid: 67797e150e823f84cbf45c64740f152e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-  - name: MenuClick
-    clip: {fileID: 8300000, guid: 7d43d7f11f9bc654bbee0bddf6806513, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: Force
-    clip: {fileID: 8300000, guid: 8b297d79107cf264aac97035605b4642, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
 --- !u!4 &1085956454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d695dfec89a48d44aa8afac738b03ad6, type: 3}
@@ -80832,6 +80765,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1281283982762530314, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
   m_PrefabInstance: {fileID: 1803875907}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1803875909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6352152652847657044, guid: fd8591e9f4415764791772e62b05c8c3, type: 3}
+  m_PrefabInstance: {fileID: 1803875907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1804295408
 PrefabInstance:
   m_ObjectHideFlags: 0

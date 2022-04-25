@@ -15,7 +15,7 @@ public class CharacterPanelState : BaseGameplayState
         gameplayStateController.characterPanelCanvas.enabled = true;
         foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
         {
-            if (s.name != "Theme") s.source.Stop();
+            if (!s.name.Contains("BGM")) s.source.Stop();
         }
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
         exitAbilityShopButton.onClick.AddListener(() => CloseAbilityShop());
@@ -68,7 +68,7 @@ public class CharacterPanelState : BaseGameplayState
             Button invButton = go.GetComponent<Button>();
             //Image itemImg = go.GetComponent<Image>()
             //Button xButton = invButton;
-          
+
             if (invButton != null&&invButton.CompareTag("invSlotButton"))
             {
 
@@ -78,7 +78,7 @@ public class CharacterPanelState : BaseGameplayState
                     //Debug.Log("Item hovered over: " + invSlot.item.name);
                     TipManager.instance.ShowInventoryTooltip(invSlot.item);
                 }
-                else 
+                else
                 {
                     TipManager.instance.HideWindow();
                 }
