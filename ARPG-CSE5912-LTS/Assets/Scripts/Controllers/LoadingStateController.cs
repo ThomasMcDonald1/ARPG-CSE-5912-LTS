@@ -54,8 +54,10 @@ public class LoadingStateController : StateMachine
     {
         loadingSceneCanvasObj.SetActive(true);
 
-        audioManager.Stop(SceneMusic(SceneManager.GetActiveScene().name));
-        Debug.Log(SceneMusic(SceneManager.GetActiveScene().name) + " asduinn");
+        audioManager.Stop(audioManager.currentBGM);
+        audioManager.Stop(audioManager.currentBossMusic);
+        audioManager.Stop(SceneMusic(SceneManager.GetSceneAt(1).name));
+        // Debug.Log(SceneMusic(SceneManager.GetActiveScene().name) + " asduinn");
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
         scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -183,7 +185,7 @@ public class LoadingStateController : StateMachine
             case "Dungeon3":
                 return "Dungeon3BGM";
             default:
-                return "Theme";
+                return "TownBGM";
         }
     }
 }

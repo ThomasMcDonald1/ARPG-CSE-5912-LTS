@@ -20,6 +20,7 @@ public class Kilixis : EnemyAbilityController
 
     private int CurrentPatrolVertexIndex = 0;
     private int AttackCycle = 0;
+    public AudioManager audioManager;
 
     private void Awake()
     {
@@ -48,6 +49,7 @@ public class Kilixis : EnemyAbilityController
         {
             PatrolToPosition = transform.position;
         }
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     protected override void Update()
@@ -55,12 +57,14 @@ public class Kilixis : EnemyAbilityController
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
+            audioManager.FadeOut("Boss2BGM", "Dungeon2BGM");
             GetComponent<Animator>().SetBool("Dead", true);
             PlayerTarget = null;
         }
 
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
         {
+            audioManager.FadeOut("Dungeon2BGM", "Boss2BGM");
             MakeHostile();
         }
         else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)

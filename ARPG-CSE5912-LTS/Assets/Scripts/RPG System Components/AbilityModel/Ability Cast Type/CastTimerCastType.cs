@@ -25,6 +25,7 @@ public class CastTimerCastType : BaseCastType
             //Debug.Log("Waiting cast time from CastTimerCastType");
             abilityCast.caster.agent.isStopped = true;
             AbilityBeganBeingCastEvent?.Invoke(this, new InfoEventArgs<Ability>(abilityCast.ability));
+            FindObjectOfType<AudioManager>().Play("Casting");
             castingRoutine = StartCoroutine(CastTimeCoroutine(abilityCast));
         }
     }
@@ -39,6 +40,7 @@ public class CastTimerCastType : BaseCastType
     protected override void CompleteCast(AbilityCast abilityCast)
     {
         //Debug.Log("Completing cast from CastTimerCastType");
+        FindObjectOfType<AudioManager>().Stop("Casting");
         abilityCast.caster.agent.isStopped = false;
         AbilityCastTimeWasCompletedEvent?.Invoke(this, new InfoEventArgs<AbilityCast>(abilityCast));
     }

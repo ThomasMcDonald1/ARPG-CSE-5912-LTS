@@ -8,10 +8,8 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
 
     public static AudioManager instance;
-    void Update()
-    {
-        Debug.Log((Array.Find(sounds, sound => sound.name == "Footsteps").source == null) + "asdfailsudhf");
-    }
+    public string currentBGM;
+    public string currentBossMusic;
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -41,18 +39,21 @@ public class AudioManager : MonoBehaviour
     {
         AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
-        Play("Theme");
+        Play("TownBGM");
     }
 
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.name == "Footsteps")
+        {
+            // s.pitch = Math.
+        }
         if(s == null)
         {
             Debug.Log("Sound: " + name + " not found");
             return;
         }
-        Debug.Log((s.source == null) + "asdcabxcvcbcbb");
         s.StartSound();
     }
 
@@ -131,5 +132,24 @@ public class AudioManager : MonoBehaviour
         }
 
     }
-
+    private IEnumerator FadeOutMusic()
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == currentBGM);
+        float total = s.volume;
+        while (s.volume > 0)
+        {
+            s.volume -= 0.5f * total * Time.deltaTime;
+            yield return null;
+        }
+        s.StopSound();
+        Sound s1 = Array.Find(sounds, sound => sound.name == currentBossMusic);
+        if (s1 != null)
+            s1.StartSound();
+    }
+    public void FadeOut(string music, string nextSong = "")
+    {
+        currentBGM = music;
+        currentBossMusic = nextSong;
+        StartCoroutine(FadeOutMusic());
+    }
 }

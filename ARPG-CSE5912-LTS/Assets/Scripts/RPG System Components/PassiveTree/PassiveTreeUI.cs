@@ -10,9 +10,11 @@ public class PassiveTreeUI : MonoBehaviour
     public GameObject skillNodes;
     public Connections[] connections;
     public GameObject skillNotification;
+    public Text remainingPoints;
     private void Awake()
     {
-        passiveSkills = new PassiveSkills(player, connections, skillNodes, skillNotification);
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        passiveSkills = new PassiveSkills(player, connections, skillNodes, skillNotification, remainingPoints, audioManager);
         Debug.Log(passiveSkills == null);
         // assign each child an event listener that listens for button click
         foreach(Transform child in skillNodes.transform)

@@ -19,6 +19,7 @@ public class DragonBoss : EnemyAbilityController
     Vector3 PatrolToPosition;
 
     private int CurrentPatrolVertexIndex = 0;
+    public AudioManager audioManager;
 
     protected override void Start()
     {
@@ -38,6 +39,7 @@ public class DragonBoss : EnemyAbilityController
         {
             PatrolToPosition = transform.position;
         }
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     public string GetClassTypeName()
@@ -50,6 +52,7 @@ public class DragonBoss : EnemyAbilityController
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0)
         {
+            audioManager.FadeOut("Boss1BGM", "Dungeon1BGM");
             animator.SetBool("Dead", true);
             agent.isStopped = true;
             //get rid of enemy canvas
@@ -58,6 +61,7 @@ public class DragonBoss : EnemyAbilityController
 
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
+            audioManager.FadeOut("Dungeon1BGM", "Boss1BGM");
             MakeHostile();
         }
         else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] > 0)
@@ -86,7 +90,7 @@ public class DragonBoss : EnemyAbilityController
                 animator.SetTrigger("Attack1");
             }
         }
-        else 
+        else
         {
             if (animator.GetBool("AnimationEnded") && stats[StatTypes.HP] > 0)
             {
@@ -124,7 +128,7 @@ public class DragonBoss : EnemyAbilityController
         if (patrolPath != null)
         {
             //print("For index: " + CurrentPatrolVertexIndex + " " + AtPatrolVertex());
-            if (AtPatrolVertex()) 
+            if (AtPatrolVertex())
             {
                 SetNextVertexIndex();
                 PatrolToPosition = patrolPath.GetVertex(CurrentPatrolVertexIndex);

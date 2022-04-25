@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
     public Stats stats;
     public GameObject skillNotification;
-
+    public Text remainingPoints;
     public const int minLevel = 1;
     public const int maxLevel = 99;
     public const int minExp = 0;
     public const int maxExp = 999999;
-
+    private Player player;
     public int LVL
     {
         get { return stats[StatTypes.LVL]; }
@@ -22,6 +24,10 @@ public class LevelController : MonoBehaviour
         get { return stats[StatTypes.EXP]; }
     }
 
+    void Awake()
+    {
+        player = FindObjectOfType<Player>();
+    }
     public void Init(int level)
     {
         stats.SetValue(StatTypes.LVL, level, false);
@@ -159,7 +165,21 @@ public class LevelController : MonoBehaviour
         int currectLVL = (int)stats[StatTypes.LVL];
         stats[StatTypes.SkillPoints] += (currectLVL - pastLVL);
         if (currectLVL - pastLVL > 0)
+        {
+            remainingPoints.text = stats[StatTypes.SkillPoints].ToString();
+            Vector3 pPos = player.transform.position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                GameObject x = Instantiate(Resources.Load("LevelUpAnimation") as GameObject, hit.position, Quaternion.identity);
+                x.transform.parent = player.transform;
+                ParticleSystem parts = x.GetComponent<ParticleSystem>();
+                Destroy(x, parts.main.duration);
+
+            }
+            FindObjectOfType<AudioManager>().Play("LevelUp");
             skillNotification.SetActive(true);
+        }
     }
 
     //public void OnSavedExpEvent(object sender, InfoEventArgs<(int, int)> e)
