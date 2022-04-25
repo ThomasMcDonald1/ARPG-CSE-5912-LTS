@@ -40,7 +40,7 @@ public class AbilityShopController : MonoBehaviour
     {
         ClearAbilityShop();
         skillPoint = stats[StatTypes.SkillPoints];
-        abilityPoint.text = skillPoint.ToString();
+        abilityPoint.text = "Skill points left: "+skillPoint.ToString();
         foreach (Ability ability in Abilities)
         {
             //Debug.Log("ability names:" +ability.name);
