@@ -23,6 +23,7 @@ public class Sound
 
     public void StopSound()
     {
+        if (source == null) return;
         this.source.Stop();
     }
 

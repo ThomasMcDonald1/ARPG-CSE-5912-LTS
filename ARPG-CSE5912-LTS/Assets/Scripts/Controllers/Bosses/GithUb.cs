@@ -20,7 +20,8 @@ public class GithUb : EnemyAbilityController
 
     private int CurrentPatrolVertexIndex = 0;
     private int AttackCycle = 0;
-
+    public AudioManager audioManager;
+    private bool fadeOutMusic = true;
     protected override void Start()
     {
         base.Start();
@@ -44,6 +45,7 @@ public class GithUb : EnemyAbilityController
         {
             PatrolToPosition = transform.position;
         }
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     protected override void Update()
@@ -51,12 +53,18 @@ public class GithUb : EnemyAbilityController
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
+            if (fadeOutMusic)
+            {
+                audioManager.FadeOut("Boss3BGM", "Dungeon3BGM");
+                fadeOutMusic = false;
+            }
             GetComponent<Animator>().SetBool("Dead", true);
             PlayerTarget = null;
         }
 
         if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
         {
+            audioManager.FadeOut("Dungeon3BGM", "Boss3BGM");
             MakeHostile();
         }
         else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)

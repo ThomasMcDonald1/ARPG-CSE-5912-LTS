@@ -85,6 +85,23 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //Send event
         BasicAttackDamageReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((target, finalCalculatedDamage, wasCrit)));
 
+        if (abilityCast.caster is Player)
+        {
+            Player p = (Player)abilityCast.caster;
+            if (p.equipManager.currentEquipment[0] != null)
+            {
+                FindObjectOfType<AudioManager>().Play("Slash");
+            }
+            else
+            {
+                FindObjectOfType<AudioManager>().Play("BasicPunch");
+            }
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("BasicPunch");
+        }
+
         //Get the lifesteal of the attacker
         float lifesteal = GetStat(abilityCast.caster, StatTypes.Lifesteal);
         //If the attacker has lifesteal, then use it to get a % of the damage done

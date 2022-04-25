@@ -26,6 +26,7 @@ public class LoadingStateController : StateMachine
 
     [HideInInspector] public Canvas loadingSceneCanvas;
     [HideInInspector] public bool clickSpace = true;
+    private AudioManager audioManager;
     void Update()
     {
         // if (loadScene == true)
@@ -35,7 +36,7 @@ public class LoadingStateController : StateMachine
         //     StartCoroutine(LoadYourAsyncScene());
         // }
     }
-    public async void InitalizeGameScene()
+    public void InitalizeGameScene()
     {
         if (!gameSceneEntered)
         {
@@ -51,8 +52,6 @@ public class LoadingStateController : StateMachine
 
             StartCoroutine(GetSceneLoadProgress());
 
-            await Task.Delay(2000);
-
             Destroy(tempAudioListener);
             InputController.Instance.enabled = true;
             scene.allowSceneActivation = true;
@@ -62,10 +61,14 @@ public class LoadingStateController : StateMachine
             LoadScene("NoControllerDuplicate");
         }
     }
-    public async void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
         loadingSceneCanvasObj.SetActive(true);
 
+        audioManager.Stop(audioManager.currentBGM);
+        audioManager.Stop(audioManager.currentBossMusic);
+        audioManager.Stop(SceneMusic(SceneManager.GetSceneAt(1).name));
+        // Debug.Log(SceneMusic(SceneManager.GetActiveScene().name) + " asduinn");
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(1));
         AudioListener tempAudioListener = gameObject.AddComponent<AudioListener>();
         scene = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -74,11 +77,10 @@ public class LoadingStateController : StateMachine
 
         StartCoroutine(GetSceneLoadProgress());
 
-        await Task.Delay(2000);
-
         Destroy(tempAudioListener);
         InputController.Instance.enabled = true;
         scene.allowSceneActivation = true;
+        audioManager.Play(SceneMusic(sceneName));
     }
     public IEnumerator GetSceneLoadProgress()
     {
@@ -140,6 +142,7 @@ public class LoadingStateController : StateMachine
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         DontDestroyOnLoad(this);
         if (Instance == null)
         {
@@ -192,6 +195,20 @@ public class LoadingStateController : StateMachine
                 gameplayStateController.ChangeState<PauseGameState>();
                 gameplayStateController.ChangeState<GameplayState>();
             }
+        }
+    }
+    private string SceneMusic(string sceneName)
+    {
+        switch (sceneName)
+        {
+            case "Dungeon1":
+                return "Dungeon1BGM";
+            case "Dungeon2":
+                return "Dungeon2BGM";
+            case "Dungeon3":
+                return "Dungeon3BGM";
+            default:
+                return "TownBGM";
         }
     }
 }

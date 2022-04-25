@@ -32,6 +32,7 @@ public class Player : Character
     Animator animator;
     AudioManager audioManager;
     MovementHandler movementHandler;
+    public EquipManager equipManager;
 
     void Awake()
     {
@@ -39,6 +40,7 @@ public class Player : Character
         animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<AudioManager>();
         movementHandler = GetComponent<MovementHandler>();
+        equipManager = GetComponent<EquipManager>();
         // inventory = new Inventory();
         // uiInventory.SetInventory(inventory);
         // ItemWorld.SpawnItemWorld(new Vector3(-4.83f, 1.13f, 14.05f), new InventoryItems { itemType = InventoryItems.ItemType.HealthPotion, amount = 1 });
@@ -269,7 +271,7 @@ public class Player : Character
     {
         animator.SetBool("AttackingMainHand", true);
     }
-    
+
 
     public void ProduceItem()
     {

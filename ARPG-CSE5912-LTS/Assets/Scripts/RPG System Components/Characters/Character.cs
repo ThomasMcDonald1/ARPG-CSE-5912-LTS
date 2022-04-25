@@ -29,6 +29,7 @@ public abstract class Character : MonoBehaviour
     public abstract Type GetCharacterType();
     public Ability basicAttackAbility;
     [HideInInspector] public float baseRunSpeed = 7f;
+    private AudioManager audioManager;
 
     #region Built-in
     private void Awake()
@@ -37,6 +38,7 @@ public abstract class Character : MonoBehaviour
         NPCInteractionRange = 2.0f;
         abilitiesKnown = new List<Ability>();
         charactersInRange = new List<Character>();
+
     }
 
     protected virtual void Start()
@@ -51,6 +53,7 @@ public abstract class Character : MonoBehaviour
         yVelocity = 0.0f;
         BaseAbilityMovement.SpecialMovementCompletedEvent += OnSpecialMovementCompleted;
         CastTimerCastType.AbilityCastWasCancelledEvent += OnAbilityCastCancelled;
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     protected virtual void Update()
@@ -226,6 +229,7 @@ public abstract class Character : MonoBehaviour
     {
         //Debug.Log("Applying ability effects");
         //TODO: Check if the ability effect should be applied to the caster or not and/or should be applied to enemies or not
+        BaseAbilityEffectElement x;
         BaseAbilityEffect[] effects = abilityCast.ability.GetComponentsInChildren<BaseAbilityEffect>();
         if (targets.Count == 0)
         {
@@ -235,6 +239,21 @@ public abstract class Character : MonoBehaviour
                 if (effect.effectVFXObj != null)
                 {
                     Debug.Log("Instantiating VFX");
+                    x = effect.GetComponent<BaseAbilityEffectElement>();
+
+                    if (x is ColdAbilityEffectElement)
+                    {
+                        audioManager.Play("ColdAbility");
+                    }
+                    if (x is FireAbilityEffectElement)
+                    {
+                        audioManager.Play("FireAbility");
+                    }
+                    if (x is LightningAbilityEffectElement)
+                    {
+                        audioManager.Play("LightningAbility");
+                    }
+
                     effect.InstantiateEffectVFX(abilityCast, null);
                 }
             }
@@ -248,7 +267,22 @@ public abstract class Character : MonoBehaviour
                     BaseAbilityEffect effect = effects[j];
                     if (effect.effectVFXObj != null)
                     {
-                        //Debug.Log("Instantiating VFX");
+                        // Debug.Log("Instantiating VFX");
+
+                        x = effect.GetComponent<BaseAbilityEffectElement>();
+                        if (x is ColdAbilityEffectElement)
+                        {
+                            audioManager.Play("ColdAbility");
+                        }
+                        if (x is FireAbilityEffectElement)
+                        {
+                            audioManager.Play("FireAbility");
+                        }
+                        if (x is LightningAbilityEffectElement)
+                        {
+                            audioManager.Play("LightningAbility");
+                        }
+
                         effect.InstantiateEffectVFX(abilityCast, targets[i]);
                     }
 
@@ -258,10 +292,15 @@ public abstract class Character : MonoBehaviour
                         //Debug.Log(specialTargeter);
                         //Debug.Log("Applying ability effects to " + targets[i].name);
                         effect.Apply(targets[i], abilityCast);
+                        x = effect.GetComponent<BaseAbilityEffectElement>();
+                        if (x == null)
+                        {
+                            audioManager.Play("PhysicalAbility");
+                        }
                     }
                 }
             }
-        }   
+        }
     }
     #endregion
     #region Private Functions
