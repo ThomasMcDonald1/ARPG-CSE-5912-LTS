@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "New Potion", menuName = "Inventory/Potion")]
 public class Potion : Ite
@@ -26,6 +27,7 @@ public class Potion : Ite
     {
         //Debug.Log("Use potion!");
         base.Use();
+        Inventory.instance.Remove(this);
         switch ((int)typeOfPotion)
         {
             case (int)potionType.health:
@@ -119,11 +121,13 @@ public class Potion : Ite
     }
     public void UseTeleportPotion()
     {
+            if (SceneManager.GetSceneAt(1).name == "GameScene" || SceneManager.GetSceneAt(1).name == "NoControllerDuplicate") return;
             Vector3 pPos = GameObject.FindGameObjectWithTag("Player").transform.position;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
             {
                 var x = Instantiate(Resources.Load("Portals/TownPortal") as GameObject, hit.position, Quaternion.identity);
+                Destroy(x, 4.0f);
             }
     }
 }
