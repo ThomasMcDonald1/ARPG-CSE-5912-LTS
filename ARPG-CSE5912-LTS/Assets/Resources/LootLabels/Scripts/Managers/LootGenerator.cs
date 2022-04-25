@@ -76,11 +76,19 @@ namespace LootLabels {
         /// Check amount of gear types and pick a random one
         /// </summary>
         /// <returns></returns>
-        public GearTypes SelectRandomGearType() {
-            int gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
-            Debug.Log("gearTypeCount is " + gearTypeCount);
-            int randomIndex = Random.Range(0, 8);
-
+        public GearTypes SelectRandomGearType(Rarity itemRarity) {
+            int randomIndex;
+            //int gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
+            //Debug.Log("gearTypeCount is " + gearTypeCount);
+            randomIndex = Random.Range(0, 8);
+            Debug.Log("GearTypes RandomIndex is " + (GearTypes)randomIndex);
+            while ((itemRarity == Rarity.Poor || itemRarity == Rarity.Normal) && (GearTypes)randomIndex == GearTypes.Jewelry)
+            {
+                //gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
+                //Debug.Log("gearTypeCount is " + gearTypeCount);
+                randomIndex = Random.Range(0, 8);
+            }
+            Debug.Log("GearType chosen: " + (GearTypes)randomIndex);
             return (GearTypes)randomIndex;
         }
 
@@ -208,7 +216,7 @@ namespace LootLabels {
         public BaseGear CreateGear(LootType type) {
             Debug.Log("Create Gear with GetModelName has been run");
             Rarity itemRarity = SelectRandomRarity(type);
-            GearTypes gearType = SelectRandomGearType();
+            GearTypes gearType = SelectRandomGearType(itemRarity);
             string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 

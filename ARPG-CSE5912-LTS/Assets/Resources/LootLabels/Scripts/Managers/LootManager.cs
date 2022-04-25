@@ -245,35 +245,13 @@ namespace LootLabels
                             equipment.suffix = suffix;
 
                             foreach (GameObject featureGO in prefix.FeaturesGOs) {
-                                Feature feature = featureGO.GetComponent<Feature>();
-                                Type typeFeature = feature.GetType();
-                                if (typeFeature == typeof(FlatStatModifierFeature))
-                                {
-                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
-
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity, flatStat.type);
-                                }
-                                else
-                                {
-                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
-                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
-                                }
+                                FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
+                                feature.flatAmount = RollStatsForFeatures(gear.ItemRarity, feature.type);
                             }
                             foreach (GameObject featureGO in suffix.FeaturesGOs)
                             {
-                                Feature feature = featureGO.GetComponent<Feature>();
-                                Type typeFeature = feature.GetType();
-                                if (typeFeature == typeof(FlatStatModifierFeature))
-                                {
-                                    FlatStatModifierFeature flatStat = (FlatStatModifierFeature)feature;
-                                    flatStat.flatAmount = RollStatsForFeatures(gear.ItemRarity, flatStat.type);
-                                }
-                                else
-                                {
-                                    PercentStatModifierFeature percentStat = (PercentStatModifierFeature)feature;
-                                    percentStat.percentAmount = RollStatsForPercent(gear.ItemRarity);
-                                }
-
+                                FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();        
+                                feature.flatAmount = RollStatsForFeatures(gear.ItemRarity, feature.type);
                             }
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
                             droppedItem.GetComponent<ItemPickup>().item = equipment;
