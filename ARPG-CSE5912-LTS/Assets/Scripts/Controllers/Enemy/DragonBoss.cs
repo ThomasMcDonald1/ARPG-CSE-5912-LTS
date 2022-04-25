@@ -8,7 +8,6 @@ using System;
 public class DragonBoss : EnemyAbilityController
 {
     [SerializeField] float chaseDistance = 15.0f;
-    //[SerializeField] float longRange = 10.0f;
     [SerializeField] float meleeRange = 5.0f;
     [SerializeField] float vertexThreshold = 5.0f;
 
@@ -52,7 +51,7 @@ public class DragonBoss : EnemyAbilityController
     new private void Update()
     {
         UpdateAnimator();
-        if (stats[StatTypes.HP] <= 0)
+        if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
         {
             if (fadeOutMusic)
             {
