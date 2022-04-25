@@ -113,6 +113,7 @@ public class Lorekeeper : NPC
             case 8:
                 break;
             case 9:
+                GetComponent<QuestGiver>().AddQuestToLogIfNew();
                 InteractionManager.GetInstance().EnableForsakenCathedralButton();
                 currentStory++;
                 GetComponent<QuestGiver>().UpdateQuestIcon();

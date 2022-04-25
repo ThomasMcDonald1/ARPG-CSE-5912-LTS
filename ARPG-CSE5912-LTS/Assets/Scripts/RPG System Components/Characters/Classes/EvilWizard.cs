@@ -25,7 +25,7 @@ namespace ARPG.Combat
 
         public override string GetClassTypeName()
         {
-            return "Bandit";
+            return "EvilWizard";
         }
 
         protected override void SeePlayer()
