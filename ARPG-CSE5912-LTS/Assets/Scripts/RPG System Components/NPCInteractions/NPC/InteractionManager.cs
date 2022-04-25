@@ -268,18 +268,22 @@ public class InteractionManager : MonoBehaviour
 
     public void ReactivateNPCS()
     {
-        player.GetComponent<PlayerController>().DungeonNum = 0;
-        generalStore.gameObject.SetActive(true);
-        blacksmith.gameObject.SetActive(true);
-        porter.gameObject.SetActive(true);
+        if (player.GetComponent<PlayerController>().DungeonNum == 0)
+        {
 
-        //lorekeeper.GetComponent<NavMeshAgent>().enabled = false;
-        lorekeeper.GetComponent<Collider>().enabled = true;
-        lorekeeperModel.SetActive(true);
-        lorekeeperQuestIcon.SetActive(true);
-        //lorekeeper.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerController>().DungeonNum = 0;
+            generalStore.gameObject.SetActive(true);
+            blacksmith.gameObject.SetActive(true);
+            porter.gameObject.SetActive(true);
 
-        StopInteraction();
+            //lorekeeper.GetComponent<NavMeshAgent>().enabled = false;
+            lorekeeper.GetComponent<Collider>().enabled = true;
+            lorekeeperModel.SetActive(true);
+            lorekeeperQuestIcon.SetActive(true);
+            //lorekeeper.GetComponent<NavMeshAgent>().enabled = true;
+
+            StopInteraction();
+        }
     }
 
     // For NPCs who will not trade

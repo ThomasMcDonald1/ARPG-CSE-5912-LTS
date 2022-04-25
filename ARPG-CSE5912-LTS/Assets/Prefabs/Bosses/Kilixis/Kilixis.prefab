@@ -126,7 +126,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 9999
   avoidancePriority: 50
   m_AngularSpeed: 999
@@ -159,10 +159,11 @@ MonoBehaviour:
   smooth: 0
   yVelocity: 0
   NPCInteractionRange: 0
-  basicAttackAbility: {fileID: 0}
+  basicAttackAbility: {fileID: 3760965741138558155, guid: b73ca9020f3572340a6cbcebd4d0c363, type: 3}
   baseRunSpeed: 7
   lootSource: 2
   lootType: 4
+  enemyAbilityOnCool: 0
   enemyInAOEAbilityTargetSelectionMode: 0
   enemyInSingleTargetAbilitySelectionMode: 0
   chaseDistance: 17
@@ -170,6 +171,7 @@ MonoBehaviour:
   vertexThreshold: 1
   HealthBar: {fileID: 5896511275699011314}
   patrolPath: {fileID: 0}
+  audioManager: {fileID: 0}
 --- !u!114 &5896511275470583572
 MonoBehaviour:
   m_ObjectHideFlags: 0

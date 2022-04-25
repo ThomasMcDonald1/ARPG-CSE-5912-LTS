@@ -126,7 +126,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
-  m_Speed: 6.5
+  m_Speed: 6
   m_Acceleration: 7
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -163,14 +163,15 @@ MonoBehaviour:
   baseRunSpeed: 7
   lootSource: 2
   lootType: 4
+  enemyAbilityOnCool: 0
   enemyInAOEAbilityTargetSelectionMode: 0
   enemyInSingleTargetAbilitySelectionMode: 0
   chaseDistance: 15
-  longRange: 10
   meleeRange: 5
   vertexThreshold: 5
   HealthBar: {fileID: 3992097992944052237}
   patrolPath: {fileID: 0}
+  audioManager: {fileID: 0}
 --- !u!114 &2048730147444159047
 MonoBehaviour:
   m_ObjectHideFlags: 0
