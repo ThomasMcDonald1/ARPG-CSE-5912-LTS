@@ -12,7 +12,6 @@ public class GithUb : EnemyAbilityController
     [SerializeField] GameObject HealthBar;
     [SerializeField] PatrolPath patrolPath;
 
-    GameObject playerObj;
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
 
@@ -36,7 +35,6 @@ public class GithUb : EnemyAbilityController
         stats[StatTypes.LVL] = 30;
         stats[StatTypes.MonsterType] = 3;
 
-        playerObj = GameObject.FindWithTag("Player");
         PlayerTarget = null;
 
         if (patrolPath != null)
@@ -50,7 +48,12 @@ public class GithUb : EnemyAbilityController
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    protected override void Update()
+    public string GetClassTypeName()
+    {
+        return "GithUb";
+    }
+
+    new private void Update()
     {
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
@@ -60,7 +63,8 @@ public class GithUb : EnemyAbilityController
                 audioManager.FadeOut("Boss3BGM", "Dungeon3BGM");
                 fadeOutMusic = false;
             }
-            GetComponent<Animator>().SetBool("Dead", true);
+            animator.SetBool("Dead", true);
+            agent.isStopped = true;
             PlayerTarget = null;
         }
 
@@ -72,11 +76,12 @@ public class GithUb : EnemyAbilityController
                 audioManager.FadeOut("Dungeon3BGM", "Boss3BGM");
             }
         }
-        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
+        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
+            audioManager.FadeOut("Dungeon2BGM", "Boss2BGM");
             MakeHostile();
         }
-        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)
+        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] > 0)
         {
             MakeNonHostile();
         }
@@ -94,7 +99,7 @@ public class GithUb : EnemyAbilityController
                 //navAgent.destination = PlayerTarget.position;
 
                 NavMeshPath path = new NavMeshPath();
-                agent.CalculatePath(playerObj.transform.position, path);
+                agent.CalculatePath(player.transform.position, path);
                 agent.path = path;
             }
 
@@ -130,7 +135,7 @@ public class GithUb : EnemyAbilityController
 
     private bool InSightRadius()
     {
-        return Vector3.Distance(playerObj.transform.position, transform.position) < chaseDistance;
+        return Vector3.Distance(player.transform.position, transform.position) < chaseDistance;
     }
     private bool InMusicTransitionRadius()
     {
@@ -139,12 +144,12 @@ public class GithUb : EnemyAbilityController
 
     private bool InMeleeRange()
     {
-        return Vector3.Distance(playerObj.transform.position, transform.position) < meleeRange;
+        return Vector3.Distance(player.transform.position, transform.position) < meleeRange;
     }
 
     private void MakeHostile()
     {
-        PlayerTarget = playerObj.transform;
+        PlayerTarget = player.transform;
         GetComponent<Animator>().SetTrigger("Intimidate");
         navAgent.speed = 6f;
     }
@@ -208,6 +213,7 @@ public class GithUb : EnemyAbilityController
     void HitPlayer()
     {
         if (++AttackCycle > 2) { AttackCycle = 0; }
+        QueueBasicAttack(basicAttackAbility, player.GetComponent<Character>(), this);
     }
 
     // Animation Event
