@@ -59,87 +59,90 @@ public class TipManager : MonoBehaviour
 
    public void ShowInventoryTooltip(Ite item)
     {
-        ShowText();
-        foreach (GameObject go in infoSlotTexts)
+        if (item != null)
         {
-            go.GetComponent<TextMeshProUGUI>().text = default;
-        }
-        nameText.text = item.name;
-        nameText.color = item.itemNameColor;
-        if (nameText.alpha < 1.0f)
-        {
-            nameText.alpha = 1.0f;
-        }
-        if (nameText.color == Color.black)
-        {
-            nameText.color = Color.white;
-        }
-        if (item is WeaponEquipment weapon)
-        {
-            if (weapon.typeOfWeapon == WeaponEquipment.weaponType.twohandsword)
-                infoSlot1.text = "Two-Handed";
-            else
-                infoSlot1.text = "One-Handed";
-            infoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
-            infoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
-            infoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
-        }
-        else if (item is ArmorEquipment armor)
-        {
-            if (armor.typeOfArmor == ArmorEquipment.armorType.light)
+            ShowText();
+            foreach (GameObject go in infoSlotTexts)
             {
-                infoSlot1.text = "Light Armor";
-                infoSlot2.text = "Evasion: " + armor.Evasion.ToString();
+                go.GetComponent<TextMeshProUGUI>().text = default;
             }
-            else if (armor.typeOfArmor == ArmorEquipment.armorType.medium)
+            nameText.text = item.name;
+            nameText.color = item.itemNameColor;
+            if (nameText.alpha < 1.0f)
             {
-                infoSlot1.text = "Medium Armor";
-                infoSlot2.text = "Armor: " + armor.Armor.ToString();
-                infoSlot3.text = "Evasion: " + armor.Evasion.ToString();
+                nameText.alpha = 1.0f;
             }
-            else if (armor.typeOfArmor == ArmorEquipment.armorType.heavy)
+            if (nameText.color == Color.black)
             {
-                infoSlot1.text = "Heavy Armor";
-                infoSlot2.text = "Armor: " + armor.Armor.ToString();
+                nameText.color = Color.white;
             }
-        }
-        else if (item is ShieldEquipment shieldEquipment)
-        {
-            infoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
-            infoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
-        }
-        if (item is Equipment equipment)
-        {
-            if (equipment.prefix != null)
+            if (item is WeaponEquipment weapon)
             {
-                for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
+                if (weapon.typeOfWeapon == WeaponEquipment.weaponType.twohandsword)
+                    infoSlot1.text = "Two-Handed";
+                else
+                    infoSlot1.text = "One-Handed";
+                infoSlot2.text = "Attack Speed: " + weapon.attackSpeed.ToString();
+                infoSlot3.text = "Physical Damage: " + weapon.minimumDamage.ToString() + " - " + weapon.maximumDamage.ToString();
+                infoSlot4.text = "Crit Chance: " + weapon.critChance.ToString() + "%";
+            }
+            else if (item is ArmorEquipment armor)
+            {
+                if (armor.typeOfArmor == ArmorEquipment.armorType.light)
                 {
-                    FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
-                    if (feature != null)
+                    infoSlot1.text = "Light Armor";
+                    infoSlot2.text = "Evasion: " + armor.Evasion.ToString();
+                }
+                else if (armor.typeOfArmor == ArmorEquipment.armorType.medium)
+                {
+                    infoSlot1.text = "Medium Armor";
+                    infoSlot2.text = "Armor: " + armor.Armor.ToString();
+                    infoSlot3.text = "Evasion: " + armor.Evasion.ToString();
+                }
+                else if (armor.typeOfArmor == ArmorEquipment.armorType.heavy)
+                {
+                    infoSlot1.text = "Heavy Armor";
+                    infoSlot2.text = "Armor: " + armor.Armor.ToString();
+                }
+            }
+            else if (item is ShieldEquipment shieldEquipment)
+            {
+                infoSlot1.text = "Armor: " + shieldEquipment.armor.ToString();
+                infoSlot2.text = "Block Chance: " + shieldEquipment.blockChance.ToString();
+            }
+            if (item is Equipment equipment)
+            {
+                if (equipment.prefix != null)
+                {
+                    for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
                     {
-                        prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
-                        prefixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                        FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
+                        if (feature != null)
+                        {
+                            prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                            prefixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                        }
+                    }
+                }
+
+                if (equipment.suffix != null)
+                {
+                    for (int i = 0; i < equipment.suffix.FeaturesGOs.Count; i++)
+                    {
+                        FlatStatModifierFeature feature = equipment.suffix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
+                        if (feature != null)
+                        {
+                            suffixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                            suffixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                        }
                     }
                 }
             }
 
-            if (equipment.suffix != null)
-            {
-                for (int i = 0; i < equipment.suffix.FeaturesGOs.Count; i++)
-                {
-                    FlatStatModifierFeature feature = equipment.suffix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
-                    if (feature != null)
-                    {
-                        suffixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
-                        suffixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
-                    }
-                }
-            }
-        }
-
-        AdjustSize();
-        AdjustTipWindowPosition();
-        tipWindow.gameObject.SetActive(true);    
+            AdjustSize();
+            AdjustTipWindowPosition();
+            tipWindow.gameObject.SetActive(true);
+        } 
     }
 
     public void ShowAbilityTooltip(Ability ability)

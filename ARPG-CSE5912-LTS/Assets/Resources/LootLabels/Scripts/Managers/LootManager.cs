@@ -105,9 +105,12 @@ namespace LootLabels
 
             while (i != 0)
             {
-                i--;
                 yield return new WaitForSeconds(.2f);
-                GenerateLoot(lootOrigin, type);
+                if (i == amount)
+                    GenerateLootSeeded(lootOrigin, type);
+                else
+                    GenerateLootRandom(lootOrigin, type);
+                i--;
             }
             int random = UnityEngine.Random.Range(1, 3);
             for (int j = 0; j < random; j++)
@@ -121,7 +124,14 @@ namespace LootLabels
 
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
-        void GenerateLoot(Transform lootOrigin, LootType type)
+        void GenerateLootSeeded(Transform lootOrigin, LootType type)
+        {
+            ChooseItemType(lootOrigin, type);
+        }
+
+        //Choses which type of loot will drop.
+        //currency, items, spellbooks, ...
+        void GenerateLootRandom(Transform lootOrigin, LootType type)
         {
             LootTypes lootType = LootGenerator.SelectRandomLootType();
 
@@ -131,7 +141,7 @@ namespace LootLabels
                     ChooseCurrency(lootOrigin, type);
                     break;
                 case LootTypes.Items:
-                    ChooseItemType(lootOrigin, type);
+                    ChooseItemTypeUnseeded(lootOrigin);
                     break;
                 default:
                     Debug.Log("loottype doesn't exist");
@@ -251,6 +261,65 @@ namespace LootLabels
                             foreach (GameObject featureGO in suffix.FeaturesGOs)
                             {
                                 FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();        
+                                feature.flatAmount = RollStatsForFeatures(gear.ItemRarity, feature.type);
+                            }
+                            gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
+                            droppedItem.GetComponent<ItemPickup>().item = equipment;
+                        }
+                        else
+                        {
+                            gear.ItemName = gear.ItemRarity + " " + gear.ItemName;
+                        }
+                        item.name = gear.ItemName;
+                        item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
+                        //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
+                    }
+                    break;
+                default:
+                    Debug.Log("Itemtype not yet implemented");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Choses a item type to drop and creates it
+        /// </summary>
+        /// <param name="lootOrigin"></param>
+        void ChooseItemTypeUnseeded(Transform lootOrigin)
+        {
+
+            ItemTypes itemType = LootGenerator.SelectRandomItemType();
+            Debug.Log("itemType is " + itemType);
+            switch (itemType)
+            {
+                case ItemTypes.Gear:
+                    BaseGear gear = LootGenerator.CreateGearUnseeded();
+                    Debug.Log("gear.ModelName is " + gear.ModelName);
+
+                    GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    droppedItem.GetComponent<DroppedGear>().gear = gear;
+
+                    if (droppedItem.GetComponent<ItemPickup>() != null)
+                    {
+                        Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
+                        Debug.Log("item is " + item);
+                        RollStatsForItems(gear.ItemRarity, item, gear.GearType);
+                        if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility && gear.ItemRarity != Rarity.Poor && gear.ItemRarity != Rarity.Normal)
+                        {
+                            Equipment equipment = (Equipment)item;
+                            PrefixSuffix prefix = featureTablesGenerator.prefixTables.GetRandomPrefixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.prefix = prefix;
+                            PrefixSuffix suffix = featureTablesGenerator.suffixTables.GetRandomSuffixForRarityAndGearType(gear.ItemRarity, gear.GearType);
+                            equipment.suffix = suffix;
+
+                            foreach (GameObject featureGO in prefix.FeaturesGOs)
+                            {
+                                FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
+                                feature.flatAmount = RollStatsForFeatures(gear.ItemRarity, feature.type);
+                            }
+                            foreach (GameObject featureGO in suffix.FeaturesGOs)
+                            {
+                                FlatStatModifierFeature feature = featureGO.GetComponent<FlatStatModifierFeature>();
                                 feature.flatAmount = RollStatsForFeatures(gear.ItemRarity, feature.type);
                             }
                             gear.ItemName = prefix.Name + gear.ItemName + suffix.Name;
@@ -421,9 +490,8 @@ namespace LootLabels
             else if (item.type == Ite.ItemType.weapon)
             {
                 Equipment equip = (Equipment)item;
-                if (equip.equipSlot == EquipmentSlot.OffHand)
+                if (equip is ShieldEquipment shield)
                 {
-                    ShieldEquipment shield = (ShieldEquipment)item;
                     shield.armor = (int)(shield.armor + multiplier);
                     shield.blockChance = (int)(shield.blockChance + multiplier);
                     item = shield;
