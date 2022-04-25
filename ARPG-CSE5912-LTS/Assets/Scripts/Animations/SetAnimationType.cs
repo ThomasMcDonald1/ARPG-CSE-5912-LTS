@@ -33,7 +33,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToUnarmed()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
 
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
@@ -46,7 +46,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToTwoHandedSword()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
             hasSecondWeapon = false;
@@ -58,7 +58,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToBow()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
             hasSecondWeapon = false;
@@ -70,7 +70,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToStaff()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
             hasSecondWeapon = false;
@@ -82,7 +82,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToOnlySwordRight()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
             hasSecondWeapon = false;
@@ -94,7 +94,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToOnlySwordLeft()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
@@ -106,7 +106,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToOnlyDaggerRight()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && hasSecondWeapon)
+        if (hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") / DoubleAttackSpeed);
             hasSecondWeapon = false;
@@ -118,7 +118,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToOnlyDaggerLeft()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
@@ -130,7 +130,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToDaggerLeftSwordRight()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
@@ -142,7 +142,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToSwordLeftDaggerRight()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
@@ -154,7 +154,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToDualSwords()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
@@ -166,7 +166,7 @@ public class SetAnimationType : MonoBehaviour
 
     public void ChangeToDualDaggers()
     {
-        if (overrider.GetComponent<Animator>().GetBool("CanDualWield") && !hasSecondWeapon)
+        if (!hasSecondWeapon)
         {
             GetComponent<Animator>().SetFloat("AttackSpeed", GetComponent<Animator>().GetFloat("AttackSpeed") * DoubleAttackSpeed);
             hasSecondWeapon = true;
