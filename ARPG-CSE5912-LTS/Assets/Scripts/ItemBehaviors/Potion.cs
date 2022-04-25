@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "New Potion", menuName = "Inventory/Potion")]
 public class Potion : Ite
@@ -119,6 +120,7 @@ public class Potion : Ite
     }
     public void UseTeleportPotion()
     {
+            if (SceneManager.GetSceneAt(1).name == "GameScene" || SceneManager.GetSceneAt(1).name == "NoControllerDuplicate") return;
             Vector3 pPos = GameObject.FindGameObjectWithTag("Player").transform.position;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
