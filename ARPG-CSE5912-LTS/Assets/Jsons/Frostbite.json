@@ -1,0 +1,31 @@
+{
+  "name":"Frostbite",
+  "description":"Deal cold damage to an enemy from range.",
+  "icon":"500_skillicons/Skill_standart/Mageskill_28",
+  "castingVFX":"Projectiles/Casting/Casting_Ice_LWRP",
+  "powerType":"Magical",
+  "baseDamageOrHealing":300,
+  "rangeType":"Constant",
+  "range":8,
+  "aoeType":"Single",
+  "aoeRadius":0,
+  "costType":"Mana",
+  "cost":12,
+  "castType":"Timer",
+  "castTime":3,
+  "cooldown":3,
+  "abilityMovement": 0,
+  "abliityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":true,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Target",
+      "vfx":"Projectiles/Explosion/Explosion_Ice_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "element":"Cold"
+    }
+  ]
+}

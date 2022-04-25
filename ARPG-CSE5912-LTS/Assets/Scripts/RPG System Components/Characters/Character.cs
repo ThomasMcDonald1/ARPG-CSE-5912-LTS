@@ -88,7 +88,7 @@ public abstract class Character : MonoBehaviour
 
     protected void OnSingleTargetSelected(AbilityCast abilityCast)
     {
-        float distFromCaster = Vector3.Distance(abilityCast.hit.collider.transform.position, abilityCast.caster.transform.position);
+        float distFromCaster = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
         float distToTravel = distFromCaster - abilityCast.abilityRange.range;
         if (distFromCaster > abilityCast.abilityRange.range)
         {
@@ -282,7 +282,10 @@ public abstract class Character : MonoBehaviour
         {
             if (abilityCast.caster.agent.enabled == true)
             {
-                abilityCast.caster.agent.destination = endPoint;
+                //abilityCast.caster.agent.destination = endPoint;
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(endPoint, path);
+                agent.path = path;
             }
             float distFromPlayer = Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
@@ -302,10 +305,15 @@ public abstract class Character : MonoBehaviour
         Vector3 endPoint = abilityCast.caster.transform.position + (dir * (distToTravel + 0.1f));
         while (abilityQueued)
         {
-            abilityCast.caster.agent.destination = endPoint;
+            //abilityCast.caster.agent.destination = endPoint;
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(endPoint, path);
+            agent.path = path;
+            Debug.Log("Path calculated");
             float distFromPlayer = Vector3.Distance(target.transform.position, abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
+                Debug.Log("Made it within range");
                 OnAgentMadeItWithinRangeWithoutCanceling(abilityCast);
             }
             yield return null;

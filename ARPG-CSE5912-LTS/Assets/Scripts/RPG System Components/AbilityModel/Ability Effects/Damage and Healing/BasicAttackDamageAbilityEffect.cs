@@ -32,7 +32,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
             {
                 if (equippedWeapon != null && equippedWeapon.currentEquipment[0] != null)
                 {
-                    Debug.Log(" I am in the weapon damage assignments");
+                    //Debug.Log(" I am in the weapon damage assignments");
                     WeaponEquipment weapon = (WeaponEquipment)equippedWeapon.currentEquipment[0];
                     minWeaponDamage = weapon.minimumDamage;
                     maxWeaponDamage = weapon.maximumDamage;

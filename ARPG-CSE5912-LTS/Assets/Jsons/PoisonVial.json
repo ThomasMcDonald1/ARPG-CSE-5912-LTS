@@ -1,0 +1,30 @@
+{
+  "name":"Poison Vial",
+  "description":"Deal poison damage in an area in close range.",
+  "icon":"500_skillicons/Skill_standart/Assassinskill_13",
+  "powerType":"Magical",
+  "baseDamageOrHealing":480,
+  "rangeType":"Constant",
+  "range":4,
+  "aoeType":"Specify",
+  "aoeRadius":3,
+  "costType":"Mana",
+  "cost":18,
+  "castType":"Instant",
+  "castTime":0,
+  "cooldown":10,
+  "abilityMovement": 0,
+  "abliityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":true,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Click",
+      "vfx":"Projectiles/Explosion/Explosion_Nature_2_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "element":"Poison"
+    }
+  ]
+}

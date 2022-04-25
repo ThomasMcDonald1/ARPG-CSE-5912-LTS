@@ -20,7 +20,7 @@ public class ChargeCharacterAbilityMovement : BaseAbilityMovement
     {
         Debug.Log("Charging");
         abilityCast.caster.transform.LookAt(abilityCast.hit.point);
-        while (Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position) > 1.25f)
+        while (Vector3.Distance(abilityCast.hit.point, abilityCast.caster.transform.position) > 3f)
         {
             abilityCast.caster.transform.position = Vector3.MoveTowards(abilityCast.caster.transform.position, abilityCast.hit.point, dist * Time.deltaTime * CHARGE_SPEED);
             yield return null;

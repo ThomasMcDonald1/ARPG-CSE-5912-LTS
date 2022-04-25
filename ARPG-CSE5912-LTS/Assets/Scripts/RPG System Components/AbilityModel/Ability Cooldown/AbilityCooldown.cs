@@ -49,7 +49,7 @@ public class AbilityCooldown : MonoBehaviour
         {
             if (actionButton.abilityAssigned == abilityCast.ability)
             {
-                Debug.Log("Cooling down " + actionButton.abilityAssigned + " with cooldown " + reducedCooldown);
+                //Debug.Log("Cooling down " + actionButton.abilityAssigned + " with cooldown " + reducedCooldown);
                 actionButton.cooldownTimer = reducedCooldown;
                 actionButton.cooldownText.gameObject.SetActive(true);
                 if (cooldownRoutine == null)
