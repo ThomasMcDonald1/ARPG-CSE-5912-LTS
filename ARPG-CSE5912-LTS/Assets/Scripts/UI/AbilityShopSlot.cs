@@ -8,6 +8,7 @@ using System;
 public class AbilityShopSlot : MonoBehaviour
 {
     public TextMeshProUGUI abilityName;
+    public TextMeshProUGUI abilityDescription;
     public Button purchaseButton;
     public Image abilityImg;
     private Ability ability;
@@ -38,6 +39,7 @@ public class AbilityShopSlot : MonoBehaviour
     {
         //Debug.Log("ability names:" +ab.name);
         ability = ab;
+        abilityDescription.text = ab.description;
         abilityName.text = ab.name;
         abilityImg.sprite = ab.icon;
         if (AbilityShopController.instance.stats[StatTypes.SkillPoints] == 0)
