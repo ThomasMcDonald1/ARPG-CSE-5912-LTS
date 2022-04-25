@@ -1,0 +1,29 @@
+{
+  "name":"Shock",
+  "description":"Electrocute an enemy from range.",
+  "icon":"500_skillicons/Skill_standart/Shamanskill_23",
+  "powerType":"Magical",
+  "baseDamageOrHealing":400,
+  "rangeType":"Constant",
+  "range":8,
+  "aoeType":"Single",
+  "aoeRadius":0,
+  "costType":"Mana",
+  "cost":12,
+  "castType":"Timer",
+  "cooldown":4,
+  "abilityMovement": 0,
+  "abliityRequiresCursorSelection":true,
+  "abilityRequiresCharacterUnderCursor":true,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Target",
+      "vfx":"Projectiles/Explosion/Explosion_Storm_LWRP",
+      "hitRateType":"Guaranteed",
+      "targetType":"Rival",
+      "element":"Lightning"
+    }
+  ]
+}

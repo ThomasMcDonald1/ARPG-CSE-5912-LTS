@@ -1,0 +1,29 @@
+{
+  "name":"Blood Magic",
+  "description":"Deal physical damage around you at the expense of your own health.",
+  "icon":"500_skillicons/Skill_standart/Assassinskill_37",
+  "powerType":"Physical",
+  "baseDamageOrHealing":600,
+  "rangeType":"Self",
+  "range":0,
+  "aoeType":"Pb",
+  "aoeRadius":4,
+  "costType":"Health",
+  "cost":100,
+  "castType":"Timer",
+  "castTime":5,
+  "cooldown":10,
+  "abilityMovement": 0,
+  "abliityRequiresCursorSelection":false,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Caster",
+      "vfx":"Projectiles/Explosion/Explosion_Dark_LWRP",
+      "hitRateType":"Evasion",
+      "targetType":"Rival"
+    }
+  ]
+}

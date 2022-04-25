@@ -1,0 +1,28 @@
+{
+  "name":"Smite",
+  "description":"Do massive physical damage to a single enemy.",
+  "icon":"500_skillicons/Skill_standart/Warriorskill_02",
+  "powerType":"Physical",
+  "baseDamageOrHealing":600,
+  "rangeType":"Constant",
+  "range":1,
+  "aoeType":"Single",
+  "aoeRadius":0,
+  "costType":"Mana",
+  "cost":18,
+  "castType":"Instant",
+  "cooldown":7,
+  "abilityMovement": 0,
+  "abliityRequiresCursorSelection":false,
+  "abilityRequiresCharacterUnderCursor":false,
+  "effects":[
+    {
+      "name":"Damage",
+      "effect":"Damage",
+      "origin":"Target",
+      "vfx":"Projectiles/Explosion/Explosion_Light_LWRP",
+      "hitRateType":"Evasion",
+      "targetType":"Rival"
+    }
+  ]
+}

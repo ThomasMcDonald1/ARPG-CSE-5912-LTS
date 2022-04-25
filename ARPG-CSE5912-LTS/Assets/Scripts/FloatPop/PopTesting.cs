@@ -18,7 +18,7 @@ public class PopTesting : MonoBehaviour
     {
         PopUp PopUp;
         Transform PopUpTransform = Instantiate(Pop, Vector3.zero, Quaternion.identity);
-        Debug.Log(target);
+        //Debug.Log(target);
         if (target is Player)
         {
             PopUpTransform.SetParent(target.transform.Find("PlayerCanvas"), false);
