@@ -71,6 +71,7 @@
         Rare,
         Epic,
         Legendary,
+        Count
        // Set,
        // SuperUltraHyperExPlusAlpha,
     }

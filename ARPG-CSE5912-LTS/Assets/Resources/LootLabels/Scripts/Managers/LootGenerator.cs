@@ -2,7 +2,11 @@
 
 namespace LootLabels {
     public class LootGenerator : MonoBehaviour {
-
+        Stats playerStats;
+        private void Awake()
+        {
+            playerStats = GetComponentInParent<GameplayStateController>().GetComponentInChildren<Player>().GetComponent<Stats>();
+        }
         /// <summary>
         /// Return a random value for dropped currency
         /// </summary>
@@ -76,7 +80,34 @@ namespace LootLabels {
         /// Check amount of gear types and pick a random one
         /// </summary>
         /// <returns></returns>
-        public GearTypes SelectRandomGearType(Rarity itemRarity) {
+        public GearTypes SelectRandomGearTypeSeeded(Rarity itemRarity) {
+            int randomIndex = Random.Range(0, 8);
+            Debug.Log("GearTypes RandomIndex is " + (GearTypes)randomIndex);
+            if ((itemRarity == Rarity.Poor || itemRarity == Rarity.Normal))
+            {
+                while ((GearTypes)randomIndex == GearTypes.Jewelry)
+                {
+                    randomIndex = Random.Range(0, 8);
+                }
+            }
+            else if (GearTypesIsPotion(randomIndex))
+            {
+                while (GearTypesIsPotion(randomIndex))
+                {
+                    randomIndex = Random.Range(0, 8);
+                }
+            }
+
+            Debug.Log("GearType chosen: " + (GearTypes)randomIndex);
+            return (GearTypes)randomIndex;
+        }
+
+        /// <summary>
+        /// Check amount of gear types and pick a random one
+        /// </summary>
+        /// <returns></returns>
+        public GearTypes SelectRandomGearTypeUnseeded(Rarity itemRarity)
+        {
             int randomIndex;
             //int gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
             //Debug.Log("gearTypeCount is " + gearTypeCount);
@@ -124,40 +155,57 @@ namespace LootLabels {
                     }
                     break;
                 case LootType.Rare:
-                    if (Random.value < 0.85)
-                    {
-                        rare = Rarity.Rare;
-                    }
-                    else if (Random.value > 0.95)
-                    {
-                        rare = Rarity.Epic;
-                    }
-                    else
-                    {
-                        rare = Rarity.Normal;
-                    }
+                    rare = Rarity.Rare;
                     break;
                 case LootType.Epic:
-                    if (Random.value < 0.98)
-                    {
-                        rare = Rarity.Epic;
-                    }
-                    else
-                    {
-                        rare = Rarity.Legendary;
-                    }
+                    rare = Rarity.Epic;
                     break;
                 case LootType.Legendary:
                     rare = Rarity.Legendary;
                     break;
-                //case Type.SuperUltraHyperExPlusAlpha:
-                //    rare = Rarity.SuperUltraHyperExPlusAlpha;
-                //    break;
                 default:
                     rare = Rarity.Poor;
                     break;
             }
             return rare;
+        }
+
+        public virtual Rarity SelectRandomRarityUnseeded()
+        {
+            float chanceForLegendary = playerStats[StatTypes.LVL] * 0.01f;
+            float chanceForEpic = playerStats[StatTypes.LVL] * 0.25f;
+            float chanceForRare = playerStats[StatTypes.LVL] * 0.8f;
+            float chanceForNormal = playerStats[StatTypes.LVL] * 0.95f;
+
+            Rarity rarity;
+            int randomNum = Random.Range(0, 101);
+            if (randomNum < chanceForLegendary)
+            {
+                rarity = Rarity.Legendary;
+            }
+            else if (randomNum < chanceForEpic)
+            {
+                rarity = Rarity.Epic;
+            }
+            else if (randomNum < chanceForRare)
+            {
+                rarity = Rarity.Rare;
+            }
+            else if (randomNum < chanceForNormal)
+            {
+                rarity = Rarity.Normal;
+            }
+            else
+            {
+                rarity = Rarity.Poor;
+            }
+
+            if ((rarity == Rarity.Poor || rarity == Rarity.Normal) && playerStats[StatTypes.MonsterType] != 1)
+            {
+                rarity = Rarity.Rare;
+            }
+
+            return rarity;
         }
 
         /// <summary>
@@ -210,13 +258,30 @@ namespace LootLabels {
         }
 
         /// <summary>
-        /// Create a randomized gear item
+        /// Create a randomized gear item with a seeded loot type
         /// </summary>
         /// <returns></returns>
         public BaseGear CreateGear(LootType type) {
             Debug.Log("Create Gear with GetModelName has been run");
             Rarity itemRarity = SelectRandomRarity(type);
-            GearTypes gearType = SelectRandomGearType(itemRarity);
+            GearTypes gearType = SelectRandomGearTypeSeeded(itemRarity);
+            string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
+            string iconName = ResourceManager.singleton.GetIconName(gearType);
+
+            BaseGear gear = new BaseGear(itemRarity, gearType, modelName, iconName);
+            Debug.Log("creategear is making " + itemRarity + " " + modelName);
+            return gear;
+        }
+
+        /// <summary>
+        /// Create a randomized gear item
+        /// </summary>
+        /// <returns></returns>
+        public BaseGear CreateGearUnseeded()
+        {
+            Debug.Log("Create Gear with GetModelName has been run");
+            Rarity itemRarity = SelectRandomRarityUnseeded();
+            GearTypes gearType = SelectRandomGearTypeSeeded(itemRarity);
             string modelName = ResourceManager.singleton.GetModelName(gearType, itemRarity);
             string iconName = ResourceManager.singleton.GetIconName(gearType);
 
@@ -237,6 +302,13 @@ namespace LootLabels {
 
             BaseCurrency currency = new BaseCurrency(currencyType, amount, modelName, iconName);
             return currency;
+        }
+
+        private bool GearTypesIsPotion(int randomIndex)
+        {
+            return (GearTypes)randomIndex == GearTypes.DefensePotion || (GearTypes)randomIndex == GearTypes.HealthPotion ||
+                (GearTypes)randomIndex == GearTypes.ManaPotion || (GearTypes)randomIndex == GearTypes.SpeedPotion ||
+                (GearTypes)randomIndex == GearTypes.TeleportPotion;
         }
     }
 }
