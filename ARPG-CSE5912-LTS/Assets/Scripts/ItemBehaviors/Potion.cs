@@ -124,6 +124,7 @@ public class Potion : Ite
             if (NavMesh.SamplePosition(pPos, out hit, 1.0f, NavMesh.AllAreas))
             {
                 var x = Instantiate(Resources.Load("Portals/TownPortal") as GameObject, hit.position, Quaternion.identity);
+                Destroy(x, 20.0f);
             }
     }
 }
