@@ -13,9 +13,12 @@ public class PauseGameState : BaseGameplayState
         gameplayStateController.pauseMenuCanvas.enabled = true;
         gameplayStateController.npcInterfaceObj.SetActive(false);
         gameplayStateController.equipmentObj.SetActive(false);
-        foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+        if (FindObjectOfType<AudioManager>() != null)
         {
-            if (!s.name.Contains("BGM")) s.source.Stop();
+            foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+            {
+                if (!s.name.Contains("BGM")) s.source.Stop();
+            }
         }
 
         AddButtonListeners();
@@ -50,13 +53,15 @@ public class PauseGameState : BaseGameplayState
     void OnResumeGameClicked()
     {
         ResumeGame();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnOptionsClicked()
     {
         gameplayStateController.ChangeState<OptionsGameplayState>();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnExitToMenuClicked()
@@ -71,7 +76,8 @@ public class PauseGameState : BaseGameplayState
 
         Time.timeScale = 1;
         LoadingStateController.Instance.LoadScene("MainMenu");
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void SetPlayerSpawn()
@@ -88,8 +94,10 @@ public class PauseGameState : BaseGameplayState
 
     void OnExitGameClicked()
     {
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
+
         Application.Quit();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)

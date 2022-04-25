@@ -13,9 +13,12 @@ public class CharacterPanelState : BaseGameplayState
         Debug.Log("entered character panel state");
         Time.timeScale = 0;
         gameplayStateController.characterPanelCanvas.enabled = true;
-        foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+        if(FindObjectOfType<AudioManager>() != null)
         {
-            if (!s.name.Contains("BGM")) s.source.Stop();
+            foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
+            {
+                if (!s.name.Contains("BGM")) s.source.Stop();
+            }
         }
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
         exitAbilityShopButton.onClick.AddListener(() => CloseAbilityShop());
@@ -33,7 +36,8 @@ public class CharacterPanelState : BaseGameplayState
     void OnBackButtonClicked()
     {
         gameplayStateController.ChangeState<GameplayState>();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
 

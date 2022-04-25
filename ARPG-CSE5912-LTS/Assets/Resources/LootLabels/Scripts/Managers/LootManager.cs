@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DunGen.DungeonCrawler;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+using DunGen.DungeonCrawler;
 
 namespace LootLabels
 {
@@ -18,6 +21,26 @@ namespace LootLabels
         RarityColors rarityColors;
         [SerializeField] GameObject featureTablesGeneratorGO;
         FeatureTablesGenerator featureTablesGenerator;
+
+        [SerializeField]
+        [Tooltip("The radius around this object that loot should be spawned")]
+        private float range = 3f;
+
+        [SerializeField]
+        [Tooltip("The delay between objects being spawned")]
+        private float interval = 0.5f;
+
+        [SerializeField]
+        [Tooltip("How long (in seconds) it takes to complete the parabola animation")]
+        private float animationDuration = 1f;
+
+        [SerializeField]
+        [Tooltip("The minimum height the spawned loot will reach")]
+        private float minParabolaHeight = 1.5f;
+
+        [SerializeField]
+        [Tooltip("The maximum height the spawned loot will reach")]
+        private float maxParabolaHeight = 2f;
 
         public RarityColors RarityColors
         {
@@ -101,6 +124,8 @@ namespace LootLabels
         //if you want a delay on each item that spawns, use this
         IEnumerator DropLootCoroutine(Transform lootOrigin, int amount, LootType type)
         {
+            //Vector3 destination;
+            //NavMeshHit closestPointHit;
             int i = amount;
 
             while (i != 0)
@@ -117,11 +142,45 @@ namespace LootLabels
             {
                 Debug.Log("generating health potions");
                 yield return new WaitForSeconds(.2f);
+                //NavMesh.SamplePosition(lootOrigin.position, out closestPointHit, range, -1);
+                //TryGetValidSpawnPoint(lootOrigin.position, closestPointHit.position, out destination);
                 GenerateHealthPotions(lootOrigin, type);
             }
             GameObject lootdrop = GameObject.Find("LootDrops");
         }
 
+        private bool TryGetValidSpawnPoint(Vector3 origin, Vector3 closestPointOnNavMesh, out Vector3 destination)
+        {
+            // There's no guarantee we'll be able to find a valid spawn point
+            // Try 20 times to find a valid spawn point, then give up
+            const int maxTryCount = 20;
+            for (int i = 0; i < maxTryCount; i++)
+            {
+                destination = origin + UnityEngine.Random.insideUnitSphere * range;
+
+                // Find the closest point on the navmesh
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(destination, out hit, range, -1))
+                {
+                    destination = hit.position;
+
+                    // Calculate a path to the destination
+                    // NavMesh.SamplePosition() returns the closest point on the navmesh, but doesn't account for
+                    // blocking geometry. To avoid spawning loot on the wrong side of a nearby wall, we calculate
+                    // a path to the desired spawn point, then calculate the length of the path. If the path is longer
+                    // than the loot spawn radius, it was spawned behind a wall and should be discarded.
+                    var path = new NavMeshPath();
+                    if (NavMesh.CalculatePath(closestPointOnNavMesh, destination, -1, path) &&
+                        path.status == NavMeshPathStatus.PathComplete &&
+                        NavMeshUtil.CalculatePathLength(path) <= range)
+                    {
+                        return true;
+                    }
+                }
+            }
+            destination = origin;
+            return false;
+        }
         //Choses which type of loot will drop.
         //currency, items, spellbooks, ...
         void GenerateLootSeeded(Transform lootOrigin, LootType type)
@@ -157,8 +216,9 @@ namespace LootLabels
         {
             BaseCurrency currency = LootGenerator.CreateCurrency(type);
 
-            GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+            GameObject droppedItem = Instantiate(Resources.Load(currency.ModelName, typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
             droppedItem.GetComponent<DroppedCurrency>().currency = currency;
+            StartCoroutine(ReleaseSingleCoroutine(droppedItem));
         }
         void GenerateHealthPotions(Transform lootOrigin, LootType type)
         {
@@ -169,28 +229,28 @@ namespace LootLabels
             Debug.Log("randPotion is " + randomPotion);
             switch (randomPotion)
             {
-               case 1:
-                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
-                   itemRarity = LootGenerator.SelectRandomRarity(type);
-                   gearType = GearTypes.DefensePotion;
-                   break;
-               case 2:
-                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/ManaPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
-                   itemRarity = LootGenerator.SelectRandomRarity(type);
-                   gearType = GearTypes.ManaPotion;
-                   break;
-               case 3:
-                   droppedItem = Instantiate(Resources.Load("LootLabels/3D models/SpeedPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
-                   itemRarity = LootGenerator.SelectRandomRarity(type);
-                   gearType = GearTypes.SpeedPotion;
-                   break;
-               case 4:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/TeleportPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                case 1:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/DefensePotion", typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.DefensePotion;
+                    break;
+                case 2:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/ManaPotion", typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.ManaPotion;
+                    break;
+                case 3:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/SpeedPotion", typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    itemRarity = LootGenerator.SelectRandomRarity(type);
+                    gearType = GearTypes.SpeedPotion;
+                    break;
+                case 4:
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/TeleportPotion", typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     itemRarity = LootGenerator.SelectRandomRarity(type);
                     gearType = GearTypes.TeleportPotion;
                     break;
                 default:
-                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    droppedItem = Instantiate(Resources.Load("LootLabels/3D models/HealthPotion", typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     itemRarity = LootGenerator.SelectRandomRarity(type);
                     gearType = GearTypes.HealthPotion;
                     break;
@@ -211,7 +271,42 @@ namespace LootLabels
                 item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
             }
             droppedItem.GetComponent<DroppedGear>().gear = gear;
+            StartCoroutine(ReleaseSingleCoroutine(droppedItem));
         }
+        public IEnumerator ReleaseSingleCoroutine(GameObject obj)
+        {
+            Vector3 origin = obj.transform.position;
+            Vector3 destination;
+            NavMeshHit closestPointHit;
+
+            // Find the closest point on the navmesh to this spawner, and use it to try to find a valid spawn point for the loot
+            NavMesh.SamplePosition(origin, out closestPointHit, range, -1);
+            TryGetValidSpawnPoint(origin, closestPointHit.position, out destination);
+
+            //obj.SetActive(true);
+            //var collectible = obj.GetComponent<ICollectibleObject>();
+
+            float time = 0f;
+            float maxHeight = UnityEngine.Random.Range(minParabolaHeight, maxParabolaHeight);
+
+            while (time < animationDuration)
+            {
+                time += Time.deltaTime;
+                yield return null;
+
+                // Normalized (0-1) animation length
+                float alpha = Mathf.Clamp01(time / animationDuration);
+
+                Vector3 position = Vector3.Lerp(obj.transform.position, destination, alpha);
+
+                // Use a parabola equation to calculate the height at a given point along the animation
+                float height = (1 - Mathf.Pow((2 * alpha - 1), 2)) * maxHeight;
+                position += Vector3.up * height;
+
+                obj.transform.position = position;
+            }
+        }
+
         /// <summary>
         /// Choses a item type to drop and creates it
         /// </summary>
@@ -227,8 +322,9 @@ namespace LootLabels
                     BaseGear gear = LootGenerator.CreateGear(type);
                     Debug.Log("gear.ModelName is " + gear.ModelName);
 
-                    GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     droppedItem.GetComponent<DroppedGear>().gear = gear;
+       //             StartCoroutine(ReleaseSingleCoroutine(droppedItem));
 
                     if (droppedItem.GetComponent<ItemPickup>() != null)
                     {
@@ -263,6 +359,7 @@ namespace LootLabels
                         item.itemNameColor = singleton.RarityColors.ReturnRarityColor(gear.ItemRarity);
                         //Debug.Log("the name of the item is now" + droppedItem.GetComponent<ItemPickup>().item.name);
                     }
+                    StartCoroutine(ReleaseSingleCoroutine(droppedItem));
                     break;
                 default:
                     Debug.Log("Itemtype not yet implemented");
