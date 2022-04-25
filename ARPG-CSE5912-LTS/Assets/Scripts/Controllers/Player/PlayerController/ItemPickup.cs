@@ -5,6 +5,8 @@ public class ItemPickup : MonoBehaviour
 	public bool EnteredTrigger = false;
 
 	public Ite item;   // Item to put in the inventory if picked up
+	private float time = 0f;
+	private float animationDuration = 2f;
 	public void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag("Player"))
@@ -15,8 +17,9 @@ public class ItemPickup : MonoBehaviour
 	// When the player interacts with the item
 	public void Update()
 	{
+		time += Time.deltaTime;
 		//Debug.Log("Inventory weapon amt: " + Inventory.instance.weaponItems.Count);
-		if (EnteredTrigger)
+		if (EnteredTrigger && time > animationDuration)
 		{
 			PickUp();
 			EnteredTrigger = false;

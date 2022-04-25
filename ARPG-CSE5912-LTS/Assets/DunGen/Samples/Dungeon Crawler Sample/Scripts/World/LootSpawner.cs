@@ -62,7 +62,7 @@ namespace DunGen.DungeonCrawler
 		/// <param name="closestPointOnNavMesh">Closest point on the navigation mesh</param>
 		/// <param name="destination">Output destination, or the origin if no spawn point could be found</param>
 		/// <returns>True if the spawn point is valid</returns>
-		private bool TryGetValidSpawnPoint(Vector3 origin, Vector3 closestPointOnNavMesh, out Vector3 destination)
+		public bool TryGetValidSpawnPoint(Vector3 origin, Vector3 closestPointOnNavMesh, out Vector3 destination)
 		{
 			// There's no guarantee we'll be able to find a valid spawn point
 			// Try 20 times to find a valid spawn point, then give up
@@ -100,7 +100,7 @@ namespace DunGen.DungeonCrawler
 		/// Coroutine for animating a single object instance
 		/// </summary>
 		/// <param name="obj">The object to animate</param>
-		private IEnumerator ReleaseSingleCoroutine(GameObject obj)
+		public IEnumerator ReleaseSingleCoroutine(GameObject obj)
 		{
 			Vector3 origin = transform.position;
 			Vector3 destination;

@@ -76,12 +76,12 @@ public class Player : Character
         {
             isMoving = false;
         }
-        if (isMoving && !soundPlaying)
+        if (isMoving && !soundPlaying && audioManager != null)
         {
             audioManager.Play("Footsteps");
             soundPlaying = true;
         }
-        else if (!isMoving)
+        else if (!isMoving && audioManager != null)
         {
             audioManager.Stop("Footsteps");
             soundPlaying = false;

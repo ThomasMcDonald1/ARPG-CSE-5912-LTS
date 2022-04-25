@@ -70,7 +70,6 @@ public class EquipManager : MonoBehaviour
         if(newItem.type == Ite.ItemType.weapon)
         {
             nu[slotIndex] = (GameObject)Instantiate(newItem.prefab);
-            nu[slotIndex].GetComponent<Animator>().enabled = false;
             Destroy(nu[slotIndex].GetComponent<LootLabels.DroppedGear>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.CreateLabel>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.ObjectHighlight>());

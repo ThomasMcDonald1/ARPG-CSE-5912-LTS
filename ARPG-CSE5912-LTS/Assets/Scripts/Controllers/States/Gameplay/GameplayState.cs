@@ -103,7 +103,8 @@ public class GameplayState : BaseGameplayState
         contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
         PauseGame();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if(FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     void OnCharaPanelClicked()
@@ -111,7 +112,8 @@ public class GameplayState : BaseGameplayState
         contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
         utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
         OpenCharacterPanel();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        if (FindObjectOfType<AudioManager>() != null)
+            FindObjectOfType<AudioManager>().Play("MenuClick");
     }
 
     protected override void OnClick(object sender, InfoEventArgs<RaycastHit> e)
