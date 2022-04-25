@@ -74,7 +74,7 @@ public class PlayerAbilityController : Player
                 GameObject go = hit.collider.gameObject;
                 Character target = go.GetComponent<Character>();
                 //TODO: If ability requires enemy or ally to be clicked, excluding the other, check that first
-                if (target != null && Mouse.current.leftButton.wasReleasedThisFrame)
+                if (target != null && Mouse.current.leftButton.wasReleasedThisFrame && target.stats[StatTypes.HP] > 0)
                 {
                     playerInSingleTargetAbilitySelectionMode = false;
                     cursorChanger.ChangeCursorToDefaultGraphic();
