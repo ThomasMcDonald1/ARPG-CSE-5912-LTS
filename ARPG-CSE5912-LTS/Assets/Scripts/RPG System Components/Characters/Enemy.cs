@@ -118,45 +118,50 @@ namespace ARPG.Combat
 
         {
             animator.ResetTrigger("AttackMainHandTrigger");
-
             animator.ResetTrigger("AttackOffHandTrigger");
-            if (InTargetRange()) 
-            {
-                Vector3 realDirection = transform.forward;
-                Vector3 direction = AttackTarget.position -transform.position;
-                float angle = Vector3.Angle(direction, realDirection);
+            //if (InTargetRange()) 
+            //{
+             Vector3 realDirection = transform.forward;
+             Vector3 direction = AttackTarget.position -transform.position;
+             float angle = Vector3.Angle(direction, realDirection);
 
-                if (angle < SightRange && !InStopRange())
+            if (angle < SightRange && !InStopRange())
+            {
+                RunToPlayer();
+
+            }
+            else if (angle < SightRange && InStopRange())
+            {
+                StopRun();
+                Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                Debug.Log(timeChecker);
+                if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                 {
-                    RunToPlayer();                  
+
+                    //Debug.Log(EnemyAttackTypeList);
+                    //Debug.Log(EnemyAttackTypeList.Count);
+                    for (int i = 0; i < EnemyAttackTypeList.Count; i++)
+                    {
+                        //Debug.Log("I got there2");
+
+                        if (EnemyAttackTypeList[i].abilityOnCooldown == false)
+                        {
+                            QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                            if (coolRoutine == null)
+                                coolRoutine = StartCoroutine(CoolDown());
+                            break;
+                        }
+                    }
+
 
                 }
-                else if (angle < SightRange && InStopRange())
+                else
                 {
-                    StopRun();
-                    Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
-                    transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    Debug.Log(timeChecker);
-                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
+                    if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
-
-                        //Debug.Log(EnemyAttackTypeList);
-                        //Debug.Log(EnemyAttackTypeList.Count);
-                        for (int i = 0; i < EnemyAttackTypeList.Count; i++)
-                        {
-                            //Debug.Log("I got there2");
-
-                            if (EnemyAttackTypeList[i].abilityOnCooldown == false)
-                            {
-                                QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
-                                if (coolRoutine == null)
-                                    coolRoutine = StartCoroutine(CoolDown());
-                                break;
-                            }
-                        }
-
-
+                        StopRun();
                     }
                     else
                     {
@@ -172,22 +177,19 @@ namespace ARPG.Combat
                             //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                         }
                     }
-                    
-                    
-                    if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
-                    {
-                            StopRun();                      
-                    }
-                }
-                else
-                {
-                    Patrol ();
                 }
             }
-            else
-            {
-                Patrol();
-            }
+                  
+            //    }
+            //    else
+            //    {
+            //        Patrol ();
+            //    }
+            //}
+            //else
+            //{
+            //    Patrol();
+            //}
         }
 
         protected void Patrol()
