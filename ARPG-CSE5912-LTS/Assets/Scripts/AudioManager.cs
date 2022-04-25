@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public string currentBGM;
     public string currentBossMusic;
+    private bool fadingMusic;
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -112,8 +113,6 @@ public class AudioManager : MonoBehaviour
 
     public void AdjustSoundEffectVolume(float volume)
     {
-        PlayerPrefs.SetFloat("SE", volume);
-
         Sound s1 = Array.Find(sounds, sound => sound.name == "Footsteps");
         Sound s2 = Array.Find(sounds, sound => sound.name == "MenuClick");
         Sound s3 = Array.Find(sounds, sound => sound.name == "Force");
@@ -134,22 +133,27 @@ public class AudioManager : MonoBehaviour
     }
     private IEnumerator FadeOutMusic()
     {
+        fadingMusic = true;
         Sound s = Array.Find(sounds, sound => sound.name == currentBGM);
         float total = s.volume;
         while (s.volume > 0)
         {
-            s.volume -= 0.5f * total * Time.deltaTime;
+            s.volume -= 0.3f * total * Time.deltaTime;
             yield return null;
         }
         s.StopSound();
         Sound s1 = Array.Find(sounds, sound => sound.name == currentBossMusic);
         if (s1 != null)
+        {
             s1.StartSound();
+        }
+        fadingMusic = false;
     }
     public void FadeOut(string music, string nextSong = "")
     {
         currentBGM = music;
         currentBossMusic = nextSong;
-        StartCoroutine(FadeOutMusic());
+        if (!fadingMusic)
+            StartCoroutine(FadeOutMusic());
     }
 }

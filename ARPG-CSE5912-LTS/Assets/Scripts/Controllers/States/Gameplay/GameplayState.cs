@@ -31,20 +31,22 @@ public class GameplayState : BaseGameplayState
     {
         base.Enter();
 
-
         Debug.Log("entered GameplayState");
 
         gameplayStateController.gameplayUICanvas.enabled = true;
-        pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
-        exitToMainMenuButton.onClick.AddListener(() => OnExitToMenuClicked());
-        exitGameButton.onClick.AddListener(() => OnExitGameClicked());
-        charaPanelButton.onClick.AddListener(() => OnCharaPanelClicked());
+        gameplayStateController.gameplayUICanvasObj.SetActive(true);
+        gameplayStateController.npcNamesObj.SetActive(true);
+        gameplayStateController.equipmentObj.SetActive(true);
+
         groundLayer = LayerMask.NameToLayer("Walkable");
         npcLayer = LayerMask.NameToLayer("NPC");
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GetComponentInChildren<Player>();
         agent = player.GetComponent<NavMeshAgent>();
         animator = player.GetComponent<Animator>();
+
+        AddButtonListeners();
+
         contextMenuPanel = gameplayStateController.GetComponentInChildren<ContextMenuPanel>();
         utilityMenuPanel = gameplayStateController.GetComponentInChildren<UtilityMenuPanel>();
         if (contextMenuPanel != null)
@@ -55,12 +57,36 @@ public class GameplayState : BaseGameplayState
         playerAbilityController = player.GetComponent<PlayerAbilityController>();
         passiveTreeUI = gameplayStateController.passiveTreeUI;
         passiveTreeUI.SetActive(false);
+
+        gameplayStateController.npcInterfaceObj.SetActive(true);
+
+        gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
+
+        GetComponentInChildren<InteractionManager>().ReactivateNPCS();
+    }
+
+    void AddButtonListeners()
+    {
+        gameplayStateController.gameplayUICanvas.enabled = true;
         skillNotificationButton.onClick.AddListener(() => SkillNotificationButtonPressed());
+        pauseMenuButton.onClick.AddListener(() => OnPauseMenuClicked());
+        charaPanelButton.onClick.AddListener(() => OnCharaPanelClicked());
+    }
+
+    void RemoveButtonListeners()
+    {
+        skillNotificationButton.onClick.RemoveAllListeners();
+        pauseMenuButton.onClick.RemoveAllListeners();
+        charaPanelButton.onClick.RemoveAllListeners();
     }
 
     public override void Exit()
     {
         base.Exit();
+        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
+        utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
+        RemoveButtonListeners();
+
         // Can remove this line to keep gameplay HUD visible while game is paused.
         gameplayStateController.gameplayUICanvas.enabled = false;
     }
@@ -70,20 +96,6 @@ public class GameplayState : BaseGameplayState
         CastTimerCastType.AbilityBeganBeingCastEvent += OnAbilityBeingCast;
         CastTimerCastType.AbilityCastWasCancelledEvent += OnAbilityWasCancelled;
         CastTimerCastType.AbilityCastTimeWasCompletedEvent += OnAbilityWasCompleted;
-    }
-
-    void OnExitToMenuClicked()
-    {
-        contextMenuPanel.contextMenuPanelCanvas.SetActive(false);
-        utilityMenuPanel.utilityMenuPanelCanvas.SetActive(false);
-        Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-        FindObjectOfType<AudioManager>().Play("MenuClick");
-    }
-
-    void OnExitGameClicked()
-    {
-        Application.Quit();
     }
 
     void OnPauseMenuClicked()

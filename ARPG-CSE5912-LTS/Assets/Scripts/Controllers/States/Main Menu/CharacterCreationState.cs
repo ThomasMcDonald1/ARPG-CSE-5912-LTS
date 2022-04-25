@@ -8,6 +8,7 @@ public class CharacterCreationState : BaseMenuState
 {
     private CharacterCustomizer characterManager;
     public CustomCharacter customCharacter;
+    private bool initialized = false;
 
     public override void Enter()
     {
@@ -55,9 +56,34 @@ public class CharacterCreationState : BaseMenuState
         ChangeSkinButton();
     }
 
+    void RemoveButtonListeners()
+    {
+        backFromCharCreateToMainButton.onClick.RemoveAllListeners();
+        resetCharaButton.onClick.RemoveAllListeners();
+        confirmButton.onClick.RemoveAllListeners();
+        maleButton.onClick.RemoveAllListeners();
+        femaleButton.onClick.RemoveAllListeners();
+        hairForwardButton.onClick.RemoveAllListeners();
+        hairBackwardButton.onClick.RemoveAllListeners();
+        hairColorButton.onClick.RemoveAllListeners();
+        eyebrowForwardButton.onClick.RemoveAllListeners();
+        eyebrowBackwardButton.onClick.RemoveAllListeners();
+        eyebrowColorButton.onClick.RemoveAllListeners();
+        faceMarkForwardButton.onClick.RemoveAllListeners();
+        faceMarkBackwardButton.onClick.RemoveAllListeners();
+        faceMarkColorButton.onClick.RemoveAllListeners();
+        facialHairForwardButton.onClick.RemoveAllListeners();
+        facialHairBackwardButton.onClick.RemoveAllListeners();
+        facialHairColorButton.onClick.RemoveAllListeners();
+        eyeColorButton.onClick.RemoveAllListeners();
+        skinColorButton.onClick.RemoveAllListeners();
+        nameField.onEndEdit.RemoveAllListeners();
+    }
+
     public override void Exit()
     {
         base.Exit();
+        RemoveButtonListeners();
         mainMenuController.createCharMenuCanvas.enabled = false;
         mainMenuController.characterCreationCamera.enabled = false;
     }
@@ -93,6 +119,7 @@ public class CharacterCreationState : BaseMenuState
         }
         PlayAudio();
     }
+
 
     void GenerateNewDungeons()
     {

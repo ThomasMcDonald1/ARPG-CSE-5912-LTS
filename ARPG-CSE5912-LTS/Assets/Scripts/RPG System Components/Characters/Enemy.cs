@@ -23,13 +23,13 @@ namespace ARPG.Combat
         public void OnDamageReact(object sender, InfoEventArgs<(Character, int, bool)> e)
         {
            
-            if (e.info.Item1 is Enemy && animator != null && animator.GetBool("Dead") == false)
+            if (e.info.Item1 is Enemy && this == e.info.Item1 && animator != null && animator.GetBool("Dead") == false)
             {
-                Vector3 playerPoint = FindObjectOfType<Player>().transform.position;
-                Quaternion targetRotation = Quaternion.LookRotation(playerPoint - transform.position);
-                float turnSpeed = 2; 
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
-
+                //Vector3 playerPoint = FindObjectOfType<Player>().transform.position;
+                //Quaternion targetRotation = Quaternion.LookRotation(playerPoint - transform.position);
+                //float turnSpeed = 2; 
+                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+                RunToPlayer();
             }
         }
         protected Animator animator;
@@ -70,36 +70,43 @@ namespace ARPG.Combat
             enemyUIText.text = transform.GetChild(0).name + " LV " + stats[StatTypes.LVL].ToString();
             //Debug.Log("enemy is" + gameObject.name);
             //Debug.Log(abilitiesKnown);
+            if (abilitiesKnown != null)
+            {
+                //Debug.Log(abilitiesKnown.Count);
+                for (int i = 0; i < abilitiesKnown.Count; i++)
+                {
+                    EnemyAbility enemyability = new EnemyAbility();
+                    enemyability.abilityAssigned = abilitiesKnown[i];
+                    EnemyAttackTypeList.Add(enemyability);
+                }
+            }
         }
         protected override void Update()
         {
-            if (regen == null)
-                regen = StartCoroutine(RegenEnergy());
-            if (player == null)
-            {
-                player = GameObject.FindGameObjectWithTag("Player");
-            }
-            //Debug.Log(abilitiesKnown);
-            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
-            animator.SetFloat("AttackSpeed", attackSpeed);
             if (animator.GetBool("Dead") == false)
             {
+                if (regen == null)
+                    regen = StartCoroutine(RegenEnergy());
+                if (player == null)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player");
+                }
+                //Debug.Log(abilitiesKnown);
+                float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+                animator.SetFloat("AttackSpeed", attackSpeed);
                 base.Update();
                 if (stats[StatTypes.HP] <= 0)
                 {
-                    if (animator.GetBool("Dead") == false)
-                    {
-                        Dead();
-                        animator.SetBool("Dead", true);
-                        //get rid of enemy canvas
-                        transform.GetChild(2).gameObject.SetActive(false);
-                    }
+                    Dead();
+                    animator.SetBool("Dead", true);
+                    //get rid of enemy canvas
+                    transform.GetChild(2).gameObject.SetActive(false);    
                 }
                 else
                 {
                     SeePlayer();
                 }
-            }         
+            }
         }
 
         public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType, string className) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
@@ -130,31 +137,32 @@ namespace ARPG.Combat
                     Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
                     transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-                    //Debug.Log(timeChecker);
-                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0)
+                    Debug.Log(timeChecker);
+                    if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                     {
-                        if (EnemyAttackTypeList != null)
+
+                        //Debug.Log(EnemyAttackTypeList);
+                        //Debug.Log(EnemyAttackTypeList.Count);
+                        for (int i = 0; i < EnemyAttackTypeList.Count; i++)
                         {
-                            //Debug.Log("I got there1");
-                            for (int i = 0; i < EnemyAttackTypeList.Count; i++)
+                            //Debug.Log("I got there2");
+
+                            if (EnemyAttackTypeList[i].abilityOnCooldown == false)
                             {
-                                //Debug.Log("I got there2");
-
-                                if (EnemyAttackTypeList[i].abilityOnCooldown == false)
-                                {
-                                    QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
-                                    if (coolRoutine == null)
-                                        coolRoutine = StartCoroutine(CoolDown());
-                                    break;
-                                }
+                                QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                                if (coolRoutine == null)
+                                    coolRoutine = StartCoroutine(CoolDown());
+                                break;
                             }
-
                         }
+
+
                     }
                     else
                     {
                         if (animator.GetBool("AttackingMainHand"))
                         {
+                            //Debug.Log("I got there1");
                             animator.SetTrigger("AttackMainHandTrigger");
                             //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                         }
@@ -164,6 +172,7 @@ namespace ARPG.Combat
                             //Debug.Log(GetComponent<Animator>().GetBool("AttackingMainHand"));
                         }
                     }
+                    
                     
                     if (AttackTarget.GetComponent<Character>().stats[StatTypes.HP] <= 0) //When player is dead, stop hit.
                     {
@@ -183,9 +192,10 @@ namespace ARPG.Combat
 
         protected void Patrol()
         {
-            if (agent.enabled)
+            if (agent.enabled == true)
             {
-                agent.isStopped = false;
+                if (agent.isStopped)
+                    agent.isStopped = false;
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     NavMeshPath path = new NavMeshPath();
@@ -264,6 +274,7 @@ namespace ARPG.Combat
 
         public void Dead()
         {
+            agent.isStopped = true;
             EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int,string)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType],transform.GetChild(0).name)));
             StartCoroutine(Die(10));
             LootManager.singleton.DropLoot(lootSource, transform, lootType);

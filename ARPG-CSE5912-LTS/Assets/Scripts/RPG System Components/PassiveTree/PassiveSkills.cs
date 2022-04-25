@@ -54,7 +54,6 @@ public class PassiveSkills
     public void PassivesReadyForUnlock(string name, Transform background)
     {
         audioManager.Play("MenuClick");
-        Debug.Log("cotingnignidnindindnign");
         PassiveNode passiveNode = Array.Find(passiveTree, node => node.Name == name);
         if (!Unlockable(passiveNode) || passiveNode.Unlocked) return;
         passiveNode.Unlocked = true;

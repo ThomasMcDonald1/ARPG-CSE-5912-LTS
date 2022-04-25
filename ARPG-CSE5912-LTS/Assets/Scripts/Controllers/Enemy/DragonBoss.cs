@@ -20,7 +20,7 @@ public class DragonBoss : EnemyAbilityController
 
     private int CurrentPatrolVertexIndex = 0;
     public AudioManager audioManager;
-
+    private bool fadeOutMusic = true;
     protected override void Start()
     {
         base.Start();
@@ -52,7 +52,11 @@ public class DragonBoss : EnemyAbilityController
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0)
         {
-            audioManager.FadeOut("Boss1BGM", "Dungeon1BGM");
+            if (fadeOutMusic)
+            {
+                audioManager.FadeOut("Boss1BGM", "Dungeon1BGM");
+                fadeOutMusic = false;
+            }
             animator.SetBool("Dead", true);
             agent.isStopped = true;
             //get rid of enemy canvas

@@ -89,24 +89,24 @@ public class LevelController : MonoBehaviour
     {
         ExperienceManager.ExpWillBeGivenEvent += OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent += OnExpHasBeenGiven;
-        //ExperienceManager.SavedExpEvent += OnSavedExpEvent;
-        //ExperienceManager.GetBackExpEvent += OnGetBackExpEvent;
-        //ExperienceManager.EmptyExpEvent += OnEmptyExpEvent;
+        AbilityShopSlot.SkillpointUsedToBuyAbilityEvent += OnSkillPointUsedToBuyAbility;
     }
 
     private void OnDisable()
     {
         ExperienceManager.ExpWillBeGivenEvent -= OnExpWillBeGiven;
         ExperienceManager.ExpHasBeenGivenEvent -= OnExpHasBeenGiven;
-        //ExperienceManager.SavedExpEvent -= OnSavedExpEvent;
-        //ExperienceManager.GetBackExpEvent -= OnGetBackExpEvent;
-        //ExperienceManager.EmptyExpEvent -= OnEmptyExpEvent;
+        AbilityShopSlot.SkillpointUsedToBuyAbilityEvent -= OnSkillPointUsedToBuyAbility;
+    }
+
+    private void OnSkillPointUsedToBuyAbility(object sender, InfoEventArgs<int> e)
+    {
+        if (stats[StatTypes.SkillPoints] == 0)
+            skillNotification.SetActive(false);
     }
 
     public void OnExpWillBeGiven(object sender, InfoEventArgs<(int, int,string)> e)
     {
-        //TODO: If exp will be given, but the player has some kind of equipment that will increase the amount of exp rewarded,
-        //then apply the modification here
         int monsterLevel = e.info.Item1;
         int monsterType = e.info.Item2;
         //Now just set the monsterType for the multiple data.
@@ -179,6 +179,9 @@ public class LevelController : MonoBehaviour
             }
             FindObjectOfType<AudioManager>().Play("LevelUp");
             skillNotification.SetActive(true);
+            stats[StatTypes.HP] = stats[StatTypes.MaxHP];
+            stats[StatTypes.Mana] = stats[StatTypes.MaxMana];
+            //TODO: Play sound effect or show vfx
         }
     }
 

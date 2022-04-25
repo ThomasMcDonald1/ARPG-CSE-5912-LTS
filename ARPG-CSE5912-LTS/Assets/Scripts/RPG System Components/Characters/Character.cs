@@ -267,7 +267,7 @@ public abstract class Character : MonoBehaviour
                     BaseAbilityEffect effect = effects[j];
                     if (effect.effectVFXObj != null)
                     {
-                        Debug.Log("Instantiating VFX");
+                        // Debug.Log("Instantiating VFX");
 
                         x = effect.GetComponent<BaseAbilityEffectElement>();
                         if (x is ColdAbilityEffectElement)
@@ -289,8 +289,8 @@ public abstract class Character : MonoBehaviour
                     AbilityEffectTarget specialTargeter = effect.GetComponent<AbilityEffectTarget>();
                     if (specialTargeter.IsTarget(targets[i], abilityCast.caster))
                     {
-                        Debug.Log(specialTargeter);
-                        Debug.Log("Applying ability effects to " + targets[i].name);
+                        //Debug.Log(specialTargeter);
+                        //Debug.Log("Applying ability effects to " + targets[i].name);
                         effect.Apply(targets[i], abilityCast);
                         x = effect.GetComponent<BaseAbilityEffectElement>();
                         if (x == null)

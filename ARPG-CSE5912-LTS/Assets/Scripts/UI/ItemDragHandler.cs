@@ -49,7 +49,10 @@ public class ItemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
                         }
                         else if (slot.name == "Offhand")
                         {
-                            weapon.equipSlot = EquipmentSlot.OffHand;
+                            if (weapon.typeOfWeapon != WeaponEquipment.weaponType.twohandsword)
+                                weapon.equipSlot = EquipmentSlot.OffHand;
+                            else
+                                weapon.equipSlot = EquipmentSlot.MainHand;
                         }
                     }
                     invSlot.UseItem();

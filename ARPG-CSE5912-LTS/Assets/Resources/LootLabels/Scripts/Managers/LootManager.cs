@@ -453,7 +453,7 @@ namespace LootLabels
                 else
                 {
                     WeaponEquipment weapon = (WeaponEquipment)item;
-                    weapon.attackRange = (int)(weapon.attackRange + multiplier);
+                    //weapon.attackRange = (int)(weapon.attackRange + multiplier);
                     weapon.minimumDamage = (int)(weapon.minimumDamage + multiplier);
                     weapon.maximumDamage = (int)(weapon.maximumDamage + multiplier);
                     weapon.attackSpeed = (int)(weapon.attackSpeed + multiplier);
@@ -461,7 +461,7 @@ namespace LootLabels
                     item = weapon;
                 }
             }
-            else if(!item.name.Equals("Pendant"))
+            else if(!(item.name.Contains("Jewelry")))
             {
                 ArmorEquipment armor = (ArmorEquipment)item;
                 if(itemRarity != Rarity.Legendary)

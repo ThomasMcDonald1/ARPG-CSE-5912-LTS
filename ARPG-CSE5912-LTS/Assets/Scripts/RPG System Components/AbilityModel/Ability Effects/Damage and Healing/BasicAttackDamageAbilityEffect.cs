@@ -77,7 +77,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         //round damage to an integer and clamp
         int finalCalculatedDamage = Mathf.RoundToInt(finalDamageWithPen);
         finalCalculatedDamage = Mathf.Clamp(finalCalculatedDamage, minDamage, maxDamage);
-        Debug.Log("Final damage: " + finalCalculatedDamage);
+        //Debug.Log("Final damage: " + finalCalculatedDamage);
         //Apply the damage
         target.stats[StatTypes.HP] -= finalCalculatedDamage;
         target.stats[StatTypes.HP] = Mathf.Clamp(target.stats[StatTypes.HP], 0, target.stats[StatTypes.MaxHP]);
@@ -109,7 +109,7 @@ public class BasicAttackDamageAbilityEffect : BaseAbilityEffect
         {
             float lifeToSteal = finalCalculatedDamage * (lifesteal * 0.01f);
             int lifeToStealInt = Mathf.RoundToInt(lifeToSteal);
-            Debug.Log("Life stolen: " + lifeToStealInt);
+            //Debug.Log("Life stolen: " + lifeToStealInt);
             abilityCast.caster.stats[StatTypes.HP] += lifeToStealInt;
             abilityCast.caster.stats[StatTypes.HP] = Mathf.Clamp(abilityCast.caster.stats[StatTypes.HP], 0, abilityCast.caster.stats[StatTypes.MaxHP]);
             BasicAttackHealingReceivedEvent?.Invoke(this, new InfoEventArgs<(Character, int, bool)>((abilityCast.caster, lifeToStealInt, wasCrit)));

@@ -15,6 +15,7 @@ public class GameoverState : BaseGameplayState
     Animator animator;
     Transform playerTransform;
     InteractionManager interactionManager;
+    LevelController levelController;
     public static event EventHandler<InfoEventArgs<(int, int)>> SaveExpEvent; //Saved exp
     //public static event EventHandler<InfoEventArgs<(int, int)>> GetBackExpEvent; //Get exp back
     //public static event EventHandler<InfoEventArgs<(int, int)>> TemporaryExpLossEvent;
@@ -36,6 +37,7 @@ public class GameoverState : BaseGameplayState
         playerTransform = player.GetComponent<Transform>();
         playerController = player.GetComponent<PlayerController>();
         interactionManager = GetComponentInChildren<InteractionManager>();
+        levelController = GetComponentInChildren<LevelController>();
         yesRespawnButton.onClick.AddListener(() => OnYesButtonClicked());
         noRespawnButton.onClick.AddListener(() => OnNoButtonClicked());
         agent.isStopped = true;
@@ -46,6 +48,8 @@ public class GameoverState : BaseGameplayState
         base.Exit();
         gameplayStateController.gameoverCanvas.enabled = false;
         Time.timeScale = 1;
+        yesRespawnButton.onClick.RemoveAllListeners();
+        noRespawnButton.onClick.RemoveAllListeners();
     }
 
     void OnYesButtonClicked()
@@ -75,9 +79,9 @@ public class GameoverState : BaseGameplayState
 
     private int CalculateExpLoss(Stats stats)
     {
-        float expToLose = LevelController.currentLevelExpToNext(stats[StatTypes.LVL]) * 0.3f;
-        int currentLevelMinExp = LevelController.ExperienceForLevel(stats[StatTypes.LVL]);
-        int maxLevelExp = LevelController.ExperienceForLevel(LevelController.maxLevel);
+        int currentLevelMinExp = LevelController.currentLevelExp(levelController.EXP, levelController.LVL);
+        int maxLevelExp = LevelController.currentLevelExp(levelController.EXP, levelController.LVL) + LevelController.currentLevelExpToNext(levelController.LVL);
+        float expToLose = (maxLevelExp - currentLevelMinExp) * 0.3f;
         expToLose = Mathf.Clamp(expToLose, currentLevelMinExp, maxLevelExp);
         return Mathf.CeilToInt(expToLose);
     }
