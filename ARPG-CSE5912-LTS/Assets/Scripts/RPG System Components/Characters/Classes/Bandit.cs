@@ -21,7 +21,7 @@ namespace ARPG.Combat
             if (e.info.Item1 == this)
             {
                 float healthPercent = stats[StatTypes.HP] / (float)stats[StatTypes.MaxHP];
-                if (animator.GetBool("Dead") == false && healthPercent < 0.1f)
+                if (animator.GetBool("Dead") == false && healthPercent < 0.5f)
                 {
                     //Debug.Log("percent" + healthPercent);
                     //look away from the player
@@ -43,6 +43,7 @@ namespace ARPG.Combat
             Speed = 3f;
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
+            stats[StatTypes.PHYATK] = 200;//testing
             cooldownTimer = 6;
         }
 
@@ -52,30 +53,5 @@ namespace ARPG.Combat
         }
 
 
-        protected override void Update()
-        {
-            UpdateAnimator();
-            //Debug.Log(abilitiesKnown);
-            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
-            animator.SetFloat("AttackSpeed", attackSpeed);
-            if (animator.GetBool("Dead") == false)
-            {
-                if (stats[StatTypes.HP] <= 0)
-                {
-                    if (animator.GetBool("Dead") == false)
-                    {
-                        Dead();
-                        animator.SetBool("Dead", true);
-                        //get rid of enemy canvas
-                        transform.GetChild(2).gameObject.SetActive(false);
-
-                    }
-                }
-                else
-                {
-                    SeePlayer();
-                }
-            }
-        }
     }
 }

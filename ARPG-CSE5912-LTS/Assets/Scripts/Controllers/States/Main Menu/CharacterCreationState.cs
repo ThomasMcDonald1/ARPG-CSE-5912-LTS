@@ -27,8 +27,6 @@ public class CharacterCreationState : BaseMenuState
 
     void SetUpButtons()
     {
-        if (initialized) return;
-
         backFromCharCreateToMainButton.onClick.AddListener(() => OnBackButtonClicked());
         resetCharaButton.onClick.AddListener(() => ResetCharacter());
         confirmButton.onClick.AddListener(() => OnConfirmButtonClicked());
@@ -56,13 +54,36 @@ public class CharacterCreationState : BaseMenuState
         ChangeFacialMarkButton();
         ChangeHairButton();
         ChangeSkinButton();
+    }
 
-        initialized = true;
+    void RemoveButtonListeners()
+    {
+        backFromCharCreateToMainButton.onClick.RemoveAllListeners();
+        resetCharaButton.onClick.RemoveAllListeners();
+        confirmButton.onClick.RemoveAllListeners();
+        maleButton.onClick.RemoveAllListeners();
+        femaleButton.onClick.RemoveAllListeners();
+        hairForwardButton.onClick.RemoveAllListeners();
+        hairBackwardButton.onClick.RemoveAllListeners();
+        hairColorButton.onClick.RemoveAllListeners();
+        eyebrowForwardButton.onClick.RemoveAllListeners();
+        eyebrowBackwardButton.onClick.RemoveAllListeners();
+        eyebrowColorButton.onClick.RemoveAllListeners();
+        faceMarkForwardButton.onClick.RemoveAllListeners();
+        faceMarkBackwardButton.onClick.RemoveAllListeners();
+        faceMarkColorButton.onClick.RemoveAllListeners();
+        facialHairForwardButton.onClick.RemoveAllListeners();
+        facialHairBackwardButton.onClick.RemoveAllListeners();
+        facialHairColorButton.onClick.RemoveAllListeners();
+        eyeColorButton.onClick.RemoveAllListeners();
+        skinColorButton.onClick.RemoveAllListeners();
+        nameField.onEndEdit.RemoveAllListeners();
     }
 
     public override void Exit()
     {
         base.Exit();
+        RemoveButtonListeners();
         mainMenuController.createCharMenuCanvas.enabled = false;
         mainMenuController.characterCreationCamera.enabled = false;
     }
@@ -98,6 +119,7 @@ public class CharacterCreationState : BaseMenuState
         }
         PlayAudio();
     }
+
 
     void GenerateNewDungeons()
     {

@@ -83,33 +83,30 @@ namespace ARPG.Combat
         }
         protected override void Update()
         {
-            if (regen == null)
-                regen = StartCoroutine(RegenEnergy());
-            if (player == null)
-            {
-                player = GameObject.FindGameObjectWithTag("Player");
-            }
-            //Debug.Log(abilitiesKnown);
-            float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
-            animator.SetFloat("AttackSpeed", attackSpeed);
             if (animator.GetBool("Dead") == false)
             {
+                if (regen == null)
+                    regen = StartCoroutine(RegenEnergy());
+                if (player == null)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player");
+                }
+                //Debug.Log(abilitiesKnown);
+                float attackSpeed = 1 + (stats[StatTypes.AtkSpeed] * 0.01f);
+                animator.SetFloat("AttackSpeed", attackSpeed);
                 base.Update();
                 if (stats[StatTypes.HP] <= 0)
                 {
-                    if (animator.GetBool("Dead") == false)
-                    {
-                        Dead();
-                        animator.SetBool("Dead", true);
-                        //get rid of enemy canvas
-                        transform.GetChild(2).gameObject.SetActive(false);
-                    }
+                    Dead();
+                    animator.SetBool("Dead", true);
+                    //get rid of enemy canvas
+                    transform.GetChild(2).gameObject.SetActive(false);    
                 }
                 else
                 {
                     SeePlayer();
                 }
-            }         
+            }
         }
 
         public void RaiseEnemyKillExpEvent(Enemy enemy, int monsterLevel, int monsterType, string className) //(stats[StatTypes.LVL], stats[StatTypes.MonsterType]))
@@ -277,6 +274,7 @@ namespace ARPG.Combat
 
         public void Dead()
         {
+            agent.isStopped = true;
             EnemyKillExpEvent?.Invoke(this, new InfoEventArgs<(int, int,string)>((stats[StatTypes.LVL], stats[StatTypes.MonsterType],transform.GetChild(0).name)));
             StartCoroutine(Die(10));
             LootManager.singleton.DropLoot(lootSource, transform, lootType);
