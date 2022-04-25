@@ -15,7 +15,7 @@ public class PauseGameState : BaseGameplayState
         gameplayStateController.equipmentObj.SetActive(false);
         foreach (Sound s in FindObjectOfType<AudioManager>().sounds)
         {
-            if (s.name != "Theme") s.source.Stop();
+            if (!s.name.Contains("BGM")) s.source.Stop();
         }
 
         AddButtonListeners();

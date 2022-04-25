@@ -33,13 +33,13 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
         }
         AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
-        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
+        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 0.15f));
     }
 
     void Start()
     {
         AdjustMusicVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
-        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
+        AdjustSoundEffectVolume(PlayerPrefs.GetFloat("SE", 0.15f));
         Play("TownBGM");
     }
 
@@ -116,6 +116,14 @@ public class AudioManager : MonoBehaviour
         Sound s1 = Array.Find(sounds, sound => sound.name == "Footsteps");
         Sound s2 = Array.Find(sounds, sound => sound.name == "MenuClick");
         Sound s3 = Array.Find(sounds, sound => sound.name == "Force");
+        Sound s4 = Array.Find(sounds, sound => sound.name == "BasicPunch");
+        Sound s5 = Array.Find(sounds, sound => sound.name == "Casting");
+        Sound s6 = Array.Find(sounds, sound => sound.name == "FireAbility");
+        Sound s7 = Array.Find(sounds, sound => sound.name == "ColdAbility");
+        Sound s8 = Array.Find(sounds, sound => sound.name == "LightningAbility");
+        Sound s9 = Array.Find(sounds, sound => sound.name == "Slash");
+        Sound s10 = Array.Find(sounds, sound => sound.name == "PhysicalAbility");
+        Sound s11 = Array.Find(sounds, sound => sound.name == "LevelUp");
 
         if (s1 != null)
         {
@@ -129,11 +137,42 @@ public class AudioManager : MonoBehaviour
         {
             s3.UpdateVolume(volume);
         }
+        if (s4 != null)
+        {
+            s4.UpdateVolume(volume);
+        }
+        if (s5 != null)
+        {
+            s5.UpdateVolume(volume);
+        }
+        if (s6 != null)
+        {
+            s6.UpdateVolume(volume);
+        }
+        if (s7 != null)
+        {
+            s7.UpdateVolume(volume);
+        }
+        if (s8 != null)
+        {
+            s8.UpdateVolume(volume);
+        }
+        if (s9 != null)
+        {
+            s9.UpdateVolume(volume);
+        }
+        if (s10 != null)
+        {
+            s10.UpdateVolume(volume);
+        }
+        if (s11 != null)
+        {
+            s11.UpdateVolume(volume);
+        }
 
     }
     private IEnumerator FadeOutMusic()
     {
-        fadingMusic = true;
         Sound s = Array.Find(sounds, sound => sound.name == currentBGM);
         float total = s.volume;
         while (s.volume > 0)
@@ -151,9 +190,11 @@ public class AudioManager : MonoBehaviour
     }
     public void FadeOut(string music, string nextSong = "")
     {
+        // if (currentBossMusic == nextSong) return;
         currentBGM = music;
         currentBossMusic = nextSong;
         if (!fadingMusic)
+            fadingMusic = true;
             StartCoroutine(FadeOutMusic());
     }
 }
