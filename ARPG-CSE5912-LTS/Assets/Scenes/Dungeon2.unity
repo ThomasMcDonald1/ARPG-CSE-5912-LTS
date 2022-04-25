@@ -2618,6 +2618,7 @@ MonoBehaviour:
   healthPotion: {fileID: 0}
   Sword: {fileID: 0}
   potionButtons: []
+  starterSwordInventorySlot: {fileID: 0}
   space: 24
 --- !u!114 &213113039
 MonoBehaviour:
@@ -2653,6 +2654,7 @@ MonoBehaviour:
   uiInventory: {fileID: 1504916275}
   cursorChanger: {fileID: 1362838752}
   questList: []
+  equipManager: {fileID: 0}
   playerInAOEAbilityTargetSelectionMode: 0
   playerInSingleTargetAbilitySelectionMode: 0
   playerNeedsToReleaseMouseButton: 0
@@ -3971,7 +3973,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341245969
 GameObject:
@@ -8324,11 +8326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lvlUIText: {fileID: 1192870902}
-  lvlText: {fileID: 0}
-  expText: {fileID: 0}
-  nextExpText: {fileID: 0}
   nextExpUIText: {fileID: 897674434}
-  expSlider: {fileID: 0}
   nextExpSlider: {fileID: 1976411176}
   levelController: {fileID: 828511015}
 --- !u!114 &828511014
@@ -8357,6 +8355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 213113044}
   skillNotification: {fileID: 0}
+  remainingPoints: {fileID: 0}
 --- !u!1 &833436201
 GameObject:
   m_ObjectHideFlags: 0
@@ -17214,6 +17213,8 @@ MonoBehaviour:
   abilityShopCanvas: {fileID: 0}
   gameoverCanvasObj: {fileID: 1658682115}
   npcInterfaceObj: {fileID: 941013427}
+  npcNamesObj: {fileID: 0}
+  equipmentObj: {fileID: 0}
   pauseMenuCanvas: {fileID: 0}
   gameplayUICanvas: {fileID: 0}
   optionsMenuCanvas: {fileID: 0}
@@ -17226,6 +17227,8 @@ MonoBehaviour:
   exitToMainMenuButtonObj: {fileID: 1818354530}
   exitGameButtonObj: {fileID: 1818354529}
   exitOptionsToPauseButtonObj: {fileID: 1818354528}
+  confirmOptionsButtonObj: {fileID: 0}
+  resetOptionsButtonObj: {fileID: 0}
   resolutionDropDownObj: {fileID: 1818354527}
   fullScreenButtonObj: {fileID: 1818354526}
   noFullScreenButtonObj: {fileID: 1818354525}
@@ -26689,7 +26692,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.67737633, g: 0.80105877, b: 0.8113208, a: 1}
   m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
@@ -26752,7 +26755,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &2133114823
 GameObject:
