@@ -12,10 +12,10 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-            Range = 5f;
+            Range = 10f;
             BodyRange = 1.5f;
-            SightRange = 90f;
-            Speed = 2f;
+            SightRange = 180;
+            Speed = 3f;
             agent.speed = Speed;
             stats[StatTypes.MonsterType] = 1; //testing
             cooldownTimer = 6;

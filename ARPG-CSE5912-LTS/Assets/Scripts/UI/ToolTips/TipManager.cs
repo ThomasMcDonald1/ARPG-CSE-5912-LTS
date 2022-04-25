@@ -59,14 +59,13 @@ public class TipManager : MonoBehaviour
 
    public void ShowInventoryTooltip(Ite item)
     {
-        ShowText();
-        foreach (GameObject go in infoSlotTexts)
-        {
-            go.GetComponent<TextMeshProUGUI>().text = default;
-        }
-
         if (item != null)
         {
+            ShowText();
+            foreach (GameObject go in infoSlotTexts)
+            {
+                go.GetComponent<TextMeshProUGUI>().text = default;
+            }
             nameText.text = item.name;
             nameText.color = item.itemNameColor;
             if (nameText.alpha < 1.0f)
@@ -139,11 +138,11 @@ public class TipManager : MonoBehaviour
                     }
                 }
             }
-        }
 
-        AdjustSize();
-        AdjustTipWindowPosition();
-        tipWindow.gameObject.SetActive(true);    
+            AdjustSize();
+            AdjustTipWindowPosition();
+            tipWindow.gameObject.SetActive(true);
+        } 
     }
 
     public void ShowAbilityTooltip(Ability ability)

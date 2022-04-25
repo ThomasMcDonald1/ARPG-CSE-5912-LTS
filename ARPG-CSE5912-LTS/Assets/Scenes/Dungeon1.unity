@@ -10105,7 +10105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562662735
 GameObject:
@@ -11982,8 +11982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32226236e08c2f40bb991753c2de56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectOrigin: 
-  effectVFXObj: {fileID: 0}
 --- !u!114 &827386557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13586,11 +13584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lvlUIText: {fileID: 462862255}
-  lvlText: {fileID: 0}
-  expText: {fileID: 0}
-  nextExpText: {fileID: 0}
   nextExpUIText: {fileID: 1563035463}
-  expSlider: {fileID: 0}
   nextExpSlider: {fileID: 357793378}
   levelController: {fileID: 1006445841}
 --- !u!114 &1006445840
@@ -13619,6 +13613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 1197381029}
   skillNotification: {fileID: 0}
+  remainingPoints: {fileID: 0}
 --- !u!1 &1011526401
 GameObject:
   m_ObjectHideFlags: 0
@@ -15479,6 +15474,7 @@ MonoBehaviour:
   healthPotion: {fileID: 0}
   Sword: {fileID: 0}
   potionButtons: []
+  starterSwordInventorySlot: {fileID: 0}
   space: 24
 --- !u!114 &1197381024
 MonoBehaviour:
@@ -15514,6 +15510,7 @@ MonoBehaviour:
   uiInventory: {fileID: 1679746768}
   cursorChanger: {fileID: 1815593414}
   questList: []
+  equipManager: {fileID: 0}
   playerInAOEAbilityTargetSelectionMode: 0
   playerInSingleTargetAbilitySelectionMode: 0
   playerNeedsToReleaseMouseButton: 0
@@ -16161,8 +16158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b39cbc4ac4807f74dbbd20bf61bc4e58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectOrigin: 
-  effectVFXObj: {fileID: 0}
 --- !u!114 &1257743142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16873,7 +16868,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.69803923, g: 0.5882353, b: 0.7490196, a: 1}
   m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
@@ -16936,7 +16931,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1316839569
 GameObject:
@@ -24448,6 +24443,8 @@ MonoBehaviour:
   abilityShopCanvas: {fileID: 0}
   gameoverCanvasObj: {fileID: 388846725}
   npcInterfaceObj: {fileID: 417955998}
+  npcNamesObj: {fileID: 0}
+  equipmentObj: {fileID: 0}
   pauseMenuCanvas: {fileID: 0}
   gameplayUICanvas: {fileID: 0}
   optionsMenuCanvas: {fileID: 0}
@@ -24460,6 +24457,8 @@ MonoBehaviour:
   exitToMainMenuButtonObj: {fileID: 252086229}
   exitGameButtonObj: {fileID: 252086228}
   exitOptionsToPauseButtonObj: {fileID: 252086227}
+  confirmOptionsButtonObj: {fileID: 0}
+  resetOptionsButtonObj: {fileID: 0}
   resolutionDropDownObj: {fileID: 252086226}
   fullScreenButtonObj: {fileID: 252086225}
   noFullScreenButtonObj: {fileID: 252086224}
@@ -25520,8 +25519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72659f8cb86c0854e9c85fc3badf0007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectOrigin: Caster
-  effectVFXObj: {fileID: 0}
 --- !u!1 &1945258619
 GameObject:
   m_ObjectHideFlags: 0

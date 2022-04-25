@@ -12,7 +12,6 @@ public class Kilixis : EnemyAbilityController
     [SerializeField] GameObject HealthBar;
     [SerializeField] PatrolPath patrolPath;
 
-    GameObject playerObj;
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
 
@@ -25,23 +24,19 @@ public class Kilixis : EnemyAbilityController
     private bool startMusic = false;
     [SerializeField] float musicTransitionRadius = 40.0f;
 
-    private void Awake()
-    {
-    }
 
     protected override void Start()
     {
         base.Start();
-
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = 3.5f;
         stats[StatTypes.AtkSpeed] = 1;
-        stats[StatTypes.MaxHP] = 500;
-        stats[StatTypes.HP] = 500;
+        stats[StatTypes.MaxHP] = 10;
+        stats[StatTypes.HP] = 10;
         stats[StatTypes.LVL] = 10;
         stats[StatTypes.MonsterType] = 3;
 
-        playerObj = GameObject.FindWithTag("Player");
+        //playerObj = GameObject.FindWithTag("Player");
         PlayerTarget = null;
 
         if (patrolPath != null)
@@ -55,7 +50,12 @@ public class Kilixis : EnemyAbilityController
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    protected override void Update()
+    public string GetClassTypeName()
+    {
+        return "Kilixis";
+    }
+
+    new private void Update()
     {
         UpdateAnimator();
         if (stats[StatTypes.HP] <= 0 && !GetComponent<Animator>().GetBool("Dead"))
@@ -65,7 +65,8 @@ public class Kilixis : EnemyAbilityController
                 audioManager.FadeOut("Boss2BGM", "Dungeon2BGM");
                 fadeOutMusic = false;
             }
-            GetComponent<Animator>().SetBool("Dead", true);
+            animator.SetBool("Dead", true);
+            agent.isStopped = true;
             PlayerTarget = null;
         }
         if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
@@ -77,12 +78,12 @@ public class Kilixis : EnemyAbilityController
             }
         }
 
-        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] >= 0)
+        if (InSightRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
             audioManager.FadeOut("Dungeon2BGM", "Boss2BGM");
             MakeHostile();
         }
-        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] >= 0)
+        else if (!InSightRadius() && PlayerTarget != null && stats[StatTypes.HP] > 0)
         {
             MakeNonHostile();
         }
@@ -100,7 +101,7 @@ public class Kilixis : EnemyAbilityController
                 //navAgent.destination = PlayerTarget.position;
 
                 NavMeshPath path = new NavMeshPath();
-                agent.CalculatePath(playerObj.transform.position, path);
+                agent.CalculatePath(player.transform.position, path);
                 agent.path = path;
             }
 
@@ -126,7 +127,7 @@ public class Kilixis : EnemyAbilityController
         }
         else
         {
-            if (GetComponent<Animator>().GetBool("AnimationEnded") && stats[StatTypes.HP] >= 0)
+            if (GetComponent<Animator>().GetBool("AnimationEnded") && stats[StatTypes.HP] > 0)
             {
                 PatrolBehavior();
             }
@@ -140,17 +141,17 @@ public class Kilixis : EnemyAbilityController
     }
     private bool InSightRadius()
     {
-        return Vector3.Distance(playerObj.transform.position, transform.position) < chaseDistance;
+        return Vector3.Distance(player.transform.position, transform.position) < chaseDistance;
     }
 
     private bool InMeleeRange()
     {
-        return Vector3.Distance(playerObj.transform.position, transform.position) < meleeRange;
+        return Vector3.Distance(player.transform.position, transform.position) < meleeRange;
     }
 
     private void MakeHostile()
     {
-        PlayerTarget = playerObj.transform;
+        PlayerTarget = player.transform;
         GetComponent<Animator>().SetTrigger("Intimidate");
         navAgent.speed = 6f;
     }
@@ -214,6 +215,7 @@ public class Kilixis : EnemyAbilityController
     void HitPlayer()
     {
         if (++AttackCycle > 2) { AttackCycle = 0; }
+        QueueBasicAttack(basicAttackAbility, player.GetComponent<Character>(), this);
     }
 
     // Animation Event

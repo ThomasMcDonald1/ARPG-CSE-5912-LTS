@@ -254,6 +254,25 @@ public abstract class Character : MonoBehaviour
                         audioManager.Play("LightningAbility");
                     }
 
+                    if (x == null)
+                    {
+                        if (effect is HealingAbilityEffect)
+                        {
+                            audioManager.Play("HealingAbility");
+                        }
+                        else if (effect is KnockbackAbilityEffect)
+                        {
+                            audioManager.Play("KnockbackAbility");
+                        }
+                        else if (effect is PullAbilityEffect)
+                        {
+                            audioManager.Play("PullAbility");
+                        }
+                        else
+                        {
+                            audioManager.Play("PhysicalAbility");
+                        }
+                    }
                     effect.InstantiateEffectVFX(abilityCast, null);
                 }
             }
@@ -295,8 +314,24 @@ public abstract class Character : MonoBehaviour
                         x = effect.GetComponent<BaseAbilityEffectElement>();
                         if (x == null)
                         {
-                            audioManager.Play("PhysicalAbility");
+                            if (effect is HealingAbilityEffect)
+                            {
+                                audioManager.Play("HealingAbility");
+                            }
+                            else if (effect is KnockbackAbilityEffect)
+                            {
+                                audioManager.Play("KnockbackAbility");
+                            }
+                            else if (effect is PullAbilityEffect)
+                            {
+                                audioManager.Play("PullAbility");
+                            }
+                            else if (!(effect is BasicAttackDamageAbilityEffect))
+                            {
+                                audioManager.Play("PhysicalAbility");
+                            }
                         }
+
                     }
                 }
             }
@@ -349,9 +384,10 @@ public abstract class Character : MonoBehaviour
             agent.CalculatePath(endPoint, path);
             agent.path = path;
             Debug.Log("Path calculated");
-            float distFromPlayer = Vector3.Distance(target.transform.position, abilityCast.caster.transform.position);
+            float distFromPlayer = Vector3.Distance(abilityCast.hit.collider.ClosestPoint(abilityCast.caster.transform.position), abilityCast.caster.transform.position);
             if (distFromPlayer <= abilityCast.abilityRange.range)
             {
+                distFromPlayer = Vector3.Distance(abilityCast.hit.collider.ClosestPoint(abilityCast.caster.transform.position), abilityCast.caster.transform.position);
                 Debug.Log("Made it within range");
                 OnAgentMadeItWithinRangeWithoutCanceling(abilityCast);
             }

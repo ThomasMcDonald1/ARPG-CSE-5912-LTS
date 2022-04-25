@@ -5628,11 +5628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lvlUIText: {fileID: 518599705}
-  lvlText: {fileID: 0}
-  expText: {fileID: 0}
-  nextExpText: {fileID: 0}
   nextExpUIText: {fileID: 711599855}
-  expSlider: {fileID: 0}
   nextExpSlider: {fileID: 724330564}
   levelController: {fileID: 451406700}
 --- !u!114 &451406699
@@ -5661,6 +5657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 1364659970}
   skillNotification: {fileID: 0}
+  remainingPoints: {fileID: 0}
 --- !u!1 &457389571
 GameObject:
   m_ObjectHideFlags: 0
@@ -13471,6 +13468,8 @@ MonoBehaviour:
   abilityShopCanvas: {fileID: 0}
   gameoverCanvasObj: {fileID: 101479165}
   npcInterfaceObj: {fileID: 1463503643}
+  npcNamesObj: {fileID: 0}
+  equipmentObj: {fileID: 0}
   pauseMenuCanvas: {fileID: 0}
   gameplayUICanvas: {fileID: 0}
   optionsMenuCanvas: {fileID: 0}
@@ -13483,6 +13482,8 @@ MonoBehaviour:
   exitToMainMenuButtonObj: {fileID: 772157715}
   exitGameButtonObj: {fileID: 772157714}
   exitOptionsToPauseButtonObj: {fileID: 772157713}
+  confirmOptionsButtonObj: {fileID: 0}
+  resetOptionsButtonObj: {fileID: 0}
   resolutionDropDownObj: {fileID: 772157712}
   fullScreenButtonObj: {fileID: 772157711}
   noFullScreenButtonObj: {fileID: 772157710}
@@ -13941,6 +13942,7 @@ MonoBehaviour:
   healthPotion: {fileID: 0}
   Sword: {fileID: 0}
   potionButtons: []
+  starterSwordInventorySlot: {fileID: 0}
   space: 24
 --- !u!114 &1364659965
 MonoBehaviour:
@@ -13976,6 +13978,7 @@ MonoBehaviour:
   uiInventory: {fileID: 2033276301}
   cursorChanger: {fileID: 1336660078}
   questList: []
+  equipManager: {fileID: 0}
   playerInAOEAbilityTargetSelectionMode: 0
   playerInSingleTargetAbilitySelectionMode: 0
   playerNeedsToReleaseMouseButton: 0
@@ -23023,7 +23026,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.6981132, g: 0.67072517, b: 0.5960306, a: 1}
   m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
