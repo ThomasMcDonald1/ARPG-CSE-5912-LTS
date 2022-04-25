@@ -234,18 +234,7 @@ namespace LootLabels
                     {
                         Ite item = Instantiate(droppedItem.GetComponent<ItemPickup>().item);
                         Debug.Log("item is " + item);
-                        // Potion potion = (Potion)droppedItem.GetComponent<ItemPickup>().item;
-                        //if (potion != null)
-                        //    Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        /*droppedItem.GetComponent<ItemPickup>().item =*/
                         RollStatsForItems(gear.ItemRarity, item, gear.GearType);
-                        // Equipment equipment = (Equipment)item;
-
-                        //if (item.type == Ite.ItemType.utility){
-                        //    Potion potion = (Potion)item;
-                        //   // Debug.Log("dropped item health amount after rollstatsforitems is now" + potion.health);
-                        //}
-                        //else
                         if (droppedItem.GetComponent<ItemPickup>().item.type != Ite.ItemType.utility && gear.ItemRarity != Rarity.Poor && gear.ItemRarity != Rarity.Normal)
                         {
                             Equipment equipment = (Equipment)item;
@@ -287,7 +276,6 @@ namespace LootLabels
         /// <param name="lootOrigin"></param>
         void ChooseItemTypeUnseeded(Transform lootOrigin)
         {
-
             ItemTypes itemType = LootGenerator.SelectRandomItemType();
             Debug.Log("itemType is " + itemType);
             switch (itemType)
