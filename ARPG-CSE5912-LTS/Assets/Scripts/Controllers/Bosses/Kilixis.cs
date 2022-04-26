@@ -15,6 +15,8 @@ public class Kilixis : EnemyAbilityController
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
 
+    Coroutine draCoolRoutine;
+
     private NavMeshAgent navAgent;
 
     private int CurrentPatrolVertexIndex = 0;
@@ -48,13 +50,29 @@ public class Kilixis : EnemyAbilityController
             PatrolToPosition = transform.position;
         }
         audioManager = FindObjectOfType<AudioManager>();
+
+        enemyAbilityOnCool = false;
+        AbilityRange = 15f;
+        FarAwayRange = 4f;
+        cooldownTimer = 6f;
     }
 
     public string GetClassTypeName()
     {
         return "Kilixis";
     }
-
+    IEnumerator draCoolDown()
+    {
+        enemyAbilityOnCool = true;
+        timeChecker = cooldownTimer;
+        while (timeChecker > 0)
+        {
+            timeChecker -= Time.deltaTime;
+            yield return null;
+        }
+        enemyAbilityOnCool = false;
+        draCoolRoutine = null;
+    }
     new private void Update()
     {
         UpdateAnimator();
@@ -101,7 +119,16 @@ public class Kilixis : EnemyAbilityController
             float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
-
+            AttackTarget = PlayerTarget;
+            if (InSightRadius() && InAbilityStopRange() && !enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count == 1)
+            {
+                if (EnemyAttackTypeList[0].abilityOnCooldown == false)
+                {
+                    QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                }
+            }
             if (GetComponent<Animator>().GetBool("AnimationEnded") && !InMeleeRange())
             {
                 navAgent.isStopped = false;
@@ -141,7 +168,10 @@ public class Kilixis : EnemyAbilityController
         }
 
     }
-
+    public bool InAbilityStopRange()
+    {
+        return Vector3.Distance(transform.position, AttackTarget.position) < AbilityRange;
+    }
     private bool InMusicTransitionRadius()
     {
         return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
