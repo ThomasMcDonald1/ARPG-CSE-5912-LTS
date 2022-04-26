@@ -146,7 +146,7 @@ namespace ARPG.Combat
                     }
                     else if (angle < SightRange && InAbilityStopRange())
                     {
-                        
+                        RunToPlayer();
                         //Debug.Log(timeChecker);
                         if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                         {
@@ -180,9 +180,9 @@ namespace ARPG.Combat
                                 EnemyAbility temp = EnemyAttackTypeList[0];
                                 EnemyAttackTypeList.RemoveAt(0);
                                 EnemyAttackTypeList.Add(temp);
-                                RunToPlayer();
+                                
                             }
-                            
+                            RunToPlayer();
                         }
                         else if (InStopRange())
                         {
