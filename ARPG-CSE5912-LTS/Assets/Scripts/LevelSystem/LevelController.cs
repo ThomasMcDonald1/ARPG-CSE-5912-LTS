@@ -14,6 +14,7 @@ public class LevelController : MonoBehaviour
     public const int minExp = 0;
     public const int maxExp = 999999;
     private Player player;
+    private bool tutorialNotSeen = true;
     public int LVL
     {
         get { return stats[StatTypes.LVL]; }
@@ -179,6 +180,12 @@ public class LevelController : MonoBehaviour
             }
             FindObjectOfType<AudioManager>().Play("LevelUp");
             skillNotification.SetActive(true);
+            if (tutorialNotSeen)
+            {
+                TutorialWindow.Instance.text.text = TutorialWindow.Instance.abilityUsageTutorial;
+                TutorialWindow.Instance.ShowCanvas();
+                tutorialNotSeen = false;
+            }
             stats[StatTypes.HP] = stats[StatTypes.MaxHP];
             stats[StatTypes.Mana] = stats[StatTypes.MaxMana];
             //TODO: Play sound effect or show vfx

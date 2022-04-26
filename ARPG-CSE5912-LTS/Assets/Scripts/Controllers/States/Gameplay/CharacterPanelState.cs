@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CharacterPanelState : BaseGameplayState
 {
-
+    private bool tutorialNotSeen = true;
     public override void Enter()
     {
         base.Enter();
@@ -23,6 +23,12 @@ public class CharacterPanelState : BaseGameplayState
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
         exitAbilityShopButton.onClick.AddListener(() => CloseAbilityShop());
         changeToAbilityMenu.onClick.AddListener(() => AbilityMenuStartUp());
+        if (tutorialNotSeen)
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.itemDragTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
     }
 
     public override void Exit()
