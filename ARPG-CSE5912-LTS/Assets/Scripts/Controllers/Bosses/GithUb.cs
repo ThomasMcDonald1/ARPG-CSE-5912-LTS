@@ -30,8 +30,8 @@ public class GithUb : EnemyAbilityController
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = 3.5f;
         stats[StatTypes.AtkSpeed] = 1;
-        stats[StatTypes.MaxHP] = 10;
-        stats[StatTypes.HP] = 10;
+        stats[StatTypes.MaxHP] = 2000;
+        stats[StatTypes.HP] = 2000;
         stats[StatTypes.LVL] = 30;
         stats[StatTypes.MonsterType] = 3;
 
