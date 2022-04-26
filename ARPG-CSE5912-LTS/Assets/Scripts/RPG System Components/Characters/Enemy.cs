@@ -81,6 +81,7 @@ namespace ARPG.Combat
                     EnemyAttackTypeList.Add(enemyability);
                 }
             }
+            AbilityRange = 50;
             cooldownTimer = 6;
             timeChecker = cooldownTimer;
         }
