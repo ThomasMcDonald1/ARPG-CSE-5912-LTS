@@ -183,7 +183,7 @@ public class GameplayState : BaseGameplayState
 
     protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)
     {
-
+        gameplayStateController.ChangeState<CharacterPanelState>();
     }
 
     protected override void OnStationaryButtonPressed(object sender, InfoEventArgs<int> e)
