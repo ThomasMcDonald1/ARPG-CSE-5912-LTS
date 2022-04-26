@@ -116,12 +116,15 @@ public class TipManager : MonoBehaviour
                 {
                     for (int i = 0; i < equipment.prefix.FeaturesGOs.Count; i++)
                     {
-                        FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
-                        if (feature != null)
-                        {
-                            prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
-                            prefixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                        if(equipment.prefix.FeaturesGOs[i] != null){
+                            FlatStatModifierFeature feature = equipment.prefix.FeaturesGOs[i].GetComponent<FlatStatModifierFeature>();
+                            if (feature != null)
+                            {
+                                prefixItemInfoList[i].text = "Increases " + feature.type.ToString() + " by " + feature.flatAmount.ToString();
+                                prefixItemInfoList[i].color = new Color(0.58f, 0.76f, 0.85f);
+                            }
                         }
+
                     }
                 }
 

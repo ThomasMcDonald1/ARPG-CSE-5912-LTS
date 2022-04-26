@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -25,6 +26,8 @@ public class Inventory : MonoBehaviour
     public Ite healthPotion;
     public Ite Sword;
     public PotionButton[] potionButtons;
+
+    public bool loaded = true;
     
 
     private GameObject player;
@@ -38,28 +41,93 @@ public class Inventory : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         potionSlots = GameObject.FindGameObjectWithTag("PotionSlot");
         potionButtons = potionSlots.GetComponentsInChildren<PotionButton>();
-        weaponItems.Add(Sword);
+        if(!weaponItems.Contains(Sword))
+            weaponItems.Add(Sword);
 
-        utilItems.Add(healthPotion);
-        amount.Add(healthPotion.name, 3);
+        if (!amount.ContainsKey(healthPotion.name))
+        {
+            utilItems.Add(healthPotion);
+            amount.Add(healthPotion.name, 3);
+        }
+
 
         var gameplayController = player.GetComponentInParent<GameplayStateController>();
         var slotNum = gameplayController.customCharacter.slotNum;
         Debug.Log("Inventory is trying to access save slot number " + slotNum);
         saveSlot = gameplayController.saveSlots[slotNum - 1];
+        if (saveSlot.weaponItems.Count == 0)
+            weaponItems.Add(Sword);
+
+        if (saveSlot.utilItems.Count == 0 && !amount.ContainsKey(healthPotion.name))
+        {
+            utilItems.Add(healthPotion);
+            amount.Add(healthPotion.name, 3);
+        }
     }
 
     public void LoadSaveData(SaveSlot slot)
     {
         saveSlot = slot;
-        if (saveSlot.weaponItems != null && saveSlot.weaponItems.Count > 0)
-            weaponItems = new List<Ite>(saveSlot.weaponItems);
 
-        if (saveSlot.armorItems != null && saveSlot.armorItems.Count > 0)
-            armorItems = new List<Ite>(saveSlot.armorItems);
+        int wepCount = saveSlot.weaponItems.Count;
+            for (int i = 0; i < wepCount; i++)
+            {
+                if (saveSlot.weaponItems[i].Contains("Shield") && loaded){
+                    ShieldEquipment shield = ScriptableObject.CreateInstance<ShieldEquipment>();
+                    JsonUtility.FromJsonOverwrite(saveSlot.weaponItems[i], shield);
+                    Add(shield, weaponItems);
+                }
+                else if (loaded)
+                {
+                    WeaponEquipment wep = ScriptableObject.CreateInstance<WeaponEquipment>();
+                    JsonUtility.FromJsonOverwrite(saveSlot.weaponItems[i], wep);
+                    Add(wep, weaponItems);
+                }
 
-        if (saveSlot.utilItems != null && saveSlot.utilItems.Count > 0)
-            utilItems = new List<Ite>(saveSlot.utilItems);
+            }
+        int armCount = saveSlot.armorItems.Count;
+            for (int i = 0; i < armCount; i++)
+            {
+                if (saveSlot.armorItems[i].Contains("Jewelry") && loaded)
+                {
+                    JewelryEquipment jewelry = ScriptableObject.CreateInstance<JewelryEquipment>();
+                    JsonUtility.FromJsonOverwrite(saveSlot.armorItems[i], jewelry);
+                    Add(jewelry, armorItems);
+                }
+                else if(loaded)
+                {
+                    ArmorEquipment arm = ScriptableObject.CreateInstance<ArmorEquipment>();
+                    JsonUtility.FromJsonOverwrite(saveSlot.armorItems[i], arm);
+                    Add(arm, armorItems);
+                }
+
+            }
+        int utCount = saveSlot.utilItems.Count;
+        for (int i = 0; i < utCount; i++)
+            {
+            if (loaded)
+            {
+                Potion potion = ScriptableObject.CreateInstance<Potion>();
+                JsonUtility.FromJsonOverwrite(saveSlot.utilItems[i], potion);
+                Add(potion, utilItems);
+            }
+
+
+            }
+        amount = saveSlot.amount;
+        loaded = false;
+
+        //   // weaponItems = new List<Ite>(saveSlot.weaponItems);
+
+        //if (saveSlot.armorItems != null && saveSlot.armorItems.Count > 0)
+        //{
+
+        //}
+        //   // armorItems = new List<Ite>(saveSlot.armorItems);
+
+        //if (saveSlot.utilItems != null && saveSlot.utilItems.Count > 0) { 
+        //}
+        //   // utilItems = new List<Ite>(saveSlot.utilItems);
     }
 
     public int space = 20;
@@ -75,9 +143,51 @@ public class Inventory : MonoBehaviour
 
     void UpdateSaveData()
     {
-        saveSlot.weaponItems = new List<Ite>(weaponItems);
-        saveSlot.armorItems = new List<Ite>(armorItems);
-        saveSlot.utilItems = new List<Ite>(utilItems);
+        foreach(WeaponEquipment weapon in weaponItems.OfType<WeaponEquipment>())
+        {
+
+            string json = JsonUtility.ToJson(weapon);
+            Debug.Log("json string is " + json);
+            if(!saveSlot.weaponItems.Contains(json))
+                saveSlot.weaponItems.Add(json);
+        }
+
+        foreach (ShieldEquipment shield in weaponItems.OfType<ShieldEquipment>())
+        {
+
+            string json = JsonUtility.ToJson(shield);
+            Debug.Log("json string is " + json);
+            if (!saveSlot.weaponItems.Contains(json))
+                saveSlot.weaponItems.Add(json);
+        }
+
+        foreach (JewelryEquipment jewel in armorItems.OfType<JewelryEquipment>())
+        {
+            string json = JsonUtility.ToJson(jewel);
+            Debug.Log("json string is " + json);
+            if (!saveSlot.armorItems.Contains(json))
+                saveSlot.armorItems.Add(json);
+        }
+
+        foreach (ArmorEquipment armor in armorItems.OfType<ArmorEquipment>())
+        {
+            string json = JsonUtility.ToJson(armor);
+            Debug.Log("json string is " + json);
+            if (!saveSlot.armorItems.Contains(json))
+                saveSlot.armorItems.Add(json);
+        }
+
+        foreach(Potion util in utilItems)
+        {
+            string json = JsonUtility.ToJson(util);
+            Debug.Log("json string is " + json);
+            if (!saveSlot.utilItems.Contains(json))
+                saveSlot.utilItems.Add(json);
+        }
+        saveSlot.amount = new Hashtable(amount);
+        //saveSlot.weaponItems = new List<Ite>(weaponItems);
+        //saveSlot.armorItems = new List<Ite>(armorItems);
+        //saveSlot.utilItems = new List<Ite>(utilItems);
     }
 
     // Add a new item if enough room

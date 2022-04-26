@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,23 +45,62 @@ public class EquipManager : MonoBehaviour
 
         var gameplayController = this.GetComponentInParent<GameplayStateController>();
         var slotNum = gameplayController.customCharacter.slotNum;
-        saveSlot = gameplayController.saveSlots[slotNum - 1];
+        if(slotNum != 0)
+            saveSlot = gameplayController.saveSlots[slotNum - 1];
     }
 
     public void LoadSavedData(SaveSlot slot)
     {
-        saveSlot = slot;
-        if (saveSlot.currentEquipment != null && saveSlot.currentEquipment.Count > 0)
-        {
-            int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
-            currentEquipment = saveSlot.currentEquipment.ToArray();
+        leftHand = GameObject.Find("EquippedItemLeft");
+        rightHand = GameObject.Find("EquippedItemRight");
+        instance = this;
+        character = GameObject.Find("GameplayController").GetComponent<GameplayStateController>().customCharacter;
+        int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        Debug.Log("numSlot is " + numSlots);
+        currentEquipment = new Equipment[numSlots];
 
+        saveSlot = slot;
+        for (int i = 0; i < slot.currentEquipment.Length; i++)
+        {
+            String current = slot.currentEquipment[i];
+            Debug.Log("Current is " + current);
+            if (current.Contains("typeOfArmor")){
+                ArmorEquipment arm = ScriptableObject.CreateInstance<ArmorEquipment>();
+                JsonUtility.FromJsonOverwrite(current, arm);
+                Equip(arm);
+            }
+            else if (current.Contains("Jewelry"))
+            {
+                JewelryEquipment jewelry = ScriptableObject.CreateInstance<JewelryEquipment>();
+                JsonUtility.FromJsonOverwrite(current, jewelry);
+                Equip(jewelry);
+            }
+            else if (current.Contains("Shield"))
+            {
+                ShieldEquipment shield = ScriptableObject.CreateInstance<ShieldEquipment>();
+                JsonUtility.FromJsonOverwrite(current, shield);
+                Equip(shield);
+            }
+            else if(current.Contains("typeOfWeapon"))
+            {
+                WeaponEquipment weapon = ScriptableObject.CreateInstance<WeaponEquipment>();
+                JsonUtility.FromJsonOverwrite(current, weapon);
+                Equip(weapon);
+            }
         }
+        //if (saveSlot.currentEquipment != null && saveSlot.currentEquipment.Count > 0)
+        //{
+        //    int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        //    currentEquipment = saveSlot.currentEquipment.ToArray();
+
+        //}
     }
 
     public void Equip(Equipment newItem)
     {
         int slotIndex = (int)newItem.equipSlot;
+        Debug.Log("slotIndex is " + slotIndex);
+        Debug.Log("currentEquipment length is " + currentEquipment.Length);
         Equipment oldItem = null;
         if (currentEquipment[slotIndex] != null)
         {
@@ -89,6 +129,8 @@ public class EquipManager : MonoBehaviour
             Destroy(nu[slotIndex].GetComponent<LootLabels.DroppedGear>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.CreateLabel>());
             Destroy(nu[slotIndex].GetComponent<LootLabels.ObjectHighlight>());
+            Destroy(nu[slotIndex].GetComponent<ItemPickup>());
+
             nu[slotIndex].transform.localScale = new Vector3(1, 1, 1);
 
             if (newItem.equipSlot == EquipmentSlot.OffHand && newItem.name.Contains("Shield"))
@@ -358,11 +400,17 @@ public class EquipManager : MonoBehaviour
 
     void UpdateSaveData()
     {
-        saveSlot.currentEquipment.Clear();
+        Array.Clear(saveSlot.currentEquipment,0,saveSlot.currentEquipment.Length);
 
-        for (int i=0; i<currentEquipment.Length; i++)
+        //for (int i=0; i<currentEquipment.Length; i++)
+        //{
+        //    saveSlot.currentEquipment.Add(currentEquipment[i]);
+        //}
+        for (int i = 0; i < currentEquipment.Length; i++)
         {
-            saveSlot.currentEquipment.Add(currentEquipment[i]);
+            string json = JsonUtility.ToJson(currentEquipment[i]);
+            saveSlot.currentEquipment[i] = json;
         }
+
     }
 }

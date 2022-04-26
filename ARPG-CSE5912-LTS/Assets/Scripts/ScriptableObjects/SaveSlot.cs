@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,12 +17,13 @@ public class SaveSlot : ScriptableObject
     public CustomCharacter characterData;
 
     //inventory data
-    public List<Ite> weaponItems; 
-    public List<Ite> armorItems;
-    public List<Ite> utilItems;
+    public List<string> weaponItems; 
+    public List<string> armorItems;
+    public List<string> utilItems;
+    public Hashtable amount;
 
     //equipment data
-    public List<Equipment> currentEquipment;
+    public string[] currentEquipment = new string[6];
 
     //insert other items to save here
 
@@ -32,7 +34,8 @@ public class SaveSlot : ScriptableObject
         weaponItems.Clear();
         armorItems.Clear();
         utilItems.Clear();
-        currentEquipment.Clear();
+        amount.Clear();
+        Array.Clear(currentEquipment, 0, currentEquipment.Length);
     }
 }
 
