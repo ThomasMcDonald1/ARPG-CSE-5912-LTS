@@ -41,6 +41,7 @@ namespace ARPG.Combat
 
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
+        public virtual float AbilityRange { get; set; }
         public virtual float SightRange { get; set; }
         protected virtual float Speed { get; set; }
 
@@ -80,6 +81,8 @@ namespace ARPG.Combat
                     EnemyAttackTypeList.Add(enemyability);
                 }
             }
+            cooldownTimer = 6;
+            timeChecker = cooldownTimer;
         }
         protected override void Update()
         {
@@ -113,7 +116,13 @@ namespace ARPG.Combat
         {
             EnemyKillExpEvent?.Invoke(enemy, new InfoEventArgs<(int, int,string)>((monsterLevel, monsterType,className)));
         }
-
+        public void StopAndRotate()
+        {
+            StopRun();
+            Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+        }
         protected virtual  void SeePlayer()
 
         {
@@ -131,20 +140,17 @@ namespace ARPG.Combat
                     Vector3 realDirection = transform.forward;
                     Vector3 direction = AttackTarget.position - transform.position;
                     float angle = Vector3.Angle(direction, realDirection);
-                    if (angle < SightRange && !InStopRange())
+                    if (angle < SightRange && !InAbilityStopRange())
                     {
                         RunToPlayer();
                     }
-                    else if (angle < SightRange && InStopRange())
+                    else if (angle < SightRange && InAbilityStopRange())
                     {
-                        StopRun();
-                        Quaternion rotate = Quaternion.LookRotation(AttackTarget.transform.position - transform.position);
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotate, 500f * Time.deltaTime);
-                        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                        
                         //Debug.Log(timeChecker);
                         if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                         {
-
+                            
                             //Debug.Log(EnemyAttackTypeList);
                             //Debug.Log(EnemyAttackTypeList.Count);
                             for (int i = 0; i < EnemyAttackTypeList.Count; i++)
@@ -153,17 +159,18 @@ namespace ARPG.Combat
 
                                 if (EnemyAttackTypeList[i].abilityOnCooldown == false)
                                 {
+                                    StopAndRotate();
                                     QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
                                     if (coolRoutine == null)
                                         coolRoutine = StartCoroutine(CoolDown());
                                     break;
                                 }
                             }
-
-
+                            RunToPlayer();
                         }
-                        else
+                        else if (InStopRange())
                         {
+                            StopAndRotate();
                             if (animator.GetBool("AttackingMainHand"))
                             {
                                 //Debug.Log("I got there1");
@@ -244,6 +251,11 @@ namespace ARPG.Combat
         public bool InStopRange()
         {
             return Vector3.Distance(transform.position, AttackTarget.position) < BodyRange;
+        }
+
+        public bool InAbilityStopRange()
+        {
+            return Vector3.Distance(transform.position, AttackTarget.position) < AbilityRange;
         }
 
         // From animation Event

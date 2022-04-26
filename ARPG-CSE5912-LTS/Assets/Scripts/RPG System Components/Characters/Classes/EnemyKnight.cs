@@ -14,6 +14,7 @@ namespace ARPG.Combat
             base.Start();
             Range = 10f;
             BodyRange = 1.5f;
+            AbilityRange = 70;
             SightRange = 180;
             Speed = 3f;
             agent.speed = Speed;
