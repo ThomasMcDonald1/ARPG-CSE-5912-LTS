@@ -13,9 +13,10 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-            Range = 5f;
+            Range = 90f;
             BodyRange = 2.5f;
-            SightRange = 90f;
+            AbilityRange = 80;
+            SightRange = 100f;
             Speed = 1f;
             agent.speed = Speed;
         }
