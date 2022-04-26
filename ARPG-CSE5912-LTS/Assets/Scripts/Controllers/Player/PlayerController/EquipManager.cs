@@ -402,7 +402,7 @@ public class EquipManager : MonoBehaviour
     }
     void UpdateSaveData()
     {
-        Array.Clear(saveSlot.currentEquipment, 0, saveSlot.currentEquipment.Length);
+        //Array.Clear(saveSlot.currentEquipment, 0, saveSlot.currentEquipment.Length);
 
         //for (int i=0; i<currentEquipment.Length; i++)
         //{
