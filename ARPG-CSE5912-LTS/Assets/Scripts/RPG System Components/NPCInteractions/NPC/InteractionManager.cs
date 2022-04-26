@@ -77,7 +77,7 @@ public class InteractionManager : MonoBehaviour
         if (player.NPCTarget == null) return;
         else
         {
-           SaleUI.updateUI();
+           //SaleUI.updateUI();
 
             switch (player.NPCTarget.transform.tag)
             {
@@ -195,6 +195,7 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterOptionsMenu()
     {
+        UI_Sale.instance.updateUI();
         waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         worldNames.SetActive(false);
