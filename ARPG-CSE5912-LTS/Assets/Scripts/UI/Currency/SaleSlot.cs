@@ -47,7 +47,7 @@ public class SaleSlot : MonoBehaviour
         Inventory.instance.Sell(item);
 
         playerMoney.addMoney(item.cost);
-        //UI_Sale.instance.updateUI();
+        UI_Sale.instance.updateUI();
 
     }
 }
