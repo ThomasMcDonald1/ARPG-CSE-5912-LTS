@@ -240,6 +240,8 @@ public class EquipManager : MonoBehaviour
 
     public void Unequip(int slotIndex)
     {
+        Debug.Log("Button click registered.");
+        Debug.Break();
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
