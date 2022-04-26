@@ -2,6 +2,7 @@
 using ARPG.Core;
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace ARPG.Combat
 {
@@ -59,6 +60,7 @@ namespace ARPG.Combat
         protected override void Update()
         {
         }
+
         private void FixedUpdate()
         {
             if (animator.GetBool("Dead") == false)
@@ -78,18 +80,36 @@ namespace ARPG.Combat
                     }
                     if (flightMode)
                     {
-                        //called 50 times per sec
-                        if (runCounter == 50)
+                        //update called 50 times per sec
+                        if (runCounter == 10)
                         {
-                            //Debug.Log("percent" + healthPercent);
-                            //look away from the player
-                            transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
-
-                            //point away from player
-                            Vector3 runTo = transform.position + transform.forward * 5;
-                            // And get it to head towards the found NavMesh position
-                            agent.SetDestination(runTo);
-                            runCounter = 0;
+                            //if player is near run opposite direction, else run torandom location
+                            if (Vector3.Distance(transform.position, player.transform.position) >= 5)
+                            {
+                                //look away from the player
+                                transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
+                                //point away from player
+                                Vector3 runTo = transform.position + transform.forward * 2;
+                                // And get it to head towards the found NavMesh position
+                                agent.SetDestination(runTo);
+                                runCounter = 0;
+                            }
+                            else
+                            {
+                                //patrol
+                                if (agent.enabled == true)
+                                {
+                                    if (agent.isStopped)
+                                        agent.isStopped = false;
+                                    if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                                    {
+                                        NavMeshPath path = new NavMeshPath();
+                                        agent.CalculatePath(RandomNavmeshDestination(2f), path);
+                                        agent.path = path;
+                                    }
+                                }
+                                runCounter = 0;
+                            }
                         }
                         runCounter++;
                     }
