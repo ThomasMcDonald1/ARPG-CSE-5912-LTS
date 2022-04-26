@@ -20,10 +20,7 @@ public class MainMenuRootState : BaseMenuState
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
 
-        if (audioManager = null)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-        }
+        audioManager = FindObjectOfType<AudioManager>();
 
         ClearErrorMessages();
 
