@@ -9,11 +9,13 @@ public class MainMenuController : StateMachine
     public GameObject deleteCharacterCanvasObj;
     public GameObject createCharMenuCanvasObj;
     public GameObject optionsMenuCanvasObj;
+    public GameObject creditsMenuCanvasObj;
 
     [HideInInspector] public Canvas mainMenuCanvas;
     [HideInInspector] public Canvas deleteCharacterCanvas;
     [HideInInspector] public Canvas createCharMenuCanvas;
     [HideInInspector] public Canvas optionsMenuCanvas;
+    [HideInInspector] public Canvas creditsMenuCanvas;
 
     // Main menu buttons
     public GameObject startGameButtonObj;
@@ -58,6 +60,9 @@ public class MainMenuController : StateMachine
     //screen resolutions
     public Resolution[] supportedRes;
 
+    //credits
+    public GameObject creditsButtonObj, backFromCreditsButtonObj;
+
     private void Awake()
     {
         mainMenuCanvas = mainMenuCanvasObj.GetComponent<Canvas>();
@@ -65,11 +70,13 @@ public class MainMenuController : StateMachine
         createCharMenuCanvas = createCharMenuCanvasObj.GetComponent<Canvas>();
         optionsMenuCanvas = optionsMenuCanvasObj.GetComponent<Canvas>();
         characterCreationCamera = characterCreationCameraObj.GetComponent<Camera>();
+        creditsMenuCanvas = creditsMenuCanvasObj.GetComponent<Canvas>();
 
         mainMenuCanvas.enabled = false;
         createCharMenuCanvas.enabled = false;
         optionsMenuCanvas.enabled = false;
         characterCreationCamera.enabled = false;
+        creditsMenuCanvas.enabled = false;
 
         //get supported resolutions
         supportedRes = Screen.resolutions;
