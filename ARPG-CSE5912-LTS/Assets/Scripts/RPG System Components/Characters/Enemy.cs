@@ -150,9 +150,10 @@ namespace ARPG.Combat
                         //Debug.Log(timeChecker);
                         if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
                         {
-                            
+
                             //Debug.Log(EnemyAttackTypeList);
                             //Debug.Log(EnemyAttackTypeList.Count);
+                            /*
                             for (int i = 0; i < EnemyAttackTypeList.Count; i++)
                             {
                                 //Debug.Log("I got there2");
@@ -163,10 +164,25 @@ namespace ARPG.Combat
                                     QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
                                     if (coolRoutine == null)
                                         coolRoutine = StartCoroutine(CoolDown());
+                                    EnemyAbility temp = EnemyAttackTypeList[i];
+                                    EnemyAttackTypeList.RemoveAt(i);
+                                    EnemyAttackTypeList.Add(temp);
                                     break;
                                 }
                             }
-                            RunToPlayer();
+                            */
+                            if (EnemyAttackTypeList[0].abilityOnCooldown == false)
+                            {
+                                StopAndRotate();
+                                QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
+                                if (coolRoutine == null)
+                                    coolRoutine = StartCoroutine(CoolDown());
+                                EnemyAbility temp = EnemyAttackTypeList[0];
+                                EnemyAttackTypeList.RemoveAt(0);
+                                EnemyAttackTypeList.Add(temp);
+                                RunToPlayer();
+                            }
+                            
                         }
                         else if (InStopRange())
                         {
