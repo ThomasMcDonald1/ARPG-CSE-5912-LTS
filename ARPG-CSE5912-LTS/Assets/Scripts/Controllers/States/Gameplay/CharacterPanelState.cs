@@ -65,6 +65,11 @@ public class CharacterPanelState : BaseGameplayState
 
     }
 
+    protected override void OnCharacterMenuPressed(object sender, InfoEventArgs<int> e)
+    {
+        gameplayStateController.ChangeState<GameplayState>();
+    }
+
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
         //figure out if the raycast results contain an item or ability
