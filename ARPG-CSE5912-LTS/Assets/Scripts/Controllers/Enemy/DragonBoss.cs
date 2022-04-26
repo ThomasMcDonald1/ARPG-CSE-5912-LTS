@@ -59,8 +59,13 @@ public class DragonBoss : EnemyAbilityController
                 fadeOutMusic = false;
             }
             animator.SetBool("Dead", true);
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(transform.position, path);
+            agent.path = path;
             agent.isStopped = true;
-            //get rid of enemy canvas
+            agent.acceleration = 0;
+            agent.angularSpeed = 0;
+            agent.radius = 0;
             PlayerTarget = null;
         }
 
