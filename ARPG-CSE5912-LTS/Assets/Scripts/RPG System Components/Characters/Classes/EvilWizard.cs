@@ -19,7 +19,7 @@ namespace ARPG.Combat
             SightRange = 360f;
             Speed = 3f;
             agent.speed = Speed;
-            stats[StatTypes.MonsterType] = 1; //testing
+            stats[StatTypes.MonsterType] = 2; //testing
             cooldownTimer = 6;
         }
 
