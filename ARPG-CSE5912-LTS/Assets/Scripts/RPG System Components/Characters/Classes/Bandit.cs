@@ -81,15 +81,15 @@ namespace ARPG.Combat
                     if (flightMode)
                     {
                         //update called 50 times per sec
-                        if (runCounter == 10)
+                        if (runCounter == 50)
                         {
                             //if player is near run opposite direction, else run torandom location
-                            if (Vector3.Distance(transform.position, player.transform.position) >= 5)
+                            if (Vector3.Distance(transform.position, player.transform.position) <= 5)
                             {
                                 //look away from the player
                                 transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
                                 //point away from player
-                                Vector3 runTo = transform.position + transform.forward * 2;
+                                Vector3 runTo = transform.position + transform.forward * 5;
                                 // And get it to head towards the found NavMesh position
                                 agent.SetDestination(runTo);
                                 runCounter = 0;
@@ -104,7 +104,7 @@ namespace ARPG.Combat
                                     if (!agent.pathPending && agent.remainingDistance < 0.5f)
                                     {
                                         NavMeshPath path = new NavMeshPath();
-                                        agent.CalculatePath(RandomNavmeshDestination(2f), path);
+                                        agent.CalculatePath(RandomNavmeshDestination(5f), path);
                                         agent.path = path;
                                     }
                                 }
