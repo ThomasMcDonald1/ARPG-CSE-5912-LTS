@@ -289,7 +289,7 @@ namespace LootLabels
             float time = 0f;
             float maxHeight = UnityEngine.Random.Range(minParabolaHeight, maxParabolaHeight);
 
-            while (time < animationDuration)
+            while (time < animationDuration && obj != null)
             {
                 time += Time.deltaTime;
                 yield return null;
