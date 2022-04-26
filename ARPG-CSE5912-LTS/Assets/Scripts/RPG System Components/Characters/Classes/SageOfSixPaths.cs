@@ -18,7 +18,7 @@ namespace ARPG.Combat
             SightRange = 90f;
             Speed = 2f;
             agent.speed = Speed;
-            stats[StatTypes.MonsterType] = 4; //testing
+            stats[StatTypes.MonsterType] = 2; //testing
         }
         protected override void Update()
         {

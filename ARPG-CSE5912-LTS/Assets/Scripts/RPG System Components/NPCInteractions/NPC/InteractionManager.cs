@@ -72,12 +72,13 @@ public class InteractionManager : MonoBehaviour
     {
 
         playerMoneyText.SetText("Player: " + '\n' + playerMoney.money.ToString() + "$");
-        SaleUI.updateUI();
 
 
         if (player.NPCTarget == null) return;
         else
         {
+           //SaleUI.updateUI();
+
             switch (player.NPCTarget.transform.tag)
             {
                 case "StartBlacksmith":
@@ -194,6 +195,7 @@ public class InteractionManager : MonoBehaviour
 
     public void EnterOptionsMenu()
     {
+        UI_Sale.instance.updateUI();
         waypointMenu.SetActive(false);
         travelMenu.SetActive(false);
         worldNames.SetActive(false);

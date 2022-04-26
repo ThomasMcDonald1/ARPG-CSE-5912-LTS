@@ -67,9 +67,14 @@ public class GithUb : EnemyAbilityController
                 audioManager.FadeOut("Boss3BGM", "Dungeon3BGM");
                 fadeOutMusic = false;
             }
-            patrolPath = null;
             animator.SetBool("Dead", true);
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(transform.position, path);
+            agent.path = path;
             agent.isStopped = true;
+            agent.acceleration = 0;
+            agent.angularSpeed = 0;
+            agent.radius = 0;
             PlayerTarget = null;
         }
 

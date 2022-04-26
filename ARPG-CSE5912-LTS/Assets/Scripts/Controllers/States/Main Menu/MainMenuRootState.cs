@@ -8,6 +8,7 @@ using TMPro;
 public class MainMenuRootState : BaseMenuState
 {
     private const int SLOTS_VISIBLE = 4;
+    private AudioManager audioManager;
 
     public override void Enter()
     {
@@ -18,6 +19,8 @@ public class MainMenuRootState : BaseMenuState
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
+
+        audioManager = FindObjectOfType<AudioManager>();
 
         ClearErrorMessages();
 
@@ -42,6 +45,7 @@ public class MainMenuRootState : BaseMenuState
         deleteCharButton.onClick.AddListener(() => OnDeleteCharacterSelected());
         yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
         noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
+        exitGameButton.onClick.AddListener(() => OnQuitGameClicked());
     }
 
     void RemoveButtonListeners()
@@ -58,6 +62,7 @@ public class MainMenuRootState : BaseMenuState
         deleteCharButton.onClick.RemoveAllListeners();
         yesDeleteButton.onClick.RemoveAllListeners();
         noDeleteButton.onClick.RemoveAllListeners();
+        exitGameButton.onClick.RemoveAllListeners();
     }
 
     void SetSlotVisibility()
@@ -119,7 +124,7 @@ public class MainMenuRootState : BaseMenuState
         base.Exit();
         RemoveButtonListeners();
         mainMenuController.mainMenuCanvas.enabled = false;
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        audioManager.Play("MenuClick");
     }
 
     void OnStartGameClicked()
@@ -128,7 +133,7 @@ public class MainMenuRootState : BaseMenuState
         if (selectedSlot != null)
         {
             Debug.Log("Start Button Clicked!");
-            FindObjectOfType<AudioManager>().Play("MenuClick");
+            audioManager.Play("MenuClick");
             mainMenuController.characterCreationCamera.enabled = false;
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
             GenerateNewDungeons();
@@ -148,13 +153,20 @@ public class MainMenuRootState : BaseMenuState
         mainMenuController.dungeon3.generated = false;
     }
 
+    void OnQuitGameClicked()
+    {
+       audioManager.Play("MenuClick");
+
+        Application.Quit();
+    }
+
     void OnCreateCharClicked()
     {
         ClearErrorMessages();
         if (!CheckIfSlotsFull())
         {
             mainMenuController.ChangeState<CharacterCreationState>();
-            FindObjectOfType<AudioManager>().Play("MenuClick");
+            audioManager.Play("MenuClick");
         }
         else
         {
@@ -179,7 +191,7 @@ public class MainMenuRootState : BaseMenuState
     {
         ClearErrorMessages();
         mainMenuController.ChangeState<OptionsState>();
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        audioManager.Play("MenuClick");
     }
 
     void OnSlotClicked(int slotNumber)
@@ -194,7 +206,7 @@ public class MainMenuRootState : BaseMenuState
             mainMenuController.displayCharacterObj.SetActive(true);
             mainMenuController.characterNameObj.SetActive(true);
 
-            FindObjectOfType<AudioManager>().Play("MenuClick");
+            audioManager.Play("MenuClick");
         }
     }
 
@@ -260,7 +272,7 @@ public class MainMenuRootState : BaseMenuState
         }
 
 
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        audioManager.Play("MenuClick");
         SetSlotVisibility();
     }
 
@@ -275,7 +287,7 @@ public class MainMenuRootState : BaseMenuState
 
         mainMenuController.deleteCharacterCanvas.enabled = false;
 
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        audioManager.Play("MenuClick");
 
         SetSlotVisibility();
     }
@@ -285,7 +297,7 @@ public class MainMenuRootState : BaseMenuState
         Debug.Log("Character deletion was cancelled");
         mainMenuController.deleteCharacterCanvas.enabled = false;
 
-        FindObjectOfType<AudioManager>().Play("MenuClick");
+        audioManager.Play("MenuClick");
 
         SetSlotVisibility();
     }
