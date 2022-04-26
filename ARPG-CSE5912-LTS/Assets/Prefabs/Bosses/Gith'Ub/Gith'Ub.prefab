@@ -1108,7 +1108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  abilitiesKnown: []
+  abilitiesKnown:
+  - {fileID: 5399752605076104965}
+  - {fileID: 9149232893993747397}
+  - {fileID: 4215743518543834979}
   charactersInRange: []
   gameplayStateController: {fileID: 0}
   abilityQueued: 0
@@ -2054,6 +2057,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6274823533592983213}
     m_Modifications:
+    - target: {fileID: 1789946130180846968, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
+      propertyPath: baseDamageOrHealing
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4141131800985517864, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
       propertyPath: m_Name
       value: Mighty Leap
@@ -2104,6 +2111,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
+--- !u!114 &5399752605076104965 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8275773174081698646, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
+  m_PrefabInstance: {fileID: 4050624717924965459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d00cdfd0856374dade85cf5aaf3bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7135261429669866748 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6571666439710781615, guid: 1dff8c65e97e91f4faa595e3c268a025, type: 3}
@@ -2164,6 +2182,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6911460406004634151, guid: 669e81182e429d747b8579ef35e959ab, type: 3}
+      propertyPath: baseDamageOrHealing
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 669e81182e429d747b8579ef35e959ab, type: 3}
 --- !u!4 &8645163844014399606 stripped
@@ -2171,6 +2193,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2621677770578477750, guid: 669e81182e429d747b8579ef35e959ab, type: 3}
   m_PrefabInstance: {fileID: 6024647230875050688}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4215743518543834979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7573520584524221859, guid: 669e81182e429d747b8579ef35e959ab, type: 3}
+  m_PrefabInstance: {fileID: 6024647230875050688}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d00cdfd0856374dade85cf5aaf3bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6733101201543535213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2408,12 +2441,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3271144079508975918, guid: 4ba38f020799a9e47ba0f4b8e6a99089, type: 3}
+      propertyPath: baseDamageOrHealing
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4352284075752940563, guid: 4ba38f020799a9e47ba0f4b8e6a99089, type: 3}
       propertyPath: m_Name
       value: Fireball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ba38f020799a9e47ba0f4b8e6a99089, type: 3}
+--- !u!114 &9149232893993747397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1726300476410266802, guid: 4ba38f020799a9e47ba0f4b8e6a99089, type: 3}
+  m_PrefabInstance: {fileID: 7569873625958090615}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d00cdfd0856374dade85cf5aaf3bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8217201078661463561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1946904331324635518, guid: 4ba38f020799a9e47ba0f4b8e6a99089, type: 3}
