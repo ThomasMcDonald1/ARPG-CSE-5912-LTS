@@ -44,6 +44,11 @@ public class DragonBoss : EnemyAbilityController
             PatrolToPosition = transform.position;
         }
         audioManager = FindObjectOfType<AudioManager>();
+        AbilityRange = 15f;
+        FarAwayRange = 10f;
+        cooldownTimer = 6f;
+        timeChecker = cooldownTimer;
+
     }
 
     public string GetClassTypeName()
@@ -109,15 +114,16 @@ public class DragonBoss : EnemyAbilityController
             AttackTarget = PlayerTarget;
             if (InSightRadius() && InAbilityStopRange())
             {
-                if (EnemyAttackTypeList[0].abilityOnCooldown == false)
+                if (EnemyAttackTypeList[0].abilityOnCooldown == false && !InFarAwayRange())
                 {
-                    
                     QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
                     if (draCoolRoutine == null)
                         draCoolRoutine = StartCoroutine(draCoolDown());
-                    EnemyAbility temp = EnemyAttackTypeList[0];
-                    EnemyAttackTypeList.RemoveAt(0);
-                    EnemyAttackTypeList.Add(temp);
+                }else if (EnemyAttackTypeList[1].abilityOnCooldown == false && InFarAwayRange())
+                {
+                    QueueAbilityCast(EnemyAttackTypeList[1].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
                 }
             }
         
@@ -144,6 +150,11 @@ public class DragonBoss : EnemyAbilityController
             }
         }
 
+    }
+
+    public bool InFarAwayRange()
+    {
+        return Vector3.Distance(transform.position, AttackTarget.position) < FarAwayRange;
     }
     public bool InAbilityStopRange()
     {
