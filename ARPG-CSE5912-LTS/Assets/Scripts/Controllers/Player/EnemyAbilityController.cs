@@ -8,11 +8,11 @@ using System;
 
 public class EnemyAbilityController : Enemy
 {
-
-
     protected override void OnDisable()
     {
         base.OnDisable();
+        CastTimerCastType.AbilityCastTimeWasCompletedEvent -= OnCompletedCast;
+        InstantCastType.AbilityInstantCastWasCompletedEvent -= OnCompletedCast;
     }
     protected override void Start()
     {
@@ -35,11 +35,19 @@ public class EnemyAbilityController : Enemy
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }
 
+   
+
 
     void OnCompletedCast(object sender, InfoEventArgs<AbilityCast> e)
     {
         if (e.info.caster == this)
         {
+            Debug.Log("Bandit debug: e.info.caster is " + e.info.caster + " and this is " + this);
+
+            if (e.info.caster is Bandit)
+            {
+                Debug.Log("Bandit completed cast event was heard");
+            }
             Debug.Log("Enemy Cast was completed");
             DeductCastingCost(e.info);
             GetColliders(e.info);

@@ -23,6 +23,13 @@ public class PlayerAbilityController : Player
         InstantCastType.AbilityInstantCastWasCompletedEvent += OnCompletedCast;
     }
 
+    private void OnDisable()
+    {
+        InputController.CancelPressedEvent -= OnCancelPressed;
+        CastTimerCastType.AbilityCastTimeWasCompletedEvent -= OnCompletedCast;
+        InstantCastType.AbilityInstantCastWasCompletedEvent -= OnCompletedCast;
+    }
+
     private void OnCancelPressed(object sender, InfoEventArgs<int> e)
     {
         playerInAOEAbilityTargetSelectionMode = false;
