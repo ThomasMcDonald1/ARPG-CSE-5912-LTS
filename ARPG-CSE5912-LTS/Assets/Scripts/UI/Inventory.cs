@@ -48,8 +48,10 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (starterSwordInventorySlot.item != null && !starterSwordEquipped)
+        if (starterSwordInventorySlot.item == Sword && !starterSwordEquipped)
         {
+            WeaponEquipment weapon = (WeaponEquipment)starterSwordInventorySlot.item;
+            weapon.equipSlot = EquipmentSlot.MainHand;
             starterSwordInventorySlot.item.Use();
             starterSwordEquipped = true;
         }
