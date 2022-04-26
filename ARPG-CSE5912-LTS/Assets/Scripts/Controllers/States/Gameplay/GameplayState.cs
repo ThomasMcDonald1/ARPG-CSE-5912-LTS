@@ -75,6 +75,17 @@ public class GameplayState : BaseGameplayState
         var charaPanel = gameplayStateController.GetComponentInChildren<CharacterPanelController>();
         charaPanel.playerInfo = gameplayStateController.customCharacter;
         charaPanel.showCharacterStates();
+
+        LoadSaveData();
+    }
+
+    void LoadSaveData()
+    {
+        var slotNum = gameplayStateController.customCharacter.slotNum;
+        var slot = gameplayStateController.saveSlots[slotNum - 1];
+
+        player.GetComponent<Inventory>().LoadSaveData(slot);
+        player.GetComponent<EquipManager>().LoadSavedData(slot);        
     }
 
     void AddButtonListeners()

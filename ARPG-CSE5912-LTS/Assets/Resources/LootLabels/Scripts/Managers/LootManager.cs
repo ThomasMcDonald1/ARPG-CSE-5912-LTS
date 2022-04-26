@@ -381,7 +381,7 @@ namespace LootLabels
                     BaseGear gear = LootGenerator.CreateGearUnseeded();
                     Debug.Log("gear.ModelName is " + gear.ModelName);
 
-                    GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), transform.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
+                    GameObject droppedItem = Instantiate(Resources.Load(gear.ModelName, typeof(GameObject)), lootOrigin.position, Quaternion.Euler(0, 0, 0), lootOrigin) as GameObject;
                     droppedItem.GetComponent<DroppedGear>().gear = gear;
 
                     if (droppedItem.GetComponent<ItemPickup>() != null)

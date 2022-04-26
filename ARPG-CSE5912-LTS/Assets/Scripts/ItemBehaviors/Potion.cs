@@ -26,8 +26,8 @@ public class Potion : Ite
     public override void Use()
     {
         //Debug.Log("Use potion!");
-        base.Use();
-        Inventory.instance.Remove(this);
+        //base.Use();
+        //Inventory.instance.Remove(this);
         switch ((int)typeOfPotion)
         {
             case (int)potionType.health:

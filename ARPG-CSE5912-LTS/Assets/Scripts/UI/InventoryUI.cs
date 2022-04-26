@@ -96,7 +96,11 @@ public class InventoryUI : MonoBehaviour
                     // Debug.Log(inventory.items[i].name + " is " + inventory.items[i].stackable);
 
 
-                    text.SetText(inventory.amount[inventory.utilItems[i].name].ToString());
+                    if(inventory.amount[inventory.utilItems[i].name] != null)
+                    {
+                        text.SetText(inventory.amount[inventory.utilItems[i].name].ToString());
+                    }
+
 
                 }
                 else

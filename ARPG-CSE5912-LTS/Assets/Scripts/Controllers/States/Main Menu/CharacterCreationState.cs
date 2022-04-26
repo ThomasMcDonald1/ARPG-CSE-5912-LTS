@@ -105,6 +105,7 @@ public class CharacterCreationState : BaseMenuState
             SetDefaultOutfit();
             nameError.SetActive(false);
             int slotNum = FindEmptySlot();
+            customCharacter.slotNum = slotNum;
             mainMenuController.saveSlotDataObjs[slotNum].containsData = true;
             mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
             selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];

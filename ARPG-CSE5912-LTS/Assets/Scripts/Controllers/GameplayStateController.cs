@@ -66,6 +66,9 @@ public class GameplayStateController : StateMachine
     // Camera Stuff
     public GameplayCameraZoom CameraZoom;
 
+    //Save Slots
+    public SaveSlot[] saveSlots;
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
