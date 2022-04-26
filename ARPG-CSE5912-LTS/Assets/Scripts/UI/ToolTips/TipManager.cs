@@ -214,9 +214,24 @@ public class TipManager : MonoBehaviour
     private void AdjustTipWindowPosition()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        if (mousePos.y >= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
-        else if (mousePos.y <= Screen.height / 2)
-            tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+        if (GameplayStateController.Instance.CurrentState is CharacterPanelState)
+        {
+            if (mousePos.y >= Screen.height / 2)
+                tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+            else if (mousePos.y < Screen.height / 2)
+                tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+        }
+        else
+        {
+            if (mousePos.x >= Screen.width / 2 && mousePos.y >= Screen.height / 2)
+                tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+            else if (mousePos.x < Screen.width / 2 && mousePos.y < Screen.height / 2)
+                tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+            else if (mousePos.x >= Screen.width / 2 && mousePos.y < Screen.height / 2)
+                tipWindow.transform.position = new Vector2(mousePos.x - tipWindow.sizeDelta.x / 2, mousePos.y + tipWindow.sizeDelta.y / 2);
+            else
+                tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x / 2, mousePos.y - tipWindow.sizeDelta.y / 2);
+
+        }
     }
 }

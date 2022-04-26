@@ -24,6 +24,7 @@ public class GameplayState : BaseGameplayState
     ActionBar actionBar;
     GameObject passiveTreeUI;
     bool lockedActions = false;
+    bool tutorialNotSeen = true;
 
     // Test inventory system
 
@@ -64,10 +65,16 @@ public class GameplayState : BaseGameplayState
 
         GetComponentInChildren<InteractionManager>().ReactivateNPCS();
 
+        if (tutorialNotSeen)
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.scrollAndQuestTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
+        
         var charaPanel = gameplayStateController.GetComponentInChildren<CharacterPanelController>();
         charaPanel.playerInfo = gameplayStateController.customCharacter;
         charaPanel.showCharacterStates();
-        
     }
 
     void AddButtonListeners()

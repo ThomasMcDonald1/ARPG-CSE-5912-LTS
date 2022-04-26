@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour
     private GameObject potionSlots;
     [SerializeField] InventorySlot starterSwordInventorySlot;
     bool starterSwordEquipped = false;
+    private bool tutorialNotSeen = true;
 
     private void Start()
     {
@@ -60,7 +61,12 @@ public class Inventory : MonoBehaviour
     // Add a new item if enough room
     public void Add(Ite item, List<Ite> list)
     {
-        
+        if (tutorialNotSeen && (list == weaponItems || list == armorItems))
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.openPanelsTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
         if (item.showInInventory)
         {
             if (list.Count >= space)
