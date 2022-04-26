@@ -135,10 +135,11 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Sword != null && !starterSwordEquipped)
+        if (Sword != null && !starterSwordEquipped && saveSlot.usedSword)
         {
             Sword.Use();
             starterSwordEquipped = true;
+            saveSlot.usedSword = false;
         }
     }
 
