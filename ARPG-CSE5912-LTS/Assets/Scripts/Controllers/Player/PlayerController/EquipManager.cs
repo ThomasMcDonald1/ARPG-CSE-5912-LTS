@@ -397,12 +397,9 @@ public class EquipManager : MonoBehaviour
             if (onEquipmentChanged != null)
                 onEquipmentChanged.Invoke(null, oldItem);
         }
-    }
 
         UpdateSaveData();
     }
-
-
     void UpdateSaveData()
     {
         Array.Clear(saveSlot.currentEquipment,0,saveSlot.currentEquipment.Length);
