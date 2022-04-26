@@ -20,7 +20,7 @@ public class SaveSlot : ScriptableObject
     public List<string> weaponItems; 
     public List<string> armorItems;
     public List<string> utilItems;
-    public Hashtable amount;
+    public Hashtable amount = new Hashtable();
 
     //equipment data
     public string[] currentEquipment = new string[6];
