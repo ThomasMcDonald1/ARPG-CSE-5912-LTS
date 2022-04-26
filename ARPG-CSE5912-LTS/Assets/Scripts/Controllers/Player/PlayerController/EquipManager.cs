@@ -402,7 +402,7 @@ public class EquipManager : MonoBehaviour
     }
     void UpdateSaveData()
     {
-        Array.Clear(saveSlot.currentEquipment,0,saveSlot.currentEquipment.Length);
+        Array.Clear(saveSlot.currentEquipment, 0, saveSlot.currentEquipment.Length);
 
         //for (int i=0; i<currentEquipment.Length; i++)
         //{
@@ -413,6 +413,7 @@ public class EquipManager : MonoBehaviour
             string json = JsonUtility.ToJson(currentEquipment[i]);
             saveSlot.currentEquipment[i] = json;
         }
+    }
 
     private void ChangeToMainHandAnimation()
     {
