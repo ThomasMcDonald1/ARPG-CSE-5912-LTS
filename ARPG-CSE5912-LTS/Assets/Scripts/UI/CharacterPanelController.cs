@@ -27,7 +27,7 @@ public class CharacterPanelController : MonoBehaviour
     {
         
     }
-    private void showCharacterStates()
+    public void showCharacterStates()
     {
         playerName.text = playerInfo.charName;
         playerMoney.text = Gold.money.ToString();

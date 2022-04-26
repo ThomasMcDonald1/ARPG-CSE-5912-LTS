@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CharacterPanelState : BaseGameplayState
 {
-
+    private bool tutorialNotSeen = true;
     public override void Enter()
     {
         base.Enter();
@@ -23,7 +23,12 @@ public class CharacterPanelState : BaseGameplayState
         exitPanelToGameButton.onClick.AddListener(() => OnBackButtonClicked());
         exitAbilityShopButton.onClick.AddListener(() => CloseAbilityShop());
         changeToAbilityMenu.onClick.AddListener(() => AbilityMenuStartUp());
-
+        if (tutorialNotSeen)
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.itemDragTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
     }
 
     public override void Exit()
@@ -60,14 +65,13 @@ public class CharacterPanelState : BaseGameplayState
 
     }
 
-
     protected override void OnUIElementHovered(object sender, InfoEventArgs<List<RaycastResult>> e)
     {
         //figure out if the raycast results contain an item or ability
        foreach (RaycastResult result in e.info)
         {
             GameObject go = result.gameObject;
-            //Debug.Log("GameObject: " + go);
+            Debug.Log("GameObject: " + go);
 
             Button invButton = go.GetComponent<Button>();
             //Image itemImg = go.GetComponent<Image>()
@@ -98,5 +102,4 @@ public class CharacterPanelState : BaseGameplayState
             }
         }
     }
-
 }

@@ -24,6 +24,7 @@ public class GameplayState : BaseGameplayState
     ActionBar actionBar;
     GameObject passiveTreeUI;
     bool lockedActions = false;
+    bool tutorialNotSeen = true;
 
     // Test inventory system
 
@@ -64,6 +65,17 @@ public class GameplayState : BaseGameplayState
 
         GetComponentInChildren<InteractionManager>().ReactivateNPCS();
 
+        if (tutorialNotSeen)
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.scrollAndQuestTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
+        
+        var charaPanel = gameplayStateController.GetComponentInChildren<CharacterPanelController>();
+        charaPanel.playerInfo = gameplayStateController.customCharacter;
+        charaPanel.showCharacterStates();
+
         LoadSaveData();
     }
 
@@ -73,7 +85,7 @@ public class GameplayState : BaseGameplayState
         var slot = gameplayStateController.saveSlots[slotNum - 1];
 
         player.GetComponent<Inventory>().LoadSaveData(slot);
-        player.GetComponent<EquipManager>().LoadSavedData(slot);
+        player.GetComponent<EquipManager>().LoadSavedData(slot);        
     }
 
     void AddButtonListeners()

@@ -15,7 +15,7 @@ public class QuestLog : MonoBehaviour
 
     [SerializeField] private Lorekeeper lorekeepr;
 
-    
+    private bool tutorialNotSeen = true;
 
 
     private void OnEnable()
@@ -87,6 +87,12 @@ public class QuestLog : MonoBehaviour
     }
     public void AddQuest(Quest quest)
     {
+        if (tutorialNotSeen)
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.itemAllocationTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
         GameObject questGameObject = Instantiate(questPrefab, questArea);// Instantiating quest in the game world
         QuestScript questScript = questGameObject.GetComponent<QuestScript>();//quest prefab will originally have QuestScript attached
         questScript.QuestReference = quest;//quest script now has reference to original quest

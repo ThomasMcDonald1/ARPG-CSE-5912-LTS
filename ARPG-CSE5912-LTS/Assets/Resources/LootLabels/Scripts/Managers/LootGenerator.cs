@@ -85,9 +85,11 @@ namespace LootLabels {
             Debug.Log("GearTypes RandomIndex is " + (GearTypes)randomIndex);
             if ((itemRarity == Rarity.Poor || itemRarity == Rarity.Normal))
             {
-                while ((GearTypes)randomIndex == GearTypes.Jewelry)
+                 if ((GearTypes)randomIndex == GearTypes.Jewelry)
                 {
-                    randomIndex = Random.Range(0, 8);
+                    //gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
+                    //Debug.Log("gearTypeCount is " + gearTypeCount);
+                    randomIndex = Random.Range(0, 7);
                 }
             }
             else if (GearTypesIsPotion(randomIndex))
@@ -113,13 +115,16 @@ namespace LootLabels {
             //Debug.Log("gearTypeCount is " + gearTypeCount);
             randomIndex = Random.Range(0, 8);
             Debug.Log("GearTypes RandomIndex is " + (GearTypes)randomIndex);
-            while ((itemRarity == Rarity.Poor || itemRarity == Rarity.Normal) && (GearTypes)randomIndex == GearTypes.Jewelry)
+            if (itemRarity == Rarity.Poor || itemRarity == Rarity.Normal)
             {
-                //gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
-                //Debug.Log("gearTypeCount is " + gearTypeCount);
-                randomIndex = Random.Range(0, 8);
+                if ((GearTypes)randomIndex == GearTypes.Jewelry)
+                {
+                    //gearTypeCount = System.Enum.GetNames(typeof(GearTypes)).Length;
+                    //Debug.Log("gearTypeCount is " + gearTypeCount);
+                    randomIndex = Random.Range(0, 7);
+                }
             }
-            Debug.Log("GearType chosen: " + (GearTypes)randomIndex);
+            Debug.Log("GearType chosen: " + (GearTypes)randomIndex + " for item rarity " + itemRarity);
             return (GearTypes)randomIndex;
         }
 

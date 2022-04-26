@@ -35,6 +35,7 @@ public class Inventory : MonoBehaviour
     private SaveSlot saveSlot;
    // [SerializeField] InventorySlot starterSwordInventorySlot;
     bool starterSwordEquipped = false;
+    private bool tutorialNotSeen = true;
 
     private void Start()
     {
@@ -135,9 +136,11 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Sword != null && !starterSwordEquipped && saveSlot.usedSword)
+        if (starterSwordInventorySlot.item == Sword && !starterSwordEquipped)
         {
-            Sword.Use();
+            WeaponEquipment weapon = (WeaponEquipment)starterSwordInventorySlot.item;
+            weapon.equipSlot = EquipmentSlot.MainHand;
+            starterSwordInventorySlot.item.Use();
             starterSwordEquipped = true;
             saveSlot.usedSword = false;
         }
@@ -328,7 +331,12 @@ public class Inventory : MonoBehaviour
     // Add a new item if enough room
     public void Add(Ite item, List<Ite> list)
     {
-        
+        if (tutorialNotSeen && (list == weaponItems || list == armorItems))
+        {
+            TutorialWindow.Instance.text.text = TutorialWindow.Instance.openPanelsTutorial;
+            TutorialWindow.Instance.ShowCanvas();
+            tutorialNotSeen = false;
+        }
         if (item.showInInventory)
         {
             if (list.Count >= space)

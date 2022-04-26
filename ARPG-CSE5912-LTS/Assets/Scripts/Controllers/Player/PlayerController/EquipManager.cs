@@ -123,7 +123,7 @@ public class EquipManager : MonoBehaviour
             //}
         }
         currentEquipment[slotIndex] = newItem;
-        if(newItem.type == Ite.ItemType.weapon)
+        if (newItem.type == Ite.ItemType.weapon)
         {
             nu[slotIndex] = (GameObject)Instantiate(newItem.prefab);
             Destroy(nu[slotIndex].GetComponent<LootLabels.DroppedGear>());
@@ -145,9 +145,11 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.Armor] += shield.armor;
                 playerStats[StatTypes.BlockChance] += shield.blockChance;
 
-                offHand= true;
+                ChangeToMainHandAnimation();
+
+                offHand = true;
             }
-            else if(newItem.equipSlot == EquipmentSlot.OffHand)
+            else if (newItem.equipSlot == EquipmentSlot.OffHand)
             {
                 if (twoHandSword)
                     Unequip(0);
@@ -220,13 +222,13 @@ public class EquipManager : MonoBehaviour
                         nu[slotIndex].transform.localPosition = Vector3.zero;
                         nu[slotIndex].transform.localRotation = Quaternion.Euler(0, 0, 0);
                         mainHand = true;
-                        if(currentEquipment[1] != null)
+                        if (currentEquipment[1] != null)
                         {
                             if (currentEquipment[1].name.Contains("Dagger"))
                             {
                                 animController.ChangeToDaggerLeftSwordRight();
                             }
-                            else if(currentEquipment[1].name.Contains("Sword"))
+                            else if (currentEquipment[1].name.Contains("Sword"))
                             {
                                 animController.ChangeToDualSwords();
                             }
@@ -301,6 +303,7 @@ public class EquipManager : MonoBehaviour
 
     public void Unequip(int slotIndex)
     {
+        Debug.Log("Button click registered.");
         if (currentEquipment[slotIndex] != null)
         {
             Equipment oldItem = currentEquipment[slotIndex];
@@ -337,9 +340,11 @@ public class EquipManager : MonoBehaviour
                         offHand = false;
 
                     }
-                    else if(oldItem.equipSlot == EquipmentSlot.OffHand)
+                    else if (oldItem.equipSlot == EquipmentSlot.OffHand)
                     {
                         WeaponEquipment weapon = (WeaponEquipment)oldItem;
+                        weapon.equipSlot = EquipmentSlot.MainHand;
+                        ChangeToMainHandAnimation();
                         playerStats[StatTypes.AttackRange] -= weapon.attackRange;
                         playerStats[StatTypes.AtkSpeed] -= weapon.attackSpeed;
                         playerStats[StatTypes.CritChance] -= weapon.critChance;
@@ -349,6 +354,7 @@ public class EquipManager : MonoBehaviour
                     {
                         WeaponEquipment weapon = (WeaponEquipment)oldItem;
                         animController.ChangeToUnarmed();
+                        weapon.equipSlot = EquipmentSlot.MainHand;
                         playerStats[StatTypes.AttackRange] -= weapon.attackRange;
                         playerStats[StatTypes.AtkSpeed] -= weapon.attackSpeed;
                         playerStats[StatTypes.CritChance] -= weapon.critChance;
@@ -364,7 +370,6 @@ public class EquipManager : MonoBehaviour
 
                     }
                     break;
-
             }
 
             currentEquipment[slotIndex] = null;
@@ -391,8 +396,8 @@ public class EquipManager : MonoBehaviour
             // Equipment has been removed so we trigger the callback
             if (onEquipmentChanged != null)
                 onEquipmentChanged.Invoke(null, oldItem);
-
         }
+    }
 
         UpdateSaveData();
     }
@@ -412,5 +417,21 @@ public class EquipManager : MonoBehaviour
             saveSlot.currentEquipment[i] = json;
         }
 
+    private void ChangeToMainHandAnimation()
+    {
+        if (currentEquipment[0] is WeaponEquipment weapon)
+        {
+            switch (weapon.typeOfWeapon)
+            {
+                case WeaponEquipment.weaponType.dagger:
+                    animController.ChangeToOnlyDaggerRight();
+                    break;
+                case WeaponEquipment.weaponType.righthandsword:
+                    animController.ChangeToOnlySwordRight();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

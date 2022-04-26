@@ -77,9 +77,9 @@ public class AudioManager : MonoBehaviour
         Sound s2 = Array.Find(sounds, sound => sound.name == "Dungeon1BGM");
         Sound s3 = Array.Find(sounds, sound => sound.name == "Dungeon2BGM");
         Sound s4 = Array.Find(sounds, sound => sound.name == "Dungeon3BGM");
-        Sound s5 = Array.Find(sounds, sound => sound.name == "Boss1Music");
-        Sound s6 = Array.Find(sounds, sound => sound.name == "Boss2Music");
-        Sound s7 = Array.Find(sounds, sound => sound.name == "Boss3Music");
+        Sound s5 = Array.Find(sounds, sound => sound.name == "Boss1BGM");
+        Sound s6 = Array.Find(sounds, sound => sound.name == "Boss2BGM");
+        Sound s7 = Array.Find(sounds, sound => sound.name == "Boss3BGM");
 
         if (s1 != null)
         {

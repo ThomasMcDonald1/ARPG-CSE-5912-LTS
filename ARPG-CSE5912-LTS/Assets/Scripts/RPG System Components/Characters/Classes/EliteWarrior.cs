@@ -15,7 +15,8 @@ namespace ARPG.Combat
             base.Start();
             Range = 150f;
             BodyRange = 2.5f;
-            AbilityRange = 80;
+            AbilityRange = 80f;
+            FarAwayRange = 4f;
             SightRange = 100f;
             Speed = 1.5f;
             stats[StatTypes.MonsterType] = 2; //testing
