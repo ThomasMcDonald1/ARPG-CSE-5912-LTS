@@ -31,8 +31,8 @@ public class Kilixis : EnemyAbilityController
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = 3.5f;
         stats[StatTypes.AtkSpeed] = 1;
-        stats[StatTypes.MaxHP] = 1750;
-        stats[StatTypes.HP] = 1750;
+        stats[StatTypes.MaxHP] = 1250;
+        stats[StatTypes.HP] = 1250;
         stats[StatTypes.LVL] = 10;
         stats[StatTypes.MonsterType] = 3;
 
