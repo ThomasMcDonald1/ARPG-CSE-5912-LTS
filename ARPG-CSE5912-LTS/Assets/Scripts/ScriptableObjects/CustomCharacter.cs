@@ -8,12 +8,12 @@ using System;
 
 public class CustomCharacter : ScriptableObject
 {
-
     private void OnEnable()
     {
         hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
+    public int charSlotNumber;
     public string charName;
     public int hairId, eyebrowID, faceMarkID, facialHairID;
     public Color hairColor, eyebrowColor, facemarkColor, facialHairColor, eyeColor, skinColor;
