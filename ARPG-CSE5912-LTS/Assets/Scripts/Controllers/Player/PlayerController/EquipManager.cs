@@ -87,6 +87,21 @@ public class EquipManager : MonoBehaviour
                 playerStats[StatTypes.Armor] += shield.armor;
                 playerStats[StatTypes.BlockChance] += shield.blockChance;
 
+                if (currentEquipment[0] is WeaponEquipment weapon)
+                {
+                    switch (weapon.typeOfWeapon)
+                    {
+                        case WeaponEquipment.weaponType.dagger:
+                            animController.ChangeToOnlyDaggerRight();
+                            break;
+                        case WeaponEquipment.weaponType.righthandsword:
+                            animController.ChangeToOnlySwordRight();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 offHand= true;
             }
             else if(newItem.equipSlot == EquipmentSlot.OffHand)
@@ -280,6 +295,7 @@ public class EquipManager : MonoBehaviour
                     else if(oldItem.equipSlot == EquipmentSlot.OffHand)
                     {
                         WeaponEquipment weapon = (WeaponEquipment)oldItem;
+                        weapon.equipSlot = EquipmentSlot.MainHand;
                         playerStats[StatTypes.AttackRange] -= weapon.attackRange;
                         playerStats[StatTypes.AtkSpeed] -= weapon.attackSpeed;
                         playerStats[StatTypes.CritChance] -= weapon.critChance;
