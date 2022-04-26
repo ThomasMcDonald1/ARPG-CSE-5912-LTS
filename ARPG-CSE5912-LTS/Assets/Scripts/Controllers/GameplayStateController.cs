@@ -51,7 +51,7 @@ public class GameplayStateController : StateMachine
     // Character model things
     public GameObject playerModel;
     public CustomCharacter customCharacter; //scriptable object
-    public CustomCharacter[] characterData;
+
 
     //Gameover panel button
     public GameObject yesRespawnButtonObj;

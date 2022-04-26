@@ -27,16 +27,9 @@ public class EquipManager : MonoBehaviour
         leftHand = GameObject.Find("EquippedItemLeft");
         rightHand = GameObject.Find("EquippedItemRight");
         instance = this;
-        GetCharacter();
+        character = GameObject.Find("GameplayController").GetComponent<GameplayStateController>().customCharacter;
         Debug.Log("character is " + character);
     }
-    
-    void GetCharacter()
-    {
-        var controller = GameObject.Find("GameplayController").GetComponent<GameplayStateController>();
-        character = controller.characterData[controller.customCharacter.charSlotNumber - 1];
-    }
-
     #endregion
     public Equipment[] currentEquipment;
     Inventory inventory;

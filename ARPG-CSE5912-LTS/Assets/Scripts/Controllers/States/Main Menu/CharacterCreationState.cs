@@ -91,7 +91,6 @@ public class CharacterCreationState : BaseMenuState
     void OnBackButtonClicked()
     {
         ResetCharacter();
-        PlayAudio();
         mainMenuController.ChangeState<MainMenuRootState>();
     }
 
@@ -106,7 +105,6 @@ public class CharacterCreationState : BaseMenuState
             SetDefaultOutfit();
             nameError.SetActive(false);
             int slotNum = FindEmptySlot();
-            customCharacter.charSlotNumber = slotNum;
             mainMenuController.saveSlotDataObjs[slotNum].containsData = true;
             mainMenuController.saveSlotDataObjs[slotNum].characterData.CopyCharacterData(customCharacter);
             selectedSlot = mainMenuController.saveSlotDataObjs[slotNum];
