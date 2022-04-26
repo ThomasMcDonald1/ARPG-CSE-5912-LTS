@@ -50,6 +50,7 @@ public class UI_shop:MonoBehaviour
         SaleButton.Select();
         PurchaseContainer.SetActive(false);
         SaleContainer.SetActive(true);
+        //UI_Sale.instance.updateUI();
     }
     public void clickOnPurchaseButton()
     {

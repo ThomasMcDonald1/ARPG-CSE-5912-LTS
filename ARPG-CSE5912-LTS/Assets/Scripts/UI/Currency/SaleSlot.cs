@@ -19,6 +19,14 @@ public class SaleSlot : MonoBehaviour
         icon.sprite = item.icon;
         icon.enabled = true;
         removeButton.interactable = true;
+        if (newItem.stackable)
+        {
+           
+            amount.text = Inventory.instance.amount[newItem.name].ToString();
+
+        }
+        //UI_Sale.instance.updateUI();
+
 
     }
 
@@ -37,6 +45,9 @@ public class SaleSlot : MonoBehaviour
     public void saleItem()
     {
         Inventory.instance.Sell(item);
+
         playerMoney.addMoney(item.cost);
+        //UI_Sale.instance.updateUI();
+
     }
 }
