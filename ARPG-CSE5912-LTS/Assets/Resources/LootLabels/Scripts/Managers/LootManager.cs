@@ -32,7 +32,7 @@ namespace LootLabels
 
         [SerializeField]
         [Tooltip("How long (in seconds) it takes to complete the parabola animation")]
-        private float animationDuration = 1f;
+        private float animationDuration = 0.4f;
 
         [SerializeField]
         [Tooltip("The minimum height the spawned loot will reach")]
@@ -289,10 +289,9 @@ namespace LootLabels
             float time = 0f;
             float maxHeight = UnityEngine.Random.Range(minParabolaHeight, maxParabolaHeight);
 
-            while (time < animationDuration && obj != null)
+            while (time < animationDuration)
             {
                 time += Time.deltaTime;
-                yield return null;
 
                 // Normalized (0-1) animation length
                 float alpha = Mathf.Clamp01(time / animationDuration);
@@ -304,6 +303,7 @@ namespace LootLabels
                 position += Vector3.up * height;
 
                 obj.transform.position = position;
+                yield return null;
             }
         }
 
