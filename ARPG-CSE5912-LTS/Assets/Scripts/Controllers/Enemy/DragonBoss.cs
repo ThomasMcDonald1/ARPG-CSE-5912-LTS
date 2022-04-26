@@ -25,8 +25,8 @@ public class DragonBoss : EnemyAbilityController
     protected override void Start()
     {
         base.Start();
-        stats[StatTypes.MaxHP] = 10;
-        stats[StatTypes.HP] = 10;
+        stats[StatTypes.MaxHP] = 1000;
+        stats[StatTypes.HP] = stats[StatTypes.MaxHP];
         stats[StatTypes.LVL] = 10;
         stats[StatTypes.MonsterType] = 3;
 
@@ -199,7 +199,10 @@ public class DragonBoss : EnemyAbilityController
     void DieAnimationEnded()
     {
         HealthBar.SetActive(false);
+        PlayerTarget = null;
         base.RaiseEnemyKillExpEvent(this, stats[StatTypes.LVL], stats[StatTypes.MonsterType], transform.GetChild(0).name);
+        GetComponent<CapsuleCollider>().enabled = false;
+        Destroy(this);
     }
 
     // Gizmos for sight range (purple) and melee range (red)
