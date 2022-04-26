@@ -63,6 +63,11 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
 
         GetComponentInChildren<InteractionManager>().ReactivateNPCS();
+
+        var charaPanel = gameplayStateController.GetComponentInChildren<CharacterPanelController>();
+        charaPanel.playerInfo = gameplayStateController.customCharacter;
+        charaPanel.showCharacterStates();
+        
     }
 
     void AddButtonListeners()
