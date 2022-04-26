@@ -7,7 +7,7 @@ using System;
 
 public class DragonBoss : EnemyAbilityController
 {
-    [SerializeField] float chaseDistance = 15.0f;
+    [SerializeField] float chaseDistance = 20.0f;
     [SerializeField] float meleeRange = 5.0f;
     [SerializeField] float vertexThreshold = 5.0f;
 
@@ -18,7 +18,7 @@ public class DragonBoss : EnemyAbilityController
     Vector3 PatrolToPosition;
 
     Coroutine draCoolRoutine;
-    Coroutine regen;
+    //Coroutine draRegen;
 
     private int CurrentPatrolVertexIndex = 0;
     public AudioManager audioManager;
@@ -44,10 +44,10 @@ public class DragonBoss : EnemyAbilityController
             PatrolToPosition = transform.position;
         }
         audioManager = FindObjectOfType<AudioManager>();
+        enemyAbilityOnCool = false;
         AbilityRange = 15f;
-        FarAwayRange = 10f;
+        FarAwayRange = 4f;
         cooldownTimer = 6f;
-        timeChecker = cooldownTimer;
 
     }
 
@@ -67,6 +67,18 @@ public class DragonBoss : EnemyAbilityController
         enemyAbilityOnCool = false;
         draCoolRoutine = null;
     }
+    /*
+    private IEnumerator draRegenEnergy()
+    {
+        //yield return new WaitForSeconds(1);
+        while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
+        {
+            stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
+            yield return new WaitForSeconds(3f);
+        }
+        draRegen = null;
+    }
+    */
     new private void Update()
     {
         UpdateAnimator();
@@ -87,7 +99,14 @@ public class DragonBoss : EnemyAbilityController
             agent.radius = 0;
             PlayerTarget = null;
         }
-
+        /*
+        if (stats[StatTypes.HP] > 0)
+        {
+            if (draRegen == null)
+                draRegen = StartCoroutine(draRegenEnergy());
+        }
+        */
+        
         if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
             if (!startMusic)
@@ -112,7 +131,7 @@ public class DragonBoss : EnemyAbilityController
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
             AttackTarget = PlayerTarget;
-            if (InSightRadius() && InAbilityStopRange())
+            if (InSightRadius() && InAbilityStopRange()&& !enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count == 2)
             {
                 if (EnemyAttackTypeList[0].abilityOnCooldown == false && !InFarAwayRange())
                 {
