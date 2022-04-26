@@ -82,13 +82,15 @@ public class PauseGameState : BaseGameplayState
 
     void SetPlayerSpawn()
     {
-        GameObject player = gameplayStateController.GetComponentInChildren<PlayerController>().gameObject;
+        var player = gameplayStateController.GetComponentInChildren<PlayerController>();
         if (player != null)
         {
             Debug.Log("Reset Player Location in Game");
-            player.GetComponent<NavMeshAgent>().enabled = false;
-            player.transform.position = new Vector3(198.5f, 9.6f, 206.32f);
-            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            player.gameObject.transform.position = new Vector3(198.5f, 9.6f, 206.32f);
+            player.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+
+            player.DungeonNum = 0;
         }
     }
 
