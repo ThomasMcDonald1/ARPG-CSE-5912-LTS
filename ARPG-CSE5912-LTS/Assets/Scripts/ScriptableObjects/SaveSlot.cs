@@ -15,6 +15,7 @@ public class SaveSlot : ScriptableObject
     public bool containsData;
     public int slotNumber;
     public CustomCharacter characterData;
+    public bool newGame = true;
 
     //inventory data
     public List<string> weaponItems; 

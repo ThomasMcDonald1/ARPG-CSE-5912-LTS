@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviour
     private GameObject player;
     private GameObject potionSlots;
     private SaveSlot saveSlot;
-    [SerializeField] InventorySlot starterSwordInventorySlot;
+   // [SerializeField] InventorySlot starterSwordInventorySlot;
     bool starterSwordEquipped = false;
 
     private void Start()
@@ -42,21 +42,27 @@ public class Inventory : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         potionSlots = GameObject.FindGameObjectWithTag("PotionSlot");
         potionButtons = potionSlots.GetComponentsInChildren<PotionButton>();
-        if(!weaponItems.Contains(Sword))
-            weaponItems.Add(Sword);
 
         var gameplayController = player.GetComponentInParent<GameplayStateController>();
         var slotNum = gameplayController.customCharacter.slotNum;
         Debug.Log("Inventory is trying to access save slot number " + slotNum);
         saveSlot = gameplayController.saveSlots[slotNum - 1];
-        if (saveSlot.weaponItems.Count == 0)
-            weaponItems.Add(Sword);
 
-        Debug.Log("healthPotion is" + healthPotion);
-        if (saveSlot.utilItems.Count == 0 && !amount.ContainsKey(healthPotion.name))
+        if (saveSlot.newGame)
         {
+            Add(Sword, weaponItems);
+            //WeaponEquipment wep = (WeaponEquipment)Sword;
+            //string jwep = JsonUtility.ToJson(wep);
+            //saveSlot.currentEquipment[0] = jwep;
+
             utilItems.Add(healthPotion);
             amount.Add(healthPotion.name, 3);
+            Potion health = (Potion)healthPotion;
+            string json = JsonUtility.ToJson(health);
+            saveSlot.utilItems.Add(json);
+            saveSlot.amount.Add(healthPotion.name, 3);
+
+            saveSlot.newGame = false;
         }
     }
 
@@ -109,7 +115,7 @@ public class Inventory : MonoBehaviour
 
 
             }
-        amount = saveSlot.amount;
+        amount = new Hashtable(saveSlot.amount);
         loaded = false;
 
         //   // weaponItems = new List<Ite>(saveSlot.weaponItems);
@@ -129,9 +135,9 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (starterSwordInventorySlot.item != null && !starterSwordEquipped)
+        if (Sword != null && !starterSwordEquipped)
         {
-            starterSwordInventorySlot.item.Use();
+            Sword.Use();
             starterSwordEquipped = true;
         }
     }
@@ -147,10 +153,6 @@ public class Inventory : MonoBehaviour
             {
                 saveSlot.weaponItems.Add(json);
             }
-            else
-            {
-                saveSlot.weaponItems.Remove(json);
-            }
         }
 
         foreach (ShieldEquipment shield in weaponItems.OfType<ShieldEquipment>())
@@ -161,10 +163,6 @@ public class Inventory : MonoBehaviour
             if (!saveSlot.weaponItems.Contains(json))
             {
                 saveSlot.weaponItems.Add(json);
-            }
-            else
-            {
-                saveSlot.weaponItems.Remove(json);
             }
 
         }
@@ -177,10 +175,6 @@ public class Inventory : MonoBehaviour
             {
                 saveSlot.armorItems.Add(json);
             }
-            else
-            {
-                saveSlot.armorItems.Remove(json);
-            }
 
         }
 
@@ -190,10 +184,6 @@ public class Inventory : MonoBehaviour
             if (!saveSlot.armorItems.Contains(json))
             {
                 saveSlot.armorItems.Add(json);
-            }
-            else
-            {
-                saveSlot.armorItems.Remove(json);
             }
         }
 
@@ -205,10 +195,6 @@ public class Inventory : MonoBehaviour
             {
                 saveSlot.utilItems.Add(json);
             }
-            else if( !amount.ContainsKey(util.name))
-            {
-                saveSlot.utilItems.Remove(json);
-            }
         }
         saveSlot.amount = new Hashtable(amount);
         //saveSlot.weaponItems = new List<Ite>(weaponItems);
@@ -216,6 +202,128 @@ public class Inventory : MonoBehaviour
         //saveSlot.utilItems = new List<Ite>(utilItems);
     }
 
+    void UpdateSaveDataRemove(Ite item)
+    {
+        if (item.name.Contains("Jewelry"))
+        {
+            JewelryEquipment jewel = (JewelryEquipment)item;
+            string json = JsonUtility.ToJson(jewel);
+            saveSlot.armorItems.Remove(json);
+        }
+        else if (item.name.Contains("Shield"))
+        {
+            ShieldEquipment shield = (ShieldEquipment)item;
+            string json = JsonUtility.ToJson(shield);
+            saveSlot.weaponItems.Remove(json);
+        }
+        else if(item.type == Ite.ItemType.armor)
+        {
+            ArmorEquipment armor = (ArmorEquipment)item;
+            string json = JsonUtility.ToJson(armor);
+            saveSlot.armorItems.Remove(json);
+        }
+        else if(item.type == Ite.ItemType.weapon)
+        {
+            WeaponEquipment wep = (WeaponEquipment)item;
+            string json = JsonUtility.ToJson(wep);
+            saveSlot.weaponItems.Remove(json);
+        }
+        else
+        {
+            if (amount.ContainsKey(item.name))
+            {
+
+                saveSlot.amount[item.name] = amount[item.name];
+            }
+            else
+            {
+                saveSlot.amount.Remove(item.name);
+                Potion pot = (Potion)item;
+                string json = JsonUtility.ToJson(pot);
+                saveSlot.utilItems.Remove(json);
+            }
+        }
+        //foreach (WeaponEquipment weapon in weaponItems.OfType<WeaponEquipment>())
+        //{
+
+        //    string json = JsonUtility.ToJson(weapon);
+        //    Debug.Log("json string is " + json);
+        //    if (!saveSlot.weaponItems.Contains(json))
+        //    {
+        //        saveSlot.weaponItems.Add(json);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("calling remove");
+        //        saveSlot.weaponItems.Remove(json);
+        //    }
+        //}
+
+        //foreach (ShieldEquipment shield in weaponItems.OfType<ShieldEquipment>())
+        //{
+
+        //    string json = JsonUtility.ToJson(shield);
+        //    Debug.Log("json string is " + json);
+        //    if (!saveSlot.weaponItems.Contains(json))
+        //    {
+        //        saveSlot.weaponItems.Add(json);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("calling remove");
+        //        saveSlot.weaponItems.Remove(json);
+        //    }
+
+        //}
+
+        //foreach (JewelryEquipment jewel in armorItems.OfType<JewelryEquipment>())
+        //{
+        //    string json = JsonUtility.ToJson(jewel);
+        //    Debug.Log("json string is " + json);
+        //    if (!saveSlot.armorItems.Contains(json))
+        //    {
+        //        saveSlot.armorItems.Add(json);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("calling remove");
+        //        saveSlot.armorItems.Remove(json);
+        //    }
+
+        //}
+
+        //foreach (ArmorEquipment armor in armorItems.OfType<ArmorEquipment>())
+        //{
+        //    string json = JsonUtility.ToJson(armor);
+        //    if (!saveSlot.armorItems.Contains(json))
+        //    {
+        //        saveSlot.armorItems.Add(json);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("calling remove");
+        //        saveSlot.armorItems.Remove(json);
+        //    }
+        //}
+
+        //foreach (Potion util in utilItems)
+        //{
+        //    string json = JsonUtility.ToJson(util);
+        //    Debug.Log("json string is " + json);
+        //    if (!saveSlot.utilItems.Contains(json))
+        //    {
+        //        saveSlot.utilItems.Add(json);
+        //    }
+        //    else
+        //    {
+        //        saveSlot.utilItems.Remove(json);
+        //    }
+        //}
+        //saveSlot.amount = new Hashtable(amount);
+        //saveSlot.weaponItems = new List<Ite>(weaponItems);
+        //saveSlot.armorItems = new List<Ite>(armorItems);
+        //saveSlot.utilItems = new List<Ite>(utilItems);
+    }
     // Add a new item if enough room
     public void Add(Ite item, List<Ite> list)
     {
@@ -326,7 +434,7 @@ public class Inventory : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
 
-        UpdateSaveData(item);
+        UpdateSaveDataRemove(item);
     }
     //sell an item
 
@@ -367,7 +475,7 @@ public class Inventory : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
 
-        UpdateSaveData(item);
+        UpdateSaveDataRemove(item);
     }
     // Remove an item
     public void RemoveEquip(Ite item)
@@ -406,6 +514,6 @@ public class Inventory : MonoBehaviour
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
 
-        UpdateSaveData(item);
+        UpdateSaveDataRemove(item);
     }
 }
