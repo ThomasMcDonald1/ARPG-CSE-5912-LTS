@@ -19,6 +19,7 @@ public class BaseMenuState : State
     public Button yesDeleteButton, noDeleteButton;
     public RectTransform charaScroll;
     public SaveSlot selectedSlot;
+    public Button creditsButton, backFromCreditsButton;
 
     // options menu buttons
     public AudioMixer audioMixer;
@@ -51,7 +52,8 @@ public class BaseMenuState : State
         noDeleteButton = mainMenuController.noDeleteObj.GetComponent<Button>();
         yesDeleteButton = mainMenuController.yesDeleteObj.GetComponent<Button>();
         charaScroll = mainMenuController.slotContainerObj.GetComponent<RectTransform>();
-
+        creditsButton = mainMenuController.creditsButtonObj.GetComponent<Button>();
+        backFromCreditsButton = mainMenuController.backFromCreditsButtonObj.GetComponent<Button>();
 
         //save slots
         slot1Button = mainMenuController.saveSlotButtonObjs[0].GetComponent<Button>();

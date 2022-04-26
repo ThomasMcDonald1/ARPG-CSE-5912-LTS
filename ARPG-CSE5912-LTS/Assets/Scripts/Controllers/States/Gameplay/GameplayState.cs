@@ -71,6 +71,10 @@ public class GameplayState : BaseGameplayState
             TutorialWindow.Instance.ShowCanvas();
             tutorialNotSeen = false;
         }
+        
+        var charaPanel = gameplayStateController.GetComponentInChildren<CharacterPanelController>();
+        charaPanel.playerInfo = gameplayStateController.customCharacter;
+        charaPanel.showCharacterStates();
     }
 
     void AddButtonListeners()

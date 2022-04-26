@@ -7,7 +7,7 @@ using System;
 
 public class DragonBoss : EnemyAbilityController
 {
-    [SerializeField] float chaseDistance = 15.0f;
+    [SerializeField] float chaseDistance = 20.0f;
     [SerializeField] float meleeRange = 5.0f;
     [SerializeField] float vertexThreshold = 5.0f;
 
@@ -16,6 +16,9 @@ public class DragonBoss : EnemyAbilityController
 
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
+
+    Coroutine draCoolRoutine;
+    //Coroutine draRegen;
 
     private int CurrentPatrolVertexIndex = 0;
     public AudioManager audioManager;
@@ -41,13 +44,41 @@ public class DragonBoss : EnemyAbilityController
             PatrolToPosition = transform.position;
         }
         audioManager = FindObjectOfType<AudioManager>();
+        enemyAbilityOnCool = false;
+        AbilityRange = 15f;
+        FarAwayRange = 4f;
+        cooldownTimer = 6f;
+
     }
 
     public string GetClassTypeName()
     {
         return "DragonBoss";
     }
-
+    IEnumerator draCoolDown()
+    {
+        enemyAbilityOnCool = true;
+        timeChecker = cooldownTimer;
+        while (timeChecker > 0)
+        {
+            timeChecker -= Time.deltaTime;
+            yield return null;
+        }
+        enemyAbilityOnCool = false;
+        draCoolRoutine = null;
+    }
+    /*
+    private IEnumerator draRegenEnergy()
+    {
+        //yield return new WaitForSeconds(1);
+        while (stats[StatTypes.Mana] < stats[StatTypes.MaxMana])
+        {
+            stats[StatTypes.Mana] += stats[StatTypes.ManaRegen];
+            yield return new WaitForSeconds(3f);
+        }
+        draRegen = null;
+    }
+    */
     new private void Update()
     {
         UpdateAnimator();
@@ -68,7 +99,14 @@ public class DragonBoss : EnemyAbilityController
             agent.radius = 0;
             PlayerTarget = null;
         }
-
+        /*
+        if (stats[StatTypes.HP] > 0)
+        {
+            if (draRegen == null)
+                draRegen = StartCoroutine(draRegenEnergy());
+        }
+        */
+        
         if (InMusicTransitionRadius() && PlayerTarget == null && stats[StatTypes.HP] > 0)
         {
             if (!startMusic)
@@ -92,6 +130,22 @@ public class DragonBoss : EnemyAbilityController
             float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
+            AttackTarget = PlayerTarget;
+            if (InSightRadius() && InAbilityStopRange()&& !enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count == 2)
+            {
+                if (EnemyAttackTypeList[0].abilityOnCooldown == false && !InFarAwayRange())
+                {
+                    QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                }else if (EnemyAttackTypeList[1].abilityOnCooldown == false && InFarAwayRange())
+                {
+                    QueueAbilityCast(EnemyAttackTypeList[1].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                }
+            }
+        
 
             if (animator.GetBool("AnimationEnded") && !InMeleeRange())
             {
@@ -117,6 +171,14 @@ public class DragonBoss : EnemyAbilityController
 
     }
 
+    public bool InFarAwayRange()
+    {
+        return Vector3.Distance(transform.position, AttackTarget.position) < FarAwayRange;
+    }
+    public bool InAbilityStopRange()
+    {
+        return Vector3.Distance(transform.position, AttackTarget.position) < AbilityRange;
+    }
     private bool InMusicTransitionRadius()
     {
         return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
