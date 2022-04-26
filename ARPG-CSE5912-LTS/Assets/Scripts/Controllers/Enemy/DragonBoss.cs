@@ -17,6 +17,9 @@ public class DragonBoss : EnemyAbilityController
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
 
+    Coroutine draCoolRoutine;
+    Coroutine regen;
+
     private int CurrentPatrolVertexIndex = 0;
     public AudioManager audioManager;
     private bool fadeOutMusic = true;
@@ -47,7 +50,18 @@ public class DragonBoss : EnemyAbilityController
     {
         return "DragonBoss";
     }
-
+    IEnumerator draCoolDown()
+    {
+        enemyAbilityOnCool = true;
+        timeChecker = cooldownTimer;
+        while (timeChecker > 0)
+        {
+            timeChecker -= Time.deltaTime;
+            yield return null;
+        }
+        enemyAbilityOnCool = false;
+        draCoolRoutine = null;
+    }
     new private void Update()
     {
         UpdateAnimator();
@@ -92,6 +106,21 @@ public class DragonBoss : EnemyAbilityController
             float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
+            AttackTarget = PlayerTarget;
+            if (InSightRadius() && InAbilityStopRange())
+            {
+                if (EnemyAttackTypeList[0].abilityOnCooldown == false)
+                {
+                    
+                    QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                    EnemyAbility temp = EnemyAttackTypeList[0];
+                    EnemyAttackTypeList.RemoveAt(0);
+                    EnemyAttackTypeList.Add(temp);
+                }
+            }
+        
 
             if (animator.GetBool("AnimationEnded") && !InMeleeRange())
             {
@@ -116,7 +145,10 @@ public class DragonBoss : EnemyAbilityController
         }
 
     }
-
+    public bool InAbilityStopRange()
+    {
+        return Vector3.Distance(transform.position, AttackTarget.position) < AbilityRange;
+    }
     private bool InMusicTransitionRadius()
     {
         return Vector3.Distance(player.transform.position, transform.position) < musicTransitionRadius;
