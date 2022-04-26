@@ -42,6 +42,7 @@ namespace ARPG.Combat
         public virtual float Range { get; set; }
         public virtual float BodyRange { get; set; }
         public virtual float AbilityRange { get; set; }
+        public virtual float FarAwayRange { get; set; }
         public virtual float SightRange { get; set; }
         protected virtual float Speed { get; set; }
 
@@ -82,6 +83,7 @@ namespace ARPG.Combat
                 }
             }
             AbilityRange = 50;
+            FarAwayRange = -1;
             cooldownTimer = 6;
             timeChecker = cooldownTimer;
         }
@@ -149,7 +151,7 @@ namespace ARPG.Combat
                     {
                         RunToPlayer();
                         //Debug.Log(timeChecker);
-                        if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0)
+                        if (!enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count != 0 && !InFarAwayRange())
                         {
 
                             //Debug.Log(EnemyAttackTypeList);
@@ -172,6 +174,7 @@ namespace ARPG.Combat
                                 }
                             }
                             */
+
                             if (EnemyAttackTypeList[0].abilityOnCooldown == false)
                             {
                                 StopAndRotate();
@@ -181,9 +184,9 @@ namespace ARPG.Combat
                                 EnemyAbility temp = EnemyAttackTypeList[0];
                                 EnemyAttackTypeList.RemoveAt(0);
                                 EnemyAttackTypeList.Add(temp);
-                                
+                                RunToPlayer();
                             }
-                            RunToPlayer();
+                            
                         }
                         else if (InStopRange())
                         {
@@ -274,7 +277,10 @@ namespace ARPG.Combat
         {
             return Vector3.Distance(transform.position, AttackTarget.position) < AbilityRange;
         }
-
+        public bool InFarAwayRange()
+        {
+            return Vector3.Distance(transform.position, AttackTarget.position) < FarAwayRange;
+        }
         // From animation Event
         public void Hit()
         {
