@@ -13,11 +13,13 @@ namespace ARPG.Combat
         protected override void Start()
         {
             base.Start();
-            Range = 90f;
+            Range = 150f;
             BodyRange = 2.5f;
             AbilityRange = 80;
             SightRange = 100f;
-            Speed = 1f;
+            Speed = 1.5f;
+            stats[StatTypes.MonsterType] = 1; //testing
+            stats[StatTypes.PHYATK] = 200;//testing
             agent.speed = Speed;
         }
         public override string GetClassTypeName()
