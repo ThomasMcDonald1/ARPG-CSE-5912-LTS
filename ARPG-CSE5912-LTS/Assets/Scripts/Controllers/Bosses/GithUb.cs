@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class GithUb : EnemyAbilityController
 {
-    [SerializeField] float chaseDistance = 15.0f;
+    [SerializeField] float chaseDistance = 25.0f;
     [SerializeField] float meleeRange = 5.0f;
     [SerializeField] float vertexThreshold = 5.0f;
 
@@ -14,9 +14,10 @@ public class GithUb : EnemyAbilityController
 
     Transform PlayerTarget;
     Vector3 PatrolToPosition;
-
+    Coroutine draCoolRoutine;
     private NavMeshAgent navAgent;
 
+    private int i = 1;
     private int CurrentPatrolVertexIndex = 0;
     private int AttackCycle = 0;
     public AudioManager audioManager;
@@ -49,9 +50,23 @@ public class GithUb : EnemyAbilityController
 
         GetComponent<Animator>().updateMode = AnimatorUpdateMode.AnimatePhysics;
         GetComponent<Animator>().updateMode = AnimatorUpdateMode.Normal;
-
+        enemyAbilityOnCool = false;
+        AbilityRange = 22f;
+        FarAwayRange = 5f;
+        cooldownTimer = 6f;
     }
-
+    IEnumerator draCoolDown()
+    {
+        enemyAbilityOnCool = true;
+        timeChecker = cooldownTimer;
+        while (timeChecker > 0)
+        {
+            timeChecker -= Time.deltaTime;
+            yield return null;
+        }
+        enemyAbilityOnCool = false;
+        draCoolRoutine = null;
+    }
     public string GetClassTypeName()
     {
         return "GithUb";
@@ -102,7 +117,29 @@ public class GithUb : EnemyAbilityController
             float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
             rotationToLookAt.eulerAngles.y, ref yVelocity, smooth);
             transform.eulerAngles = new Vector3(0, rotationY, 0);
+            AttackTarget = PlayerTarget;
+            if (InSightRadius() && InAbilityStopRange() && !enemyAbilityOnCool && stats[StatTypes.Mana] > 0 && EnemyAttackTypeList.Count > 0)
+            {
+                if (EnemyAttackTypeList[0].abilityOnCooldown == false && !InFarAwayRange())
+                {
+                    QueueAbilityCast(EnemyAttackTypeList[0].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                }
 
+                else if (EnemyAttackTypeList[i].abilityOnCooldown == false && InFarAwayRange())
+                {
+
+                    QueueAbilityCast(EnemyAttackTypeList[i].abilityAssigned);
+                    if (draCoolRoutine == null)
+                        draCoolRoutine = StartCoroutine(draCoolDown());
+                    i++;
+                    if (i == EnemyAttackTypeList.Count)
+                    {
+                        i = 1;
+                    }
+                }
+            }
             if (GetComponent<Animator>().GetBool("AnimationEnded") && !InMeleeRange())
             {
                 navAgent.isStopped = false;
