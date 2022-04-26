@@ -136,6 +136,7 @@ public class MainMenuRootState : BaseMenuState
             audioManager.Play("MenuClick");
             mainMenuController.characterCreationCamera.enabled = false;
             mainMenuController.charaScriptableObj.CopyCharacterData(selectedSlot.characterData);
+            mainMenuController.charaScriptableObj.slotNum = selectedSlot.slotNumber;
             GenerateNewDungeons();
             LoadingStateController.Instance.InitalizeGameScene();
         }
@@ -284,6 +285,7 @@ public class MainMenuRootState : BaseMenuState
         selectedSlot = null;
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
+        mainMenuController.saveSlotDataObjs[selectedSlot.slotNumber - 1].ClearData();
 
         mainMenuController.deleteCharacterCanvas.enabled = false;
 

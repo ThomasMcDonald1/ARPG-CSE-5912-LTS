@@ -63,6 +63,17 @@ public class GameplayState : BaseGameplayState
         gameplayStateController.customCharacter.UpdatePlayerModel(gameplayStateController.playerModel);
 
         GetComponentInChildren<InteractionManager>().ReactivateNPCS();
+
+        LoadSaveData();
+    }
+
+    void LoadSaveData()
+    {
+        var slotNum = gameplayStateController.customCharacter.slotNum;
+        var slot = gameplayStateController.saveSlots[slotNum - 1];
+
+        player.GetComponent<Inventory>().LoadSaveData(slot);
+        player.GetComponent<EquipManager>().LoadSavedData(slot);
     }
 
     void AddButtonListeners()

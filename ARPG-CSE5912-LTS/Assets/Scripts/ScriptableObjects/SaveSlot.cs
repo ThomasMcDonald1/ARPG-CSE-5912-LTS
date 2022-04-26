@@ -14,7 +14,26 @@ public class SaveSlot : ScriptableObject
     public bool containsData;
     public int slotNumber;
     public CustomCharacter characterData;
-    
+
+    //inventory data
+    public List<Ite> weaponItems; 
+    public List<Ite> armorItems;
+    public List<Ite> utilItems;
+
+    //equipment data
+    public List<Equipment> currentEquipment;
+
     //insert other items to save here
 
+
+    public void ClearData()
+    {
+        containsData = false;
+        weaponItems.Clear();
+        armorItems.Clear();
+        utilItems.Clear();
+        currentEquipment.Clear();
+    }
 }
+
+

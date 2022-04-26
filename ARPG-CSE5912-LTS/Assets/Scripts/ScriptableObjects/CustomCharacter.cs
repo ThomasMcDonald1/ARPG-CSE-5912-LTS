@@ -14,6 +14,7 @@ public class CustomCharacter : ScriptableObject
         hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
+    public int slotNum;
     public string charName;
     public int hairId, eyebrowID, faceMarkID, facialHairID;
     public Color hairColor, eyebrowColor, facemarkColor, facialHairColor, eyeColor, skinColor;

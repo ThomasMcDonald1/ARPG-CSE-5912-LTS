@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
 
     private GameObject player;
     private GameObject potionSlots;
+    private SaveSlot saveSlot;
     [SerializeField] InventorySlot starterSwordInventorySlot;
     bool starterSwordEquipped = false;
 
@@ -41,8 +42,25 @@ public class Inventory : MonoBehaviour
 
         utilItems.Add(healthPotion);
         amount.Add(healthPotion.name, 3);
+
+        var gameplayController = player.GetComponentInParent<GameplayStateController>();
+        var slotNum = gameplayController.customCharacter.slotNum;
+        Debug.Log("Inventory is trying to access save slot number " + slotNum);
+        saveSlot = gameplayController.saveSlots[slotNum - 1];
     }
 
+    public void LoadSaveData(SaveSlot slot)
+    {
+        saveSlot = slot;
+        if (saveSlot.weaponItems != null && saveSlot.weaponItems.Count > 0)
+            weaponItems = new List<Ite>(saveSlot.weaponItems);
+
+        if (saveSlot.armorItems != null && saveSlot.armorItems.Count > 0)
+            armorItems = new List<Ite>(saveSlot.armorItems);
+
+        if (saveSlot.utilItems != null && saveSlot.utilItems.Count > 0)
+            utilItems = new List<Ite>(saveSlot.utilItems);
+    }
 
     public int space = 20;
 
@@ -53,6 +71,13 @@ public class Inventory : MonoBehaviour
             starterSwordInventorySlot.item.Use();
             starterSwordEquipped = true;
         }
+    }
+
+    void UpdateSaveData()
+    {
+        saveSlot.weaponItems = new List<Ite>(weaponItems);
+        saveSlot.armorItems = new List<Ite>(armorItems);
+        saveSlot.utilItems = new List<Ite>(utilItems);
     }
 
     // Add a new item if enough room
@@ -120,6 +145,8 @@ public class Inventory : MonoBehaviour
                 pButton.AddItem(item, amount[item.name].ToString());
             }
         }
+
+        UpdateSaveData();
     }
 
     
@@ -162,6 +189,8 @@ public class Inventory : MonoBehaviour
         }
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
+
+        UpdateSaveData();
     }
     //sell an item
 
@@ -201,6 +230,8 @@ public class Inventory : MonoBehaviour
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
+
+        UpdateSaveData();
     }
     // Remove an item
     public void RemoveEquip(Ite item)
@@ -238,5 +269,7 @@ public class Inventory : MonoBehaviour
         //Debug.Log("item prefab:" + item.prefab);
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
+
+        UpdateSaveData();
     }
 }

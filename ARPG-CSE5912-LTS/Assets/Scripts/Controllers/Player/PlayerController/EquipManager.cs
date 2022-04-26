@@ -19,6 +19,7 @@ public class EquipManager : MonoBehaviour
     [SerializeField] AnimatorOverrider overrider;
     [SerializeField] SetAnimationType animController;
     GameObject[] nu = new GameObject[6];
+    private SaveSlot saveSlot;
 
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
     public event OnEquipmentChanged onEquipmentChanged;
@@ -40,6 +41,21 @@ public class EquipManager : MonoBehaviour
         Debug.Log("numSlot is " + numSlots);
         currentEquipment = new Equipment[numSlots];
         playerStats = this.GetComponentInChildren<Stats>();
+
+        var gameplayController = this.GetComponentInParent<GameplayStateController>();
+        var slotNum = gameplayController.customCharacter.slotNum;
+        saveSlot = gameplayController.saveSlots[slotNum - 1];
+    }
+
+    public void LoadSavedData(SaveSlot slot)
+    {
+        saveSlot = slot;
+        if (saveSlot.currentEquipment != null && saveSlot.currentEquipment.Count > 0)
+        {
+            int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+            currentEquipment = saveSlot.currentEquipment.ToArray();
+
+        }
     }
 
     public void Equip(Equipment newItem)
@@ -236,6 +252,9 @@ public class EquipManager : MonoBehaviour
         // Equipment has been removed so we trigger the callback
         if (onEquipmentChanged != null)
             onEquipmentChanged.Invoke(null, oldItem);
+
+
+        UpdateSaveData();
     }
 
     public void Unequip(int slotIndex)
@@ -333,6 +352,17 @@ public class EquipManager : MonoBehaviour
 
         }
 
+        UpdateSaveData();
+    }
 
+
+    void UpdateSaveData()
+    {
+        saveSlot.currentEquipment.Clear();
+
+        for (int i=0; i<currentEquipment.Length; i++)
+        {
+            saveSlot.currentEquipment.Add(currentEquipment[i]);
+        }
     }
 }
