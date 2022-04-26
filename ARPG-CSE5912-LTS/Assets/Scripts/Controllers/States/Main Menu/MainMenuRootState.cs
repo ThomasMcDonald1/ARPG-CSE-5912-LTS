@@ -16,6 +16,7 @@ public class MainMenuRootState : BaseMenuState
         Debug.Log("entered main menu root state");
         mainMenuController.mainMenuCanvas.enabled = true;
         mainMenuController.deleteCharacterCanvas.enabled = false;
+        mainMenuController.creditsMenuCanvas.enabled = false;
 
         mainMenuController.displayCharacterObj.SetActive(false);
         mainMenuController.characterNameObj.SetActive(false);
@@ -46,6 +47,8 @@ public class MainMenuRootState : BaseMenuState
         yesDeleteButton.onClick.AddListener(() => OnYesDeleteClicked());
         noDeleteButton.onClick.AddListener(() => OnNoDeleteClicked());
         exitGameButton.onClick.AddListener(() => OnQuitGameClicked());
+        creditsButton.onClick.AddListener(() => OnCreditsSelected());
+        backFromCreditsButton.onClick.AddListener(() => OnBackFromCreditsSelected());
     }
 
     void RemoveButtonListeners()
@@ -63,6 +66,8 @@ public class MainMenuRootState : BaseMenuState
         yesDeleteButton.onClick.RemoveAllListeners();
         noDeleteButton.onClick.RemoveAllListeners();
         exitGameButton.onClick.RemoveAllListeners();
+        creditsButton.onClick.RemoveAllListeners();
+        backFromCreditsButton.onClick.RemoveAllListeners();
     }
 
     void SetSlotVisibility()
@@ -271,7 +276,6 @@ public class MainMenuRootState : BaseMenuState
             mainMenuController.deleteCharacterCanvas.enabled = true;
         }
 
-
         audioManager.Play("MenuClick");
         SetSlotVisibility();
     }
@@ -307,6 +311,19 @@ public class MainMenuRootState : BaseMenuState
         mainMenuController.startErrorObj.SetActive(false);
         mainMenuController.deleteCharaErrorObj.SetActive(false);
         mainMenuController.slotsFullErrorObj.SetActive(false);
+    }
+
+    void OnCreditsSelected()
+    {
+        audioManager.Play("MenuClick");
+        mainMenuController.creditsMenuCanvas.enabled = true;
+    }
+
+
+    void OnBackFromCreditsSelected()
+    {
+        audioManager.Play("MenuClick");
+        mainMenuController.creditsMenuCanvas.enabled = false;
     }
 
 }
